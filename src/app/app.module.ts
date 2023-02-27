@@ -21,6 +21,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProjectsEffects } from './store/effects/projects.effects';
+import { TasksEffects } from './store/effects/tasks.effects';
 import { projectsReducer, tasksReducer } from './store/reducers/';
 
 @NgModule({
@@ -37,7 +38,7 @@ import { projectsReducer, tasksReducer } from './store/reducers/';
       },
       {}
     ),
-    EffectsModule.forRoot([ProjectsEffects]),
+    EffectsModule.forRoot([ProjectsEffects, TasksEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,
     MatToolbarModule,

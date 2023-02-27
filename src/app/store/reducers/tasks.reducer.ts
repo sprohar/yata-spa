@@ -1,5 +1,6 @@
-import { createFeature, createReducer } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { Task } from '../../models';
+import { YataApiActions } from '../actions';
 
 interface State {
   tasks: Task[];
@@ -13,7 +14,13 @@ const initialState: State = {
 
 export const tasksFeature = createFeature({
   name: 'tasks',
-  reducer: createReducer(initialState),
+  reducer: createReducer(
+    initialState,
+    on(YataApiActions.loadTasksSuccess, (state, action) => ({
+      ...state,
+      tasks: action.tasks,
+    }))
+  ),
 });
 
 export const {
