@@ -1,9 +1,9 @@
-import { Priority } from "../enums/priority.enum";
+import { Task } from './task.model';
 
 export interface Subtask {
   id?: number;
   title: string;
-  priority?: Priority;
+  priority?: Task.Priority;
   completed?: boolean;
   deleted?: boolean;
   completedOn?: string;
