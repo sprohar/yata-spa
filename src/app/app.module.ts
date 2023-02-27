@@ -1,13 +1,16 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ProjectsEffects } from './store/effects/projects.effects';
 import { projectsReducer, tasksReducer } from './store/reducers/';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +18,7 @@ import { projectsReducer, tasksReducer } from './store/reducers/';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     StoreModule.forRoot(
       {
         projects: projectsReducer,
@@ -22,8 +26,9 @@ import { projectsReducer, tasksReducer } from './store/reducers/';
       },
       {}
     ),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([ProjectsEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
