@@ -9,6 +9,11 @@ const routes: Routes = [
         (m) => m.KanbanViewModule
       ),
   },
+  {
+    path: 'list',
+    loadChildren: () =>
+      import('./list-view/list-view.module').then((m) => m.ListViewModule),
+  },
 ];
 
 @NgModule({
