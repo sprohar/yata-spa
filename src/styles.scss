@@ -1,4 +1,134 @@
-/* You can add global styles to this file, and also import other style files */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.text-large {
+  font-size: 24px;
+}
+
+.text-ellipsis,
+.truncate {
+  text-overflow: ellipsis;
+}
+
+.text-grey {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.faded-text {
+  opacity: 0.54;
+}
+
+.input-label {
+  margin: 0;
+  padding: 0;
+}
+
+.input {
+  appearance: none;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  padding: 8px 12px;
+  width: 100%;
+  background: inherit;
+  color: #000;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+textarea.input {
+  resize: vertical;
+}
+
+.input:focus,
+.input:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.input:focus {
+  border-bottom: thin solid;
+  border-color: rgba(255, 255, 255, 0.25);
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .input {
+    color: #fff !important;
+  }
+
+  .input:focus,
+  .input:hover {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.relative {
+  position: relative;
+}
+
+.mat-button-full-width {
+  width: 100%;
+  &.mdc-button {
+    justify-content: unset;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.icon {
+  opacity: 0.54;
+}
+
+.error {
+  background-color: rgba(255, 0, 0, 0.09);
+  padding: 6px 12px;
+  border-radius: 4px;
+
+  .error-text {
+    font-size: 12px;
+    color: rgb(255, 0, 0);
+    font-weight: 600;
+    padding: 0;
+    margin: 0;
+  }
+}

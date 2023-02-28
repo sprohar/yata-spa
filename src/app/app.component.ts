@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Observable, shareReplay } from 'rxjs';
+import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { Project } from './models';
 import { SidenavActions } from './store/actions';
 import { selectProjects } from './store/reducers/projects.reducer';
@@ -39,7 +40,7 @@ export class AppComponent {
   }
 
   openAddProjectDialog() {
-    // TODO:  this.dialog.open(AddProjectDialogComponent);
+    this.dialog.open(CreateProjectDialogComponent);
   }
 
   handleSetCurrentProject(project: Project) {

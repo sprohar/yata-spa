@@ -1,0 +1,29 @@
+<ng-container [formGroup]="form">
+  <h2 mat-dialog-title>Create Project</h2>
+  <mat-dialog-content>
+    <div class="create-project-dialog-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Project Name</mat-label>
+        <input
+          #input
+          matInput
+          type="text"
+          formControlName="name"
+          (keyup.enter)="handleSave()"
+        />
+        <mat-hint>{{ input.value.length }} / {{ nameMaxLength }}</mat-hint>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close="">Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="handleSave()"
+      [disabled]="nameControl.invalid"
+    >
+      Save
+    </button>
+  </mat-dialog-actions>
+</ng-container>
