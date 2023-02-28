@@ -39,6 +39,10 @@ export const projectsFeature = createFeature({
       ...state,
       projects: state.projects.concat(action.project),
     })),
+    on(YataApiActions.deleteProjectSuccess, (state, action) => ({
+      currentProjectId: null,
+      projects: state.projects.filter((p) => p.id !== action.project.id),
+    })),
     on(YataApiActions.loadProjectsSuccess, (state, action) => ({
       ...state,
       projects: action.projects,

@@ -50,10 +50,13 @@
         <span>History</span>
       </button>
       <mat-divider></mat-divider>
-      <!-- <button mat-menu-item (click)="openDeleteProjectConfirmationDialog()">
+      <button
+        mat-menu-item
+        (click)="openDeleteProjectConfirmationDialog(project)"
+      >
         <mat-icon>delete</mat-icon>
         <span>Delete</span>
-      </button> -->
+      </button>
     </mat-menu>
   </header>
 </ng-container>

@@ -1,9 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { takeUntil } from 'rxjs';
+import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogData } from '../../../interfaces/confirmation-dialog-data';
 import { Project } from '../../../models';
-import { KanbanViewActions, ListViewActions } from '../../../store/actions';
+import {
+  KanbanViewActions,
+  ListViewActions,
+  ViewHeaderActions,
+} from '../../../store/actions';
 import { selectCurrentProject } from '../../../store/selectors/projects.selectors';
 
 @Component({
@@ -11,7 +18,8 @@ import { selectCurrentProject } from '../../../store/selectors/projects.selector
   templateUrl: './view-header.component.html',
   styleUrls: ['./view-header.component.scss'],
 })
-export class ViewHeaderComponent {
+export class ViewHeaderComponent implements OnDestroy {
+  destroy$ = new EventEmitter<void>();
   currentProject$ = this.store.select(selectCurrentProject);
 
   constructor(
@@ -19,6 +27,10 @@ export class ViewHeaderComponent {
     private dialog: MatDialog,
     private router: Router
   ) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.emit();
+  }
 
   switchToKanbanView(project: Project) {
     this.router.navigate(['kanban', project.id!]);
@@ -44,29 +56,29 @@ export class ViewHeaderComponent {
     );
   }
 
-  // openDeleteProjectConfirmationDialog() {
-  //   const dialogData: ConfirmationDialogData = {
-  //     title: 'Delete Project',
-  //     content: 'Deleting a project will also delete all tasks. Continue?',
-  //   };
+  openDeleteProjectConfirmationDialog(project: Project) {
+    const dialogData: ConfirmationDialogData = {
+      title: 'Delete Project',
+      content: 'Deleting a project will also delete all tasks. Continue?',
+    };
 
-  //   const ref = this.dialog.open(ConfirmationDialogComponent, {
-  //     data: dialogData,
-  //   });
+    const ref = this.dialog.open(ConfirmationDialogComponent, {
+      data: dialogData,
+    });
 
-  //   ref
-  //     .afterClosed()
-  //     .pipe(takeUntil(this.destroy$))
-  //     .subscribe((confirmed) => {
-  //       if (confirmed && this.project) {
-  //         this.store.dispatch(
-  //           ProjectPageActions.deleteProject({
-  //             projectId: this.project.id!,
-  //           })
-  //         );
-  //       }
-  //     });
-  // }
+    ref
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((confirmed) => {
+        if (confirmed && project) {
+          this.store.dispatch(
+            ViewHeaderActions.deleteProject({
+              project,
+            })
+          );
+        }
+      });
+  }
 
   // openProjectDetailsDialog() {
   //   const ref = this.dialog.open(ProjectDetailsDialogComponent, {
