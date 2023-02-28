@@ -1,0 +1,59 @@
+<ng-container *ngIf="currentProject$ | async as project">
+  <header class="view-header">
+    <h1 class="truncate">
+      {{ project.name }}
+    </h1>
+    <span class="spacer"></span>
+    <ng-container *ngIf="project.view === 'LIST'; else kanban">
+      <button
+        mat-icon-button
+        (click)="switchToKanbanView(project)"
+        title="Kanban view"
+      >
+        <mat-icon>view_kanban</mat-icon>
+      </button>
+    </ng-container>
+    <ng-template #kanban>
+      <button
+        mat-icon-button
+        (click)="switchToListView(project)"
+        title="List view"
+      >
+        <mat-icon>view_list</mat-icon>
+      </button>
+    </ng-template>
+
+    <!-- Change view -->
+    <!-- TODO: Sort tasks -->
+    <button mat-icon-button title="Sort options">
+      <mat-icon>sort</mat-icon>
+    </button>
+    <!-- TODO: Show more options -->
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="projectOptions"
+      title="Project options"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #projectOptions xPosition="before" yPosition="below">
+      <!-- <button mat-menu-item (click)="openProjectDetailsDialog()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button> -->
+      <button mat-menu-item>
+        <mat-icon>push_pin</mat-icon>
+        <span>Pin</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>history</mat-icon>
+        <span>History</span>
+      </button>
+      <mat-divider></mat-divider>
+      <!-- <button mat-menu-item (click)="openDeleteProjectConfirmationDialog()">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button> -->
+    </mat-menu>
+  </header>
+</ng-container>
