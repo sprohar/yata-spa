@@ -65,6 +65,24 @@ export class ProjectsEffects {
     )
   );
 
+  getOne$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SidenavActions.projectSelected),
+      switchMap((action) =>
+        this.projectsService.get(action.projectId).pipe(
+          map((project) => YataApiActions.loadProjectSuccess({ project })),
+          catchError(() =>
+            of(
+              YataApiActions.loadProjectError({
+                message: 'Could not load the selected project',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
   getAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SidenavActions.onInit),
