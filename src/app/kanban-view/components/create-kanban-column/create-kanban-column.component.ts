@@ -49,7 +49,7 @@ export class CreateKanbanColumnComponent implements OnDestroy, OnInit {
     }
 
     this.store.dispatch(
-      KanbanViewActions.addSection({
+      KanbanViewActions.createSection({
         section: {
           ...this.form.value,
           projectId,

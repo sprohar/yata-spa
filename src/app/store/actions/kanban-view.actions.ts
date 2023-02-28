@@ -5,8 +5,8 @@ export const KanbanViewActions = createActionGroup({
   source: 'Kanban View',
   events: {
     'Switch to List View': props<{ project: Project }>(),
-    'Add Task': props<{ task: Task }>(),
-    'Add Section': props<{ section: Section }>(),
+    'Create Task': props<{ task: Task }>(),
+    'Create Section': props<{ section: Section }>(),
     'Delete Task': props<{ task: Task }>(),
     'Delete Section': props<{ section: Section }>(),
     'Update Task': props<{ task: Task }>(),
