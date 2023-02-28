@@ -16,6 +16,10 @@ export const projectsFeature = createFeature({
   name: 'projects',
   reducer: createReducer(
     initialState,
+    on(YataApiActions.createProjectSuccess, (state, action) => ({
+      ...state,
+      projects: state.projects.concat(action.project),
+    })),
     on(YataApiActions.loadProjectsSuccess, (state, action) => ({
       ...state,
       projects: action.projects,
