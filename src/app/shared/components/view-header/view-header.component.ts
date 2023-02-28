@@ -22,26 +22,26 @@ export class ViewHeaderComponent {
 
   switchToKanbanView(project: Project) {
     this.router.navigate(['kanban', project.id!]);
-    // this.store.dispatch(
-    //   ListViewActions.switchToKanbanView({
-    //     project: {
-    //       ...project,
-    //       view: Project.View.KANBAN,
-    //     },
-    //   })
-    // );
+    this.store.dispatch(
+      ListViewActions.switchToKanbanView({
+        project: {
+          ...project,
+          view: Project.View.KANBAN,
+        },
+      })
+    );
   }
 
   switchToListView(project: Project) {
     this.router.navigate(['list', project.id!]);
-    // this.store.dispatch(
-    //   KanbanViewActions.switchToListView({
-    //     project: {
-    //       ...project,
-    //       view: Project.View.LIST,
-    //     },
-    //   })
-    // );
+    this.store.dispatch(
+      KanbanViewActions.switchToListView({
+        project: {
+          ...project,
+          view: Project.View.LIST,
+        },
+      })
+    );
   }
 
   // openDeleteProjectConfirmationDialog() {
