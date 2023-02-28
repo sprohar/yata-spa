@@ -1,33 +1,39 @@
 <div class="kanban-wrapper" *ngIf="currentProject$ | async as project">
-    <div class="full-height relative">
-      <yata-view-header></yata-view-header>
-      <main>
-        <div class="kanban-view">
-          <div class="columns">
-            <ng-container *ngIf="sections$ | async as sections">
-              <yata-kanban-column
-                *ngFor="let section of sections"
-                [section]="section"
-              ></yata-kanban-column>
+  <div class="full-height relative">
+    <yata-view-header></yata-view-header>
+    <main>
+      <div class="kanban-view">
+        <div class="columns">
+          <ng-container *ngIf="sections$ | async as sections">
+            <yata-kanban-column
+              *ngFor="let section of sections"
+              [section]="section"
+            ></yata-kanban-column>
+          </ng-container>
+          <div class="column-last-child">
+            <ng-container
+              *ngIf="
+                showAddKanbanColumnComponent;
+                else hideAddKanbanColumnComponent
+              "
+            >
+              <yata-create-kanban-column
+                (close)="handleAddKanbanColumnComponentClosed()"
+              ></yata-create-kanban-column>
             </ng-container>
-            <!-- <div class="column-last-child">
-              <ng-container *ngIf="showAddKanbanColumnComponent; else hideAddKanbanColumnComponent">
-                <yata-create-kanban-column (close)="handleAddKanbanColumnComponentClosed()"></yata-create-kanban-column>
-              </ng-container>
-              <ng-template #hideAddKanbanColumnComponent>
-                <button
-                  mat-stroked-button
-                  color="primary"
-                  (click)="handleAddColumn(project)"
-                >
-                  <mat-icon>add</mat-icon>
-                  <span>Add column</span>
-                </button>
-              </ng-template>
-            </div> -->
+            <ng-template #hideAddKanbanColumnComponent>
+              <button
+                mat-stroked-button
+                color="primary"
+                (click)="handleAddColumn(project)"
+              >
+                <mat-icon>add</mat-icon>
+                <span>Add column</span>
+              </button>
+            </ng-template>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
-  
+</div>

@@ -9,20 +9,28 @@ import { SharedModule } from '../shared/shared.module';
 import { KanbanColumnComponent } from './components/kanban-column/kanban-column.component';
 import { KanbanViewRoutingModule } from './kanban-view-routing.module';
 import { KanbanViewComponent } from './kanban-view.component';
+import { CreateKanbanColumnComponent } from './components/create-kanban-column/create-kanban-column.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
   declarations: [
     KanbanViewComponent,
     KanbanColumnComponent,
+    CreateKanbanColumnComponent,
   ],
   imports: [
     CommonModule,
     KanbanViewRoutingModule,
+    ReactiveFormsModule,
     SharedModule,
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatMenuModule,
   ]
 })
