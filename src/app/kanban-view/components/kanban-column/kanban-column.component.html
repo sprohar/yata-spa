@@ -1,0 +1,32 @@
+<article *ngIf="section" class="column">
+    <div class="column-header">
+      <h2>{{ section.name }}</h2>
+      <button mat-icon-button [matMenuTriggerFor]="columnOptions">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #columnOptions>
+        <button mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="handleDeleteColumn()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="tasks-container">
+      <ul class="tasks">
+        <li *ngFor="let task of section.tasks">
+          <mat-card matRipple class="task">
+            <p>{{ task.title }}</p>
+            <div class="icons">
+              <mat-icon class="icon">description</mat-icon>
+              <mat-icon class="icon">event</mat-icon>
+            </div>
+          </mat-card>
+        </li>
+      </ul>
+    </div>
+  </article>
+  

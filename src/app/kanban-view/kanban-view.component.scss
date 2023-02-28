@@ -1,0 +1,36 @@
+.kanban-wrapper {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+main {
+  overflow-y: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 78px;
+}
+
+.kanban-view {
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding: 0 16px;
+  height: 100%;
+}
+
+.columns {
+  display: flex;
+  column-gap: 16px;
+  padding-top: 4px;
+
+  .column-last-child {
+    min-width: 282px;
+    height: fit-content;
+    padding-right: 16px;
+  }
+}

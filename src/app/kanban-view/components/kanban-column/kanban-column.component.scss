@@ -1,0 +1,49 @@
+.column {
+  border: thin solid;
+  // border-color: rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 8px 16px;
+  min-width: 282px;
+  height: fit-content;
+
+  .column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+}
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+
+  .tasks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+
+    .task {
+      padding: 8px 16px;
+
+      .icons {
+        display: flex;
+        column-gap: 8px;
+        opacity: 0.54;
+
+        .icon {
+          transform: scale(0.7);
+        }
+      }
+    }
+
+    .task:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+    }
+  }
+}
