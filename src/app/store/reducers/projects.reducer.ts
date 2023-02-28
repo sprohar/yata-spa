@@ -2,12 +2,12 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { Project } from '../../models';
 import { YataApiActions } from '../actions';
 
-interface State {
+export interface ProjectsState {
   projects: Project[];
   currentProjectId: number | null;
 }
 
-const initialState: State = {
+const initialState: ProjectsState = {
   projects: [],
   currentProjectId: null,
 };
