@@ -27,9 +27,10 @@ import { CreateProjectDialogComponent } from './components/create-project-dialog
 import { ProjectsEffects } from './store/effects/projects.effects';
 import { TasksEffects } from './store/effects/tasks.effects';
 import { projectsReducer, tasksReducer } from './store/reducers/';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, CreateProjectDialogComponent],
+  declarations: [AppComponent, CreateProjectDialogComponent, ConfirmationDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
