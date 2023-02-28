@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Project } from '../models';
 import {
   selectCurrentProject,
-  selectProjectSections,
+  selectKanbanColumns,
 } from '../store/selectors/projects.selectors';
 
 @Component({
@@ -13,7 +13,7 @@ import {
 })
 export class KanbanViewComponent {
   currentProject$ = this.store.select(selectCurrentProject);
-  sections$ = this.store.select(selectProjectSections);
+  columns$ = this.store.select(selectKanbanColumns);
   showAddKanbanColumnComponent = false;
 
   constructor(private store: Store) {}

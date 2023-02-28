@@ -4,10 +4,10 @@
     <main>
       <div class="kanban-view">
         <div class="columns">
-          <ng-container *ngIf="sections$ | async as sections">
+          <ng-container *ngIf="columns$ | async as columns">
             <yata-kanban-column
-              *ngFor="let section of sections"
-              [section]="section"
+              *ngFor="let column of columns"
+              [section]="column"
             ></yata-kanban-column>
           </ng-container>
           <div class="column-last-child">
