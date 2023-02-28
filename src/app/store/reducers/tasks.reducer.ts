@@ -7,7 +7,7 @@ export interface TasksState {
   currentTaskId: number | null;
 }
 
-const initialState: TasksState = {
+export const tasksInitialState: TasksState = {
   tasks: [],
   currentTaskId: null,
 };
@@ -15,7 +15,7 @@ const initialState: TasksState = {
 export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
-    initialState,
+    tasksInitialState,
     on(YataApiActions.loadProjectSuccess, (state, action) => ({
       ...state,
       tasks: action.project.tasks ?? [],

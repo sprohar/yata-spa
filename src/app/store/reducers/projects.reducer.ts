@@ -7,7 +7,7 @@ export interface ProjectsState {
   currentProjectId: number | null;
 }
 
-const initialState: ProjectsState = {
+export const projectsInitialState: ProjectsState = {
   projects: [],
   currentProjectId: null,
 };
@@ -30,7 +30,7 @@ function updateProject(
 export const projectsFeature = createFeature({
   name: 'projects',
   reducer: createReducer(
-    initialState,
+    projectsInitialState,
     on(SidenavActions.projectSelected, (state, action) => ({
       projects: state.projects,
       currentProjectId: action.projectId,
