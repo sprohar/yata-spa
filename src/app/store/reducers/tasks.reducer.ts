@@ -16,9 +16,9 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialState,
-    on(YataApiActions.loadTasksSuccess, (state, action) => ({
+    on(YataApiActions.loadProjectSuccess, (state, action) => ({
       ...state,
-      tasks: action.tasks,
+      tasks: action.project.tasks ?? [],
     }))
   ),
 });
