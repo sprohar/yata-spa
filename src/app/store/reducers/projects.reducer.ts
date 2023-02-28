@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Project } from '../../models';
-import { YataApiActions } from '../actions';
+import { SidenavActions, YataApiActions } from '../actions';
 
 export interface ProjectsState {
   projects: Project[];
@@ -16,6 +16,10 @@ export const projectsFeature = createFeature({
   name: 'projects',
   reducer: createReducer(
     initialState,
+    on(SidenavActions.projectSelected, (state, action) => ({
+      projects: state.projects,
+      currentProjectId: action.projectId,
+    })),
     on(YataApiActions.createProjectSuccess, (state, action) => ({
       ...state,
       projects: state.projects.concat(action.project),
