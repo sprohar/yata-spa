@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Project } from '../../models';
@@ -8,11 +13,10 @@ import { SidenavActions } from '../../store/actions';
 @Component({
   selector: 'yata-create-project-dialog',
   templateUrl: './create-project-dialog.component.html',
-  styleUrls: ['./create-project-dialog.component.scss']
+  styleUrls: ['./create-project-dialog.component.scss'],
 })
 export class CreateProjectDialogComponent implements OnInit {
-
-    readonly nameMaxLength = Project.Name.MaxLength;
+  readonly nameMaxLength = Project.Name.MaxLength;
   form!: FormGroup;
 
   constructor(
@@ -45,5 +49,4 @@ export class CreateProjectDialogComponent implements OnInit {
     this.store.dispatch(SidenavActions.createProject({ project }));
     this.dialogRef.close();
   }
-
 }
