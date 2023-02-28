@@ -14,7 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {
   MatSnackBarModule,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,14 +23,23 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { ProjectsEffects } from './store/effects/projects.effects';
 import { TasksEffects } from './store/effects/tasks.effects';
-import { projectsReducer, tasksReducer } from './store/reducers/';
-import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import {
+  projectsReducer,
+  sectionsReducer,
+  tasksReducer,
+} from './store/reducers/';
+import { SectionsEffects } from './store/effects/sections.effects';
 
 @NgModule({
-  declarations: [AppComponent, CreateProjectDialogComponent, ConfirmationDialogComponent],
+  declarations: [
+    AppComponent,
+    CreateProjectDialogComponent,
+    ConfirmationDialogComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,11 +49,12 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     StoreModule.forRoot(
       {
         projects: projectsReducer,
+        sections: sectionsReducer,
         tasks: tasksReducer,
       },
       {}
     ),
-    EffectsModule.forRoot([ProjectsEffects, TasksEffects]),
+    EffectsModule.forRoot([ProjectsEffects, SectionsEffects, TasksEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,
     MatToolbarModule,
@@ -63,4 +73,4 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
