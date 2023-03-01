@@ -1,13 +1,15 @@
+@use "../../../../scss/colors" as colors;
+
 .border-left-red {
-  border-left-color: red;
+  border-left-color: colors.$mat-red-700;
 }
 
 .border-left-blue {
-  border-left-color: blue;
+  border-left-color: colors.$mat-blue-700;
 }
 
-.border-left-orange {
-  border-left-color: orange;
+.border-left-yellow {
+  border-left-color: colors.$mat-yellow-700;
 }
 
 .task {

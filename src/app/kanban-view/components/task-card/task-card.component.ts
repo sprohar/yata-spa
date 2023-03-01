@@ -21,7 +21,7 @@ export class TaskCardComponent implements OnInit {
   get borderColor() {
     return {
       'border-left-red': this.task.priority === Task.Priority.HIGH,
-      'border-left-orange': this.task.priority === Task.Priority.MEDIUM,
+      'border-left-yellow': this.task.priority === Task.Priority.MEDIUM,
       'border-left-blue': this.task.priority === Task.Priority.LOW,
     };
   }
