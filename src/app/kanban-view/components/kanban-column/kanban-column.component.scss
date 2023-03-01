@@ -2,7 +2,7 @@
   border: thin solid;
   // border-color: rgba(255, 255, 255, 0.25);
   border-radius: 6px;
-  padding: 8px 16px;
+  padding: 8px 16px 32px;
   min-width: 282px;
   height: fit-content;
 
@@ -26,24 +26,5 @@
     display: flex;
     flex-direction: column;
     row-gap: 16px;
-
-    .task {
-      padding: 8px 16px;
-
-      .icons {
-        display: flex;
-        column-gap: 8px;
-        opacity: 0.54;
-
-        .icon {
-          transform: scale(0.7);
-        }
-      }
-    }
-
-    .task:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-      cursor: pointer;
-    }
   }
 }

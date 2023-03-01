@@ -1,0 +1,11 @@
+<mat-card matRipple class="task" [ngClass]="borderColor">
+  <p>{{ task.title }}</p>
+  <div class="icons">
+    <ng-container *ngIf="task.content">
+      <mat-icon class="icon">description</mat-icon>
+    </ng-container>
+    <ng-container *ngIf="task.dueDate">
+      <mat-icon class="icon">event</mat-icon>
+    </ng-container>
+  </div>
+</mat-card>

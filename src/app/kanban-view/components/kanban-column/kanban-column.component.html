@@ -18,13 +18,7 @@
     <div class="tasks-container">
       <ul class="tasks">
         <li *ngFor="let task of section.tasks">
-          <mat-card matRipple class="task">
-            <p>{{ task.title }}</p>
-            <div class="icons">
-              <mat-icon class="icon">description</mat-icon>
-              <mat-icon class="icon">event</mat-icon>
-            </div>
-          </mat-card>
+          <yata-task-card [task]="task"></yata-task-card>
         </li>
       </ul>
     </div>

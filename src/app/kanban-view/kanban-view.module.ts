@@ -13,6 +13,7 @@ import { CreateKanbanColumnComponent } from './components/create-kanban-column/c
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TaskCardComponent } from './components/task-card/task-card.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
     KanbanViewComponent,
     KanbanColumnComponent,
     CreateKanbanColumnComponent,
+    TaskCardComponent,
   ],
   imports: [
     CommonModule,

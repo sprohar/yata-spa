@@ -1,0 +1,35 @@
+.border-left-red {
+  border-left-color: red;
+}
+
+.border-left-blue {
+  border-left-color: blue;
+}
+
+.border-left-orange {
+  border-left-color: orange;
+}
+
+.task {
+  padding: 8px 16px;
+  border-left-width: 4px;
+
+  .icons {
+    display: flex;
+    column-gap: 8px;
+
+    .icon {
+      transform: scale(0.7);
+      opacity: 0.54;
+    }
+
+    .icon:focus {
+      opacity: 0.87;
+    }
+  }
+}
+
+.task:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+}
