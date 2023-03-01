@@ -50,5 +50,8 @@ export class CreateKanbanColumnComponent implements OnInit {
         },
       })
     );
+
+    this.form.reset();
+    this.close.emit();
   }
 }
