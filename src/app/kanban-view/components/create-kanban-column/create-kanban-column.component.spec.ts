@@ -10,8 +10,8 @@ import { of } from 'rxjs';
 import { KanbanViewActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
 import { selectCurrentProjectId } from '../../../store/reducers/projects.reducer';
-import { sectionsInitialState } from '../../../store/reducers/sections.reducer';
-import { tasksInitialState } from '../../../store/reducers/tasks.reducer';
+import { initialSectionsState } from '../../../store/reducers/sections.reducer';
+import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 
 import { CreateKanbanColumnComponent } from './create-kanban-column.component';
 
@@ -20,8 +20,8 @@ const initialState: AppState = {
     currentProjectId: 1,
     projects: [{ id: 1, name: 'Project' }],
   },
-  sections: sectionsInitialState,
-  tasks: tasksInitialState,
+  sections: initialSectionsState,
+  tasks: initialTasksState,
 };
 
 describe('CreateKanbanColumnComponent', () => {

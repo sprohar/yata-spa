@@ -10,15 +10,15 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { AppState } from '../../../store/app.state';
 import { projectsInitialState } from '../../../store/reducers/projects.reducer';
-import { sectionsInitialState } from '../../../store/reducers/sections.reducer';
-import { tasksInitialState } from '../../../store/reducers/tasks.reducer';
+import { initialSectionsState } from '../../../store/reducers/sections.reducer';
+import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 
 import { KanbanColumnComponent } from './kanban-column.component';
 
 const initialState: AppState = {
   projects: projectsInitialState,
-  sections: sectionsInitialState,
-  tasks: tasksInitialState,
+  sections: initialSectionsState,
+  tasks: initialTasksState,
 };
 
 class MatDialogRefStub {

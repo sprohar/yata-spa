@@ -7,7 +7,7 @@ export interface SectionsState {
   currentSectionId: number | null;
 }
 
-export const sectionsInitialState: SectionsState = {
+export const initialSectionsState: SectionsState = {
   sections: [],
   currentSectionId: null,
 };
@@ -15,7 +15,7 @@ export const sectionsInitialState: SectionsState = {
 export const sectionsFeature = createFeature({
   name: 'sections',
   reducer: createReducer(
-    sectionsInitialState,
+    initialSectionsState,
     on(YataApiActions.createSectionSuccess, (state, action) => ({
       currentSectionId: state.currentSectionId,
       sections: state.sections.concat(action.section),
