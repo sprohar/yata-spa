@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Project } from '../models';
 import {
   selectCurrentProject,
   selectKanbanColumns,
@@ -18,8 +17,7 @@ export class KanbanViewComponent {
 
   constructor(private store: Store) {}
 
-  handleAddColumn(project: Project) {
-    // TODO: Add a new column to the current project
+  handleAddColumn() {
     this.showAddKanbanColumnComponent = true;
   }
 
