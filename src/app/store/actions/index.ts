@@ -1,3 +1,4 @@
+export * from './create-task.actions';
 export * from './kanban-view.actions';
 export * from './list-view.actions';
 export * from './sidenav.actions';

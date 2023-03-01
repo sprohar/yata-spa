@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
-import { SidenavActions, YataApiActions } from '../actions';
+import { CreateTaskActions, SidenavActions, YataApiActions } from '../actions';
 
 @Injectable()
 export class TasksEffects {
@@ -12,6 +12,24 @@ export class TasksEffects {
     private tasksService: TasksService,
     private snackbar: MatSnackBar
   ) {}
+
+  create$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CreateTaskActions.createTask),
+      concatMap((action) =>
+        this.tasksService.create(action.task).pipe(
+          map((task) => YataApiActions.createTaskSuccess({ task })),
+          catchError(() =>
+            of(
+              YataApiActions.createTaskError({
+                message: 'Could not create Task',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
 
   // loadTasks$ = createEffect(() =>
   //   this.actions$.pipe(
