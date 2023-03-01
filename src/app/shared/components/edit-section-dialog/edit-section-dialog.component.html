@@ -1,0 +1,27 @@
+<ng-container *ngIf="currentSection$ | async as section" [formGroup]="form">
+  <h2 mat-dialog-title>Edit Section</h2>
+  <mat-dialog-content>
+    <div class="dialog-content">
+      <mat-form-field appearance="outline">
+        <mat-label>Section Name</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          (keyup.enter)="handleSave(section)"
+        />
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+    <button
+      [disabled]="form.invalid || form.pristine"
+      mat-raised-button
+      (click)="handleSave(section)"
+      color="primary"
+    >
+      Save
+    </button>
+  </mat-dialog-actions>
+</ng-container>

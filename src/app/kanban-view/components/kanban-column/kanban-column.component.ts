@@ -1,8 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { Section } from '../../../models';
 import { ConfirmationDialogService } from '../../../services/confirmation-dialog.service';
+import { EditSectionDialogComponent } from '../../../shared/components/edit-section-dialog/edit-section-dialog.component';
 import { KanbanViewActions } from '../../../store/actions';
 
 @Component({
@@ -16,7 +18,8 @@ export class KanbanColumnComponent implements OnDestroy, OnInit {
 
   constructor(
     private store: Store,
-    private confirmationDialog: ConfirmationDialogService
+    private confirmationDialog: ConfirmationDialogService,
+    private dialog: MatDialog
   ) {}
 
   ngOnDestroy(): void {
@@ -27,6 +30,14 @@ export class KanbanColumnComponent implements OnDestroy, OnInit {
     if (!this.section) {
       throw new Error('"section" is undefined.');
     }
+  }
+
+  handleEditColumn() {
+    this.store.dispatch(
+      KanbanViewActions.setCurrentSectionId({ sectionId: this.section.id! })
+    );
+
+    this.dialog.open(EditSectionDialogComponent);
   }
 
   handleDeleteColumn() {
