@@ -51,4 +51,24 @@ export class SectionsEffects {
       )
     )
   );
+
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(KanbanViewActions.updateSection),
+      concatMap((action) =>
+        this.sectionsService.update(action.section).pipe(
+          map(
+            (section) => YataApiActions.updateSectionSuccess({ section }),
+            catchError(() =>
+              of(
+                YataApiActions.updateSectionError({
+                  message: 'Could not update Section',
+                })
+              )
+            )
+          )
+        )
+      )
+    )
+  );
 }

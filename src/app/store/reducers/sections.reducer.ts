@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Section } from '../../models';
-import { YataApiActions } from '../actions';
+import { KanbanViewActions, YataApiActions } from '../actions';
 
 export interface SectionsState {
   sections: Section[];
@@ -16,6 +16,14 @@ export const sectionsFeature = createFeature({
   name: 'sections',
   reducer: createReducer(
     initialSectionsState,
+    on(KanbanViewActions.setCurrentSectionId, (state, action) => ({
+      sections: state.sections,
+      currentSectionId: action.sectionId,
+    })),
+    on(KanbanViewActions.closeEditSectionDialog, (state, _) => ({
+      sections: state.sections,
+      currentSectionId: null,
+    })),
     on(YataApiActions.createSectionSuccess, (state, action) => ({
       currentSectionId: state.currentSectionId,
       sections: state.sections.concat(action.section),
@@ -27,7 +35,22 @@ export const sectionsFeature = createFeature({
     on(YataApiActions.loadProjectSuccess, (state, action) => ({
       currentSectionId: state.currentSectionId,
       sections: action.project.sections ?? [],
-    }))
+    })),
+    on(YataApiActions.updateSectionSuccess, (state, action) => {
+      const sections: Section[] = [];
+      for (const section of state.sections) {
+        if (section.id === action.section.id) {
+          sections.push(action.section);
+        } else {
+          sections.push(section);
+        }
+      }
+
+      return {
+        currentSectionId: state.currentSectionId,
+        sections,
+      };
+    })
   ),
 });
 
