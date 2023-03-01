@@ -17,6 +17,9 @@
     </div>
     <div class="tasks-container">
       <ul class="tasks">
+        <li>
+          <yata-create-task [section]="section"></yata-create-task>
+        </li>
         <li *ngFor="let task of section.tasks">
           <yata-task-card [task]="task"></yata-task-card>
         </li>

@@ -1,0 +1,40 @@
+@use "../../../../scss/colors" as colors;
+
+.high-priority {
+  color: colors.$mat-red-700;
+}
+
+.medium-priority {
+  color: colors.$mat-yellow-700;
+}
+
+.low-priority {
+  color: colors.$mat-blue-700;
+}
+
+.no-priority {
+  color: inherit;
+}
+
+.create-task {
+  position: relative;
+
+  .form-field {
+    width: 100%;
+
+    input[type="text"] {
+      width: 75%;
+    }
+  }
+
+  .create-task-actions {
+    position: absolute;
+    top: 4px;
+    bottom: 0;
+    right: 2px;
+
+    mat-icon {
+      transform: scale(0.75);
+    }
+  }
+}
