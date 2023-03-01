@@ -17,7 +17,8 @@ export class SectionsService {
     );
   }
 
-  delete(projectId: number, sectionId: number) {
+  delete(section: Section) {
+    const { projectId, id: sectionId } = section;
     return this.http.delete<void>(
       `${baseUrl}/projects/${projectId}/sections/${sectionId}`
     );

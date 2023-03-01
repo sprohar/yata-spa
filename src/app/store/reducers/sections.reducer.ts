@@ -20,6 +20,10 @@ export const sectionsFeature = createFeature({
       currentSectionId: state.currentSectionId,
       sections: state.sections.concat(action.section),
     })),
+    on(YataApiActions.deleteSectionSuccess, (state, action) => ({
+      currentSectionId: state.currentSectionId,
+      sections: state.sections.filter((s) => s.id !== action.section.id),
+    })),
     on(YataApiActions.loadProjectSuccess, (state, action) => ({
       currentSectionId: state.currentSectionId,
       sections: action.project.sections ?? [],

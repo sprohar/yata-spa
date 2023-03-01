@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
 import { SectionsService } from '../../services/sections.service';
 import { KanbanViewActions, YataApiActions } from '../actions';
 
@@ -8,7 +9,8 @@ import { KanbanViewActions, YataApiActions } from '../actions';
 export class SectionsEffects {
   constructor(
     private actions$: Actions,
-    private sectionsService: SectionsService
+    private sectionsService: SectionsService,
+    private snackbar: MatSnackBar
   ) {}
 
   create$ = createEffect(() =>
@@ -21,6 +23,27 @@ export class SectionsEffects {
             of(
               YataApiActions.createSectionError({
                 message: 'Could not create Section',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(KanbanViewActions.deleteSection),
+      mergeMap((action) =>
+        this.sectionsService.delete(action.section).pipe(
+          map(() =>
+            YataApiActions.deleteSectionSuccess({ section: action.section })
+          ),
+          tap(() => this.snackbar.open(`${action.section.name} was deleted`)),
+          catchError(() =>
+            of(
+              YataApiActions.deleteSectionError({
+                message: 'Could not delete Section',
               })
             )
           )
