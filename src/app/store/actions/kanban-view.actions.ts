@@ -10,6 +10,7 @@ export const KanbanViewActions = createActionGroup({
     'Delete Section': props<{ section: Section }>(),
     'Update Task': props<{ task: Task }>(),
     'Update Section': props<{ section: Section }>(),
+    'Set Current Task Id': props<{ taskId: number | null }>(),
     'Set Current Section Id': props<{ sectionId: number | null }>(),
     'Close Edit Section Dialog': emptyProps(),
   },

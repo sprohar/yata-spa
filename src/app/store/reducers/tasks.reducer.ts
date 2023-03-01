@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Task } from '../../models';
-import { YataApiActions } from '../actions';
+import { KanbanViewActions, YataApiActions } from '../actions';
 
 export interface TasksState {
   tasks: Task[];
@@ -23,6 +23,10 @@ export const tasksFeature = createFeature({
     on(YataApiActions.loadProjectSuccess, (state, action) => ({
       ...state,
       tasks: action.project.tasks ?? [],
+    })),
+    on(KanbanViewActions.setCurrentTaskId, (state, action) => ({
+      tasks: state.tasks,
+      currentTaskId: action.taskId,
     }))
   ),
 });
