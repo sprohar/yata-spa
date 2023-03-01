@@ -57,6 +57,7 @@ export class ViewHeaderComponent implements OnDestroy {
   }
 
   openDeleteProjectConfirmationDialog(project: Project) {
+    // TODO: Unit test (openDeleteProjectConfirmationDialog)
     const dialogData: ConfirmationDialogData = {
       title: 'Delete Project',
       content: 'Deleting a project will also delete all tasks. Continue?',
