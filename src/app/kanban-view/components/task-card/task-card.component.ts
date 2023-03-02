@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { Task } from '../../../models';
 
 @Component({
@@ -10,7 +10,7 @@ import { Task } from '../../../models';
 export class TaskCardComponent implements OnInit {
   @Input() task!: Task;
 
-  constructor(private store: Store) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (!this.task) {
@@ -24,5 +24,14 @@ export class TaskCardComponent implements OnInit {
       'border-left-yellow': this.task.priority === Task.Priority.MEDIUM,
       'border-left-blue': this.task.priority === Task.Priority.LOW,
     };
+  }
+
+  handleViewTask() {
+    this.router.navigate([
+      'kanban',
+      this.task.projectId!,
+      'tasks',
+      this.task.id!,
+    ]);
   }
 }

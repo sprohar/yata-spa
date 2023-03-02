@@ -1,4 +1,9 @@
-<mat-card matRipple class="task" [ngClass]="borderColor">
+<mat-card
+  matRipple
+  class="task"
+  [ngClass]="borderColor"
+  (click)="handleViewTask()"
+>
   <p>{{ task.title }}</p>
   <div class="icons">
     <ng-container *ngIf="task.content">
