@@ -30,6 +30,8 @@ export const YataApiActions = createActionGroup({
     'Create Task Error': props<ServiceErrorResponse>(),
     'Delete Task Success': props<{ task: Task }>(),
     'Delete Task Error': props<ServiceErrorResponse>(),
+    'Load Task Success': props<{ task: Task }>(),
+    'Load Task Error': props<ServiceErrorResponse>(),
     'Load Tasks Success': props<{ tasks: Task[] }>(),
     'Load Tasks Error': props<ServiceErrorResponse>(),
     'Update Task Success': props<{ task: Task }>(),
