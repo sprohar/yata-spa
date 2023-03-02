@@ -18,6 +18,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
 import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
 import { SubtaskListItemComponent } from './components/subtask-list-item/subtask-list-item.component';
+import { CreateSubtaskComponent } from './components/create-subtask/create-subtask.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SubtaskListItemComponent } from './components/subtask-list-item/subtask
     TaskPriorityPickerComponent,
     SubtaskListComponent,
     SubtaskListItemComponent,
+    CreateSubtaskComponent,
   ],
   imports: [
     CommonModule,
