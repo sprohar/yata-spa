@@ -25,14 +25,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
-import { ProjectsEffects } from './store/effects/projects.effects';
-import { TasksEffects } from './store/effects/tasks.effects';
+import {
+  ProjectsEffects,
+  SectionsEffects,
+  SubtasksEffects,
+  TasksEffects,
+} from './store/effects/';
 import {
   projectsReducer,
   sectionsReducer,
   tasksReducer,
 } from './store/reducers/';
-import { SectionsEffects } from './store/effects/sections.effects';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,12 @@ import { SectionsEffects } from './store/effects/sections.effects';
       },
       {}
     ),
-    EffectsModule.forRoot([ProjectsEffects, SectionsEffects, TasksEffects]),
+    EffectsModule.forRoot([
+      ProjectsEffects,
+      SectionsEffects,
+      TasksEffects,
+      SubtasksEffects,
+    ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,
     MatToolbarModule,

@@ -32,7 +32,25 @@ export const tasksFeature = createFeature({
     on(TaskDetailsActions.clearCurrentTaskId, (state, _) => ({
       tasks: state.tasks,
       currentTaskId: null,
-    }))
+    })),
+    on(YataApiActions.createSubtaskSuccess, (state, action) => {
+      const tasks: Task[] = [];
+      for (const task of state.tasks) {
+        if (task.id === action.subtask.taskId) {
+          tasks.push({
+            ...task,
+            subtasks: task.subtasks?.concat(action.subtask) ?? [action.subtask],
+          });
+        } else {
+          tasks.push(task);
+        }
+      }
+
+      return {
+        ...state,
+        tasks,
+      };
+    })
   ),
 });
 
