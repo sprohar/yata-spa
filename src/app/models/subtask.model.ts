@@ -6,6 +6,7 @@ export interface Subtask {
   priority?: Task.Priority;
   completed?: boolean;
   deleted?: boolean;
+  dueDate?: string;
   completedOn?: string;
   createdOn?: string;
   updatedOn?: string;

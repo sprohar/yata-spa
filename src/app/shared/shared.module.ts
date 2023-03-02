@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import {  MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +16,8 @@ import { EditSectionDialogComponent } from './components/edit-section-dialog/edi
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
+import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
+import { SubtaskListItemComponent } from './components/subtask-list-item/subtask-list-item.component';
 
 @NgModule({
   declarations: [
@@ -23,11 +26,14 @@ import { TaskPriorityPickerComponent } from './components/task-priority-picker/t
     CreateTaskComponent,
     EditSectionDialogComponent,
     TaskPriorityPickerComponent,
+    SubtaskListComponent,
+    SubtaskListItemComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatDialogModule,
     MatDividerModule,
     MatFormFieldModule,

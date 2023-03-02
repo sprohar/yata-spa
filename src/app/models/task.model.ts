@@ -15,7 +15,6 @@ export interface Task {
   subtasks?: Subtask[];
   projectId: number;
   sectionId?: number;
-  taskId?: number;
 }
 
 export namespace Task {
