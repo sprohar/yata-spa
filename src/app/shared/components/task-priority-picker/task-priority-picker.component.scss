@@ -1,0 +1,17 @@
+@use "../../../../scss/colors" as colors;
+
+.high-priority {
+  color: colors.$mat-red-700;
+}
+
+.medium-priority {
+  color: colors.$mat-yellow-700;
+}
+
+.low-priority {
+  color: colors.$mat-blue-700;
+}
+
+.no-priority {
+  color: inherit;
+}

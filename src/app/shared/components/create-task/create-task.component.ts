@@ -3,7 +3,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
@@ -25,7 +25,7 @@ export class CreateTaskComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
   }
-  
+
   initForm() {
     this.form = this.fb.group({
       title: this.fb.control('', {
@@ -41,16 +41,6 @@ export class CreateTaskComponent implements OnInit {
     });
   }
 
-  get flagColor() {
-    const priority = this.priorityControl.value as Task.Priority;
-    return {
-      'no-priority': priority === Task.Priority.NONE,
-      'high-priority': priority === Task.Priority.HIGH,
-      'medium-priority': priority === Task.Priority.MEDIUM,
-      'low-priority': priority === Task.Priority.LOW,
-    };
-  }
-
   get titleControl() {
     return this.form.get('title') as FormControl;
   }
@@ -59,20 +49,8 @@ export class CreateTaskComponent implements OnInit {
     return this.form.get('priority') as FormControl;
   }
 
-  handleHighPriorityChange() {
-    this.priorityControl.setValue(Task.Priority.HIGH);
-  }
-
-  handleMediumPriorityChange() {
-    this.priorityControl.setValue(Task.Priority.MEDIUM);
-  }
-
-  handleLowPriorityChange() {
-    this.priorityControl.setValue(Task.Priority.LOW);
-  }
-
-  handleNonePriorityChange() {
-    this.priorityControl.setValue(Task.Priority.NONE);
+  handlePriorityChange(priority: Task.Priority) {
+    this.priorityControl.setValue(priority);
   }
 
   handleSave(projectId: number) {

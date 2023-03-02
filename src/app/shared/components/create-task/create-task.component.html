@@ -19,32 +19,6 @@
       <button mat-icon-button title="Set the due date">
         <mat-icon>event</mat-icon>
       </button>
-      <!-- Priority picker -->
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="priorityOptions"
-        title="Set the priority level"
-      >
-        <mat-icon [ngClass]="flagColor">flag</mat-icon>
-      </button>
-      <mat-menu #priorityOptions>
-        <button mat-menu-item (click)="handleHighPriorityChange()">
-          <mat-icon class="high-priority">flag</mat-icon>
-          <span>High</span>
-        </button>
-        <button mat-menu-item (click)="handleMediumPriorityChange()">
-          <mat-icon class="medium-priority">flag</mat-icon>
-          <span>Medium</span>
-        </button>
-        <button mat-menu-item (click)="handleLowPriorityChange()">
-          <mat-icon class="low-priority">flag</mat-icon>
-          <span>Low</span>
-        </button>
-        <button mat-menu-item (click)="handleNonePriorityChange()">
-          <mat-icon>flag</mat-icon>
-          <span>None</span>
-        </button>
-      </mat-menu>
     </div>
   </div>
 </ng-container>

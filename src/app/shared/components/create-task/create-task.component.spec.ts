@@ -47,25 +47,11 @@ describe('CreateTaskComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#priorityChange', () => {
-    it('should change priority to HIGH', () => {
-      component.handleHighPriorityChange();
-      expect(component.priorityControl.value).toBe(Task.Priority.HIGH);
-    });
-
-    it('should change priority to MEDIUM', () => {
-      component.handleMediumPriorityChange();
-      expect(component.priorityControl.value).toBe(Task.Priority.MEDIUM);
-    });
-
-    it('should change priority to LOW', () => {
-      component.handleLowPriorityChange();
-      expect(component.priorityControl.value).toBe(Task.Priority.LOW);
-    });
-
-    it('should change priority to NONE', () => {
-      component.handleNonePriorityChange();
-      expect(component.priorityControl.value).toBe(Task.Priority.NONE);
+  describe('#handlePriorityChange', () => {
+    it('should set the form control value with the priority value', () => {
+      const priority = Task.Priority.HIGH;
+      component.handlePriorityChange(priority);
+      expect(component.priorityControl.value).toBe(priority);
     });
   });
 
