@@ -3,7 +3,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
-import { CreateTaskActions, SidenavActions, YataApiActions } from '../actions';
+import {
+  CreateTaskActions,
+  KanbanViewActions,
+  YataApiActions,
+} from '../actions';
 
 @Injectable()
 export class TasksEffects {
@@ -25,6 +29,20 @@ export class TasksEffects {
                 message: 'Could not create Task',
               })
             )
+          )
+        )
+      )
+    )
+  );
+
+  getById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(KanbanViewActions.setCurrentTaskId),
+      switchMap((action) =>
+        this.tasksService.get(action.taskId).pipe(
+          map((task) => YataApiActions.loadTaskSuccess({ task })),
+          catchError(() =>
+            of(YataApiActions.loadTaskError({ message: 'Could not load Task' }))
           )
         )
       )
