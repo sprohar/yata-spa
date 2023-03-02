@@ -3,7 +3,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
@@ -15,7 +15,8 @@ import { TaskDetailsActions } from '../../../store/actions/task-details.actions'
   styleUrls: ['./create-subtask.component.scss'],
 })
 export class CreateSubtaskComponent implements OnInit {
-  @Output() saved = new EventEmitter<void>();
+  @Output() save = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
   @Input() task!: Task;
   readonly titleMaxLength = Task.Title.MaxLength;
   form!: FormGroup;
@@ -58,6 +59,10 @@ export class CreateSubtaskComponent implements OnInit {
     this.priorityControl.setValue(priority);
   }
 
+  handleCancel() {
+    this.cancel.emit();
+  }
+
   handleSave() {
     if (this.form.invalid) {
       return;
@@ -69,6 +74,6 @@ export class CreateSubtaskComponent implements OnInit {
       })
     );
 
-    this.saved.emit();
+    this.save.emit();
   }
 }

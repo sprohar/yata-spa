@@ -1,12 +1,27 @@
-.subtask-list-item {
+.create-subtask-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.create-subtask-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
   column-gap: 8px;
 
-  .subtask-actions {
+  .create-subtask-input-actions {
     display: flex;
     column-gap: 8px;
     margin-top: -24px;
+  }
+}
+
+.create-subtask-actions {
+  display: flex;
+  column-gap: 8px;
+
+  button {
+    flex: 1;
   }
 }

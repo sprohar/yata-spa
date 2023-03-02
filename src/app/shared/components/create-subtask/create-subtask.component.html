@@ -1,20 +1,29 @@
-<div class="subtask-list-item" [formGroup]="form">
-  <mat-form-field class="full-width">
-    <mat-label>Subtask</mat-label>
-    <input
-      matInput
-      type="text"
-      formControlName="title"
-      placeholder="Press Enter to save"
-      (keyup.enter)="handleSave()"
-    />
-  </mat-form-field>
+<div class="create-subtask-wrapper" [formGroup]="form">
+  <div class="create-subtask-input">
+    <mat-form-field class="full-width">
+      <mat-label>Subtask</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="title"
+        placeholder="Press Enter to save"
+        (keyup.enter)="handleSave()"
+      />
+    </mat-form-field>
 
-  <div class="subtask-actions">
-    <yata-task-priority-picker
-      (selectionChange)="handlePriorityChange($event)"
-    ></yata-task-priority-picker>
-    <!-- TODO: Add the DateTimePicker -->
-    <button mat-icon-button><mat-icon>event</mat-icon></button>
+    <div class="create-subtask-input-actions">
+      <yata-task-priority-picker
+        (selectionChange)="handlePriorityChange($event)"
+      ></yata-task-priority-picker>
+      <!-- TODO: Add the DateTimePicker -->
+      <button mat-icon-button><mat-icon>event</mat-icon></button>
+    </div>
+  </div>
+
+  <div class="create-subtask-actions">
+    <button mat-stroked-button (click)="handleCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="handleSave()">
+      Save
+    </button>
   </div>
 </div>

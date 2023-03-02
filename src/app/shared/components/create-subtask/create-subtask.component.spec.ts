@@ -83,6 +83,14 @@ describe('CreateSubtaskComponent', () => {
     });
   });
 
+  describe('#handleCancel', () => {
+    it('should emit the "cancel" event', () => {
+      spyOn(component.cancel, 'emit');
+      component.handleCancel();
+      expect(component.cancel.emit).toHaveBeenCalled();
+    })
+  });
+
   describe('#handleSave', () => {
     it('should NOT dispatch an action when the form is invalid', () => {
       spyOn(store, 'dispatch');
