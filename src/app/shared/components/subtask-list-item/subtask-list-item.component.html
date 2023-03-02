@@ -1,10 +1,12 @@
 <div class="subtask-list-item" [formGroup]="form">
-  <mat-checkbox
-    color="primary"
-    formControlName="completed"
-    (change)="handleToggleCompletionStatus()"
-  ></mat-checkbox>
-  <mat-form-field>
+  <div class="subtask-list-item-actions">
+    <mat-checkbox
+      color="primary"
+      formControlName="completed"
+      (change)="handleToggleCompletionStatus()"
+    ></mat-checkbox>
+  </div>
+  <mat-form-field class="full-width">
     <mat-label>Title</mat-label>
     <input
       matInput
@@ -14,8 +16,8 @@
       (keyup.enter)="handleSave()"
     />
   </mat-form-field>
-  <span class="spacer"></span>
-  <div class="actions">
+
+  <div class="subtask-list-item-actions">
     <button mat-icon-button (click)="handleDelete()">
       <mat-icon>close</mat-icon>
     </button>
