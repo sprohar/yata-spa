@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subtask, Task } from '../../../models';
-import { SubtasksListItemActions } from '../../../store/actions/subtasks-list-item.actions';
+import { TaskDetailsActions } from '../../../store/actions';
 
 @Component({
   selector: 'yata-subtask-list-item',
@@ -37,7 +37,7 @@ export class SubtaskListItemComponent implements OnInit {
 
   handleDelete() {
     this.store.dispatch(
-      SubtasksListItemActions.deleteSubtask({
+      TaskDetailsActions.deleteSubtask({
         subtask: this.subtask,
       })
     );
@@ -50,7 +50,7 @@ export class SubtaskListItemComponent implements OnInit {
     const subtask: Subtask = this.form.value;
 
     this.store.dispatch(
-      SubtasksListItemActions.updateSubtask({
+      TaskDetailsActions.updateSubtask({
         subtask: {
           id: subtask.id!,
           completed: subtask.completed,
@@ -66,7 +66,7 @@ export class SubtaskListItemComponent implements OnInit {
     }
 
     this.store.dispatch(
-      SubtasksListItemActions.updateSubtask({
+      TaskDetailsActions.updateSubtask({
         subtask: this.form.value,
       })
     );

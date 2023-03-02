@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Subtask, Task } from '../../../models';
-import { SubtasksListItemActions } from '../../../store/actions/subtasks-list-item.actions';
+import { TaskDetailsActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
 import { initialSectionsState } from '../../../store/reducers/sections.reducer';
 
@@ -82,7 +82,7 @@ describe('SubtaskListItemComponent', () => {
       spyOn(store, 'dispatch');
       component.handleDelete();
       expect(store.dispatch).toHaveBeenCalledWith(
-        SubtasksListItemActions.deleteSubtask({
+        TaskDetailsActions.deleteSubtask({
           subtask,
         })
       );
@@ -108,7 +108,7 @@ describe('SubtaskListItemComponent', () => {
       const subtaskFromForm: Subtask = component.form.value;
 
       expect(store.dispatch).toHaveBeenCalledWith(
-        SubtasksListItemActions.updateSubtask({
+        TaskDetailsActions.updateSubtask({
           subtask: {
             id: subtaskFromForm.id,
             completed: subtaskFromForm.completed,
@@ -137,9 +137,9 @@ describe('SubtaskListItemComponent', () => {
       component.form.get('title')?.setValue('Updated subtask');
       component.form.markAsDirty();
       component.handleSave();
-      
+
       expect(store.dispatch).toHaveBeenCalledWith(
-        SubtasksListItemActions.updateSubtask({
+        TaskDetailsActions.updateSubtask({
           subtask: component.form.value,
         })
       );
