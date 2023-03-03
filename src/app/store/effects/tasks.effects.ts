@@ -6,6 +6,7 @@ import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskActions,
   KanbanViewActions,
+  TaskDetailsActions,
   YataApiActions,
 } from '../actions';
 
@@ -51,7 +52,11 @@ export class TasksEffects {
 
   update$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(KanbanViewActions.updateTask),
+      ofType(
+        KanbanViewActions.updateTask,
+        TaskDetailsActions.updateTask,
+        TaskDetailsActions.moveTaskToProject
+      ),
       concatMap((action) =>
         this.tasksService.update(action.task).pipe(
           map((task) => YataApiActions.updateTaskSuccess({ task })),
@@ -67,4 +72,25 @@ export class TasksEffects {
       )
     )
   );
+
+  // moveTaskToProject$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(TaskDetailsActions.moveTaskToProject),
+  //     concatMap((action) =>
+  //       this.tasksService.update(action.task).pipe(
+  //         map((task) => {
+  //           this.snackbar.open(`Update successful.`);
+  //           return YataApiActions.moveTaskToProjectSuccess({ task });
+  //         }),
+  //         catchError(() =>
+  //           of(
+  //             YataApiActions.moveTaskToProjectError({
+  //               message: 'Could not update the Task',
+  //             })
+  //           )
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
 }
