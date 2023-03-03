@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
+import { TaskCardActions } from '../../../store/actions/task-card.actions';
 
 @Component({
   selector: 'yata-task-card',
@@ -9,13 +12,27 @@ import { Task } from '../../../models';
 })
 export class TaskCardComponent implements OnInit {
   @Input() task!: Task;
+  form!: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private store: Store,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     if (!this.task) {
       throw new Error('Method not implemented.');
     }
+    this.initForm(this.task);
+  }
+
+  initForm(task: Task) {
+    this.form = this.fb.group({
+      id: [task.id, [Validators.required]],
+      projectId: [task.projectId, [Validators.required]],
+      completed: [task.completed, [Validators.required]],
+    });
   }
 
   get borderColor() {
@@ -24,6 +41,14 @@ export class TaskCardComponent implements OnInit {
       'border-left-yellow': this.task.priority === Task.Priority.MEDIUM,
       'border-left-blue': this.task.priority === Task.Priority.LOW,
     };
+  }
+
+  handleChecked() {
+    this.store.dispatch(
+      TaskCardActions.updateTask({
+        task: this.form.value,
+      })
+    );
   }
 
   handleViewTask() {

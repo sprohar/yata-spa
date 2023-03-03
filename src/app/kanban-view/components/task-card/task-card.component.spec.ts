@@ -1,9 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Task } from '../../../models';
+import { TaskCardActions } from '../../../store/actions/task-card.actions';
 
 import { TaskCardComponent } from './task-card.component';
 
@@ -11,6 +15,7 @@ describe('TaskCardComponent', () => {
   let component: TaskCardComponent;
   let fixture: ComponentFixture<TaskCardComponent>;
   let router: jasmine.SpyObj<Router>;
+  let store: MockStore;
   let task: Task = {
     id: 1,
     title: 'Task',
@@ -22,8 +27,15 @@ describe('TaskCardComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [TaskCardComponent],
-      imports: [MatCardModule, MatIconModule, MatRippleModule],
+      imports: [
+        MatCardModule,
+        MatCheckboxModule,
+        MatIconModule,
+        MatRippleModule,
+        ReactiveFormsModule,
+      ],
       providers: [
+        provideMockStore(),
         {
           provide: Router,
           useValue: router,
@@ -32,6 +44,7 @@ describe('TaskCardComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskCardComponent);
+    store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
     component.task = task;
     component.ngOnInit();
@@ -40,6 +53,18 @@ describe('TaskCardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('#handleChecked', () => {
+    it('should dispatch an action to update the task', () => {
+      spyOn(store, 'dispatch');
+      component.handleChecked();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        TaskCardActions.updateTask({
+          task: component.form.value,
+        })
+      );
+    });
   });
 
   describe('#handleViewTask', () => {
