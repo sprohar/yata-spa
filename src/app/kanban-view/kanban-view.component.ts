@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  selectCurrentProject,
-  selectKanbanColumns,
-} from '../store/selectors/projects.selectors';
+import { Section, Task } from '../models';
+import { selectCurrentProject } from '../store/selectors/projects.selectors';
+import { selectKanbanColumns } from '../store/selectors/sections.selectors';
+import { selectUnsectionedTasks } from '../store/selectors/tasks.selectors';
 
 @Component({
   selector: 'yata-kanban-view',
@@ -13,6 +13,7 @@ import {
 export class KanbanViewComponent {
   currentProject$ = this.store.select(selectCurrentProject);
   columns$ = this.store.select(selectKanbanColumns);
+  unsectionedTasks$ = this.store.select(selectUnsectionedTasks);
   showAddKanbanColumnComponent = false;
 
   constructor(private store: Store) {}
@@ -23,5 +24,13 @@ export class KanbanViewComponent {
 
   handleAddKanbanColumnComponentClosed() {
     this.showAddKanbanColumnComponent = false;
+  }
+
+  toSection(tasks: Task[]) {
+    return {
+      name: 'Not Sectioned',
+      projectId: tasks[0].projectId,
+      tasks,
+    } as Section;
   }
 }
