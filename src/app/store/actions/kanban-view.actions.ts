@@ -8,6 +8,7 @@ export const KanbanViewActions = createActionGroup({
     'Create Section': props<{ section: Section }>(),
     'Delete Task': props<{ task: Task }>(),
     'Delete Section': props<{ section: Section }>(),
+    'Move Task To Section': props<{ task: Partial<Task> }>(),
     'Update Task': props<{ task: Partial<Task> }>(),
     'Update Section': props<{ section: Partial<Section> }>(),
     'Set Current Task Id': props<{ taskId: number }>(),

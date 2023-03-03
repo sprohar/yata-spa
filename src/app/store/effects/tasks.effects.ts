@@ -54,6 +54,7 @@ export class TasksEffects {
     this.actions$.pipe(
       ofType(
         KanbanViewActions.updateTask,
+        KanbanViewActions.moveTaskToSection,
         TaskDetailsActions.updateTask,
         TaskDetailsActions.moveTaskToProject
       ),
