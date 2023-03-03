@@ -30,4 +30,24 @@ export class SubtasksEffects {
       )
     )
   );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskDetailsActions.deleteSubtask),
+      concatMap((action) =>
+        this.subtasksService.delete(action.subtask).pipe(
+          map(() =>
+            YataApiActions.deleteSubtaskSuccess({ subtask: action.subtask })
+          ),
+          catchError(() =>
+            of(
+              YataApiActions.deleteSubtaskError({
+                message: 'Could not create Subtask',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
 }
