@@ -12,8 +12,7 @@
       matInput
       type="text"
       formControlName="title"
-      placeholder="Press Enter to save"
-      (keyup.enter)="handleSave()"
+      (blur)="handleSave()"
     />
   </mat-form-field>
 
