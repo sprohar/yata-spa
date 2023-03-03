@@ -1,0 +1,27 @@
+<div class="time-picker-container full-width" [formGroup]="form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Time</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="time"
+      [placeholder]="placeholderText"
+      class="full-width"
+      (keyup.enter)="handleAddTime()"
+    />
+    <mat-hint>Valid format: 9:00 AM, 9 AM, 09:00</mat-hint>
+    <mat-error>{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+
+  <div class="buttons">
+    <button mat-button (click)="handleCancel()">Cancel</button>
+    <button
+      [disabled]="timeControl.invalid"
+      mat-raised-button
+      (click)="handleAddTime()"
+      color="primary"
+    >
+      Add
+    </button>
+  </div>
+</div>
