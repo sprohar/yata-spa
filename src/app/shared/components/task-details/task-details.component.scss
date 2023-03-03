@@ -1,0 +1,72 @@
+.task-details-wrapper {
+  padding: 32px 16px;
+  width: 100%;
+}
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  margin: auto;
+  width: 100%;
+
+  .task-details-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .task-details-header-actions {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+    }
+  }
+}
+
+.subtasks-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.form-field-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 8px;
+  margin-top: 32px;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .task-details {
+    width: 85%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .task-details {
+    width: 65%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .task-details {
+    width: 60%;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .task-details {
+    width: 50%;
+  }
+}

@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { EditSectionDialogComponent } from './components/edit-section-dialog/edit-section-dialog.component';
+import { TaskDetailsComponent } from './components/task-details/task-details.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
@@ -26,6 +27,7 @@ import { CreateSubtaskComponent } from './components/create-subtask/create-subta
     ViewHeaderComponent,
     CreateTaskComponent,
     EditSectionDialogComponent,
+    TaskDetailsComponent,
     TaskPriorityPickerComponent,
     SubtaskListComponent,
     SubtaskListItemComponent,
@@ -50,6 +52,7 @@ import { CreateSubtaskComponent } from './components/create-subtask/create-subta
     ViewHeaderComponent,
     CreateTaskComponent,
     EditSectionDialogComponent,
+    TaskDetailsComponent,
     TaskPriorityPickerComponent,
   ],
 })

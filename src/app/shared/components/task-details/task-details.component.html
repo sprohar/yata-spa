@@ -1,0 +1,105 @@
+<ng-container *ngIf="currentTask$ | async as task">
+  <div class="task-details-wrapper">
+    <div class="task-details" [formGroup]="form">
+      <div class="task-details-header">
+        <button mat-icon-button (click)="handleGoBack()" title="Go back">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <div class="task-details-header-actions">
+          <yata-task-priority-picker
+            (selectionChange)="handlePriorityChange($event)"
+            [value]="task.priority"
+          ></yata-task-priority-picker>
+          <button mat-icon-button title="Task options">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-field-container">
+        <mat-checkbox
+          (change)="handleCompleted()"
+          formControlName="completed"
+          color="primary"
+        >
+          Mark as {{ task.completed ? "incomplete" : "completed" }}
+        </mat-checkbox>
+        <!-- TODO: Add the DateTimePicker right here -->
+      </div>
+
+      <div class="form-field-container" *ngIf="projects$ | async as projects">
+        <mat-form-field class="full-width">
+          <mat-label>Project</mat-label>
+          <mat-select
+            formControlName="projectId"
+            (selectionChange)="handleMoveTaskToProject($event.value)"
+          >
+            <ng-container
+              *ngFor="let project of projects; trackBy: trackByProjectId"
+            >
+              <mat-option [value]="project.id">{{ project.name }}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-container">
+        <mat-form-field class="full-width">
+          <mat-label>Title</mat-label>
+          <input matInput type="text" formControlName="title" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-container">
+        <mat-form-field class="full-width">
+          <mat-label>Content</mat-label>
+          <textarea
+            matInput
+            formControlName="content"
+            cdkTextareaAutosize
+          ></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="subtasks-container" formArrayName="subtasks">
+        <ng-container *ngIf="task.subtasks && task.subtasks.length > 0">
+          <div class="subtasks-container">
+            <p>Subtasks</p>
+            <yata-subtask-list [subtasks]="task.subtasks"></yata-subtask-list>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isAddingSubtask">
+          <yata-create-subtask
+            [task]="task"
+            (saved)="isAddingSubtask = false"
+            (cancel)="isAddingSubtask = false"
+          ></yata-create-subtask>
+        </ng-container>
+
+        <ng-container *ngIf="!isAddingSubtask">
+          <button mat-stroked-button (click)="isAddingSubtask = true">
+            <mat-icon>checklist</mat-icon>
+            <span>Add Sub-task</span>
+          </button>
+        </ng-container>
+      </div>
+
+      <div
+        class="form-actions"
+        [class.hide]="isAddingSubtask"
+      >
+        <button
+          [disabled]="form.invalid"
+          mat-raised-button
+          color="primary"
+          class="full-width"
+          (click)="handleSave()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
