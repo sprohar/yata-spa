@@ -25,6 +25,21 @@ export const tasksFeature = createFeature({
       currentTaskId: state.currentTaskId,
       tasks: action.project.tasks ?? [],
     })),
+    on(YataApiActions.updateTaskSuccess, (state, action) => {
+      const tasks: Task[] = [];
+      for (const task of state.tasks) {
+        if (task.id === action.task.id) {
+          tasks.push(action.task);
+        } else {
+          tasks.push(task);
+        }
+      }
+
+      return {
+        currentTaskId: state.currentTaskId,
+        tasks,
+      };
+    }),
     on(YataApiActions.loadTaskSuccess, (state, action) => {
       const tasks: Task[] = [];
       for (const task of state.tasks) {
@@ -38,7 +53,7 @@ export const tasksFeature = createFeature({
       return {
         currentTaskId: state.currentTaskId,
         tasks,
-      }
+      };
     }),
     on(KanbanViewActions.setCurrentTaskId, (state, action) => ({
       tasks: state.tasks,

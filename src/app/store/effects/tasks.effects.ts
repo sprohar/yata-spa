@@ -49,21 +49,21 @@ export class TasksEffects {
     )
   );
 
-  // loadTasks$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(SidenavActions.projectSelected),
-  //     switchMap(({ projectId }) =>
-  //       this.tasksService.getAll(projectId).pipe(
-  //         map((res) => YataApiActions.loadTasksSuccess({ tasks: res.data })),
-  //         catchError(() =>
-  //           of(
-  //             YataApiActions.loadTasksError({
-  //               message: 'Could not load tasks',
-  //             })
-  //           )
-  //         )
-  //       )
-  //     )
-  //   )
-  // );
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(KanbanViewActions.updateTask),
+      concatMap((action) =>
+        this.tasksService.update(action.task).pipe(
+          map((task) => YataApiActions.updateTaskSuccess({ task })),
+          catchError(() =>
+            of(
+              YataApiActions.updateTaskError({
+                message: 'Could not update Task',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
 }
