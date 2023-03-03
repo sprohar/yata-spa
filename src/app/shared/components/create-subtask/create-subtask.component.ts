@@ -75,5 +75,6 @@ export class CreateSubtaskComponent implements OnInit {
     );
 
     this.save.emit();
+    this.form.reset();
   }
 }
