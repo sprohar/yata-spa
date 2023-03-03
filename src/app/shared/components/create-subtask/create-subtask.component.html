@@ -1,5 +1,6 @@
 <div class="create-subtask-wrapper" [formGroup]="form">
   <div class="create-subtask-input">
+    <mat-checkbox disabled="true" class="checkbox"></mat-checkbox>
     <mat-form-field class="full-width">
       <mat-label>Subtask</mat-label>
       <input
@@ -10,14 +11,6 @@
         (keyup.enter)="handleSave()"
       />
     </mat-form-field>
-
-    <div class="create-subtask-input-actions">
-      <yata-task-priority-picker
-        (selectionChange)="handlePriorityChange($event)"
-      ></yata-task-priority-picker>
-      <!-- TODO: Add the DateTimePicker -->
-      <button mat-icon-button><mat-icon>event</mat-icon></button>
-    </div>
   </div>
 
   <div class="create-subtask-actions">
