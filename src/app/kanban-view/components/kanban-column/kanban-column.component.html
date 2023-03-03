@@ -1,29 +1,40 @@
 <article *ngIf="section" class="column">
-    <div class="column-header">
-      <h2>{{ section.name }}</h2>
-      <button mat-icon-button [matMenuTriggerFor]="columnOptions">
-        <mat-icon>more_vert</mat-icon>
+  <div class="column-header">
+    <h2>{{ section.name }}</h2>
+    <button mat-icon-button [matMenuTriggerFor]="columnOptions">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #columnOptions>
+      <button mat-menu-item (click)="handleEditColumn()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
       </button>
-      <mat-menu #columnOptions>
-        <button mat-menu-item (click)="handleEditColumn()">
-          <mat-icon>edit</mat-icon>
-          <span>Edit</span>
-        </button>
-        <button mat-menu-item (click)="handleDeleteColumn()">
-          <mat-icon>delete</mat-icon>
-          <span>Delete</span>
-        </button>
-      </mat-menu>
+      <button mat-menu-item (click)="handleDeleteColumn()">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
+  </div>
+  <div class="tasks-container">
+    <div class="create-task-container">
+      <yata-create-task [section]="section"></yata-create-task>
     </div>
-    <div class="tasks-container">
-      <ul class="tasks">
+    <ul
+      #taskList
+      class="task-list"
+      cdkDropList
+      [cdkDropListData]="section"
+      (cdkDropListDropped)="handleTaskCardDrop($event)"
+    >
+      <ng-container *ngFor="let task of section.tasks; trackBy: trackByTaskId">
         <li>
-          <yata-create-task [section]="section"></yata-create-task>
+          <yata-task-card
+            [task]="task"
+            cdkDrag
+            [cdkDragData]="task"
+          ></yata-task-card>
         </li>
-        <li *ngFor="let task of section.tasks">
-          <yata-task-card [task]="task"></yata-task-card>
-        </li>
-      </ul>
-    </div>
-  </article>
-  
+      </ng-container>
+    </ul>
+  </div>
+</article>

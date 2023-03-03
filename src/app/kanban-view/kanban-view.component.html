@@ -3,7 +3,7 @@
     <yata-view-header></yata-view-header>
     <main>
       <div class="kanban-view">
-        <div class="columns">
+        <div class="columns" cdkDropListGroup>
           <!-- Unsectioned Tasks -->
           <ng-container *ngIf="unsectionedTasks$ | async as unsectionedTasks">
             <ng-container *ngIf="unsectionedTasks.length > 0">

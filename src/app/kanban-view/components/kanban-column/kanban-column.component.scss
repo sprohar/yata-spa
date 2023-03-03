@@ -17,13 +17,13 @@
   display: flex;
   flex-direction: column;
 
-  .tasks {
+  .task-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    gap: 8px;
     display: flex;
     flex-direction: column;
-    row-gap: 16px;
+    row-gap: 24px;
+    min-height: 72px; // provides enough room for a card to be dropped into a empty list
   }
 }
