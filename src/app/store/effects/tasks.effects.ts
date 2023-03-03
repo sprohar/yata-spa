@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of, switchMap } from 'rxjs';
+import { catchError, concatMap, map, of, switchMap, tap } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskActions,
@@ -55,6 +55,7 @@ export class TasksEffects {
       concatMap((action) =>
         this.tasksService.update(action.task).pipe(
           map((task) => YataApiActions.updateTaskSuccess({ task })),
+          tap(() => this.snackbar.open('Updated task')),
           catchError(() =>
             of(
               YataApiActions.updateTaskError({
