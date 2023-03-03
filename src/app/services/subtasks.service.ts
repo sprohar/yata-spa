@@ -31,8 +31,8 @@ export class SubtasksService {
     return this.http.get<PaginatedList<Subtask>>(url);
   }
 
-  update(subtaskId: number, subtask: Subtask | Partial<Subtask>) {
-    const url = `${baseUrl}/${subtask.taskId!}/subtasks/${subtaskId}`;
+  update(subtask: Subtask | Partial<Subtask>) {
+    const url = `${baseUrl}/${subtask.taskId!}/subtasks/${subtask.id}`;
     return this.http.patch<Subtask>(url, subtask);
   }
 }

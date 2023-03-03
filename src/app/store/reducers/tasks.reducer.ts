@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { Task } from '../../models';
+import { Subtask, Task } from '../../models';
 import { KanbanViewActions, YataApiActions } from '../actions';
 import { TaskDetailsActions } from '../actions/task-details.actions';
 
@@ -88,6 +88,34 @@ export const tasksFeature = createFeature({
           tasks.push({
             ...task,
             subtasks: task.subtasks?.filter((s) => s.id !== action.subtask.id),
+          });
+        } else {
+          tasks.push(task);
+        }
+      }
+
+      return {
+        currentTaskId: state.currentTaskId,
+        tasks,
+      };
+    }),
+    on(YataApiActions.updateSubtaskSuccess, (state, action) => {
+      const tasks: Task[] = [];
+      for (const task of state.tasks) {
+        if (task.id === action.subtask.taskId) {
+          const subtasks: Subtask[] = [];
+
+          for (const subtask of task.subtasks!) {
+            if (subtask.id === action.subtask.id) {
+              subtasks.push(action.subtask);
+            } else {
+              subtasks.push(subtask);
+            }
+          }
+
+          tasks.push({
+            ...task,
+            subtasks,
           });
         } else {
           tasks.push(task);

@@ -50,4 +50,24 @@ export class SubtasksEffects {
       )
     )
   );
+
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskDetailsActions.updateSubtask),
+      concatMap((action) =>
+        this.subtasksService.update(action.subtask).pipe(
+          map((subtask) =>
+            YataApiActions.updateSubtaskSuccess({ subtask })
+          ),
+          catchError(() =>
+            of(
+              YataApiActions.updateSubtaskError({
+                message: 'Could not create Subtask',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
 }
