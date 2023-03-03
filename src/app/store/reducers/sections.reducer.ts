@@ -20,6 +20,10 @@ export const sectionsFeature = createFeature({
       sections: state.sections,
       currentSectionId: action.sectionId,
     })),
+    on(KanbanViewActions.resetCurrentSectionId, (state, _) => ({
+      currentSectionId: null,
+      sections: state.sections,
+    })),
     on(KanbanViewActions.closeEditSectionDialog, (state, _) => ({
       sections: state.sections,
       currentSectionId: null,

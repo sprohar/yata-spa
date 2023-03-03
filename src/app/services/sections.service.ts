@@ -34,7 +34,7 @@ export class SectionsService {
     return this.http.get<Section>(`${baseUrl}/projects/${projectId}`);
   }
 
-  update(section: Section) {
+  update(section: Partial<Section>) {
     return this.http.patch<Section>(
       `${baseUrl}/projects/${section.projectId}/sections/${section.id!}`,
       section
