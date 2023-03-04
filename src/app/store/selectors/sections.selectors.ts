@@ -13,7 +13,7 @@ export const selectCurrentSection = createSelector(
   (sectionId, sections) => sections.find((s) => s.id === sectionId)
 );
 
-export const selectKanbanColumns = createSelector(
+export const selectSectionsWithTasks = createSelector(
   selectCurrentProjectId,
   selectSections,
   selectTasks,

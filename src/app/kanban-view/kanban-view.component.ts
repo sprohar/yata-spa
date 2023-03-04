@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../models';
 import { selectCurrentProject } from '../store/selectors/projects.selectors';
-import { selectKanbanColumns } from '../store/selectors/sections.selectors';
+import { selectSectionsWithTasks } from '../store/selectors/sections.selectors';
 import { selectUnsectionedTasks } from '../store/selectors/tasks.selectors';
 
 @Component({
@@ -12,7 +12,7 @@ import { selectUnsectionedTasks } from '../store/selectors/tasks.selectors';
 })
 export class KanbanViewComponent {
   currentProject$ = this.store.select(selectCurrentProject);
-  columns$ = this.store.select(selectKanbanColumns);
+  columns$ = this.store.select(selectSectionsWithTasks);
   unsectionedTasks$ = this.store.select(selectUnsectionedTasks);
   showAddKanbanColumnComponent = false;
 
