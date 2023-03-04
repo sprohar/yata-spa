@@ -1,0 +1,114 @@
+<mat-dialog-content class="date-picker-container">
+  <ng-container *ngIf="date">
+    <div class="due-date-string-container">
+      <ng-container *ngIf="isAllDay(date); else hasTime">
+        <p>{{ date | date : "MMMM d, y" }}</p>
+      </ng-container>
+      <ng-template #hasTime>
+        <p>{{ date | date : "MMMM d, y, h:mm a" }}</p>
+      </ng-template>
+      <mat-divider></mat-divider>
+    </div>
+  </ng-container>
+  <!-- Suggested dates -->
+  <div class="suggested-dates-list">
+    <div class="suggested-date-item">
+      <button mat-button (click)="handleSelectedDate(todayDate)">
+        <mat-icon class="icon">today</mat-icon>
+        <span class="flex">
+          <span>Today</span>
+          <span class="spacer"></span>
+        </span>
+      </button>
+      <span class="suggested-date-weekday">
+        {{ todayDate | date : "E" }}
+      </span>
+    </div>
+
+    <div class="suggested-date-item">
+      <button mat-button (click)="handleSelectedDate(tomorrowDate)">
+        <mat-icon class="icon">sunny</mat-icon>
+        <span>Tomorrow</span>
+      </button>
+      <span class="suggested-date-weekday">
+        {{ tomorrowDate | date : "E" }}
+      </span>
+    </div>
+
+    <div *ngIf="thisWeekendDate" class="suggested-date-item">
+      <button mat-button (click)="handleSelectedDate(thisWeekendDate)">
+        <mat-icon class="icon">weekend</mat-icon>
+        <span>This Weekend</span>
+      </button>
+      <span class="suggested-date-weekday">
+        {{ thisWeekendDate | date : "E" }}
+      </span>
+    </div>
+
+    <div class="suggested-date-item">
+      <button mat-button (click)="handleSelectedDate(nextWeekDate)">
+        <mat-icon class="icon">next_week</mat-icon>
+        <span>Next week</span>
+      </button>
+      <span class="suggested-date-weekday">
+        {{ nextWeekDate | date : "E MMM d" }}
+      </span>
+    </div>
+
+    <ng-container *ngIf="date">
+      <button mat-button (click)="clearDueDate()">
+        <mat-icon class="icon">block</mat-icon>
+        <span>No date</span>
+      </button>
+    </ng-container>
+  </div>
+
+  <!-- Calendar: Pick due date -->
+  <mat-calendar
+    class="full-width"
+    [minDate]="todayDate"
+    [selected]="date"
+    (selectedChange)="handleSelectedDate($event)"
+  ></mat-calendar>
+
+  <!-- Due date: set time (optional) -->
+  <div class="full-width" *ngIf="date">
+    <ng-container *ngIf="!hasTimeComponent; else showTimeValue">
+      <!-- No time value -->
+      <button
+        mat-stroked-button
+        (click)="openTimePicker()"
+        class="full-width"
+        [class.hide]="showTimeInput"
+      >
+        <mat-icon>schedule</mat-icon>
+        Add time
+      </button>
+    </ng-container>
+    <ng-template #showTimeValue>
+      <!-- Has time value -->
+      <div class="flex align-items-center" [class.hide]="showTimeInput">
+        <button mat-stroked-button (click)="openTimePicker()">
+          {{ date | date : "h:mm a" }}
+        </button>
+        <button mat-icon-button (click)="clearTime()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Time Picker -->
+  <yata-time-input
+    *ngIf="showTimeInput"
+    class="full-width"
+    [date]="date"
+    (close)="closeTimePicker()"
+    (time)="handleTimeChange($event)"
+  ></yata-time-input>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="handleSave()">Save</button>
+</mat-dialog-actions>

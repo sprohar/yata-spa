@@ -1,0 +1,39 @@
+.date-picker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 350px;
+}
+
+.due-date-string-container {
+  width: 100%;
+  text-align: center;
+}
+
+.suggested-dates-list {
+  width: 100%;
+  margin-top: 8px;
+
+  .suggested-date-item {
+    position: relative;
+
+    button {
+      width: 100%;
+    }
+
+    .mdc-button {
+      justify-content: unset;
+    }
+
+    .mdc-button__label {
+      display: flex;
+      flex: 1;
+    }
+
+    .suggested-date-weekday {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+  }
+}
