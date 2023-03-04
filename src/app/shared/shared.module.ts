@@ -23,6 +23,7 @@ import { TaskDetailsComponent } from './components/task-details/task-details.com
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
+import { ClickableDirective } from './directives/clickable.directive';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 
 @NgModule({
@@ -38,6 +39,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     CreateSubtaskComponent,
     TimeInputComponent,
     DateTimePickerDialogComponent,
+    ClickableDirective,
   ],
   imports: [
     CommonModule,
@@ -62,6 +64,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     EditSectionDialogComponent,
     TaskDetailsComponent,
     TaskPriorityPickerComponent,
+    ClickableDirective,
   ],
 })
 export class SharedModule {}

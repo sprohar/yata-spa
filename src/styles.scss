@@ -1,4 +1,5 @@
 @use "@angular/material" as mat;
+@use "./scss/foundation/clickable";
 @include mat.core();
 
 $dark-theme: mat.define-dark-theme(
