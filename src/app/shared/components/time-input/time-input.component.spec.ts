@@ -43,17 +43,17 @@ describe('TimeInputComponent', () => {
 
   describe('#handleAddTime', () => {
     it('should NOT emit the "change" event when the form is invalid', () => {
-      spyOn(component.change, 'emit');
+      spyOn(component.time, 'emit');
       component.timeControl.setValue('19 PM');
       component.handleAddTime();
-      expect(component.change.emit).not.toHaveBeenCalled();
+      expect(component.time.emit).not.toHaveBeenCalled();
     })
     
     it('should emit the "change" event', () => {
-      spyOn(component.change, 'emit');
+      spyOn(component.time, 'emit');
       component.timeControl.setValue('9 PM');
       component.handleAddTime();
-      expect(component.change.emit).toHaveBeenCalled();
+      expect(component.time.emit).toHaveBeenCalled();
     })
   })
 });

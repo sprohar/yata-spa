@@ -16,7 +16,7 @@
   <div class="buttons">
     <button mat-button (click)="handleCancel()">Cancel</button>
     <button
-      [disabled]="timeControl.invalid"
+      [disabled]="form.invalid || form.pristine"
       mat-raised-button
       (click)="handleAddTime()"
       color="primary"
