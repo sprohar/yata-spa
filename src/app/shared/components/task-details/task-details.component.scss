@@ -1,5 +1,5 @@
 .task-details-wrapper {
-  padding: 32px 16px;
+  padding: 16px;
   width: 100%;
 }
 
@@ -13,7 +13,10 @@
   .task-details-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+
+    .projects-select {
+      margin-top: 24px;
+    }
 
     .task-details-header-actions {
       display: flex;

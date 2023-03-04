@@ -1,11 +1,33 @@
 <ng-container *ngIf="currentTask$ | async as task">
   <div class="task-details-wrapper">
     <div class="task-details" [formGroup]="form">
+      <!-- Header -->
       <div class="task-details-header">
+        <!-- Navigate back -->
         <button mat-icon-button (click)="handleGoBack()" title="Go back">
           <mat-icon>chevron_left</mat-icon>
         </button>
 
+        <!-- Move task to a different project -->
+        <ng-container *ngIf="projects$ | async as projects">
+          <mat-form-field appearance="outline" class="projects-select">
+            <mat-label>Project</mat-label>
+            <mat-select
+              formControlName="projectId"
+              (selectionChange)="handleMoveTaskToProject($event.value)"
+            >
+              <ng-container
+                *ngFor="let project of projects; trackBy: trackByProjectId"
+              >
+                <mat-option [value]="project.id">{{ project.name }}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+
+        <span class="spacer"></span>
+
+        <!-- Priority -->
         <div class="task-details-header-actions">
           <yata-task-priority-picker
             (selectionChange)="handlePriorityChange($event)"
@@ -17,7 +39,11 @@
         </div>
       </div>
 
-      <div class="form-field-container">
+      <mat-divider></mat-divider>
+
+      <!-- Completed & Due Date -->
+      <div class="form-field-container space-between">
+        <!-- Completed -->
         <mat-checkbox
           (change)="handleCompleted()"
           formControlName="completed"
@@ -25,25 +51,29 @@
         >
           Mark as {{ task.completed ? "incomplete" : "completed" }}
         </mat-checkbox>
-        <!-- TODO: Add the DateTimePicker right here -->
-      </div>
 
-      <div class="form-field-container" *ngIf="projects$ | async as projects">
-        <mat-form-field class="full-width">
-          <mat-label>Project</mat-label>
-          <mat-select
-            formControlName="projectId"
-            (selectionChange)="handleMoveTaskToProject($event.value)"
+        <!-- Due date -->
+        <ng-container *ngIf="dueDateControl.value; else dueDateIsNull">
+          <button
+            mat-stroked-button
+            (click)="openDateTimePickerDialog()"
+            title="Due date"
           >
-            <ng-container
-              *ngFor="let project of projects; trackBy: trackByProjectId"
-            >
-              <mat-option [value]="project.id">{{ project.name }}</mat-option>
-            </ng-container>
-          </mat-select>
-        </mat-form-field>
+            {{ dueDateControl.value | date : "MMM d, y, hh:mm a" }}
+          </button>
+        </ng-container>
+        <ng-template #dueDateIsNull>
+          <button
+            mat-icon-button
+            (click)="openDateTimePickerDialog()"
+            title="Set a due date"
+          >
+            <mat-icon>event</mat-icon>
+          </button>
+        </ng-template>
       </div>
 
+      <!-- Title -->
       <div class="form-field-container">
         <mat-form-field class="full-width">
           <mat-label>Title</mat-label>
@@ -51,6 +81,7 @@
         </mat-form-field>
       </div>
 
+      <!-- Content -->
       <div class="form-field-container">
         <mat-form-field class="full-width">
           <mat-label>Content</mat-label>
@@ -62,6 +93,7 @@
         </mat-form-field>
       </div>
 
+      <!-- Subtasks -->
       <div class="subtasks-container" formArrayName="subtasks">
         <ng-container *ngIf="task.subtasks && task.subtasks.length > 0">
           <div class="subtasks-container">
@@ -81,15 +113,12 @@
         <ng-container *ngIf="!isAddingSubtask">
           <button mat-stroked-button (click)="isAddingSubtask = true">
             <mat-icon>checklist</mat-icon>
-            <span>Add Sub-task</span>
+            <span>Add Subtask</span>
           </button>
         </ng-container>
       </div>
 
-      <div
-        class="form-actions"
-        [class.hide]="isAddingSubtask"
-      >
+      <div class="form-actions" [class.hide]="isAddingSubtask">
         <button
           [disabled]="form.invalid"
           mat-raised-button

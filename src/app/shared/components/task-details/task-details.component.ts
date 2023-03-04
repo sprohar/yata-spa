@@ -6,14 +6,16 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Project, Task } from '../../../models';
 import { KanbanViewActions } from '../../../store/actions';
 import { TaskDetailsActions } from '../../../store/actions/task-details.actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
 import { selectCurrentTask } from '../../../store/selectors/tasks.selectors';
+import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 @Component({
   selector: 'yata-task-details',
@@ -26,6 +28,7 @@ export class TaskDetailsComponent implements OnDestroy, OnInit {
   readonly PRIORITY_MEDIUM = Task.Priority.MEDIUM;
   readonly PRIORITY_LOW = Task.Priority.LOW;
 
+  destroy$ = new Subject<void>();
   currentTask$?: Observable<Task | undefined>;
   projects$ = this.store.select(selectProjects);
   isAddingSubtask = false;
@@ -35,11 +38,13 @@ export class TaskDetailsComponent implements OnDestroy, OnInit {
     private store: Store,
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnDestroy(): void {
     this.store.dispatch(TaskDetailsActions.resetCurrentTaskId());
+    this.destroy$.next();
   }
 
   ngOnInit(): void {
@@ -52,8 +57,19 @@ export class TaskDetailsComponent implements OnDestroy, OnInit {
     );
   }
 
-  handleGoBack() {
-    this.router.navigate(['../..'], { relativeTo: this.route });
+  openDateTimePickerDialog() {
+    const dueDate: Date | null = this.dueDateControl.value;
+    const ref = this.dialog.open(DateTimePickerDialogComponent, {
+      data: dueDate,
+    });
+
+    ref
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((dueDate) => {
+        this.dueDateControl.setValue(dueDate);
+        this.dueDateControl.markAsDirty();
+      });
   }
 
   trackByProjectId(index: number, project: Project) {
@@ -74,6 +90,10 @@ export class TaskDetailsComponent implements OnDestroy, OnInit {
       subtasks: this.fb.array([]),
       content: [task.content, [Validators.maxLength(Task.Content.MaxLength)]],
     });
+
+    if (task.dueDate) {
+      this.dueDateControl.setValue(new Date(task.dueDate));
+    }
   }
 
   get priorityControl() {
@@ -82,6 +102,14 @@ export class TaskDetailsComponent implements OnDestroy, OnInit {
 
   get subtasksControls() {
     return this.form.get('subtasks') as FormArray;
+  }
+
+  get dueDateControl() {
+    return this.form.get('dueDate') as FormControl;
+  }
+
+  handleGoBack() {
+    this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
   handlePriorityChange(priority: Task.Priority) {
@@ -115,6 +143,7 @@ export class TaskDetailsComponent implements OnDestroy, OnInit {
   }
 
   handleSave() {
+    console.log(this.form);
     if (this.form.invalid || this.form.pristine) {
       return;
     }
