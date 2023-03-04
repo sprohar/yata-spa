@@ -10,25 +10,39 @@ export class TimeStringParser {
 
     if (tiempo.includes(':')) {
       const [hoursToken, minutesToken] = tiempo.split(':');
-      const hours = Number.parseInt(hoursToken, 10);
-      const minutes = Number.parseInt(minutesToken, 10);
+      const hours = parseInt(hoursToken);
+      const minutes = parseInt(minutesToken);
+      if (!isAM) {
+        return {
+          minutes,
+          hours: hours === 12 ? hours : hours + 12,
+        };
+      }
+
       return {
-        hours: isAM ? hours : hours + 12,
+        hours,
         minutes,
       };
     }
 
-    const hours = Number.parseInt(tiempo, 10);
+    const hours = parseInt(tiempo);
+    if (isAM) {
+      return {
+        hours,
+        minutes: 0,
+      };
+    }
+
     return {
-      hours: isAM ? hours : hours + 12,
+      hours: hours === 12 ? hours : hours + 12,
       minutes: 0,
     };
   }
 
   private static parseZuluTime(time: string): TimeTokens {
     const [hoursToken, minutesToken] = time.split(':');
-    const hours = Number.parseInt(hoursToken, 10);
-    const minutes = Number.parseInt(minutesToken, 10);
+    const hours = parseInt(hoursToken);
+    const minutes = parseInt(minutesToken);
     return {
       hours,
       minutes,
@@ -42,6 +56,6 @@ export class TimeStringParser {
     if (TimeStringValidator.isZuluTimeString(time)) {
       return TimeStringParser.parseZuluTime(time);
     }
-    throw new TimeStringParseError();
+    throw new TimeStringParseError(time);
   }
 }

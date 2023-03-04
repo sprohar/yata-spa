@@ -1,5 +1,5 @@
 export class TimeStringParseError extends Error {
-  constructor() {
-    super('Invalid time format');
+  constructor(message?: string) {
+    super(message ? `Invalid time format: ${message}` : `Invalid time format`);
   }
 }

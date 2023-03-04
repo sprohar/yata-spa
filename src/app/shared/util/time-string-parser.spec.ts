@@ -9,11 +9,21 @@ describe('TimeStringParser', () => {
         expect(tokens.hours).toEqual(hour);
         expect(tokens.minutes).toEqual(0);
       }
+      const { hours, minutes } = TimeStringParser.parse('12:00 PM');
+      expect(hours).toEqual(12);
+      expect(minutes).toEqual(0);
+
+      for (let hour = 1; hour < 12; hour++) {
+        const tokens = TimeStringParser.parse(`${hour} PM`);
+        expect(tokens.hours).toEqual(hour + 12);
+        expect(tokens.minutes).toEqual(0);
+      }
     });
 
     it('should throw an error for an invalid format', () => {
-      expect(() => TimeStringParser.parse('13 PM')).toThrow(
-        new TimeStringParseError()
+      const timeInput = '13 PM';
+      expect(() => TimeStringParser.parse(timeInput)).toThrow(
+        new TimeStringParseError(timeInput)
       );
     });
   });
