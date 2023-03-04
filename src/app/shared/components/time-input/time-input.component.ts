@@ -15,7 +15,7 @@ import { TimeStringValidator } from '../../validators/time-string.validator';
   styleUrls: ['./time-input.component.scss'],
 })
 export class TimeInputComponent implements OnInit {
-  @Input() dueDate?: Date | null;
+  @Input() date?: Date | null;
   @Output() time = new EventEmitter<TimeTokens>();
   @Output() close = new EventEmitter<void>();
   form!: FormGroup;
@@ -34,8 +34,8 @@ export class TimeInputComponent implements OnInit {
 
     this.initForm();
 
-    if (this.dueDate && this.isAllDay(this.dueDate)) {
-      this.timeControl.setValue(this.datetimeFormatter.format(this.dueDate));
+    if (this.date && this.isAllDay(this.date)) {
+      this.timeControl.setValue(this.datetimeFormatter.format(this.date));
     }
   }
 
