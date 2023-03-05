@@ -36,6 +36,12 @@ export const sectionsFeature = createFeature({
       currentSectionId: state.currentSectionId,
       sections: action.project.sections ?? [],
     })),
+    on(YataApiActions.moveSectionToProjectSuccess, (state, action) => ({
+      currentSectionId: state.currentSectionId,
+      sections: state.sections.filter(
+        (section) => section.id !== action.section.id
+      ),
+    })),
     on(YataApiActions.updateSectionSuccess, (state, action) => {
       const sections: Section[] = [];
       for (const section of state.sections) {

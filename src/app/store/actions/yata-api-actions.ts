@@ -25,6 +25,8 @@ export const YataApiActions = createActionGroup({
     'Load Section Error': props<ServiceErrorResponse>(),
     'Update Section Success': props<{ section: Section }>(),
     'Update Section Error': props<ServiceErrorResponse>(),
+    'Move Section To Project Success': props<{ section: Section }>(),
+    'Move Section To Project Error': props<ServiceErrorResponse>(),
     // Tasks
     'Create Task Success': props<{ task: Task }>(),
     'Create Task Error': props<ServiceErrorResponse>(),

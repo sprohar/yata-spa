@@ -69,10 +69,10 @@ export class SectionsEffects {
           })
           .pipe(
             map(
-              (section) => YataApiActions.updateSectionSuccess({ section }),
+              (section) => YataApiActions.moveSectionToProjectSuccess({ section }),
               catchError(() =>
                 of(
-                  YataApiActions.updateSectionError({
+                  YataApiActions.moveSectionToProjectError({
                     message: 'Could not update Section',
                   })
                 )

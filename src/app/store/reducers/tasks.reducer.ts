@@ -17,6 +17,15 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialTasksState,
+    on(YataApiActions.moveSectionToProjectSuccess, (state, action) => {
+      return {
+        ...state,
+        currentTaskId: state.currentTaskId,
+        tasks: state.tasks.map(
+          (task) => ({ ...task, projectId: action.section.projectId } as Task)
+        ),
+      };
+    }),
     on(YataApiActions.createTaskSuccess, (state, action) => ({
       currentTaskId: state.currentTaskId,
       tasks: state.tasks.concat(action.task),
