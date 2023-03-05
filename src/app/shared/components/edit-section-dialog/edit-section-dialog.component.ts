@@ -1,16 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
 import { Section } from '../../../models';
-import { KanbanViewActions } from '../../../store/actions';
-import { selectCurrentSection } from '../../../store/selectors/sections.selectors';
+import { EditSectionDialogActions } from '../../../store/actions';
 
 @Component({
   selector: 'yata-edit-section-dialog',
@@ -19,31 +17,34 @@ import { selectCurrentSection } from '../../../store/selectors/sections.selector
 })
 export class EditSectionDialogComponent implements OnDestroy, OnInit {
   form!: FormGroup;
-  currentSection$?: Observable<Section | undefined>;
 
   constructor(
     private store: Store,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<EditSectionDialogComponent>
+    private dialogRef: MatDialogRef<EditSectionDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Section
   ) {}
 
   ngOnDestroy(): void {
-    this.store.dispatch(KanbanViewActions.closeEditSectionDialog());
+    this.store.dispatch(EditSectionDialogActions.onDestroy());
   }
 
   ngOnInit(): void {
-    this.currentSection$ = this.store.select(selectCurrentSection).pipe(
-      tap((section) => {
-        if (!section) {
-          throw new Error('Section is undefined');
-        }
-        this.initForm(section);
+    if (!this.data) {
+      throw new Error('Section is undefined');
+    }
+    this.initForm(this.data);
+    this.store.dispatch(
+      EditSectionDialogActions.onInit({
+        section: this.data,
       })
     );
   }
 
   initForm(section: Section) {
     this.form = this.fb.group({
+      id: [section.id, [Validators.required]],
+      projectId: [section.projectId, [Validators.required]],
       name: [
         section.name,
         [Validators.required, Validators.maxLength(Section.Name.MaxLength)],
@@ -55,15 +56,14 @@ export class EditSectionDialogComponent implements OnDestroy, OnInit {
     return this.form.get('name') as FormControl;
   }
 
-  handleSave(section: Section) {
+  handleSave() {
     if (this.form.invalid || this.form.pristine) {
       return;
     }
 
     this.store.dispatch(
-      KanbanViewActions.updateSection({
+      EditSectionDialogActions.updateSection({
         section: {
-          ...section,
           ...this.form.value,
         },
       })

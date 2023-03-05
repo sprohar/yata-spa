@@ -11,33 +11,18 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Section } from '../../../models';
-import { KanbanViewActions } from '../../../store/actions';
-import { AppState } from '../../../store/app.state';
-import { initialTasksState } from '../../../store/reducers/tasks.reducer';
+import { EditSectionDialogActions } from '../../../store/actions';
 
 import { EditSectionDialogComponent } from './edit-section-dialog.component';
-
-const initialState: AppState = {
-  projects: {
-    currentProjectId: 1,
-    projects: [{ id: 1, name: 'Project' }],
-  },
-  sections: {
-    currentSectionId: 1,
-    sections: [{ id: 1, name: 'Section', projectId: 1 }],
-  },
-  tasks: initialTasksState,
-};
 
 describe('EditSectionDialogComponent', () => {
   let component: EditSectionDialogComponent;
   let fixture: ComponentFixture<EditSectionDialogComponent>;
   let matDialogRef: jasmine.SpyObj<MatDialogRef<EditSectionDialogComponent>>;
-  let section: Section;
+  let section: Section = { id: 1, name: 'Section', projectId: 1 };
   let store: MockStore;
 
   beforeEach(async () => {
-    section = initialState.sections.sections[0];
     matDialogRef = jasmine.createSpyObj('MatDialogRef', {
       close: () => {},
     });
@@ -53,53 +38,81 @@ describe('EditSectionDialogComponent', () => {
         NoopAnimationsModule,
       ],
       providers: [
-        provideMockStore({ initialState }),
-        { provide: MAT_DIALOG_DATA, useValue: {} },
+        provideMockStore(),
+        { provide: MAT_DIALOG_DATA, useValue: null },
         { provide: MatDialogRef, useValue: matDialogRef },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditSectionDialogComponent);
     store = TestBed.inject(MockStore);
-    component = fixture.componentInstance;
-    component.ngOnInit();
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-    expect(component.form.get('name')?.value).toBe(section.name);
+  describe('ngOnInit', () => {
+    it('should throw an error when no Section data is supplied to the component', () => {
+      expect(() => {
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+      }).toThrowError();
+    });
+
+    it('should create', () => {
+      component = fixture.componentInstance;
+      component.data = section;
+      fixture.detectChanges();
+
+      expect(component).toBeTruthy();
+    });
   });
 
-  it('should dispatch the "close" action when the component is destroyed', () => {
-    spyOn(store, 'dispatch');
-    component.ngOnDestroy();
-    expect(store.dispatch).toHaveBeenCalledWith(
-      KanbanViewActions.closeEditSectionDialog()
-    );
+  describe('#ngOnDestroy', () => {
+    it('should dispatch an action when the component is destroyed', () => {
+      spyOn(store, 'dispatch');
+      component = fixture.componentInstance;
+      component.data = section;
+      fixture.detectChanges();
+
+      component.ngOnDestroy();
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        EditSectionDialogActions.onDestroy()
+      );
+    });
   });
 
   describe('#handleSave', () => {
     beforeEach(() => {
+      component = fixture.componentInstance;
+      component.data = section;
+      fixture.detectChanges();
+    });
+
+    it('should NOT dispatch an action when the form is pristine', () => {
       spyOn(store, 'dispatch');
+      component.handleSave();
+      expect(store.dispatch).not.toHaveBeenCalled();
     });
 
     it('should NOT dispatch an action when the form is invalid', () => {
-      component.handleSave(section);
+      spyOn(store, 'dispatch');
+      component.nameControl.setValue(' '.repeat(Section.Name.MaxLength + 1));
+      component.nameControl.markAsDirty();
+      component.handleSave();
       expect(store.dispatch).not.toHaveBeenCalled();
     });
 
     it('should dispatch the "updateSection" action', () => {
+      spyOn(store, 'dispatch');
       component.nameControl.setValue('Updated Section Name');
       component.nameControl.markAsDirty();
-      component.handleSave(section);
+      component.handleSave();
 
       expect(matDialogRef.close).toHaveBeenCalled();
       expect(store.dispatch).toHaveBeenCalledWith(
-        KanbanViewActions.updateSection({
+        EditSectionDialogActions.updateSection({
           section: {
             ...section,
-            name: component.nameControl.value
+            name: component.nameControl.value,
           },
         })
       );
