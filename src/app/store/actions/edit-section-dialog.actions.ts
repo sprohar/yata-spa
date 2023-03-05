@@ -6,5 +6,6 @@ export const EditSectionDialogActions = createActionGroup({
   events: {
     'On Init': props<{ section: Section }>(),
     'On Destroy': emptyProps(),
+    'Update Section': props<{ section: Partial<Section> }>(),
   },
 });

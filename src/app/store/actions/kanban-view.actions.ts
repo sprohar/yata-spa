@@ -1,4 +1,4 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
 import { Project, Section, Task } from '../../models';
 
 export const KanbanViewActions = createActionGroup({
@@ -9,7 +9,6 @@ export const KanbanViewActions = createActionGroup({
     'Delete Task': props<{ task: Task }>(),
     'Move Task To Section': props<{ task: Partial<Task> }>(),
     'Update Task': props<{ task: Partial<Task> }>(),
-    'Update Section': props<{ section: Partial<Section> }>(),
     'Set Current Task Id': props<{ taskId: number }>(),
   },
 });

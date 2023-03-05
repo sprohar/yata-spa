@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
 import { SectionsService } from '../../services/sections.service';
 import {
+  EditSectionDialogActions,
   KanbanViewActions,
   SectionOptionsMenuActions,
   YataApiActions,
@@ -58,7 +59,7 @@ export class SectionsEffects {
 
   update$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(KanbanViewActions.updateSection),
+      ofType(EditSectionDialogActions.updateSection),
       concatMap((action) =>
         this.sectionsService.update(action.section).pipe(
           map(
