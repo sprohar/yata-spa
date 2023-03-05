@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
@@ -16,6 +16,7 @@ import { selectCurrentProjectId } from '../../../store/reducers/projects.reducer
   styleUrls: ['./create-task.component.scss'],
 })
 export class CreateTaskComponent implements OnInit {
+  @Output() created = new EventEmitter<void>();
   @Input() section?: Section;
   currentProjectId$ = this.store.select(selectCurrentProjectId);
   form!: FormGroup;
@@ -68,6 +69,7 @@ export class CreateTaskComponent implements OnInit {
     }
 
     this.store.dispatch(CreateTaskActions.createTask({ task }));
+    this.created.emit();
     this.form.reset();
   }
 }
