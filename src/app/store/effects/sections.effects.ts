@@ -8,6 +8,7 @@ import {
   EditSectionDialogActions,
   KanbanViewActions,
   SectionOptionsMenuActions,
+  ViewHeaderActions,
   YataApiActions,
 } from '../actions';
 
@@ -21,7 +22,7 @@ export class SectionsEffects {
 
   create$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(KanbanViewActions.createSection),
+      ofType(KanbanViewActions.createSection, ViewHeaderActions.createSection),
       concatMap((action) =>
         this.sectionsService.create(action.section).pipe(
           map((section) => YataApiActions.createSectionSuccess({ section })),
@@ -69,7 +70,8 @@ export class SectionsEffects {
           })
           .pipe(
             map(
-              (section) => YataApiActions.moveSectionToProjectSuccess({ section }),
+              (section) =>
+                YataApiActions.moveSectionToProjectSuccess({ section }),
               catchError(() =>
                 of(
                   YataApiActions.moveSectionToProjectError({
