@@ -7,7 +7,10 @@ export const selectCurrentTask = createSelector(
   (taskId, tasks) => tasks.find((t) => t.id === taskId)
 );
 
-export const selectUnsectionedTasks = createSelector(
-  selectTasks,
-  (tasks) => tasks.filter(task => !task.sectionId)
+export const selectUnsectionedTasks = createSelector(selectTasks, (tasks) =>
+  tasks.filter((task) => !task.sectionId)
+);
+
+export const selectCompletedTasks = createSelector(selectTasks, (tasks) =>
+  tasks.filter((task) => task.completed)
 );
