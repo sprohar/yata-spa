@@ -1,3 +1,12 @@
-export * as fromProjects from './projects.selectors';
-export * as fromSections from './sections.selectors';
-export * as fromTasks from './tasks.selectors';
+export * from './projects.selectors';
+export * from './sections.selectors';
+export * from './tasks.selectors';
+export {
+  selectCurrentProjectId,
+  selectProjects,
+} from '../reducers/projects.reducer';
+export {
+  selectCurrentSectionId,
+  selectSections,
+} from '../reducers/sections.reducer';
+export { selectCurrentTaskId, selectTasks } from '../reducers/tasks.reducer';
