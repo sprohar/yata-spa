@@ -1,0 +1,41 @@
+<details open>
+  <summary yataClickable (click)="toggleExpanded()">
+    <div class="summary-content">
+      <!-- Section name -->
+      <span>
+        {{ section.name }}&nbsp;
+        <span class="badge-task-count">({{ section.tasks?.length }})</span>
+      </span>
+
+      <!-- Actions -->
+      <div class="section-actions" *ngIf="!isCompletedSection">
+        <button mat-icon-button title="Add task">
+          <mat-icon>add</mat-icon>
+        </button>
+        <yata-section-options-menu
+          [direction]="'horizontal'"
+          [section]="section"
+        ></yata-section-options-menu>
+      </div>
+
+      <span class="spacer"></span>
+
+      <!-- Toggle section visibility -->
+      <ng-container *ngIf="expanded; else notExpanded">
+        <button mat-icon-button [disabled]="true">
+          <mat-icon>expand_less</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #notExpanded>
+        <button mat-icon-button [disabled]="true">
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </ng-template>
+    </div>
+  </summary>
+
+  <yata-task-list
+    [section]="section"
+    [tasks]="section.tasks ?? []"
+  ></yata-task-list>
+</details>
