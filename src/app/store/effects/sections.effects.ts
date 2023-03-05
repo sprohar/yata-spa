@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
+import { Section } from '../../models';
 import { SectionsService } from '../../services/sections.service';
 import {
   EditSectionDialogActions,
@@ -53,6 +54,31 @@ export class SectionsEffects {
             )
           )
         )
+      )
+    )
+  );
+
+  moveToProject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SectionOptionsMenuActions.moveToProject),
+      concatMap((action) =>
+        this.sectionsService
+          .update({
+            id: action.section.id,
+            projectId: action.targetProjectId,
+          })
+          .pipe(
+            map(
+              (section) => YataApiActions.updateSectionSuccess({ section }),
+              catchError(() =>
+                of(
+                  YataApiActions.updateSectionError({
+                    message: 'Could not update Section',
+                  })
+                )
+              )
+            )
+          )
       )
     )
   );
