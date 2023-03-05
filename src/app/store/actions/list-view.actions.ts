@@ -5,7 +5,7 @@ export const ListViewActions = createActionGroup({
   source: 'List View',
   events: {
     'Switch to Kanban View': props<{ project: Project }>(),
-    'Mark Task As Complete': props<{ task: Task }>(),
-    'Mark Task As Incomplete': props<{ task: Task }>(),
+    'Mark Task As Complete': props<{ task: Partial<Task> }>(),
+    'Mark Task As Incomplete': props<{ task: Partial<Task> }>(),
   },
 });
