@@ -41,13 +41,13 @@
         <mat-icon>edit</mat-icon>
         <span>Edit</span>
       </button> -->
-      <button mat-menu-item>
-        <mat-icon>push_pin</mat-icon>
-        <span>Pin</span>
+      <button mat-menu-item (click)="openCreateSectionDialog(project)">
+        <mat-icon>add</mat-icon>
+        <span>Add Section</span>
       </button>
       <button mat-menu-item>
         <mat-icon>history</mat-icon>
-        <span>History</span>
+        <span>Show History</span>
       </button>
       <mat-divider></mat-divider>
       <button
@@ -55,7 +55,7 @@
         (click)="openDeleteProjectConfirmationDialog(project)"
       >
         <mat-icon>delete</mat-icon>
-        <span>Delete</span>
+        <span>Delete Project</span>
       </button>
     </mat-menu>
   </header>

@@ -158,4 +158,11 @@ describe('ViewHeaderComponent', () => {
       );
     });
   });
+
+  describe('#openCreateSectionDialog', () => {
+    it('should open the "CreateSectionDailogComponent"', () => {
+      component.openCreateSectionDialog(initialState.projects.projects[0]);
+      expect(matDialogSpy.open).toHaveBeenCalled();
+    });
+  });
 });

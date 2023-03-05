@@ -26,6 +26,7 @@ import { TimeInputComponent } from './components/time-input/time-input.component
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { ClickableDirective } from './directives/clickable.directive';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
+import { CreateSectionDialogComponent } from './components/create-section-dialog/create-section-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     DateTimePickerDialogComponent,
     ClickableDirective,
     SectionOptionsMenuComponent,
+    CreateSectionDialogComponent,
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,7 @@ import {
   ViewHeaderActions,
 } from '../../../store/actions';
 import { selectCurrentProject } from '../../../store/selectors/projects.selectors';
+import { CreateSectionDialogComponent } from '../create-section-dialog/create-section-dialog.component';
 
 @Component({
   selector: 'yata-view-header',
@@ -57,7 +58,6 @@ export class ViewHeaderComponent implements OnDestroy {
   }
 
   openDeleteProjectConfirmationDialog(project: Project) {
-    // TODO: Unit test (openDeleteProjectConfirmationDialog)
     const dialogData: ConfirmationDialogData = {
       title: 'Delete Project',
       content: 'Deleting a project will also delete all tasks. Continue?',
@@ -79,6 +79,12 @@ export class ViewHeaderComponent implements OnDestroy {
           );
         }
       });
+  }
+
+  openCreateSectionDialog(project: Project) {
+    this.dialog.open(CreateSectionDialogComponent, {
+      data: project,
+    });
   }
 
   // openProjectDetailsDialog() {
