@@ -59,7 +59,8 @@ export class TasksEffects {
         TaskDetailsActions.updateTask,
         TaskDetailsActions.moveTaskToProject,
         ListViewActions.markTaskAsComplete,
-        ListViewActions.markTaskAsIncomplete
+        ListViewActions.markTaskAsIncomplete,
+        ListViewActions.moveTaskToSection,
       ),
       concatMap((action) =>
         this.tasksService.update(action.task).pipe(
