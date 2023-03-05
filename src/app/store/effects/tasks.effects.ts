@@ -6,6 +6,7 @@ import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskActions,
   KanbanViewActions,
+  ListViewActions,
   TaskDetailsActions,
   YataApiActions,
 } from '../actions';
@@ -56,7 +57,9 @@ export class TasksEffects {
         KanbanViewActions.updateTask,
         KanbanViewActions.moveTaskToSection,
         TaskDetailsActions.updateTask,
-        TaskDetailsActions.moveTaskToProject
+        TaskDetailsActions.moveTaskToProject,
+        ListViewActions.markTaskAsComplete,
+        ListViewActions.markTaskAsIncomplete
       ),
       concatMap((action) =>
         this.tasksService.update(action.task).pipe(
