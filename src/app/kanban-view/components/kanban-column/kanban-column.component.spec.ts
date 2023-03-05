@@ -13,33 +13,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { of } from 'rxjs';
 import { Section, Task } from '../../../models';
 import { KanbanViewActions } from '../../../store/actions';
-import { AppState } from '../../../store/app.state';
-import { projectsInitialState } from '../../../store/reducers/projects.reducer';
-import { initialSectionsState } from '../../../store/reducers/sections.reducer';
-import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 
 import { KanbanColumnComponent } from './kanban-column.component';
-
-const initialState: AppState = {
-  projects: projectsInitialState,
-  sections: initialSectionsState,
-  tasks: initialTasksState,
-};
-
-class MatDialogRefStub {
-  afterClosed() {
-    return of(true);
-  }
-}
-
-class MatDialogStub {
-  open() {
-    return new MatDialogRefStub();
-  }
-}
 
 const task: Task = {
   id: 1,
@@ -73,13 +50,7 @@ describe('KanbanColumnComponent', () => {
         MatButtonModule,
         MatCardModule,
       ],
-      providers: [
-        provideMockStore({ initialState }),
-        {
-          provide: MatDialog,
-          useClass: MatDialogStub,
-        },
-      ],
+      providers: [provideMockStore()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(KanbanColumnComponent);
@@ -158,14 +129,6 @@ describe('KanbanColumnComponent', () => {
           },
         })
       );
-    });
-  });
-
-  describe('#handleDeleteColumn', () => {
-    it('should dispatch the "deleteSection" action', () => {
-      spyOn(store, 'dispatch');
-      component.handleDeleteColumn();
-      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 });

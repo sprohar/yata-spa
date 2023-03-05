@@ -1,22 +1,10 @@
 <article *ngIf="section" class="column">
   <div class="column-header">
     <h2>{{ section.name }}</h2>
-
-    <ng-container *ngIf="section.id">
-      <button mat-icon-button [matMenuTriggerFor]="columnOptions">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #columnOptions>
-        <button mat-menu-item (click)="handleEditColumn()">
-          <mat-icon>edit</mat-icon>
-          <span>Edit</span>
-        </button>
-        <button mat-menu-item (click)="handleDeleteColumn()">
-          <mat-icon>delete</mat-icon>
-          <span>Delete</span>
-        </button>
-      </mat-menu>
-    </ng-container>
+    <yata-section-options-menu
+      [section]="section"
+      [direction]="'vertical'"
+    ></yata-section-options-menu>
   </div>
   <div class="tasks-container">
     <div class="create-task-container">
