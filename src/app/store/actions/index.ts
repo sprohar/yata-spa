@@ -1,6 +1,7 @@
 export * from './create-task.actions';
 export * from './kanban-view.actions';
 export * from './list-view.actions';
+export * from './section-options-menu.actions';
 export * from './sidenav.actions';
 export * from './task-card.actions';
 export * from './task-details.actions';

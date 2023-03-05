@@ -3,7 +3,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
 import { SectionsService } from '../../services/sections.service';
-import { KanbanViewActions, YataApiActions } from '../actions';
+import {
+  KanbanViewActions,
+  SectionOptionsMenuActions,
+  YataApiActions,
+} from '../actions';
 
 @Injectable()
 export class SectionsEffects {
@@ -33,7 +37,7 @@ export class SectionsEffects {
 
   delete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(KanbanViewActions.deleteSection),
+      ofType(SectionOptionsMenuActions.deleteSection),
       mergeMap((action) =>
         this.sectionsService.delete(action.section).pipe(
           map(() =>
