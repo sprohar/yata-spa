@@ -13,6 +13,27 @@ export const selectCurrentSection = createSelector(
   (sectionId, sections) => sections.find((s) => s.id === sectionId)
 );
 
+export const selectSectionsWithIncompleteTasks = createSelector(
+  selectCurrentProjectId,
+  selectSections,
+  selectTasks,
+  (projectId, sections, tasks) => {
+    const collection: Section[] = [];
+    for (const section of sections) {
+      collection.push({
+        ...section,
+        tasks: tasks.filter(
+          (task) =>
+            task.sectionId === section.id &&
+            task.projectId === projectId &&
+            !task.completed
+        ),
+      });
+    }
+    return collection;
+  }
+);
+
 export const selectSectionsWithTasks = createSelector(
   selectCurrentProjectId,
   selectSections,
