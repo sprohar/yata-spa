@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { Section } from '../../../models';
+import { Project, Section } from '../../../models';
 import { ConfirmationDialogService } from '../../../services/confirmation-dialog.service';
 import { SectionOptionsMenuActions } from '../../../store/actions';
 import { selectProjectsDropdown } from '../../../store/selectors';
@@ -41,6 +41,20 @@ export class SectionOptionsMenuComponent implements OnDestroy, OnInit {
 
   get icon() {
     return this.direction === 'horizontal' ? 'more_horiz' : 'more_vert';
+  }
+
+  trackByProjectId(index: number, project: Project) {
+    return project.id;
+  }
+
+  handleMoveToProject(targetProjectId: number) {
+    this.store.dispatch(
+      SectionOptionsMenuActions.moveToProject({
+        sourceProjectId: this.section?.projectId!,
+        targetProjectId,
+        section: this.section!,
+      })
+    );
   }
 
   handleEdit() {

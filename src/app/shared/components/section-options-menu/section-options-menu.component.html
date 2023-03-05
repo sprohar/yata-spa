@@ -4,14 +4,18 @@
   </button>
   <mat-menu #options="matMenu">
     <button mat-menu-item (click)="handleEdit()">Edit</button>
-    <button mat-menu-item>Delete</button>
+    <button mat-menu-item (click)="handleDelete()">Delete</button>
     <button mat-menu-item [matMenuTriggerFor]="availableProjects">
       Move to project
     </button>
   </mat-menu>
 
   <mat-menu #availableProjects="matMenu">
-    <button mat-menu-item *ngFor="let project of projects">
+    <button
+      mat-menu-item
+      *ngFor="let project of projects; trackBy: trackByProjectId"
+      (click)="handleMoveToProject(project.id!)"
+    >
       {{ project.name }}
     </button>
   </mat-menu>
