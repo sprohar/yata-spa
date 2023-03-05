@@ -1,27 +1,26 @@
-<ul class="task-list">
+<ul
+  class="task-list"
+  cdkDropList
+  [cdkDropListData]="section"
+  (cdkDropListDropped)="handleDropped($event)"
+>
   <ng-container *ngFor="let task of tasks">
     <li
       yataClickable
       class="task-list-item"
-      matRipple
-      [matRippleTrigger]="trigger"
       [attr.data-task]="task.id"
+      cdkDrag
+      [cdkDragData]="task"
     >
       <mat-checkbox
         [checked]="task.completed"
         (change)="handleCheckbox($event.checked, task)"
       ></mat-checkbox>
-      <div
-        class="task-text"
-        #trigger
-        class="task-text"
-        (click)="handleSelectedTask(task)"
-      >
+      <div class="task-text">
         <span>
           {{ task.title }}
         </span>
       </div>
     </li>
-    <mat-divider></mat-divider>
   </ng-container>
 </ul>

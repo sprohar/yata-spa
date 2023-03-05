@@ -1,7 +1,8 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Task } from '../../../models';
+import { Section, Task } from '../../../models';
 import { ListViewActions } from '../../../store/actions';
 
 @Component({
@@ -10,6 +11,7 @@ import { ListViewActions } from '../../../store/actions';
   styleUrls: ['./task-list.component.scss'],
 })
 export class TaskListComponent implements OnInit {
+  @Input() section?: Section;
   @Input() tasks!: Task[];
 
   constructor(private store: Store, private router: Router) {}
@@ -46,5 +48,27 @@ export class TaskListComponent implements OnInit {
         })
       );
     }
+  }
+
+  handleDropped(
+    event: CdkDragDrop<Section | undefined, Section | undefined, Task>
+  ) {
+    const source = event.previousContainer.data;
+    const target = event.container.data;
+    const task = event.item.data;
+
+    if (source?.id === target?.id) {
+      return;
+    }
+
+    this.store.dispatch(
+      ListViewActions.moveTaskToSection({
+        task: {
+          id: task.id,
+          projectId: task.projectId,
+          sectionId: target ? target.id : null,
+        },
+      })
+    );
   }
 }
