@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
-import { TaskCardActions } from '../../../store/actions/task-card.actions';
+import { TaskCardActions } from '../../../store/actions';
 
 @Component({
   selector: 'yata-task-card',
