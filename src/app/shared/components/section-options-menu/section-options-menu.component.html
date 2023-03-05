@@ -1,0 +1,18 @@
+<ng-container *ngIf="projects$ | async as projects">
+  <button mat-icon-button [matMenuTriggerFor]="options" title="Section options">
+    <mat-icon>{{ icon }}</mat-icon>
+  </button>
+  <mat-menu #options="matMenu">
+    <button mat-menu-item (click)="handleEdit()">Edit</button>
+    <button mat-menu-item>Delete</button>
+    <button mat-menu-item [matMenuTriggerFor]="availableProjects">
+      Move to project
+    </button>
+  </mat-menu>
+
+  <mat-menu #availableProjects="matMenu">
+    <button mat-menu-item *ngFor="let project of projects">
+      {{ project.name }}
+    </button>
+  </mat-menu>
+</ng-container>

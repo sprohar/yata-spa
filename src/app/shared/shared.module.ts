@@ -17,6 +17,7 @@ import { CreateSubtaskComponent } from './components/create-subtask/create-subta
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { DateTimePickerDialogComponent } from './components/date-time-picker-dialog/date-time-picker-dialog.component';
 import { EditSectionDialogComponent } from './components/edit-section-dialog/edit-section-dialog.component';
+import { SectionOptionsMenuComponent } from './components/section-options-menu/section-options-menu.component';
 import { SubtaskListItemComponent } from './components/subtask-list-item/subtask-list-item.component';
 import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
@@ -40,6 +41,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TimeInputComponent,
     DateTimePickerDialogComponent,
     ClickableDirective,
+    SectionOptionsMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -65,6 +67,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskDetailsComponent,
     TaskPriorityPickerComponent,
     ClickableDirective,
+    SectionOptionsMenuComponent,
   ],
 })
 export class SharedModule {}
