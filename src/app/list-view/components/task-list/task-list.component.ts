@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
+import { ListViewActions } from '../../../store/actions';
 
 @Component({
   selector: 'yata-task-list',
@@ -11,7 +12,7 @@ import { Task } from '../../../models';
 export class TaskListComponent implements OnInit {
   @Input() tasks!: Task[];
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
     if (!this.tasks) {
@@ -20,11 +21,30 @@ export class TaskListComponent implements OnInit {
   }
 
   handleSelectedTask(task: Task) {
-    console.log(task);
+    this.router.navigate(['list', task.projectId, 'tasks', task.id]);
   }
 
-  handleCompletedToggle(event: MatCheckboxChange) {
-    const element: HTMLElement = event.source._elementRef.nativeElement;
-    console.log('toggled');
+  handleCheckbox(checked: boolean, task: Task) {
+    if (checked) {
+      this.store.dispatch(
+        ListViewActions.markTaskAsComplete({
+          task: {
+            id: task.id,
+            completed: true,
+            projectId: task.projectId,
+          },
+        })
+      );
+    } else {
+      this.store.dispatch(
+        ListViewActions.markTaskAsIncomplete({
+          task: {
+            id: task.id,
+            completed: false,
+            projectId: task.projectId,
+          },
+        })
+      );
+    }
   }
 }

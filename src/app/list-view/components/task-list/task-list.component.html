@@ -1,0 +1,27 @@
+<ul class="task-list">
+  <ng-container *ngFor="let task of tasks">
+    <li
+      yataClickable
+      class="task-list-item"
+      matRipple
+      [matRippleTrigger]="trigger"
+      [attr.data-task]="task.id"
+    >
+      <mat-checkbox
+        [checked]="task.completed"
+        (change)="handleCheckbox($event.checked, task)"
+      ></mat-checkbox>
+      <div
+        class="task-text"
+        #trigger
+        class="task-text"
+        (click)="handleSelectedTask(task)"
+      >
+        <span>
+          {{ task.title }}
+        </span>
+      </div>
+    </li>
+    <mat-divider></mat-divider>
+  </ng-container>
+</ul>
