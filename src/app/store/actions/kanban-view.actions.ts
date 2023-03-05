@@ -11,8 +11,5 @@ export const KanbanViewActions = createActionGroup({
     'Update Task': props<{ task: Partial<Task> }>(),
     'Update Section': props<{ section: Partial<Section> }>(),
     'Set Current Task Id': props<{ taskId: number }>(),
-    'Set Current Section Id': props<{ sectionId: number }>(),
-    'Reset Current Section Id': emptyProps(),
-    'Close Edit Section Dialog': emptyProps(),
   },
 });

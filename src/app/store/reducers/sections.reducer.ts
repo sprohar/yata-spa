@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Section } from '../../models';
-import { KanbanViewActions, YataApiActions } from '../actions';
+import { EditSectionDialogActions, YataApiActions } from '../actions';
 
 export interface SectionsState {
   sections: Section[];
@@ -16,17 +16,13 @@ export const sectionsFeature = createFeature({
   name: 'sections',
   reducer: createReducer(
     initialSectionsState,
-    on(KanbanViewActions.setCurrentSectionId, (state, action) => ({
+    on(EditSectionDialogActions.onInit, (state, action) => ({
       sections: state.sections,
-      currentSectionId: action.sectionId,
+      currentSectionId: action.section.id!,
     })),
-    on(KanbanViewActions.resetCurrentSectionId, (state, _) => ({
+    on(EditSectionDialogActions.onDestroy, (state, _) => ({
       currentSectionId: null,
       sections: state.sections,
-    })),
-    on(KanbanViewActions.closeEditSectionDialog, (state, _) => ({
-      sections: state.sections,
-      currentSectionId: null,
     })),
     on(YataApiActions.createSectionSuccess, (state, action) => ({
       currentSectionId: state.currentSectionId,
