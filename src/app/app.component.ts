@@ -18,7 +18,7 @@ export class AppComponent {
   projects$ = this.store.select(selectProjects);
 
   isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
+    .observe([Breakpoints.Handset, Breakpoints.HandsetLandscape])
     .pipe(
       map((result) => result.matches),
       shareReplay()
