@@ -88,7 +88,7 @@ describe('CreateSubtaskComponent', () => {
       spyOn(component.cancel, 'emit');
       component.handleCancel();
       expect(component.cancel.emit).toHaveBeenCalled();
-    })
+    });
   });
 
   describe('#handleSave', () => {
@@ -105,12 +105,22 @@ describe('CreateSubtaskComponent', () => {
     it('should dispatch an action to create a new Subtask', () => {
       spyOn(store, 'dispatch');
 
-      component.form.get('title')?.setValue('Subtask');
+      const subtask: Subtask = {
+        title: 'Subtask',
+        taskId: 1,
+        completed: false,
+        priority: Task.Priority.NONE,
+      };
+
+      component.form.patchValue({
+        title: subtask.title,
+      });
+
       component.handleSave();
 
       expect(store.dispatch).toHaveBeenCalledWith(
         TaskDetailsActions.createSubtask({
-          subtask: component.form.value,
+          subtask,
         })
       );
     });
