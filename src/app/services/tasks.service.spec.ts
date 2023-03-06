@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController
@@ -11,7 +10,6 @@ import { TasksService } from './tasks.service';
 
 describe('TasksService', () => {
   let service: TasksService;
-  let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
@@ -20,7 +18,6 @@ describe('TasksService', () => {
     });
 
     service = TestBed.inject(TasksService);
-    httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
