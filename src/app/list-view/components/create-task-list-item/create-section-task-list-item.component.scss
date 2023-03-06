@@ -1,0 +1,11 @@
+.task-list-item {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  border-radius: 6px;
+}
+
+.task-text {
+  cursor: pointer;
+  width: 100%;
+}
