@@ -14,6 +14,7 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 import { ListViewRoutingModule } from './list-view-routing.module';
 import { ListViewComponent } from './list-view.component';
 import { CreateSectionTaskListItem } from './components/create-task-list-item/create-section-task-list-item.component';
+import { TaskListItemComponent } from './components/task-list-item/task-list-item.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CreateSectionTaskListItem } from './components/create-task-list-item/cr
     TaskListComponent,
     ProjectSectionComponent,
     CreateSectionTaskListItem,
+    TaskListItemComponent,
   ],
   imports: [
     CommonModule,

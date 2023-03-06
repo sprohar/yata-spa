@@ -1,0 +1,7 @@
+<li class="task-list-item" [attr.data-task]="task.id" [formGroup]="form">
+  <mat-checkbox
+    [checked]="task.completed"
+    (change)="handleChecked($event.checked, task)"
+  ></mat-checkbox>
+  <input type="text" class="input" formControlName="title" (blur)="update()" />
+</li>
