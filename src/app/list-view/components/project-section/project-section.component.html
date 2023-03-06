@@ -9,7 +9,12 @@
 
       <!-- Actions -->
       <div class="section-actions" *ngIf="section.id">
-        <button mat-icon-button title="Add task">
+        <button
+          mat-icon-button
+          title="Add task"
+          ariaLabel="Add task to {{ section.name }}"
+          (click)="handleAddTask()"
+        >
           <mat-icon>add</mat-icon>
         </button>
         <yata-section-options-menu
