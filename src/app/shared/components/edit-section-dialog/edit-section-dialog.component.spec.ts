@@ -65,21 +65,6 @@ describe('EditSectionDialogComponent', () => {
     });
   });
 
-  describe('#ngOnDestroy', () => {
-    it('should dispatch an action when the component is destroyed', () => {
-      spyOn(store, 'dispatch');
-      component = fixture.componentInstance;
-      component.data = section;
-      fixture.detectChanges();
-
-      component.ngOnDestroy();
-
-      expect(store.dispatch).toHaveBeenCalledWith(
-        EditSectionDialogActions.onDestroy()
-      );
-    });
-  });
-
   describe('#handleSave', () => {
     beforeEach(() => {
       component = fixture.componentInstance;

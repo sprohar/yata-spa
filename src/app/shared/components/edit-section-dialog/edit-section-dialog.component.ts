@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -15,7 +15,7 @@ import { EditSectionDialogActions } from '../../../store/actions';
   templateUrl: './edit-section-dialog.component.html',
   styleUrls: ['./edit-section-dialog.component.scss'],
 })
-export class EditSectionDialogComponent implements OnDestroy, OnInit {
+export class EditSectionDialogComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
@@ -25,20 +25,11 @@ export class EditSectionDialogComponent implements OnDestroy, OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Section
   ) {}
 
-  ngOnDestroy(): void {
-    this.store.dispatch(EditSectionDialogActions.onDestroy());
-  }
-
   ngOnInit(): void {
     if (!this.data) {
       throw new Error('Section is undefined');
     }
     this.initForm(this.data);
-    this.store.dispatch(
-      EditSectionDialogActions.onInit({
-        section: this.data,
-      })
-    );
   }
 
   initForm(section: Section) {
