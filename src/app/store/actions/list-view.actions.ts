@@ -11,5 +11,6 @@ export const ListViewActions = createActionGroup({
     'Create Task In Section': props<{ task: Task }>(),
     'Open Create Section Task List Item': props<{ sectionId: number }>(),
     'Close Create Section Task List Item': emptyProps(),
+    'Update Task List Item': props<{ task: Task }>(),
   },
 });
