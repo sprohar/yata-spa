@@ -7,7 +7,9 @@
   <div class="sections-wrapper" cdkDropListGroup>
     <!-- Unsectioned tasks -->
     <ng-container *ngIf="unsectionedTasks$ | async as unsectionedTasks">
-      <yata-task-list [tasks]="unsectionedTasks"></yata-task-list>
+      <ng-container *ngIf="unsectionedTasks.length">
+        <yata-task-list [tasks]="unsectionedTasks"></yata-task-list>
+      </ng-container>
     </ng-container>
 
     <div *ngIf="sections$ | async as sections">
