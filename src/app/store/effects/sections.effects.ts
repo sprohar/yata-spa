@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
-import { Section } from '../../models';
 import { SectionsService } from '../../services/sections.service';
 import {
   EditSectionDialogActions,
