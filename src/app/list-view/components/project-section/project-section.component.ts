@@ -8,7 +8,6 @@ import { Section } from '../../../models';
 })
 export class ProjectSectionComponent implements OnInit {
   @Input() section!: Section;
-  isCompletedSection = false;
   expanded = true;
 
   constructor() {}
@@ -16,11 +15,6 @@ export class ProjectSectionComponent implements OnInit {
   ngOnInit(): void {
     if (!this.section) {
       throw new Error('"section" is undefined');
-    }
-    if (this.section.tasks) {
-      this.isCompletedSection = this.section.tasks.every(
-        (task) => task.completed
-      );
     }
   }
 
