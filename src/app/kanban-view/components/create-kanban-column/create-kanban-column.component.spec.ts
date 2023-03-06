@@ -6,10 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { of } from 'rxjs';
+import { Section } from 'src/app/models';
 import { KanbanViewActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
-import { selectCurrentProjectId } from '../../../store/reducers/projects.reducer';
 import { initialSectionsState } from '../../../store/reducers/sections.reducer';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 
@@ -46,6 +45,7 @@ describe('CreateKanbanColumnComponent', () => {
     fixture = TestBed.createComponent(CreateKanbanColumnComponent);
     store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
+    component.ngOnInit();
     fixture.detectChanges();
   });
 
@@ -72,18 +72,16 @@ describe('CreateKanbanColumnComponent', () => {
     });
 
     it('should dispatch the "createSection" action', () => {
+      const projectId = initialState.projects.currentProjectId!;
       spyOn(store, 'dispatch');
-      component.nameControl.setValue('New Section');
-      const currentProjectId = initialState.projects.currentProjectId;
 
-      component.handleSave(currentProjectId!);
+      const section: Section = { name: 'Section', projectId };
+      component.nameControl.setValue(section.name);
+      component.handleSave(section.projectId);
 
       expect(store.dispatch).toHaveBeenCalledWith(
         KanbanViewActions.createSection({
-          section: {
-            ...component.form.value,
-            projectId: currentProjectId,
-          },
+          section,
         })
       );
     });
