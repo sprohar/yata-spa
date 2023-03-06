@@ -107,7 +107,7 @@ export class ProjectsEffects {
     this.actions$.pipe(
       ofType(ViewHeaderActions.updateProject),
       concatMap((action) =>
-        this.projectsService.update(action.project).pipe(
+        this.projectsService.update(action.project.id!, action.project).pipe(
           map((project) => {
             this.snackbar.open(`${project.name} was updated.`);
             return YataApiActions.updateProjectSuccess({ project });
@@ -131,7 +131,7 @@ export class ProjectsEffects {
         KanbanViewActions.switchToListView
       ),
       concatMap((action) =>
-        this.projectsService.update(action.project).pipe(
+        this.projectsService.update(action.project.id!, action.project).pipe(
           map((project) => YataApiActions.updateProjectSuccess({ project })),
           catchError(() =>
             of(
