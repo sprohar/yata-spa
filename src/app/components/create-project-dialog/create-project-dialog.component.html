@@ -9,6 +9,7 @@
           matInput
           type="text"
           formControlName="name"
+          placeholder="Press Enter to save"
           (keyup.enter)="handleSave()"
         />
         <mat-hint>{{ input.value.length }} / {{ nameMaxLength }}</mat-hint>
