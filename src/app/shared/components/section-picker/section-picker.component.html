@@ -1,0 +1,17 @@
+<button mat-icon-button [matMenuTriggerFor]="options">
+  <mat-icon>expand_more</mat-icon>
+</button>
+<mat-menu #options="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="sections">Move to section</button>
+</mat-menu>
+<mat-menu #sections="matMenu">
+  <ng-container *ngIf="sections$ | async as sections">
+    <button
+      mat-menu-item
+      *ngFor="let section of sections; trackBy: trackBySectionId"
+      (click)="handleSelected(section)"
+    >
+      {{ section.name }}
+    </button>
+  </ng-container>
+</mat-menu>

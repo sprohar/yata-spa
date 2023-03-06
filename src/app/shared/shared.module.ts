@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -13,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { CreateSectionDialogComponent } from './components/create-section-dialog/create-section-dialog.component';
 import { CreateSubtaskComponent } from './components/create-subtask/create-subtask.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { DateTimePickerDialogComponent } from './components/date-time-picker-dialog/date-time-picker-dialog.component';
@@ -26,7 +28,7 @@ import { TimeInputComponent } from './components/time-input/time-input.component
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { ClickableDirective } from './directives/clickable.directive';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
-import { CreateSectionDialogComponent } from './components/create-section-dialog/create-section-dialog.component';
+import { SectionPickerComponent } from './components/section-picker/section-picker.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { CreateSectionDialogComponent } from './components/create-section-dialog
     ClickableDirective,
     SectionOptionsMenuComponent,
     CreateSectionDialogComponent,
+    SectionPickerComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +63,7 @@ import { CreateSectionDialogComponent } from './components/create-section-dialog
     MatSelectModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatChipsModule,
   ],
   exports: [
     TaskPriorityPipe,
