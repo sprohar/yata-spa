@@ -1,9 +1,9 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
 import { ListViewActions } from '../../../store/actions';
+import { selectCurrentSection } from '../../../store/selectors';
 
 @Component({
   selector: 'yata-task-list',
@@ -13,40 +13,13 @@ import { ListViewActions } from '../../../store/actions';
 export class TaskListComponent implements OnInit {
   @Input() section?: Section;
   @Input() tasks!: Task[];
+  currentSection$ = this.store.select(selectCurrentSection);
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     if (!this.tasks) {
       throw new Error('"tasks" is undefined');
-    }
-  }
-
-  handleSelectedTask(task: Task) {
-    this.router.navigate(['list', task.projectId, 'tasks', task.id]);
-  }
-
-  handleCheckbox(checked: boolean, task: Task) {
-    if (checked) {
-      this.store.dispatch(
-        ListViewActions.markTaskAsComplete({
-          task: {
-            id: task.id,
-            completed: true,
-            projectId: task.projectId,
-          },
-        })
-      );
-    } else {
-      this.store.dispatch(
-        ListViewActions.markTaskAsIncomplete({
-          task: {
-            id: task.id,
-            completed: false,
-            projectId: task.projectId,
-          },
-        })
-      );
     }
   }
 

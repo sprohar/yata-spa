@@ -1,18 +1,6 @@
-.task-text {
-  cursor: pointer;
-  width: 100%;
-}
-
 .task-list {
   padding: 0 8px;
   min-height: 48px;
-
-  .task-list-item {
-    display: flex;
-    align-items: center;
-    column-gap: 16px;
-    border-radius: 6px;
-  }
 }
 
 @media only screen and (min-width: 600px) {

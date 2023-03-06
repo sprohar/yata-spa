@@ -5,22 +5,18 @@
   (cdkDropListDropped)="handleDropped($event)"
 >
   <ng-container *ngFor="let task of tasks">
-    <li
-      yataClickable
-      class="task-list-item"
-      [attr.data-task]="task.id"
+    <yata-task-list-item
       cdkDrag
       [cdkDragData]="task"
-    >
-      <mat-checkbox
-        [checked]="task.completed"
-        (change)="handleCheckbox($event.checked, task)"
-      ></mat-checkbox>
-      <div class="task-text">
-        <span>
-          {{ task.title }}
-        </span>
-      </div>
-    </li>
+      [task]="task"
+    ></yata-task-list-item>
+  </ng-container>
+
+  <ng-container *ngIf="currentSection$ | async as currentSection">
+    <ng-container *ngIf="currentSection.id === section?.id">
+      <yata-create-section-task-list-item
+        [section]="currentSection"
+      ></yata-create-section-task-list-item>
+    </ng-container>
   </ng-container>
 </ul>
