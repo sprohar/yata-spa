@@ -1,5 +1,5 @@
-import { createActionGroup, props } from '@ngrx/store';
-import { Project, Task } from '../../models';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Project, Section, Task } from '../../models';
 
 export const ListViewActions = createActionGroup({
   source: 'List View',
@@ -8,5 +8,8 @@ export const ListViewActions = createActionGroup({
     'Mark Task As Complete': props<{ task: Partial<Task> }>(),
     'Mark Task As Incomplete': props<{ task: Partial<Task> }>(),
     'Move Task To Section': props<{ task: Partial<Task> }>(),
+    'Create Task In Section': props<{ task: Task }>(),
+    'Open Create Section Task List Item': props<{ sectionId: number }>(),
+    'Close Create Section Task List Item': emptyProps(),
   },
 });

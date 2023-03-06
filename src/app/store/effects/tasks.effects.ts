@@ -21,7 +21,7 @@ export class TasksEffects {
 
   create$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CreateTaskActions.createTask),
+      ofType(CreateTaskActions.createTask, ListViewActions.createTaskInSection),
       concatMap((action) =>
         this.tasksService.create(action.task).pipe(
           map((task) => YataApiActions.createTaskSuccess({ task })),
