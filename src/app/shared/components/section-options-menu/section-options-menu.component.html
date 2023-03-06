@@ -3,8 +3,14 @@
     <mat-icon>{{ icon }}</mat-icon>
   </button>
   <mat-menu #options="matMenu">
-    <button mat-menu-item (click)="handleEdit()">Edit</button>
-    <button mat-menu-item (click)="handleDelete()">Delete</button>
+    <button mat-menu-item (click)="handleEdit()">
+      <mat-icon>edit</mat-icon>
+      Rename
+    </button>
+    <button mat-menu-item (click)="handleDelete()">
+      <mat-icon>delete</mat-icon>
+      Delete
+    </button>
     <button mat-menu-item [matMenuTriggerFor]="availableProjects">
       Move to project
     </button>
