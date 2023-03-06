@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Section } from '../../models';
-import { EditSectionDialogActions, ListViewActions, YataApiActions } from '../actions';
+import { ListViewActions, YataApiActions } from '../actions';
 
 export interface SectionsState {
   sections: Section[];
@@ -23,14 +23,6 @@ export const sectionsFeature = createFeature({
     on(ListViewActions.closeCreateSectionTaskListItem, (state, _) => ({
       sections: state.sections,
       currentSectionId: null,
-    })),
-    on(EditSectionDialogActions.onInit, (state, action) => ({
-      sections: state.sections,
-      currentSectionId: action.section.id!,
-    })),
-    on(EditSectionDialogActions.onDestroy, (state, _) => ({
-      currentSectionId: null,
-      sections: state.sections,
     })),
     on(YataApiActions.createSectionSuccess, (state, action) => ({
       currentSectionId: state.currentSectionId,

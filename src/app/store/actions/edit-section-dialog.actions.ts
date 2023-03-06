@@ -4,8 +4,6 @@ import { Section } from '../../models';
 export const EditSectionDialogActions = createActionGroup({
   source: 'Edit Section Dialog',
   events: {
-    'On Init': props<{ section: Section }>(),
-    'On Destroy': emptyProps(),
     'Update Section': props<{ section: Partial<Section> }>(),
   },
 });
