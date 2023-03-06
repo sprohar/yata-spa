@@ -32,8 +32,8 @@ export class TasksService {
     return this.http.get<PaginatedList<Task>>(url);
   }
 
-  update(task: Task | Partial<Task>) {
-    const url = `${this.baseUrl}/tasks/${task.id}`;
+  update(id: number, task: Task | Partial<Task>) {
+    const url = `${this.baseUrl}/tasks/${id}`;
     return this.http.patch<Task>(url, task);
   }
 }

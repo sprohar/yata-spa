@@ -64,7 +64,7 @@ export class TasksEffects {
         ListViewActions.updateTaskListItem,
       ),
       concatMap((action) =>
-        this.tasksService.update(action.task).pipe(
+        this.tasksService.update(action.task.id!, action.task).pipe(
           map((task) => YataApiActions.updateTaskSuccess({ task })),
           tap(() => this.snackbar.open('Updated task')),
           catchError(() =>

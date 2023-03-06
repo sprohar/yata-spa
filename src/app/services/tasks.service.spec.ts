@@ -93,7 +93,7 @@ describe('TasksService', () => {
     it('should make a PATCH request to update a task', () => {
       const task: Task = {id: 1,  title: 'Title', projectId: 1 };
 
-      service.update(task).subscribe((data) => expect(data).toEqual(task));
+      service.update(task.id!, task).subscribe((data) => expect(data).toEqual(task));
 
       const url = `${environment.apiUrl}/tasks/${task.id}`;
       const req = httpTestingController.expectOne(url);
