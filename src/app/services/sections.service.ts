@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environment/environment';
 import { Section } from '../models/section.model';
-
-const baseUrl = 'http://localhost:7070';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SectionsService {
+  private readonly baseUrl = environment.apiUrl;
+  
   constructor(private http: HttpClient) {}
 
   create(section: Section) {
     return this.http.post<Section>(
-      `${baseUrl}/projects/${section.projectId}/sections`,
+      `${this.baseUrl}/projects/${section.projectId}/sections`,
       section
     );
   }
@@ -20,23 +21,23 @@ export class SectionsService {
   delete(section: Section) {
     const { projectId, id: sectionId } = section;
     return this.http.delete<void>(
-      `${baseUrl}/projects/${projectId}/sections/${sectionId}`
+      `${this.baseUrl}/projects/${projectId}/sections/${sectionId}`
     );
   }
 
   get(projectId: number, sectionId: number) {
     return this.http.get<Section>(
-      `${baseUrl}/projects/${projectId}/sections/${sectionId}`
+      `${this.baseUrl}/projects/${projectId}/sections/${sectionId}`
     );
   }
 
   getAll(projectId: number) {
-    return this.http.get<Section>(`${baseUrl}/projects/${projectId}`);
+    return this.http.get<Section>(`${this.baseUrl}/projects/${projectId}`);
   }
 
-  update(section: Partial<Section>) {
+  update(section: Section) {
     return this.http.patch<Section>(
-      `${baseUrl}/projects/${section.projectId}/sections/${section.id!}`,
+      `${this.baseUrl}/projects/${section.projectId}/sections/${section.id!}`,
       section
     );
   }
