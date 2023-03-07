@@ -4,6 +4,7 @@ import {
   CdkDropList,
   DragDropModule,
 } from '@angular/cdk/drag-drop';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
@@ -23,6 +24,7 @@ describe('TaskListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TaskListComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         MatRippleModule,
         MatCheckboxModule,
