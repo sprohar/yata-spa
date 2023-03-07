@@ -5,6 +5,7 @@ export const TaskOptionsMenuActions = createActionGroup({
   source: 'Task Options Menu',
   events: {
     'Delete Task': props<{ task: Task }>(),
+    'Duplicate Task': props<{ task: Task }>(),
     'View Task Details': props<{ taskId: number }>(),
   },
 });
