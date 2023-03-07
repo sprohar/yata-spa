@@ -2,6 +2,7 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { Subtask, Task } from '../../models';
 import { KanbanViewActions, YataApiActions } from '../actions';
 import { TaskDetailsActions } from '../actions/task-details.actions';
+import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
 
 export interface TasksState {
   tasks: Task[];
@@ -17,6 +18,14 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialTasksState,
+    on(TaskOptionsMenuActions.viewTaskDetails, (state, action) => ({
+      tasks: state.tasks,
+      currentTaskId: action.taskId,
+    })),
+    on(YataApiActions.deleteTaskSuccess, (state, action) => ({
+      ...state,
+      tasks: state.tasks.filter((task) => task.id !== action.task.id),
+    })),
     on(YataApiActions.moveSectionToProjectSuccess, (state, action) => {
       return {
         ...state,

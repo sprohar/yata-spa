@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of, switchMap, tap } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskActions,
@@ -10,6 +10,7 @@ import {
   TaskDetailsActions,
   YataApiActions,
 } from '../actions';
+import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
 
 @Injectable()
 export class TasksEffects {
@@ -29,6 +30,24 @@ export class TasksEffects {
             of(
               YataApiActions.createTaskError({
                 message: 'Could not create Task',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskOptionsMenuActions.deleteTask),
+      mergeMap((action) =>
+        this.tasksService.delete(action.task).pipe(
+          map(() => YataApiActions.deleteTaskSuccess({ task: action.task })),
+          catchError(() =>
+            of(
+              YataApiActions.deleteTaskError({
+                message: 'Could not delete Task',
               })
             )
           )
@@ -61,7 +80,7 @@ export class TasksEffects {
         ListViewActions.markTaskAsComplete,
         ListViewActions.markTaskAsIncomplete,
         ListViewActions.moveTaskToSection,
-        ListViewActions.updateTaskListItem,
+        ListViewActions.updateTaskListItem
       ),
       concatMap((action) =>
         this.tasksService.update(action.task.id!, action.task).pipe(
