@@ -1,6 +1,19 @@
+@use "../../../../scss/colors" as colors;
+
 .task-list-item {
   display: flex;
   align-items: center;
   column-gap: 16px;
   border-radius: 6px;
+
+  .actions {
+    display: flex;
+    visibility: hidden;
+  }
+
+  &:hover {
+    .actions {
+      visibility: visible;
+    }
+  }
 }

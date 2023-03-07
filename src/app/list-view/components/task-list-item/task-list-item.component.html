@@ -4,4 +4,13 @@
     (change)="handleChecked($event.checked, task)"
   ></mat-checkbox>
   <input type="text" class="input" formControlName="title" (blur)="update()" />
+  <div class="actions">
+    <yata-task-priority-picker
+      [value]="priorityControl.value"
+      (selectionChange)="handlePriorityChange($event)"
+    ></yata-task-priority-picker>
+    <button mat-icon-button title="Task options">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
 </li>
