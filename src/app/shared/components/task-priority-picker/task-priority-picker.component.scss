@@ -1,5 +1,9 @@
 @use "../../../../scss/colors" as colors;
 
+mat-icon {
+  opacity: 0.87 !important;
+}
+
 .high-priority {
   color: colors.$mat-red-700;
 }
