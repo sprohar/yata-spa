@@ -129,7 +129,7 @@ export class TaskDetailsComponent implements OnDestroy, OnInit {
     );
   }
 
-  handleCompleted() {
+  handleChecked() {
     const task: Task = this.form.value;
     this.store.dispatch(
       KanbanViewActions.updateTask({
@@ -143,7 +143,6 @@ export class TaskDetailsComponent implements OnDestroy, OnInit {
   }
 
   handleSave() {
-    console.log(this.form);
     if (this.form.invalid || this.form.pristine) {
       return;
     }
