@@ -9,31 +9,31 @@ import { environment } from '../../environment/environment';
 })
 export class TasksService {
   private readonly baseUrl = environment.apiUrl;
-  
+
   constructor(private http: HttpClient) {}
 
   create(task: Task) {
-    const url = `${this.baseUrl}/tasks`;
+    const url = `${this.baseUrl}/projects/${task.projectId}/tasks`;
     return this.http.post<Task>(url, task);
   }
 
-  delete(task: Task) {
-    const url = `${this.baseUrl}/tasks/${task.id}`;
-    return this.http.delete(url);
-  }
-
-  get(taskId: number) {
-    const url = `${this.baseUrl}/tasks/${taskId}`;
-    return this.http.get<Task>(url);
-  }
-
-  getProjectTasks(projectId: number) {
+  getAll(projectId: number) {
     const url = `${this.baseUrl}/projects/${projectId}/tasks`;
     return this.http.get<PaginatedList<Task>>(url);
   }
 
+  delete(task: Task) {
+    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}`;
+    return this.http.delete(url);
+  }
+
+  get(projectId: number, taskId: number) {
+    const url = `${this.baseUrl}/projects/${projectId}/tasks/${taskId}`;
+    return this.http.get<Task>(url);
+  }
+
   update(id: number, task: Task | Partial<Task>) {
-    const url = `${this.baseUrl}/tasks/${id}`;
+    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}`;
     return this.http.patch<Task>(url, task);
   }
 }

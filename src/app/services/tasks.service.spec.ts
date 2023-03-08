@@ -1,6 +1,6 @@
 import {
   HttpClientTestingModule,
-  HttpTestingController
+  HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { environment } from '../../environment/environment';
@@ -32,7 +32,7 @@ describe('TasksService', () => {
       const task: Task = { title: 'Title', projectId: 1 };
       service.create(task).subscribe((data) => expect(data).toEqual(task));
 
-      const url = `${environment.apiUrl}/tasks`;
+      const url = `${environment.apiUrl}/projects/${task.projectId}/tasks`;
       const req = httpTestingController.expectOne(url);
 
       expect(req.request.method).toEqual('POST');
@@ -43,11 +43,11 @@ describe('TasksService', () => {
 
   describe('#delete', () => {
     it('should make a DELETE request to delete a task', () => {
-      const task: Task = {id: 1,  title: 'Title', projectId: 1 };
+      const task: Task = { id: 1, title: 'Title', projectId: 1 };
 
       service.delete(task).subscribe((data) => expect(data).toEqual(task));
 
-      const url = `${environment.apiUrl}/tasks/${task.id}`;
+      const url = `${environment.apiUrl}/projects/${task.projectId}/tasks/${task.id}`;
       const req = httpTestingController.expectOne(url);
 
       expect(req.request.method).toEqual('DELETE');
@@ -57,12 +57,14 @@ describe('TasksService', () => {
   });
 
   describe('#get', () => {
-    it('should make a GEt request to fetch a task', () => {
-      const task: Task = {id: 1,  title: 'Title', projectId: 1 };
+    it('should make a GET request to fetch a task', () => {
+      const task: Task = { id: 1, title: 'Title', projectId: 1 };
 
-      service.get(task.id!).subscribe((data) => expect(data).toEqual(task));
+      service
+        .get(task.projectId, task.id!)
+        .subscribe((data) => expect(data).toEqual(task));
 
-      const url = `${environment.apiUrl}/tasks/${task.id}`;
+      const url = `${environment.apiUrl}/projects/${task.projectId}/tasks/${task.id}`;
       const req = httpTestingController.expectOne(url);
 
       expect(req.request.method).toEqual('GET');
@@ -71,11 +73,11 @@ describe('TasksService', () => {
     });
   });
 
-  describe('#getProjects', () => {
+  describe('#getAll', () => {
     it(`should make a GET request to fetch a project's tasks`, () => {
-      const task: Task = {id: 1,  title: 'Title', projectId: 1 };
+      const task: Task = { id: 1, title: 'Title', projectId: 1 };
 
-      service.getProjectTasks(task.projectId).subscribe();
+      service.getAll(task.projectId).subscribe();
 
       const url = `${environment.apiUrl}/projects/${task.projectId}/tasks`;
       const req = httpTestingController.expectOne(url);
@@ -88,11 +90,13 @@ describe('TasksService', () => {
 
   describe('#update', () => {
     it('should make a PATCH request to update a task', () => {
-      const task: Task = {id: 1,  title: 'Title', projectId: 1 };
+      const task: Task = { id: 1, title: 'Title', projectId: 1 };
 
-      service.update(task.id!, task).subscribe((data) => expect(data).toEqual(task));
+      service
+        .update(task.id!, task)
+        .subscribe((data) => expect(data).toEqual(task));
 
-      const url = `${environment.apiUrl}/tasks/${task.id}`;
+      const url = `${environment.apiUrl}/projects/${task.projectId}/tasks/${task.id}`;
       const req = httpTestingController.expectOne(url);
 
       expect(req.request.method).toEqual('PATCH');
