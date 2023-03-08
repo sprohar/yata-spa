@@ -58,12 +58,12 @@
       </span>
     </div>
 
-    <ng-container *ngIf="date">
+    <div class="suggested-date-item" *ngIf="date">
       <button mat-button (click)="clearDueDate()">
         <mat-icon class="icon">block</mat-icon>
         <span>No date</span>
       </button>
-    </ng-container>
+    </div>
   </div>
 
   <!-- Calendar: Pick due date -->
