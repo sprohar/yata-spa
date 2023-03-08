@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Subtask, Task } from '../../models';
-import { KanbanViewActions, YataApiActions } from '../actions';
+import { TaskResolverActions, YataApiActions } from '../actions';
 import { TaskDetailsActions } from '../actions/task-details.actions';
 import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
 
@@ -73,7 +73,7 @@ export const tasksFeature = createFeature({
         tasks,
       };
     }),
-    on(KanbanViewActions.setCurrentTaskId, (state, action) => ({
+    on(TaskResolverActions.setCurrentTaskId, (state, action) => ({
       tasks: state.tasks,
       currentTaskId: action.taskId,
     })),

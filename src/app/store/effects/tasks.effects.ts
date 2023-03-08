@@ -60,20 +60,6 @@ export class TasksEffects {
     )
   );
 
-  getById$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(KanbanViewActions.setCurrentTaskId),
-      switchMap((action) =>
-        this.tasksService.get(action.taskId).pipe(
-          map((task) => YataApiActions.loadTaskSuccess({ task })),
-          catchError(() =>
-            of(YataApiActions.loadTaskError({ message: 'Could not load Task' }))
-          )
-        )
-      )
-    )
-  );
-
   update$ = createEffect(() =>
     this.actions$.pipe(
       ofType(

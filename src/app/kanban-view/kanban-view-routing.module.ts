@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { projectTasksGuard } from '../guards/project-tasks.guard';
-import { taskDetailsGuard } from '../guards/task-details.guard';
+import { taskResolver } from '../resolvers/task-details.resolver';
 import { TaskDetailsComponent } from '../shared/components/task-details/task-details.component';
 import { KanbanViewComponent } from './kanban-view.component';
 
@@ -14,7 +14,10 @@ const routes: Routes = [
   {
     path: ':projectId/tasks/:taskId',
     component: TaskDetailsComponent,
-    canActivate: [projectTasksGuard ,taskDetailsGuard]
+    canActivate: [projectTasksGuard],
+    resolve: {
+      task: taskResolver,
+    }
   },
 ];
 
