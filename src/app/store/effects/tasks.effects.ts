@@ -24,6 +24,7 @@ export class TasksEffects {
     this.actions$.pipe(
       ofType(
         CreateTaskActions.createTask,
+        KanbanViewActions.createTask,
         ListViewActions.createTaskInSection,
         TaskOptionsMenuActions.duplicateTask
       ),
