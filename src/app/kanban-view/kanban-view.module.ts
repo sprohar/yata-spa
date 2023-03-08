@@ -16,6 +16,7 @@ import { KanbanColumnComponent } from './components/kanban-column/kanban-column.
 import { TaskCardComponent } from './components/task-card/task-card.component';
 import { KanbanViewRoutingModule } from './kanban-view-routing.module';
 import { KanbanViewComponent } from './kanban-view.component';
+import { KanbanColumnCreateTaskComponent } from './components/kanban-column-create-task/kanban-column-create-task.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { KanbanViewComponent } from './kanban-view.component';
     KanbanColumnComponent,
     CreateKanbanColumnComponent,
     TaskCardComponent,
+    KanbanColumnCreateTaskComponent,
   ],
   imports: [
     CommonModule,

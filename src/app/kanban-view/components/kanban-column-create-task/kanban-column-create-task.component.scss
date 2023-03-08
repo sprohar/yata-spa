@@ -1,0 +1,48 @@
+.ng-valid[required],
+.ng-valid.required {
+  border-color: inherit !important;
+}
+
+.value-indicator {
+  color: #00bcd4;
+}
+
+.create-task-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .create-task {
+    position: relative;
+
+    .form-field {
+      width: 100%;
+
+      input[type="text"] {
+        width: 55%;
+      }
+    }
+
+    .create-task-actions {
+      position: absolute;
+      top: 4px;
+      bottom: 0;
+      right: 2px;
+
+      mat-icon {
+        transform: scale(0.75);
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .create-task-wrapper {
+    .create-task {
+      .form-field {
+        input[type="text"] {
+          width: 75%;
+        }
+      }
+    }
+  }
+}

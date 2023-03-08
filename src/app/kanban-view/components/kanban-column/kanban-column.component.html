@@ -8,7 +8,9 @@
   </div>
   <div class="tasks-container">
     <div class="create-task-container">
-      <yata-create-task [section]="section"></yata-create-task>
+      <yata-kanban-column-create-task
+        [section]="section"
+      ></yata-kanban-column-create-task>
     </div>
     <ul
       #taskList
