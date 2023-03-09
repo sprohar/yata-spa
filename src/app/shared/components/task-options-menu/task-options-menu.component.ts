@@ -2,9 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
 import { TaskOptionsMenuActions } from '../../../store/actions/task-options-menu.actions';
-import {
-  selectMoveToSectionsOptions
-} from '../../../store/selectors';
+import { selectMoveToSectionsOptions } from '../../../store/selectors';
 
 @Component({
   selector: 'yata-task-options-menu',
@@ -13,7 +11,7 @@ import {
 })
 export class TaskOptionsMenuComponent {
   @Input() task!: Task;
-
+  
   sections$ = this.store.select(selectMoveToSectionsOptions);
 
   constructor(private store: Store) {}
@@ -28,10 +26,6 @@ export class TaskOptionsMenuComponent {
         task: this.task,
       })
     );
-  }
-
-  handleMoveTaskToSection(sectionId: number) {
-    console.log('section id', sectionId);
   }
 
   handleDuplicate() {
