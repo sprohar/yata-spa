@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskActions,
@@ -44,9 +44,7 @@ export class TasksEffects {
 
   duplicate$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(
-        TaskOptionsMenuActions.duplicateTask
-      ),
+      ofType(TaskOptionsMenuActions.duplicateTask),
       concatMap((action) =>
         this.tasksService.duplicate(action.task).pipe(
           map((task) => YataApiActions.createTaskSuccess({ task })),
@@ -68,6 +66,7 @@ export class TasksEffects {
       mergeMap((action) =>
         this.tasksService.delete(action.task).pipe(
           map(() => YataApiActions.deleteTaskSuccess({ task: action.task })),
+          tap(() => this.snackbar.open('Removed task')),
           catchError(() =>
             of(
               YataApiActions.deleteTaskError({
@@ -107,25 +106,4 @@ export class TasksEffects {
       )
     )
   );
-
-  // moveTaskToProject$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(TaskDetailsActions.moveTaskToProject),
-  //     concatMap((action) =>
-  //       this.tasksService.update(action.task).pipe(
-  //         map((task) => {
-  //           this.snackbar.open(`Update successful.`);
-  //           return YataApiActions.moveTaskToProjectSuccess({ task });
-  //         }),
-  //         catchError(() =>
-  //           of(
-  //             YataApiActions.moveTaskToProjectError({
-  //               message: 'Could not update the Task',
-  //             })
-  //           )
-  //         )
-  //       )
-  //     )
-  //   )
-  // );
 }
