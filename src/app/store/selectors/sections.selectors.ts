@@ -52,3 +52,12 @@ export const selectSectionsWithTasks = createSelector(
     return collection;
   }
 );
+
+export const selectMoveToSectionsOptions = createSelector(
+  selectCurrentSectionId,
+  selectSections,
+  (currentSectionId: number | null, sections: Section[]) =>
+    currentSectionId === null
+      ? []
+      : sections.filter((section) => section.id !== currentSectionId)
+);
