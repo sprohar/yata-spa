@@ -26,10 +26,29 @@ export class TasksEffects {
         CreateTaskActions.createTask,
         KanbanViewActions.createTask,
         ListViewActions.createTaskInSection,
-        TaskOptionsMenuActions.duplicateTask
       ),
       concatMap((action) =>
         this.tasksService.create(action.task).pipe(
+          map((task) => YataApiActions.createTaskSuccess({ task })),
+          catchError(() =>
+            of(
+              YataApiActions.createTaskError({
+                message: 'Could not create Task',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  duplicate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        TaskOptionsMenuActions.duplicateTask
+      ),
+      concatMap((action) =>
+        this.tasksService.duplicate(action.task).pipe(
           map((task) => YataApiActions.createTaskSuccess({ task })),
           catchError(() =>
             of(

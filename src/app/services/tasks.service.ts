@@ -16,6 +16,11 @@ export class TasksService {
     const url = `${this.baseUrl}/projects/${task.projectId}/tasks`;
     return this.http.post<Task>(url, task);
   }
+  
+  duplicate(task: Task) {
+    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}/duplicate`;
+    return this.http.post<Task>(url, task);
+  }
 
   getAll(projectId: number) {
     const url = `${this.baseUrl}/projects/${projectId}/tasks`;
