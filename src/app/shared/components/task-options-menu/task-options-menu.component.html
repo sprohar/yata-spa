@@ -1,0 +1,26 @@
+<ng-container *ngIf="sections$ | async as sections">
+  <button mat-icon-button [matMenuTriggerFor]="options" title="Task options">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #options="matMenu">
+    <button mat-menu-item>View details</button>
+    <button mat-menu-item (click)="handleDuplicate()">Duplicate</button>
+    <button mat-menu-item (click)="handleDelete()">Delete</button>
+    <button mat-menu-item [matMenuTriggerFor]="availableSections">
+      Move to
+    </button>
+  </mat-menu>
+
+  <mat-menu #availableSections="matMenu">
+    <ng-container *ngIf="sections.length > 0; else noSections">
+      <ng-container *ngFor="let section of sections; trackBy: trackBySectionId">
+        <button mat-menu-item (click)="handleMoveTaskToSection(section.id!)">
+          {{ section.name }}
+        </button>
+      </ng-container>
+    </ng-container>
+    <ng-template #noSections>
+      <button [disabled]="true" mat-menu-item>No Available Sections</button>
+    </ng-template>
+  </mat-menu>
+</ng-container>

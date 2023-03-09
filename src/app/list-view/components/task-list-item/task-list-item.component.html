@@ -9,8 +9,6 @@
       [value]="priorityControl.value"
       (selectionChange)="handlePriorityChange($event)"
     ></yata-task-priority-picker>
-    <button mat-icon-button title="Task options">
-      <mat-icon>more_vert</mat-icon>
-    </button>
+    <yata-task-options-menu [task]="task"></yata-task-options-menu>
   </div>
 </li>

@@ -29,6 +29,7 @@ import { ViewHeaderComponent } from './components/view-header/view-header.compon
 import { ClickableDirective } from './directives/clickable.directive';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 import { SectionPickerComponent } from './components/section-picker/section-picker.component';
+import { TaskOptionsMenuComponent } from './components/task-options-menu/task-options-menu.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { SectionPickerComponent } from './components/section-picker/section-pick
     SectionOptionsMenuComponent,
     CreateSectionDialogComponent,
     SectionPickerComponent,
+    TaskOptionsMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -74,6 +76,7 @@ import { SectionPickerComponent } from './components/section-picker/section-pick
     TaskPriorityPickerComponent,
     ClickableDirective,
     SectionOptionsMenuComponent,
+    TaskOptionsMenuComponent,
   ],
 })
 export class SharedModule {}
