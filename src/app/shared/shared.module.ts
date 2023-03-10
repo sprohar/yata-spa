@@ -22,7 +22,7 @@ import { EditSectionDialogComponent } from './components/edit-section-dialog/edi
 import { SectionOptionsMenuComponent } from './components/section-options-menu/section-options-menu.component';
 import { SubtaskListItemComponent } from './components/subtask-list-item/subtask-list-item.component';
 import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
-import { TaskDetailsComponent } from './components/task-details/task-details.component';
+import { TaskDetailsDialogComponent } from './components/task-details-dialog/task-details-dialog.component';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
@@ -37,7 +37,7 @@ import { TaskOptionsMenuComponent } from './components/task-options-menu/task-op
     ViewHeaderComponent,
     CreateTaskComponent,
     EditSectionDialogComponent,
-    TaskDetailsComponent,
+    TaskDetailsDialogComponent,
     TaskPriorityPickerComponent,
     SubtaskListComponent,
     SubtaskListItemComponent,
@@ -72,7 +72,7 @@ import { TaskOptionsMenuComponent } from './components/task-options-menu/task-op
     ViewHeaderComponent,
     CreateTaskComponent,
     EditSectionDialogComponent,
-    TaskDetailsComponent,
+    TaskDetailsDialogComponent,
     TaskPriorityPickerComponent,
     ClickableDirective,
     SectionOptionsMenuComponent,

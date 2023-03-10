@@ -18,11 +18,11 @@ import { selectCurrentTask } from '../../../store/selectors/tasks.selectors';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 @Component({
-  selector: 'yata-task-details',
-  templateUrl: './task-details.component.html',
-  styleUrls: ['./task-details.component.scss'],
+  selector: 'yata-task-details-dialog',
+  templateUrl: './task-details-dialog.component.html',
+  styleUrls: ['./task-details-dialog.component.scss'],
 })
-export class TaskDetailsComponent implements OnDestroy, OnInit {
+export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   readonly PRIORITY_NONE = Task.Priority.NONE;
   readonly PRIORITY_HIGH = Task.Priority.HIGH;
   readonly PRIORITY_MEDIUM = Task.Priority.MEDIUM;

@@ -1,0 +1,139 @@
+<mat-dialog-content *ngIf="currentTask$ | async as task">
+  <!-- Close button container -->
+  <div class="close-button-container">
+    <button
+      mat-icon-button
+      mat-dialog-close
+      class="close-button"
+      title="Close dialog"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="task-details" [formGroup]="form">
+    <!-- Header -->
+    <div class="task-details-header">
+      <!-- Move task to a different project -->
+      <ng-container *ngIf="projects$ | async as projects">
+        <mat-form-field appearance="outline" class="projects-select">
+          <mat-label>Project</mat-label>
+          <mat-select
+            formControlName="projectId"
+            (selectionChange)="handleMoveTaskToProject($event.value)"
+          >
+            <ng-container
+              *ngFor="let project of projects; trackBy: trackByProjectId"
+            >
+              <mat-option [value]="project.id">{{ project.name }}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <span class="spacer"></span>
+
+      <!-- Priority -->
+      <div class="task-details-header-actions">
+        <yata-task-priority-picker
+          (selectionChange)="handlePriorityChange($event)"
+          [value]="task.priority"
+        ></yata-task-priority-picker>
+        <button mat-icon-button title="Task options">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- Completed & Due Date -->
+    <div class="form-field-container space-between">
+      <!-- Completed -->
+      <mat-checkbox
+        (change)="handleChecked()"
+        formControlName="completed"
+        color="primary"
+      >
+        Mark as {{ task.completed ? "incomplete" : "completed" }}
+      </mat-checkbox>
+
+      <!-- Due date -->
+      <ng-container *ngIf="dueDateControl.value; else dueDateIsNull">
+        <button
+          mat-stroked-button
+          (click)="openDateTimePickerDialog()"
+          title="Due date"
+        >
+          {{ dueDateControl.value | date : "MMM d, y, hh:mm a" }}
+        </button>
+      </ng-container>
+      <ng-template #dueDateIsNull>
+        <button
+          mat-icon-button
+          (click)="openDateTimePickerDialog()"
+          title="Set a due date"
+        >
+          <mat-icon>event</mat-icon>
+        </button>
+      </ng-template>
+    </div>
+
+    <!-- Title -->
+    <div class="form-field-container">
+      <mat-form-field class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" formControlName="title" />
+      </mat-form-field>
+    </div>
+
+    <!-- Content -->
+    <div class="form-field-container">
+      <mat-form-field class="full-width">
+        <mat-label>Content</mat-label>
+        <textarea
+          matInput
+          formControlName="content"
+          cdkTextareaAutosize
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <!-- Subtasks -->
+    <div class="subtasks-container" formArrayName="subtasks">
+      <ng-container *ngIf="task.subtasks && task.subtasks.length > 0">
+        <div class="subtasks-container">
+          <p>Subtasks</p>
+          <yata-subtask-list [subtasks]="task.subtasks"></yata-subtask-list>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isAddingSubtask">
+        <yata-create-subtask
+          [task]="task"
+          (saved)="isAddingSubtask = false"
+          (cancel)="isAddingSubtask = false"
+        ></yata-create-subtask>
+      </ng-container>
+
+      <ng-container *ngIf="!isAddingSubtask">
+        <button mat-stroked-button (click)="isAddingSubtask = true">
+          <mat-icon>checklist</mat-icon>
+          <span>Add Subtask</span>
+        </button>
+      </ng-container>
+    </div>
+
+    <div class="form-actions" [class.hide]="isAddingSubtask">
+      <button
+        [disabled]="form.invalid"
+        mat-raised-button
+        color="primary"
+        class="full-width"
+        (click)="handleSave()"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</mat-dialog-content>

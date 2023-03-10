@@ -20,7 +20,7 @@ import { of } from 'rxjs';
 import { AppState } from '../../../store/app.state';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
-import { TaskDetailsComponent } from './task-details.component';
+import { TaskDetailsDialogComponent } from './task-details-dialog.component';
 
 const initialState: AppState = {
   projects: {
@@ -38,8 +38,8 @@ const initialState: AppState = {
 };
 
 describe('TaskDetailsComponent', () => {
-  let component: TaskDetailsComponent;
-  let fixture: ComponentFixture<TaskDetailsComponent>;
+  let component: TaskDetailsDialogComponent;
+  let fixture: ComponentFixture<TaskDetailsDialogComponent>;
   let route: jasmine.SpyObj<ActivatedRoute>;
   let matDialog: jasmine.SpyObj<MatDialog>;
   let router: jasmine.SpyObj<Router>;
@@ -50,7 +50,7 @@ describe('TaskDetailsComponent', () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      declarations: [TaskDetailsComponent],
+      declarations: [TaskDetailsDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         ReactiveFormsModule,
@@ -72,7 +72,7 @@ describe('TaskDetailsComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TaskDetailsComponent);
+    fixture = TestBed.createComponent(TaskDetailsDialogComponent);
     store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
     fixture.detectChanges();
