@@ -1,7 +1,10 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { TaskCreatedAtSortStrategy } from 'src/app/strategies/tasks/task-created-at-sort.strategy';
+import { TaskListSortContext } from 'src/app/strategies/tasks/task-list-sort-context';
 import { Subtask, Task } from '../../models';
 import { TaskResolverActions, YataApiActions } from '../actions';
 import { TaskDetailsActions } from '../actions/task-details.actions';
+import { TaskListSortOptionsActions } from '../actions/task-list-sort-options.actions';
 import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
 
 export interface TasksState {
@@ -18,6 +21,12 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialTasksState,
+    on(TaskListSortOptionsActions.sortByCreatedAt, (state, _) => ({
+      ...state,
+      tasks: new TaskListSortContext(new TaskCreatedAtSortStrategy()).sort(
+        state.tasks
+      ),
+    })),
     on(TaskOptionsMenuActions.viewTaskDetails, (state, action) => ({
       tasks: state.tasks,
       currentTaskId: action.taskId,

@@ -7,5 +7,6 @@ export const ViewHeaderActions = createActionGroup({
     'Delete Project': props<{ project: Project }>(),
     'Update Project': props<{ project: Project }>(),
     'Create Section': props<{ section: Section }>(),
+    
   },
 });
