@@ -3,8 +3,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Task } from '../../../models';
 import { TaskCardActions } from '../../../store/actions/task-card.actions';
@@ -14,7 +14,7 @@ import { TaskCardComponent } from './task-card.component';
 describe('TaskCardComponent', () => {
   let component: TaskCardComponent;
   let fixture: ComponentFixture<TaskCardComponent>;
-  let router: jasmine.SpyObj<Router>;
+  let matDialog: jasmine.SpyObj<MatDialog>;
   let store: MockStore;
   let task: Task = {
     id: 1,
@@ -23,7 +23,7 @@ describe('TaskCardComponent', () => {
   };
 
   beforeEach(async () => {
-    router = jasmine.createSpyObj('Router', ['navigate']);
+    matDialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
       declarations: [TaskCardComponent],
@@ -33,12 +33,13 @@ describe('TaskCardComponent', () => {
         MatIconModule,
         MatRippleModule,
         ReactiveFormsModule,
+        MatDialogModule,
       ],
       providers: [
         provideMockStore(),
         {
-          provide: Router,
-          useValue: router,
+          provide: MatDialog,
+          useValue: matDialog,
         },
       ],
     }).compileComponents();
@@ -69,12 +70,15 @@ describe('TaskCardComponent', () => {
 
   describe('#handleViewTask', () => {
     it('should navigate to "/kanban/:projectId/tasks/:taskId"', () => {
+      spyOn(store, 'dispatch');
+
       component.handleViewTask();
 
-      const spy = router.navigate as jasmine.Spy;
-      const navArgs = spy.calls.first().args[0];
-
-      expect(navArgs).toEqual(['kanban', task.projectId, 'tasks', task.id]);
+      expect(store.dispatch).toHaveBeenCalledWith(
+        TaskCardActions.viewTaskDetails({
+          taskId: task.id!,
+        })
+      );
     });
   });
 });

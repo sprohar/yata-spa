@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Subtask, Task } from '../../models';
-import { TaskResolverActions, YataApiActions } from '../actions';
+import { TaskCardActions, TaskResolverActions, YataApiActions } from '../actions';
 import { TaskDetailsActions } from '../actions/task-details.actions';
 import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
 
@@ -18,7 +18,7 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialTasksState,
-    on(TaskOptionsMenuActions.viewTaskDetails, (state, action) => ({
+    on(TaskOptionsMenuActions.viewTaskDetails, TaskCardActions.viewTaskDetails, (state, action) => ({
       tasks: state.tasks,
       currentTaskId: action.taskId,
     })),

@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TaskDetailsDialogComponent } from 'src/app/shared/components/task-details-dialog/task-details-dialog.component';
 import { Task } from '../../../models';
 import { TaskCardActions } from '../../../store/actions';
 
@@ -17,7 +19,8 @@ export class TaskCardComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -52,11 +55,12 @@ export class TaskCardComponent implements OnInit {
   }
 
   handleViewTask() {
-    this.router.navigate([
-      'kanban',
-      this.task.projectId!,
-      'tasks',
-      this.task.id!,
-    ]);
+   this.store.dispatch(
+     TaskCardActions.viewTaskDetails({
+        taskId: this.task.id!,
+     })
+   );
+
+   this.dialog.open(TaskDetailsDialogComponent); 
   }
 }

@@ -5,5 +5,6 @@ export const TaskCardActions = createActionGroup({
   source: 'Task Card',
   events: {
     'Update Task': props<{ task: Partial<Task> }>(),
+    'View Task Details': props<{ taskId: number }>(),
   },
 });
