@@ -7,6 +7,7 @@ import {
   CreateTaskActions,
   KanbanViewActions,
   ListViewActions,
+  TaskCardActions,
   TaskDetailsActions,
   YataApiActions,
 } from '../actions';
@@ -83,6 +84,7 @@ export class TasksEffects {
     this.actions$.pipe(
       ofType(
         KanbanViewActions.updateTask,
+        TaskCardActions.updateTask,
         KanbanViewActions.moveTaskToSection,
         TaskDetailsActions.updateTask,
         TaskDetailsActions.moveTaskToProject,
