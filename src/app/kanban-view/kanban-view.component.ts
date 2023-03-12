@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../models';
+import { BreakpointService } from '../services/breakpoint.service';
 import { selectCurrentProject } from '../store/selectors/projects.selectors';
 import { selectSectionsWithTasks } from '../store/selectors/sections.selectors';
 import { selectUnsectionedTasks } from '../store/selectors/tasks.selectors';
@@ -16,7 +17,7 @@ export class KanbanViewComponent {
   unsectionedTasks$ = this.store.select(selectUnsectionedTasks);
   showAddKanbanColumnComponent = false;
 
-  constructor(private store: Store) {}
+  constructor(public breakpoint: BreakpointService, private store: Store) {}
 
   handleAddColumn() {
     this.showAddKanbanColumnComponent = true;
