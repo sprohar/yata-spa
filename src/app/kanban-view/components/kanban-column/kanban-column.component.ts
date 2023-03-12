@@ -11,6 +11,8 @@ import { KanbanViewActions } from '../../../store/actions';
 })
 export class KanbanColumnComponent implements OnInit {
   @Input() section!: Section;
+  completedTasks?: Task[];
+  pendingTasks?: Task[];
 
   constructor(private store: Store) {}
 
@@ -18,6 +20,9 @@ export class KanbanColumnComponent implements OnInit {
     if (!this.section) {
       throw new Error('"section" is undefined.');
     }
+
+    this.completedTasks = this.section.tasks?.filter(task => task.completed);
+    this.pendingTasks = this.section.tasks?.filter(task => !task.completed);
   }
 
   trackByTaskId(index: number, task: Task) {

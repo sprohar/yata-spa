@@ -1,17 +1,29 @@
 <article *ngIf="section" class="column">
   <div class="column-header">
-    <h2>{{ section.name }}</h2>
+    <div class="section-name-container">
+      <h5 class="section-name">
+        {{ section.name }}
+      </h5>
+      <p
+        class="badge-task-count"
+        *ngIf="completedTasks && completedTasks.length"
+      >
+        {{ completedTasks.length }}
+      </p>
+    </div>
     <yata-section-options-menu
       [section]="section"
       [direction]="'vertical'"
     ></yata-section-options-menu>
   </div>
+
   <div class="tasks-container">
     <div class="create-task-container">
       <yata-kanban-column-create-task
         [section]="section"
       ></yata-kanban-column-create-task>
     </div>
+
     <ul
       #taskList
       class="task-list"
@@ -19,7 +31,7 @@
       [cdkDropListData]="section"
       (cdkDropListDropped)="handleTaskCardDrop($event)"
     >
-      <ng-container *ngFor="let task of section.tasks; trackBy: trackByTaskId">
+      <ng-container *ngFor="let task of pendingTasks; trackBy: trackByTaskId">
         <li>
           <yata-task-card
             [task]="task"
@@ -29,5 +41,19 @@
         </li>
       </ng-container>
     </ul>
+  </div>
+
+  <div class="completed-tasks" *ngIf="completedTasks && completedTasks.length">
+    <details open>
+      <summary>
+        Completed
+        <span class="badge-task-count">({{ completedTasks.length }})</span>
+      </summary>
+      <ul class="task-list">
+        <li *ngFor="let task of completedTasks; trackBy: trackByTaskId">
+          <yata-task-card [task]="task"></yata-task-card>
+        </li>
+      </ul>
+    </details>
   </div>
 </article>
