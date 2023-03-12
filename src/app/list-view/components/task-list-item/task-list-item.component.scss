@@ -6,12 +6,24 @@
   column-gap: 16px;
   border-radius: 6px;
 
+  .drag-indicator {
+    visibility: hidden;
+    transform: scale(0.75); 
+    &:hover {
+      cursor: grab;
+    }
+  }
+  
   .actions {
     display: flex;
     visibility: hidden;
   }
 
   &:hover {
+    .drag-indicator {
+      visibility: visible;
+    }
+    
     .actions {
       visibility: visible;
     }

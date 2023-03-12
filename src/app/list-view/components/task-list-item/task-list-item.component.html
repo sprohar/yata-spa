@@ -1,4 +1,7 @@
 <li class="task-list-item" [attr.data-task]="task.id" [formGroup]="form">
+  <span class="drag-indicator">
+    <mat-icon>drag_indicator</mat-icon>
+  </span>
   <mat-checkbox
     [checked]="task.completed"
     (change)="handleChecked($event.checked, task)"
