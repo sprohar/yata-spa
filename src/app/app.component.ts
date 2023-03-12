@@ -1,11 +1,10 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, Observable, shareReplay } from 'rxjs';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { Project } from './models';
+import { BreakpointService } from './services/breakpoint.service';
 import { SidenavActions } from './store/actions';
 import { selectProjects } from './store/reducers/projects.reducer';
 
@@ -17,15 +16,10 @@ import { selectProjects } from './store/reducers/projects.reducer';
 export class AppComponent {
   projects$ = this.store.select(selectProjects);
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe([Breakpoints.Handset, Breakpoints.HandsetLandscape])
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
+  isHandset$ = this.breakpointService.isHandset$;
 
   constructor(
-    private breakpointObserver: BreakpointObserver,
+    private breakpointService: BreakpointService,
     private store: Store,
     private dialog: MatDialog,
     private router: Router
