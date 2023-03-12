@@ -1,4 +1,5 @@
 export * from './create-task.actions';
+export * from './edit-project-dialog.actions';
 export * from './edit-section-dialog.actions';
 export * from './kanban-view.actions';
 export * from './list-view.actions';

@@ -6,6 +6,7 @@ import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { ProjectsService } from '../../services/projects.service';
 import { SidenavActions } from '../actions/sidenav.actions';
 import {
+  EditProjectDialogActions,
   KanbanViewActions,
   ListViewActions,
   ViewHeaderActions,
@@ -105,7 +106,7 @@ export class ProjectsEffects {
 
   update$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ViewHeaderActions.updateProject),
+      ofType(EditProjectDialogActions.updateProject),
       concatMap((action) =>
         this.projectsService.update(action.project.id!, action.project).pipe(
           map((project) => {
