@@ -30,6 +30,7 @@ import { ClickableDirective } from './directives/clickable.directive';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 import { SectionPickerComponent } from './components/section-picker/section-picker.component';
 import { TaskOptionsMenuComponent } from './components/task-options-menu/task-options-menu.component';
+import { TaskListSortOptionsComponent } from './components/task-list-sort-options/task-list-sort-options.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { TaskOptionsMenuComponent } from './components/task-options-menu/task-op
     CreateSectionDialogComponent,
     SectionPickerComponent,
     TaskOptionsMenuComponent,
+    TaskListSortOptionsComponent,
   ],
   imports: [
     CommonModule,
