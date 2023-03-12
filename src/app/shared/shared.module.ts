@@ -31,6 +31,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 import { SectionPickerComponent } from './components/section-picker/section-picker.component';
 import { TaskOptionsMenuComponent } from './components/task-options-menu/task-options-menu.component';
 import { TaskListSortOptionsComponent } from './components/task-list-sort-options/task-list-sort-options.component';
+import { EditProjectDialogComponent } from './components/edit-project-dialog/edit-project-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { TaskListSortOptionsComponent } from './components/task-list-sort-option
     SectionPickerComponent,
     TaskOptionsMenuComponent,
     TaskListSortOptionsComponent,
+    EditProjectDialogComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Edit Project</h2>
+<mat-dialog-content [formGroup]="form">
+  <div class="form-field-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+        (keyup.enter)="handleSave()"
+      />
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="handleSave()">Save</button>
+</mat-dialog-actions>

@@ -35,10 +35,10 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #projectOptions xPosition="before" yPosition="below">
-      <!-- <button mat-menu-item (click)="openProjectDetailsDialog()">
+      <button mat-menu-item (click)="openEditProjectDialog(project)">
         <mat-icon>edit</mat-icon>
-        <span>Edit</span>
-      </button> -->
+        <span>Edit Project</span>
+      </button>
       <button mat-menu-item (click)="openCreateSectionDialog(project)">
         <mat-icon>add</mat-icon>
         <span>Add Section</span>

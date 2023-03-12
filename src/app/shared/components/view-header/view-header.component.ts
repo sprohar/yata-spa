@@ -9,10 +9,11 @@ import { Project } from '../../../models';
 import {
   KanbanViewActions,
   ListViewActions,
-  ViewHeaderActions,
+  ViewHeaderActions
 } from '../../../store/actions';
 import { selectCurrentProject } from '../../../store/selectors/projects.selectors';
 import { CreateSectionDialogComponent } from '../create-section-dialog/create-section-dialog.component';
+import { EditProjectDialogComponent } from '../edit-project-dialog/edit-project-dialog.component';
 
 @Component({
   selector: 'yata-view-header',
@@ -87,9 +88,9 @@ export class ViewHeaderComponent implements OnDestroy {
     });
   }
 
-  // openProjectDetailsDialog() {
-  //   const ref = this.dialog.open(ProjectDetailsDialogComponent, {
-  //     data: this.project,
-  //   });
-  // }
+  openEditProjectDialog(project: Project) {
+    const ref = this.dialog.open(EditProjectDialogComponent, {
+      data: project,
+    });
+  }
 }
