@@ -21,11 +21,6 @@ summary {
   display: flex;
   margin-left: 8px;
   visibility: hidden;
-
-  button {
-    transform: scale(0.75);
-    opacity: 0.54;
-  }
 }
 
 summary:hover .section-actions {

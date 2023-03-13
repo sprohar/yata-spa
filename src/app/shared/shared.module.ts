@@ -18,20 +18,19 @@ import { CreateSectionDialogComponent } from './components/create-section-dialog
 import { CreateSubtaskComponent } from './components/create-subtask/create-subtask.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { DateTimePickerDialogComponent } from './components/date-time-picker-dialog/date-time-picker-dialog.component';
+import { EditProjectDialogComponent } from './components/edit-project-dialog/edit-project-dialog.component';
 import { EditSectionDialogComponent } from './components/edit-section-dialog/edit-section-dialog.component';
 import { SectionOptionsMenuComponent } from './components/section-options-menu/section-options-menu.component';
+import { SectionPickerComponent } from './components/section-picker/section-picker.component';
 import { SubtaskListItemComponent } from './components/subtask-list-item/subtask-list-item.component';
 import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
 import { TaskDetailsDialogComponent } from './components/task-details-dialog/task-details-dialog.component';
+import { TaskListSortOptionsComponent } from './components/task-list-sort-options/task-list-sort-options.component';
+import { TaskOptionsMenuComponent } from './components/task-options-menu/task-options-menu.component';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
-import { ClickableDirective } from './directives/clickable.directive';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
-import { SectionPickerComponent } from './components/section-picker/section-picker.component';
-import { TaskOptionsMenuComponent } from './components/task-options-menu/task-options-menu.component';
-import { TaskListSortOptionsComponent } from './components/task-list-sort-options/task-list-sort-options.component';
-import { EditProjectDialogComponent } from './components/edit-project-dialog/edit-project-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,6 @@ import { EditProjectDialogComponent } from './components/edit-project-dialog/edi
     CreateSubtaskComponent,
     TimeInputComponent,
     DateTimePickerDialogComponent,
-    ClickableDirective,
     SectionOptionsMenuComponent,
     CreateSectionDialogComponent,
     SectionPickerComponent,
@@ -78,7 +76,6 @@ import { EditProjectDialogComponent } from './components/edit-project-dialog/edi
     EditSectionDialogComponent,
     TaskDetailsDialogComponent,
     TaskPriorityPickerComponent,
-    ClickableDirective,
     SectionOptionsMenuComponent,
     TaskOptionsMenuComponent,
   ],
