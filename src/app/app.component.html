@@ -12,24 +12,30 @@
       <a mat-list-item href="#">Next 7 Days</a>
     </mat-nav-list>
     <mat-divider></mat-divider>
-    <mat-nav-list *ngIf="projects$ | async as projects">
-      <mat-list-item
-        *ngFor="let project of projects; trackBy: trackByProjectId"
-      >
-        <div role="button" (click)="handleSetCurrentProject(project)">
-          {{ project.name }}
-        </div>
-      </mat-list-item>
-    </mat-nav-list>
-    <mat-divider></mat-divider>
-    <button
-      mat-button
-      class="mat-button-full-width"
-      (click)="openAddProjectDialog()"
-    >
-      <mat-icon>add</mat-icon>
-      <span>New Project</span>
-    </button>
+
+    <div *ngIf="projects$ | async as projects">
+      <details open class="collapsible-list">
+        <summary class="clickable">
+          <span> Projects </span>
+          <button
+            mat-icon-button
+            (click)="openAddProjectDialog()"
+            title="Add project"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </summary>
+        <ul class="sidenav-list">
+          <ng-container
+            *ngFor="let project of projects; trackBy: trackByProjectId"
+          >
+            <li class="clickable" (click)="handleSetCurrentProject(project)">
+              {{ project.name }}
+            </li>
+          </ng-container>
+        </ul>
+      </details>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content class="relative">
     <mat-toolbar color="primary" [class.hide]="(isHandset$ | async) === false">
