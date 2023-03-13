@@ -1,116 +1,128 @@
 <main class="matrix-container row-gap-1">
   <div class="quadrant-row column-gap-1">
-    <mat-card class="quadrant">
-      <mat-card-content>
-        <div class="quadrant-header">
-          <h5 class="high-priority">Urgent & Important</h5>
+  <mat-card class="quadrant">
+    <mat-card-content>
+      <div class="quadrant-header">
+        <h5 class="high-priority">Urgent & Important</h5>
 
-          <div class="quadrant-header-actions">
-            <button mat-icon-button>
-              <mat-icon>add</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>more_vert</mat-icon>
-            </button>
-          </div>
+        <div class="quadrant-header-actions">
+          <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
         </div>
-        <div
-          *ngIf="highPriorityTasks$ | async as highPriorityTasks"
-          class="quadrant-content"
-        >
-          <ul>
-            <li *ngFor="let task of highPriorityTasks">
-              {{ task.title }}
-            </li>
-          </ul>
-        </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+      <div
+        *ngIf="highPriorityTasks$ | async as highPriorityTasks"
+        class="quadrant-content"
+      >
+        <ul>
+          <li
+            *ngFor="let task of highPriorityTasks"
+            (click)="openTaskDetailsDialog(task)"
+          >
+            {{ task.title }}
+          </li>
+        </ul>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-    <mat-card class="quadrant">
-      <mat-card-content>
-        <div class="quadrant-header">
-          <h5 class="medium-priority">Not Urgent & Important</h5>
+  <mat-card class="quadrant">
+    <mat-card-content>
+      <div class="quadrant-header">
+        <h5 class="medium-priority">Not Urgent & Important</h5>
 
-          <div class="quadrant-header-actions">
-            <button mat-icon-button>
-              <mat-icon>add</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>more_vert</mat-icon>
-            </button>
-          </div>
+        <div class="quadrant-header-actions">
+          <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
         </div>
+      </div>
 
-        <div
-          *ngIf="mediumPriorityTasks$ | async as mediumPriorityTasks"
-          class="quadrant-content"
-        >
-          <ul>
-            <li *ngFor="let task of mediumPriorityTasks">
-              {{ task.title }}
-            </li>
-          </ul>
-        </div>
-      </mat-card-content>
-    </mat-card>
+      <div
+        *ngIf="mediumPriorityTasks$ | async as mediumPriorityTasks"
+        class="quadrant-content"
+      >
+        <ul>
+          <li
+            *ngFor="let task of mediumPriorityTasks"
+            (click)="openTaskDetailsDialog(task)"
+          >
+            {{ task.title }}
+          </li>
+        </ul>
+      </div>
+    </mat-card-content>
+  </mat-card>
   </div>
 
   <div class="quadrant-row column-gap-1">
-    <mat-card class="quadrant">
-      <mat-card-content>
-        <div class="quadrant-header">
-          <h5 class="low-priority">Urgent & Unimportant</h5>
+  <mat-card class="quadrant">
+    <mat-card-content>
+      <div class="quadrant-header">
+        <h5 class="low-priority">Urgent & Unimportant</h5>
 
-          <div class="quadrant-header-actions">
-            <button mat-icon-button>
-              <mat-icon>add</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>more_vert</mat-icon>
-            </button>
-          </div>
+        <div class="quadrant-header-actions">
+          <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
         </div>
+      </div>
 
-        <div
-          *ngIf="lowPriorityTasks$ | async as lowPriorityTasks"
-          class="quadrant-content"
-        >
-          <ul>
-            <li *ngFor="let task of lowPriorityTasks">
-              {{ task.title }}
-            </li>
-          </ul>
+      <div
+        *ngIf="lowPriorityTasks$ | async as lowPriorityTasks"
+        class="quadrant-content"
+      >
+        <ul>
+          <li
+            *ngFor="let task of lowPriorityTasks"
+            (click)="openTaskDetailsDialog(task)"
+          >
+            {{ task.title }}
+          </li>
+        </ul>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="quadrant">
+    <mat-card-content>
+      <div class="quadrant-header">
+        <h5 class="no-priority">Not Urgent & Unimportant</h5>
+
+        <div class="quadrant-header-actions">
+          <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
 
-    <mat-card class="quadrant">
-      <mat-card-content>
-        <div class="quadrant-header">
-          <h5 class="no-priority">Not Urgent & Unimportant</h5>
-
-          <div class="quadrant-header-actions">
-            <button mat-icon-button>
-              <mat-icon>add</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>more_vert</mat-icon>
-            </button>
-          </div>
-        </div>
-
-        <div
-          *ngIf="noPriorityTasks$ | async as noPriorityTasks"
-          class="quadrant-content"
-        >
-          <ul>
-            <li *ngFor="let task of noPriorityTasks">
-              {{ task.title }}
-            </li>
-          </ul>
-        </div>
-      </mat-card-content>
-    </mat-card>
+      <div
+        *ngIf="noPriorityTasks$ | async as noPriorityTasks"
+        class="quadrant-content"
+      >
+        <ul>
+          <li
+            *ngFor="let task of noPriorityTasks"
+            (click)="openTaskDetailsDialog(task)"
+          >
+            {{ task.title }}
+          </li>
+        </ul>
+      </div>
+    </mat-card-content>
+  </mat-card>
   </div>
 </main>

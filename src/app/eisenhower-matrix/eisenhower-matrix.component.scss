@@ -25,22 +25,37 @@
 
 .quadrant-row {
   display: flex;
-}
-
-.quadrant {
   flex: 1;
-}
 
-.quadrant-header {
-  display: flex;
-  column-gap: 8px;
-  align-items: center;
-  justify-content: space-between;
-}
+  .quadrant {
+    flex: 1;
 
-.quadrant-header-actions {
-  button {
-    transform: scale(0.75);
+    .quadrant-header {
+      display: flex;
+      column-gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+
+      .quadrant-header-actions {
+        button {
+          transform: scale(0.75);
+        }
+      }
+    }
+
+    .quadrant-content {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+
+      ul {
+        margin: 0;
+        padding: 0;
+        li {
+          padding: 16px;
+        }
+      }
+    }
   }
 }
 

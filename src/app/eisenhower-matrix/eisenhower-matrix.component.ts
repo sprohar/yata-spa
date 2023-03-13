@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
+import { Task } from '../models';
+import { TaskDetailsDialogComponent } from '../shared/components/task-details-dialog/task-details-dialog.component';
+import { EisenhowerMatrixActions } from '../store/actions';
 import {
   selectHighPriorityTasks,
   selectLowPriorityTasks,
@@ -19,9 +23,23 @@ export class EisenhowerMatrixComponent implements OnInit {
   mediumPriorityTasks$ = this.store.select(selectMediumPriorityTasks);
   highPriorityTasks$ = this.store.select(selectHighPriorityTasks);
 
-  constructor(private store: Store, private title: Title) {}
+  constructor(
+    private store: Store,
+    private title: Title,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.title.setTitle('Eisenhower Matrix - Yata');
+  }
+
+  openTaskDetailsDialog(task: Task) {
+    this.store.dispatch(
+      EisenhowerMatrixActions.viewTaskDetails({
+        taskId: task.id!,
+      })
+    );
+
+    this.dialog.open(TaskDetailsDialogComponent);
   }
 }
