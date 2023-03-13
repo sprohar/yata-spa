@@ -38,7 +38,7 @@ export class TasksService {
   }
 
   update(id: number, task: Task | Partial<Task>) {
-    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}`;
+    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${id}`;
     return this.http.patch<Task>(url, task);
   }
 }
