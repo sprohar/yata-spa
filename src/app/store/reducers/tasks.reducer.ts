@@ -3,6 +3,7 @@ import { TaskCreatedAtSortStrategy } from 'src/app/strategies/tasks/task-created
 import { TaskListSortContext } from 'src/app/strategies/tasks/task-list-sort-context';
 import { Subtask, Task } from '../../models';
 import {
+  EisenhowerMatrixActions,
   TaskCardActions,
   TaskResolverActions,
   YataApiActions,
@@ -38,6 +39,7 @@ export const tasksFeature = createFeature({
     on(
       TaskOptionsMenuActions.viewTaskDetails,
       TaskCardActions.viewTaskDetails,
+      EisenhowerMatrixActions.viewTaskDetails,
       (state, action) => ({
         tasks: state.tasks,
         currentTaskId: action.taskId,
