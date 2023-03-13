@@ -17,45 +17,54 @@
 }
 
 .matrix-container {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   padding: 1em;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 16px;
 }
 
-.quadrant-row {
-  display: flex;
-  flex: 1;
+.quadrant {
+  height: 100%;
+  width: 100%;
 
-  .quadrant {
-    flex: 1;
+  .quadrant-header {
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+    justify-content: space-between;
 
-    .quadrant-header {
-      display: flex;
-      column-gap: 8px;
-      align-items: center;
-      justify-content: space-between;
-
-      .quadrant-header-actions {
-        button {
-          transform: scale(0.75);
-        }
+    .quadrant-header-actions {
+      button {
+        transform: scale(0.75);
       }
     }
+  }
 
-    .quadrant-content {
-      display: flex;
-      flex-direction: column;
+  .quadrant-content {
+    position: relative;
+    height: 100%;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
       overflow-y: auto;
-
-      ul {
-        margin: 0;
-        padding: 0;
-        li {
-          padding: 16px;
-        }
+      
+      li {
+        padding: 16px;
       }
     }
+  }
+
+  .quadrant-header,
+  .quadrant-content {
+    padding: 16px;
   }
 }
 
