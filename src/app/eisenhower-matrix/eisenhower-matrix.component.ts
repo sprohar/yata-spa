@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'yata-eisenhower-matrix',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class EisenhowerMatrixComponent {
 
+  constructor(private store: Store) { }
 }
