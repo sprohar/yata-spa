@@ -1,10 +1,20 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  exhaustMap,
+  map,
+  mergeMap,
+  of,
+  tap,
+} from 'rxjs';
+import { EisenhowerService } from '../../services/eisenhower.service';
 import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskActions,
+  EisenhowerMatrixActions,
   KanbanViewActions,
   ListViewActions,
   TaskCardActions,
@@ -18,6 +28,7 @@ export class TasksEffects {
   constructor(
     private actions$: Actions,
     private tasksService: TasksService,
+    private eisenhowerService: EisenhowerService,
     private snackbar: MatSnackBar
   ) {}
 
@@ -26,7 +37,7 @@ export class TasksEffects {
       ofType(
         CreateTaskActions.createTask,
         KanbanViewActions.createTask,
-        ListViewActions.createTaskInSection,
+        ListViewActions.createTaskInSection
       ),
       concatMap((action) =>
         this.tasksService.create(action.task).pipe(
@@ -72,6 +83,24 @@ export class TasksEffects {
             of(
               YataApiActions.deleteTaskError({
                 message: 'Could not delete Task',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  getAllTasks$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EisenhowerMatrixActions.onInit),
+      exhaustMap((_) =>
+        this.eisenhowerService.getAllTasks().pipe(
+          map((res) => YataApiActions.loadTasksSuccess({ tasks: res.data })),
+          catchError(() =>
+            of(
+              YataApiActions.loadTasksError({
+                message: 'Could not load tasks for the eisenhower matrix',
               })
             )
           )

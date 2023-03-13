@@ -2,7 +2,11 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { TaskCreatedAtSortStrategy } from 'src/app/strategies/tasks/task-created-at-sort.strategy';
 import { TaskListSortContext } from 'src/app/strategies/tasks/task-list-sort-context';
 import { Subtask, Task } from '../../models';
-import { TaskCardActions, TaskResolverActions, YataApiActions } from '../actions';
+import {
+  TaskCardActions,
+  TaskResolverActions,
+  YataApiActions,
+} from '../actions';
 import { TaskDetailsActions } from '../actions/task-details.actions';
 import { TaskListSortOptionsActions } from '../actions/task-list-sort-options.actions';
 import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
@@ -21,16 +25,24 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialTasksState,
+    on(YataApiActions.loadTasksSuccess, (state, action) => ({
+      ...state,
+      tasks: action.tasks,
+    })),
     on(TaskListSortOptionsActions.sortByCreatedAt, (state, _) => ({
       ...state,
       tasks: new TaskListSortContext(new TaskCreatedAtSortStrategy()).sort(
         state.tasks
       ),
     })),
-    on(TaskOptionsMenuActions.viewTaskDetails, TaskCardActions.viewTaskDetails, (state, action) => ({
-      tasks: state.tasks,
-      currentTaskId: action.taskId,
-    })),
+    on(
+      TaskOptionsMenuActions.viewTaskDetails,
+      TaskCardActions.viewTaskDetails,
+      (state, action) => ({
+        tasks: state.tasks,
+        currentTaskId: action.taskId,
+      })
+    ),
     on(YataApiActions.deleteTaskSuccess, (state, action) => ({
       ...state,
       tasks: state.tasks.filter((task) => task.id !== action.task.id),
