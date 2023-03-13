@@ -1,32 +1,8 @@
-.close-button-container {
-  display: flex;
-  justify-content: flex-end;
-
-  .close-button {
-    transform: scale(0.75);
-  }
-}
-
 .task-details {
   display: flex;
   flex-direction: column;
   row-gap: 16px;
   width: 100%;
-
-  .task-details-header {
-    display: flex;
-    align-items: center;
-
-    .projects-select {
-      margin-top: 24px;
-    }
-
-    .task-details-header-actions {
-      display: flex;
-      align-items: center;
-      column-gap: 8px;
-    }
-  }
 }
 
 .subtasks-container {
@@ -48,31 +24,3 @@
   column-gap: 8px;
   margin-top: 32px;
 }
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-// @media only screen and (min-width: 600px) {
-//   .task-details {
-//     width: 85%;
-//   }
-// }
-
-/* Medium devices (landscape tablets, 768px and up) */
-// @media only screen and (min-width: 768px) {
-//   .task-details {
-//     width: 65%;
-//   }
-// }
-
-/* Large devices (laptops/desktops, 992px and up) */
-// @media only screen and (min-width: 992px) {
-//   .task-details {
-//     width: 60%;
-//   }
-// }
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-// @media only screen and (min-width: 1200px) {
-//   .task-details {
-//     width: 50%;
-//   }
-// }

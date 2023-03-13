@@ -106,15 +106,6 @@ describe('TaskDetailsComponent', () => {
     });
   });
 
-  describe('#handleMoveTaskToProject', () => {
-    it('should dispatch an action to move the task to a different project', () => {
-      spyOn(store, 'dispatch');
-      const projectId = 1;
-      component.handleMoveTaskToProject(projectId);
-      expect(store.dispatch).toHaveBeenCalled();
-    });
-  });
-
   describe('#handleChecked', () => {
     it('should dispatch an action to toggle the "checked" field in a Task', () => {
       spyOn(store, 'dispatch');

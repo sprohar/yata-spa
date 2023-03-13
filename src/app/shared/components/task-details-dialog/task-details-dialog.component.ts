@@ -116,19 +116,6 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     this.priorityControl.setValue(priority);
   }
 
-  handleMoveTaskToProject(projectId: number) {
-    const task: Task = this.form.value;
-    this.store.dispatch(
-      TaskDetailsActions.moveTaskToProject({
-        task: {
-          id: task.id,
-          projectId,
-          sectionId: null,
-        },
-      })
-    );
-  }
-
   handleChecked() {
     const task: Task = this.form.value;
     this.store.dispatch(

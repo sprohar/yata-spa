@@ -43,6 +43,9 @@ export class TaskOptionsMenuComponent {
       taskId: this.task.id!,
     }));
 
-    this.dialog.open(TaskDetailsDialogComponent);
+    this.dialog.open(TaskDetailsDialogComponent, {
+      maxWidth: '600px',
+      width: '80%',
+    });
   }
 }
