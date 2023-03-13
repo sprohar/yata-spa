@@ -5,11 +5,15 @@
 }
 
 .medium-priority {
-  color: colors.$mat-yellow-900;
+  color: colors.$mat-orange-A100;
 }
 
 .low-priority {
   color: colors.$mat-blue-A100;
+}
+
+.no-priority {
+  color: colors.$mat-cyan-A100;
 }
 
 .matrix-container {
@@ -46,10 +50,14 @@
   }
 
   .medium-priority {
-    color: colors.$mat-yellow-900 !important;
+    color: colors.$mat-orange-700 !important;
   }
 
   .low-priority {
     color: colors.$mat-blue-700 !important;
+  }
+
+  .no-priority {
+    color: colors.$mat-cyan-700 !important;
   }
 }
