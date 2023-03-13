@@ -4,14 +4,15 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { ProjectsService } from '../../services/projects.service';
-import { SidenavActions } from '../actions/sidenav.actions';
 import {
+  AppActions,
   EditProjectDialogActions,
   KanbanViewActions,
   ListViewActions,
   ViewHeaderActions,
   YataApiActions,
 } from '../actions/';
+import { SidenavActions } from '../actions/sidenav.actions';
 
 @Injectable()
 export class ProjectsEffects {
@@ -86,7 +87,7 @@ export class ProjectsEffects {
 
   getAll$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SidenavActions.onInit),
+      ofType(AppActions.onInit),
       switchMap(() =>
         this.projectsService.getAll().pipe(
           map((res) =>

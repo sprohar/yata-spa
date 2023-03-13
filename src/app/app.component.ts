@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { Project } from './models';
 import { BreakpointService } from './services/breakpoint.service';
-import { SidenavActions } from './store/actions';
+import { AppActions } from './store/actions';
 import { selectProjects } from './store/reducers/projects.reducer';
 
 @Component({
@@ -15,7 +15,6 @@ import { selectProjects } from './store/reducers/projects.reducer';
 })
 export class AppComponent {
   projects$ = this.store.select(selectProjects);
-
   isHandset$ = this.breakpointService.isHandset$;
 
   constructor(
@@ -26,7 +25,7 @@ export class AppComponent {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(SidenavActions.onInit());
+    this.store.dispatch(AppActions.onInit());
   }
 
   trackByProjectId(index: number, project: Project) {
