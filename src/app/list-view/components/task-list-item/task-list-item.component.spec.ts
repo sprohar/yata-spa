@@ -1,6 +1,8 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Task } from '../../../models';
 import { ListViewActions } from '../../../store/actions';
@@ -16,11 +18,11 @@ describe('TaskListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskListItemComponent ],
-      imports: [MatCheckboxModule, ReactiveFormsModule],
-      providers: [provideMockStore()]
-    })
-    .compileComponents();
+      declarations: [TaskListItemComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [MatCheckboxModule, ReactiveFormsModule, MatIconModule],
+      providers: [provideMockStore()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TaskListItemComponent);
     store = TestBed.inject(MockStore);
@@ -82,7 +84,7 @@ describe('TaskListItemComponent', () => {
       spyOn(store, 'dispatch');
       component.form.patchValue({
         title: '',
-      })
+      });
       component.update();
       expect(store.dispatch).not.toHaveBeenCalled();
     });
@@ -91,11 +93,11 @@ describe('TaskListItemComponent', () => {
       spyOn(store, 'dispatch');
       component.form.patchValue({
         title: 'Updated Task',
-      })
+      });
       component.update();
       expect(store.dispatch).not.toHaveBeenCalled();
     });
-  })
+  });
 
   // describe('handleSelectedTask', () => {
   //   beforeEach(() => {
