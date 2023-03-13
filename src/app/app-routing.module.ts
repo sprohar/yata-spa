@@ -14,6 +14,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./list-view/list-view.module').then((m) => m.ListViewModule),
   },
+  {
+    path: 'matrix',
+    loadChildren: () =>
+      import('./eisenhower-matrix/eisenhower-matrix.module').then(
+        (m) => m.EisenhowerMatrixModule
+      ),
+  },
 ];
 
 @NgModule({

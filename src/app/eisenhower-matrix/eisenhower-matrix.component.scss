@@ -1,0 +1,55 @@
+@use "../../scss/colors" as colors;
+
+.high-priority {
+  color: colors.$mat-red-A100;
+}
+
+.medium-priority {
+  color: colors.$mat-yellow-900;
+}
+
+.low-priority {
+  color: colors.$mat-blue-A100;
+}
+
+.matrix-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1em;
+}
+
+.quadrant-row {
+  display: flex;
+}
+
+.quadrant {
+  flex: 1;
+}
+
+.quadrant-header {
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quadrant-header-actions {
+  button {
+    transform: scale(0.75);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .high-priority {
+    color: colors.$mat-red-700 !important;
+  }
+
+  .medium-priority {
+    color: colors.$mat-yellow-900 !important;
+  }
+
+  .low-priority {
+    color: colors.$mat-blue-700 !important;
+  }
+}
