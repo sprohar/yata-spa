@@ -1,4 +1,5 @@
 export * from './app.actions';
+export * from './auth.actions';
 export * from './create-task.actions';
 export * from './edit-project-dialog.actions';
 export * from './edit-section-dialog.actions';
