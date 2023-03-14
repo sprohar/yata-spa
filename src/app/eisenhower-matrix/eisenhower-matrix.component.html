@@ -1,92 +1,29 @@
 <main class="matrix-container row-gap-1">
-  <mat-card class="quadrant">
-    <div class="quadrant-header">
-      <h5 class="high-priority">Urgent & Important</h5>
+  <ng-container *ngIf="highPriorityTasks$ | async as tasks">
+    <yata-matrix-quadrant
+      [tasks]="tasks"
+      [priority]="HIGH_PRIORITY"
+    ></yata-matrix-quadrant>
+  </ng-container>
 
-      <div class="quadrant-header-actions">
-        <button mat-icon-button>
-          <mat-icon>add</mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div
-      *ngIf="highPriorityTasks$ | async as highPriorityTasks"
-      class="quadrant-content"
-    >
-      <yata-matrix-task-list
-        [tasks]="highPriorityTasks"
-      ></yata-matrix-task-list>
-    </div>
-  </mat-card>
+  <ng-container *ngIf="mediumPriorityTasks$ | async as tasks">
+    <yata-matrix-quadrant
+      [tasks]="tasks"
+      [priority]="MEDIUM_PRIORITY"
+    ></yata-matrix-quadrant>
+  </ng-container>
 
-  <mat-card class="quadrant">
-    <div class="quadrant-header">
-      <h5 class="medium-priority">Not Urgent & Important</h5>
+  <ng-container *ngIf="lowPriorityTasks$ | async as tasks">
+    <yata-matrix-quadrant
+      [tasks]="tasks"
+      [priority]="LOW_PRIORITY"
+    ></yata-matrix-quadrant>
+  </ng-container>
 
-      <div class="quadrant-header-actions">
-        <button mat-icon-button>
-          <mat-icon>add</mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <div
-      *ngIf="mediumPriorityTasks$ | async as mediumPriorityTasks"
-      class="quadrant-content"
-    >
-      <yata-matrix-task-list
-        [tasks]="mediumPriorityTasks"
-      ></yata-matrix-task-list>
-    </div>
-  </mat-card>
-
-  <mat-card class="quadrant">
-    <div class="quadrant-header">
-      <h5 class="low-priority">Urgent & Unimportant</h5>
-
-      <div class="quadrant-header-actions">
-        <button mat-icon-button>
-          <mat-icon>add</mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <div
-      *ngIf="lowPriorityTasks$ | async as lowPriorityTasks"
-      class="quadrant-content"
-    >
-      <yata-matrix-task-list [tasks]="lowPriorityTasks"></yata-matrix-task-list>
-    </div>
-  </mat-card>
-
-  <mat-card class="quadrant">
-    <div class="quadrant-header">
-      <h5 class="no-priority">Not Urgent & Unimportant</h5>
-
-      <div class="quadrant-header-actions">
-        <button mat-icon-button>
-          <mat-icon>add</mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <div
-      *ngIf="noPriorityTasks$ | async as noPriorityTasks"
-      class="quadrant-content"
-    >
-      <yata-matrix-task-list [tasks]="noPriorityTasks"></yata-matrix-task-list>
-    </div>
-  </mat-card>
+  <ng-container *ngIf="noPriorityTasks$ | async as tasks">
+    <yata-matrix-quadrant
+      [tasks]="tasks"
+      [priority]="NO_PRIORITY"
+    ></yata-matrix-quadrant>
+  </ng-container>
 </main>

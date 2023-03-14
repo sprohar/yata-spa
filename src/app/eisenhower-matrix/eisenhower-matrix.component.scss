@@ -1,21 +1,3 @@
-@use "../../scss/colors" as colors;
-
-.high-priority {
-  color: colors.$mat-red-A100;
-}
-
-.medium-priority {
-  color: colors.$mat-orange-A100;
-}
-
-.low-priority {
-  color: colors.$mat-blue-A100;
-}
-
-.no-priority {
-  color: colors.$mat-cyan-A100;
-}
-
 .matrix-container {
   height: 100%;
   padding: 1em;
@@ -23,46 +5,4 @@
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
   gap: 16px;
-}
-
-.quadrant {
-  height: 100%;
-  width: 100%;
-
-  .quadrant-header {
-    display: flex;
-    column-gap: 8px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 16px 0 16px;
-
-    .quadrant-header-actions {
-      button {
-        transform: scale(0.75);
-      }
-    }
-  }
-
-  .quadrant-content {
-    height: 100%;
-    padding: 16px;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .high-priority {
-    color: colors.$mat-red-700 !important;
-  }
-
-  .medium-priority {
-    color: colors.$mat-orange-700 !important;
-  }
-
-  .low-priority {
-    color: colors.$mat-blue-700 !important;
-  }
-
-  .no-priority {
-    color: colors.$mat-cyan-700 !important;
-  }
 }

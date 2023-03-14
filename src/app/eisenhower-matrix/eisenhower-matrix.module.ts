@@ -11,12 +11,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatrixTaskListComponent } from './components/matrix-task-list/matrix-task-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-quadrant.component';
 
 
 @NgModule({
   declarations: [
     EisenhowerMatrixComponent,
-    MatrixTaskListComponent
+    MatrixTaskListComponent,
+    MatrixQuadrantComponent
   ],
   imports: [
     CommonModule,

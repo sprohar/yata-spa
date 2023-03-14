@@ -1,0 +1,19 @@
+<mat-card class="quadrant">
+  <div class="quadrant-header">
+    <h5 [ngClass]="headerTextColorClassName">
+      {{ headerText }}
+    </h5>
+
+    <div class="quadrant-header-actions">
+      <button mat-icon-button>
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="quadrant-content">
+    <yata-matrix-task-list [tasks]="tasks"></yata-matrix-task-list>
+  </div>
+</mat-card>
