@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of } from 'rxjs';
+import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { SubtasksService } from '../../services/subtasks.service';
 import { TaskDetailsActions, YataApiActions } from '../actions';
 
@@ -19,10 +20,10 @@ export class SubtasksEffects {
       concatMap((action) =>
         this.subtasksService.create(action.subtask).pipe(
           map((subtask) => YataApiActions.createSubtaskSuccess({ subtask })),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.createSubtaskError({
-                message: 'Could not create Subtask',
+                error,
               })
             )
           )
@@ -39,10 +40,10 @@ export class SubtasksEffects {
           map(() =>
             YataApiActions.deleteSubtaskSuccess({ subtask: action.subtask })
           ),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.deleteSubtaskError({
-                message: 'Could not create Subtask',
+                error,
               })
             )
           )
@@ -56,13 +57,11 @@ export class SubtasksEffects {
       ofType(TaskDetailsActions.updateSubtask),
       concatMap((action) =>
         this.subtasksService.update(action.subtask).pipe(
-          map((subtask) =>
-            YataApiActions.updateSubtaskSuccess({ subtask })
-          ),
-          catchError(() =>
+          map((subtask) => YataApiActions.updateSubtaskSuccess({ subtask })),
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.updateSubtaskError({
-                message: 'Could not create Subtask',
+                error,
               })
             )
           )

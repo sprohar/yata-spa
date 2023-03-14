@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { ProjectsService } from '../../services/projects.service';
 import {
   AppActions,
@@ -32,10 +33,10 @@ export class ProjectsEffects {
             this.snackbar.open(`${project.name} was created.`);
             return YataApiActions.createProjectSuccess({ project });
           }),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.createProjectError({
-                message: 'Could not create Project',
+                error,
               })
             )
           )
@@ -55,10 +56,10 @@ export class ProjectsEffects {
             })
           ),
           tap(() => this.router.navigateByUrl('/')),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.deleteProjectError({
-                message: `Could not delete Project`,
+                error,
               })
             )
           )
@@ -73,10 +74,10 @@ export class ProjectsEffects {
       switchMap((action) =>
         this.projectsService.get(action.projectId).pipe(
           map((project) => YataApiActions.loadProjectSuccess({ project })),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.loadProjectError({
-                message: 'Could not load the selected project',
+                error,
               })
             )
           )
@@ -93,10 +94,10 @@ export class ProjectsEffects {
           map((res) =>
             YataApiActions.loadProjectsSuccess({ projects: res.data })
           ),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.loadProjectsError({
-                message: "Could not load the user's projects",
+                error,
               })
             )
           )
@@ -114,10 +115,10 @@ export class ProjectsEffects {
             this.snackbar.open(`${project.name} was updated.`);
             return YataApiActions.updateProjectSuccess({ project });
           }),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.updateProjectError({
-                message: 'Could not update the Project',
+                error,
               })
             )
           )
@@ -135,10 +136,10 @@ export class ProjectsEffects {
       concatMap((action) =>
         this.projectsService.update(action.project.id!, action.project).pipe(
           map((project) => YataApiActions.updateProjectSuccess({ project })),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.updateProjectError({
-                message: 'Could not persist the project view',
+                error,
               })
             )
           )

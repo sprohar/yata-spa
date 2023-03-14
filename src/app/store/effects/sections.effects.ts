@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
+import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { SectionsService } from '../../services/sections.service';
 import {
   EditSectionDialogActions,
@@ -25,10 +26,10 @@ export class SectionsEffects {
       concatMap((action) =>
         this.sectionsService.create(action.section).pipe(
           map((section) => YataApiActions.createSectionSuccess({ section })),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.createSectionError({
-                message: 'Could not create Section',
+                error,
               })
             )
           )
@@ -46,10 +47,10 @@ export class SectionsEffects {
             YataApiActions.deleteSectionSuccess({ section: action.section })
           ),
           tap(() => this.snackbar.open(`${action.section.name} was deleted`)),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.deleteSectionError({
-                message: 'Could not delete Section',
+                error,
               })
             )
           )
@@ -71,10 +72,10 @@ export class SectionsEffects {
             map(
               (section) =>
                 YataApiActions.moveSectionToProjectSuccess({ section }),
-              catchError(() =>
+              catchError((error: ApiErrorResponse) =>
                 of(
                   YataApiActions.moveSectionToProjectError({
-                    message: 'Could not update Section',
+                    error,
                   })
                 )
               )
@@ -91,10 +92,10 @@ export class SectionsEffects {
         this.sectionsService.update(action.section).pipe(
           map(
             (section) => YataApiActions.updateSectionSuccess({ section }),
-            catchError(() =>
+            catchError((error: ApiErrorResponse) =>
               of(
                 YataApiActions.updateSectionError({
-                  message: 'Could not update Section',
+                  error,
                 })
               )
             )

@@ -1,3 +1,4 @@
+export * from './auth.effects';
 export * from './projects.effects';
 export * from './sections.effects';
 export * from './subtasks.effect';

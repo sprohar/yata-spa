@@ -10,6 +10,7 @@ import {
   of,
   tap,
 } from 'rxjs';
+import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { EisenhowerService } from '../../services/eisenhower.service';
 import { TasksService } from '../../services/tasks.service';
 import {
@@ -42,10 +43,10 @@ export class TasksEffects {
       concatMap((action) =>
         this.tasksService.create(action.task).pipe(
           map((task) => YataApiActions.createTaskSuccess({ task })),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.createTaskError({
-                message: 'Could not create Task',
+                error,
               })
             )
           )
@@ -60,10 +61,10 @@ export class TasksEffects {
       concatMap((action) =>
         this.tasksService.duplicate(action.task).pipe(
           map((task) => YataApiActions.createTaskSuccess({ task })),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.createTaskError({
-                message: 'Could not create Task',
+                error,
               })
             )
           )
@@ -79,10 +80,10 @@ export class TasksEffects {
         this.tasksService.delete(action.task).pipe(
           map(() => YataApiActions.deleteTaskSuccess({ task: action.task })),
           tap(() => this.snackbar.open('Removed task')),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.deleteTaskError({
-                message: 'Could not delete Task',
+                error,
               })
             )
           )
@@ -97,10 +98,10 @@ export class TasksEffects {
       exhaustMap((_) =>
         this.eisenhowerService.getAllTasks().pipe(
           map((res) => YataApiActions.loadTasksSuccess({ tasks: res.data })),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.loadTasksError({
-                message: 'Could not load tasks for the eisenhower matrix',
+                error,
               })
             )
           )
@@ -126,10 +127,10 @@ export class TasksEffects {
         this.tasksService.update(action.task.id!, action.task).pipe(
           map((task) => YataApiActions.updateTaskSuccess({ task })),
           tap(() => this.snackbar.open('Updated task')),
-          catchError(() =>
+          catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.updateTaskError({
-                message: 'Could not update Task',
+                error,
               })
             )
           )
