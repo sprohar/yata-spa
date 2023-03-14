@@ -9,6 +9,7 @@ import { Task } from '../../../models';
 export class TaskPriorityPickerComponent {
   @Output() selectionChange = new EventEmitter<Task.Priority>();
   @Input() value?: Task.Priority;
+  @Input() disabled: boolean = false;
 
   constructor() {}
 

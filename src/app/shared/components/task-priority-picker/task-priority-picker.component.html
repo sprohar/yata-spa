@@ -1,6 +1,7 @@
 <button
   mat-icon-button
   [matMenuTriggerFor]="priorityOptions"
+  [disabled]="disabled"
   title="Set the priority level"
 >
   <mat-icon [ngClass]="flagColor">flag</mat-icon>
