@@ -1,6 +1,6 @@
 <mat-card class="quadrant">
   <div class="quadrant-header">
-    <h5 [ngClass]="headerTextColorClassName">
+    <h5 [ngClass]="textColorClassName">
       {{ headerText }}
     </h5>
 
@@ -8,12 +8,43 @@
       <button mat-icon-button (click)="openCreateTaskDialog()">
         <mat-icon>add</mat-icon>
       </button>
-      <button mat-icon-button>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="quadrantOptions"
+        title="Quadrant options"
+      >
         <mat-icon>more_vert</mat-icon>
       </button>
+      <mat-menu #quadrantOptions>
+        <button mat-menu-item (click)="showCompleted = !showCompleted">
+          {{ showCompleted ? "Hide" : "Show" }} completed
+        </button>
+      </mat-menu>
     </div>
   </div>
-  <div class="quadrant-content">
-    <yata-matrix-task-list [tasks]="tasks"></yata-matrix-task-list>
+  <div class="full-height p-1 relative">
+    <div class="quadrant-content">
+      <ng-container *ngIf="projects$ | async as projects">
+        <ng-container *ngFor="let project of projects">
+          <ng-container *ngIf="getProjectTasks(project) as items">
+            <yata-section
+              *ngIf="items.length"
+              [name]="project.name"
+              [itemsCount]="items.length"
+            >
+              <yata-matrix-task-list [tasks]="items"></yata-matrix-task-list>
+            </yata-section>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="completedItems.length && showCompleted">
+        <yata-section [name]="'Completed'" [itemsCount]="completedItems.length">
+          <yata-matrix-task-list
+            [tasks]="completedItems"
+          ></yata-matrix-task-list>
+        </yata-section>
+      </ng-container>
+    </div>
   </div>
 </mat-card>

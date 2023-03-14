@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 16px 0 16px;
+    
     .quadrant-header-actions {
       button {
         transform: scale(0.75);
@@ -18,8 +19,13 @@
   }
 
   .quadrant-content {
-    height: 100%;
-    padding: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    padding: 1em;
   }
 }
 

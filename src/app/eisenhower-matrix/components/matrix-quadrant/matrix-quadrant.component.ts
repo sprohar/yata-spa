@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Task } from '../../../models';
+import { Store } from '@ngrx/store';
+import { Project, Task } from '../../../models';
+import { selectProjects } from '../../../store/selectors';
 import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
 
 @Component({
@@ -9,12 +11,18 @@ import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dia
   styleUrls: ['./matrix-quadrant.component.scss'],
 })
 export class MatrixQuadrantComponent implements OnInit {
+  projects$ = this.store.select(selectProjects);
   @Input() tasks!: Task[];
   @Input() priority!: Task.Priority;
+  showCompleted = true;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private store: Store) {}
 
   ngOnInit(): void {}
+
+  get completedItems() {
+    return this.tasks.filter(t => t.completed);
+  }
 
   get headerText() {
     switch (this.priority) {
@@ -31,13 +39,17 @@ export class MatrixQuadrantComponent implements OnInit {
     }
   }
 
-  get headerTextColorClassName() {
+  get textColorClassName() {
     return {
       'high-priority': this.priority === Task.Priority.HIGH,
       'medium-priority': this.priority === Task.Priority.MEDIUM,
       'low-priority': this.priority === Task.Priority.LOW,
       'no-priority': this.priority === Task.Priority.NONE,
     };
+  }
+
+  getProjectTasks(project: Project) {
+    return this.tasks.filter(t => t.projectId === project.id);
   }
 
   openCreateTaskDialog() {
