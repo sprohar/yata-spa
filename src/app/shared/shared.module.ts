@@ -31,6 +31,7 @@ import { TaskPriorityPickerComponent } from './components/task-priority-picker/t
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
+import { SectionComponent } from './components/section/section.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskOptionsMenuComponent,
     TaskListSortOptionsComponent,
     EditProjectDialogComponent,
+    SectionComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +81,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     SectionOptionsMenuComponent,
     TaskOptionsMenuComponent,
     DateTimePickerDialogComponent,
+    SectionComponent,
   ],
 })
 export class SharedModule {}
