@@ -3,37 +3,47 @@ import { Injectable } from '@angular/core';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Project } from '../models/project.model';
 import { environment } from '../../environment/environment';
+import { ApiService } from './api.service';
+import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectsService {
+export class ProjectsService extends ApiService {
   private readonly baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   create(project: Project) {
     const url = `${this.baseUrl}/projects`;
-    return this.http.post<Project>(url, project);
+    return this.http
+      .post<Project>(url, project)
+      .pipe(catchError(this.handleError));
   }
 
   delete(projectId: number) {
     const url = `${this.baseUrl}/projects/${projectId}`;
-    return this.http.delete(url);
+    return this.http.delete(url).pipe(catchError(this.handleError));
   }
 
   get(projectId: number) {
     const url = `${this.baseUrl}/projects/${projectId}`;
-    return this.http.get<Project>(url);
+    return this.http.get<Project>(url).pipe(catchError(this.handleError));
   }
 
   getAll() {
     const url = `${this.baseUrl}/projects`;
-    return this.http.get<PaginatedList<Project>>(url);
+    return this.http
+      .get<PaginatedList<Project>>(url)
+      .pipe(catchError(this.handleError));
   }
 
   update(id: number, project: Partial<Project>) {
     const url = `${this.baseUrl}/projects/${id}`;
-    return this.http.patch<Project>(url, project);
+    return this.http
+      .patch<Project>(url, project)
+      .pipe(catchError(this.handleError));
   }
 }
