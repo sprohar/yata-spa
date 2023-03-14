@@ -1,4 +1,4 @@
-<div class="tlist-container" *ngIf="projects$ | async as projects">
+<ng-container class="tlist-container" *ngIf="projects$ | async as projects">
   <ul>
     <li
       *ngFor="let task of tasks"
@@ -15,4 +15,4 @@
       </div>
     </li>
   </ul>
-</div>
+</ng-container>
