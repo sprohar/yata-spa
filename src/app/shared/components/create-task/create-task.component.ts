@@ -16,7 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { Section, Task } from '../../../models';
-import { CreateTaskActions } from '../../../store/actions';
+import { CreateTaskComponentActions } from '../../../store/actions';
 import { selectCurrentProjectId } from '../../../store/reducers/projects.reducer';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
@@ -100,7 +100,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
       task.sectionId = this.section.id;
     }
 
-    this.store.dispatch(CreateTaskActions.createTask({ task }));
+    this.store.dispatch(CreateTaskComponentActions.createTask({ task }));
     this.created.emit();
     this.form.reset();
     this.section = null;

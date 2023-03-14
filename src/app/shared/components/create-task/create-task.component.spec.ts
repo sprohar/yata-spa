@@ -7,7 +7,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { Section, Task } from '../../../models';
-import { CreateTaskActions } from '../../../store/actions';
+import { CreateTaskComponentActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
@@ -89,7 +89,7 @@ describe('CreateTaskComponent', () => {
       component.handleSave(projectId);
 
       expect(store.dispatch).toHaveBeenCalledWith(
-        CreateTaskActions.createTask({
+        CreateTaskComponentActions.createTask({
           task,
         })
       );

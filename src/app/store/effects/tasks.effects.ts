@@ -13,7 +13,7 @@ import {
 import { EisenhowerService } from '../../services/eisenhower.service';
 import { TasksService } from '../../services/tasks.service';
 import {
-  CreateTaskActions,
+  CreateTaskComponentActions,
   EisenhowerMatrixActions,
   KanbanViewActions,
   ListViewActions,
@@ -35,7 +35,7 @@ export class TasksEffects {
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
-        CreateTaskActions.createTask,
+        CreateTaskComponentActions.createTask,
         KanbanViewActions.createTask,
         ListViewActions.createTaskInSection
       ),
