@@ -1,0 +1,63 @@
+<mat-dialog-content [formGroup]="form">
+  <div class="flex flex-column row-gap-1">
+    <!-- Header -->
+    <div class="flex align-items-center space-between">
+      <ng-container *ngIf="dueDateControl.value; else dateTimePicker">
+        <button mat-stroked-button (click)="openDateTimePicker()">
+          {{ dueDateControl.value | date }}
+        </button>
+      </ng-container>
+      <ng-template #dateTimePicker>
+        <button mat-button title="Set due date" (click)="openDateTimePicker()">
+          <mat-icon>event</mat-icon>
+          <span>Due date</span>
+        </button>
+      </ng-template>
+
+      <yata-task-priority-picker
+        [value]="data"
+        [disabled]="true"
+      ></yata-task-priority-picker>
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-column">
+      <mat-form-field>
+        <mat-label>New Task</mat-label>
+        <input matInput type="text" formControlName="title" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="content"></textarea>
+      </mat-form-field>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex align-items-center space-between">
+      <ng-container *ngIf="projects$ | async as projects">
+        <button mat-button [matMenuTriggerFor]="moveToOptions" title="Move to">
+          <mat-icon>input</mat-icon>
+          <span>
+            {{ getSelectedProject(projects)?.name }}
+          </span>
+        </button>
+        <mat-menu #moveToOptions>
+          <ng-container *ngFor="let project of getAvailableProjects(projects)">
+            <button mat-menu-item (click)="setProjectId(project.id!)">
+              {{ project.name }}
+            </button>
+          </ng-container>
+        </mat-menu>
+      </ng-container>
+
+      <button
+        [disabled]="form.invalid || form.pristine"
+        mat-raised-button
+        color="primary"
+        (click)="handleSave()"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</mat-dialog-content>

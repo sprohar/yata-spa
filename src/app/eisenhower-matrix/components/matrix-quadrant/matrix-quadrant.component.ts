@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Task } from '../../../models';
+import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
 
 @Component({
   selector: 'yata-matrix-quadrant',
@@ -10,7 +12,7 @@ export class MatrixQuadrantComponent implements OnInit {
   @Input() tasks!: Task[];
   @Input() priority!: Task.Priority;
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
@@ -36,5 +38,12 @@ export class MatrixQuadrantComponent implements OnInit {
       'low-priority': this.priority === Task.Priority.LOW,
       'no-priority': this.priority === Task.Priority.NONE,
     };
+  }
+
+  openCreateTaskDialog() {
+    this.dialog.open(CreateTaskDialogComponent, {
+      data: this.priority,
+      minWidth: '350px',
+    });
   }
 }

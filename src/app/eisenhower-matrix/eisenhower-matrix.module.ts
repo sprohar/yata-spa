@@ -12,17 +12,25 @@ import { MatrixTaskListComponent } from './components/matrix-task-list/matrix-ta
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-quadrant.component';
+import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
+import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
   declarations: [
     EisenhowerMatrixComponent,
     MatrixTaskListComponent,
-    MatrixQuadrantComponent
+    MatrixQuadrantComponent,
+    CreateTaskDialogComponent
   ],
   imports: [
     CommonModule,
     EisenhowerMatrixRoutingModule,
+    SharedModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatIconModule,
     MatButtonModule,
@@ -30,6 +38,8 @@ import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-qua
     MatDialogModule,
     MatCheckboxModule,
     MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
   ]
 })
 export class EisenhowerMatrixModule { }

@@ -78,6 +78,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskPriorityPickerComponent,
     SectionOptionsMenuComponent,
     TaskOptionsMenuComponent,
+    DateTimePickerDialogComponent,
   ],
 })
 export class SharedModule {}
