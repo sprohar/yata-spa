@@ -44,16 +44,12 @@
   </div>
 
   <div class="completed-tasks" *ngIf="completedTasks && completedTasks.length">
-    <details open>
-      <summary>
-        Completed
-        <span class="badge-task-count">({{ completedTasks.length }})</span>
-      </summary>
+    <yata-section [name]="'Completed'" [itemsCount]="completedTasks.length">
       <ul class="task-list">
         <li *ngFor="let task of completedTasks; trackBy: trackByTaskId">
           <yata-task-card [task]="task"></yata-task-card>
         </li>
       </ul>
-    </details>
+    </yata-section>
   </div>
 </article>
