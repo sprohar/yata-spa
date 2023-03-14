@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Task } from '../../../models';
+import { Project, Task } from '../../../models';
 import { TaskDetailsDialogComponent } from '../../../shared/components/task-details-dialog/task-details-dialog.component';
 import { EisenhowerMatrixActions } from '../../../store/actions';
+import { selectProjects } from '../../../store/selectors';
 
 @Component({
   selector: 'yata-matrix-task-list',
@@ -12,6 +13,7 @@ import { EisenhowerMatrixActions } from '../../../store/actions';
 })
 export class MatrixTaskListComponent implements OnInit {
   @Input() tasks!: Task[];
+  projects$ = this.store.select(selectProjects);
 
   constructor(private store: Store, private dialog: MatDialog) {}
 
@@ -29,5 +31,9 @@ export class MatrixTaskListComponent implements OnInit {
     );
 
     this.dialog.open(TaskDetailsDialogComponent);
+  }
+
+  getProjectName(projectId: number, projects: Project[]) {
+    return projects.find((p) => p.id === projectId)?.name ?? '';
   }
 }
