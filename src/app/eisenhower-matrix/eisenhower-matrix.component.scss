@@ -34,6 +34,7 @@
     column-gap: 8px;
     align-items: center;
     justify-content: space-between;
+    padding: 16px 16px 0 16px;
 
     .quadrant-header-actions {
       button {
@@ -43,27 +44,7 @@
   }
 
   .quadrant-content {
-    position: relative;
     height: 100%;
-
-    ul {
-      margin: 0;
-      padding: 0;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      overflow-y: auto;
-      
-      li {
-        padding: 16px;
-      }
-    }
-  }
-
-  .quadrant-header,
-  .quadrant-content {
     padding: 16px;
   }
 }

@@ -8,11 +8,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatrixTaskListComponent } from './components/matrix-task-list/matrix-task-list.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
   declarations: [
-    EisenhowerMatrixComponent
+    EisenhowerMatrixComponent,
+    MatrixTaskListComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +26,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatMenuModule,
     MatDialogModule,
+    MatCheckboxModule,
+    MatDividerModule,
   ]
 })
 export class EisenhowerMatrixModule { }

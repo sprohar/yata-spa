@@ -14,16 +14,11 @@
     </div>
     <div
       *ngIf="highPriorityTasks$ | async as highPriorityTasks"
-      class="quadrant-content relative"
+      class="quadrant-content"
     >
-      <ul>
-        <li
-          *ngFor="let task of highPriorityTasks"
-          (click)="openTaskDetailsDialog(task)"
-        >
-          {{ task.title }}
-        </li>
-      </ul>
+      <yata-matrix-task-list
+        [tasks]="highPriorityTasks"
+      ></yata-matrix-task-list>
     </div>
   </mat-card>
 
@@ -43,16 +38,11 @@
 
     <div
       *ngIf="mediumPriorityTasks$ | async as mediumPriorityTasks"
-      class="quadrant-content relative"
+      class="quadrant-content"
     >
-      <ul>
-        <li
-          *ngFor="let task of mediumPriorityTasks"
-          (click)="openTaskDetailsDialog(task)"
-        >
-          {{ task.title }}
-        </li>
-      </ul>
+      <yata-matrix-task-list
+        [tasks]="mediumPriorityTasks"
+      ></yata-matrix-task-list>
     </div>
   </mat-card>
 
@@ -72,16 +62,9 @@
 
     <div
       *ngIf="lowPriorityTasks$ | async as lowPriorityTasks"
-      class="quadrant-content relative"
+      class="quadrant-content"
     >
-      <ul>
-        <li
-          *ngFor="let task of lowPriorityTasks"
-          (click)="openTaskDetailsDialog(task)"
-        >
-          {{ task.title }}
-        </li>
-      </ul>
+      <yata-matrix-task-list [tasks]="lowPriorityTasks"></yata-matrix-task-list>
     </div>
   </mat-card>
 
@@ -101,16 +84,9 @@
 
     <div
       *ngIf="noPriorityTasks$ | async as noPriorityTasks"
-      class="quadrant-content relative"
+      class="quadrant-content"
     >
-      <ul>
-        <li
-          *ngFor="let task of noPriorityTasks"
-          (click)="openTaskDetailsDialog(task)"
-        >
-          {{ task.title }}
-        </li>
-      </ul>
+      <yata-matrix-task-list [tasks]="noPriorityTasks"></yata-matrix-task-list>
     </div>
   </mat-card>
 </main>
