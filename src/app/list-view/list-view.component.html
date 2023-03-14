@@ -21,9 +21,12 @@
       <!-- Completed sections -->
       <ng-container *ngIf="completedTasks$ | async as completedTasks">
         <ng-container *ngIf="completedTasks && completedTasks.length > 0">
-          <yata-project-section
-            [section]="createCompletedSection(completedTasks)"
-          ></yata-project-section>
+          <yata-section
+            [name]="'Completed'"
+            [itemsCount]="completedTasks.length"
+          >
+            <yata-task-list [tasks]="completedTasks"></yata-task-list>
+          </yata-section>
         </ng-container>
       </ng-container>
     </div>
