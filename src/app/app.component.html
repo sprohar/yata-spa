@@ -31,7 +31,8 @@
             *ngFor="let project of projects; trackBy: trackByProjectId"
           >
             <li class="clickable" (click)="handleSetCurrentProject(project)">
-              {{ project.name }}
+              <mat-icon>{{ getProjectViewIcon(project) }}</mat-icon>&nbsp;
+              <span>{{ project.name }}</span>
             </li>
           </ng-container>
         </ul>

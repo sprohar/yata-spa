@@ -36,6 +36,15 @@ export class AppComponent {
     this.dialog.open(CreateProjectDialogComponent);
   }
 
+  /**
+   * @see https://fonts.google.com/icons
+   * @param project
+   * @returns
+   */
+  getProjectViewIcon(project: Project) {
+    return project.view === Project.View.LIST ? 'view_list' : 'view_kanban';
+  }
+
   handleSetCurrentProject(project: Project) {
     switch (project.view) {
       case Project.View.KANBAN:
