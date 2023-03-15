@@ -9,12 +9,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 
 import { SharedModule } from '../shared/shared.module';
+import { CreateSectionTaskListItem } from './components/create-task-list-item/create-section-task-list-item.component';
 import { ProjectSectionComponent } from './components/project-section/project-section.component';
+import { TaskListItemComponent } from './components/task-list-item/task-list-item.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { ListViewRoutingModule } from './list-view-routing.module';
 import { ListViewComponent } from './list-view.component';
-import { CreateSectionTaskListItem } from './components/create-task-list-item/create-section-task-list-item.component';
-import { TaskListItemComponent } from './components/task-list-item/task-list-item.component';
 
 @NgModule({
   declarations: [

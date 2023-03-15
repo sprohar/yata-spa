@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs';
+import { environment } from '../../environment/environment';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Project } from '../models/project.model';
-import { environment } from '../../environment/environment';
 import { ApiService } from './api.service';
-import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
