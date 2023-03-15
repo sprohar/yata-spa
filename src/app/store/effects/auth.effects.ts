@@ -4,6 +4,7 @@ import { catchError, concatMap, map, of } from 'rxjs';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { AuthActions } from '../actions';
+import { AuthApiActions } from '../actions/auth-api.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -17,10 +18,10 @@ export class AuthEffects {
       ofType(AuthActions.signIn),
       concatMap((action) =>
         this.authenticationService.signIn(action.dto).pipe(
-          map((res) => AuthActions.signInSucesss({ res })),
+          map((res) => AuthApiActions.signInSucess({ res })),
           catchError((error: ApiErrorResponse) =>
             of(
-              AuthActions.signInError({
+              AuthApiActions.signInError({
                 error,
               })
             )
@@ -35,10 +36,10 @@ export class AuthEffects {
       ofType(AuthActions.signUp),
       concatMap((action) =>
         this.authenticationService.signUp(action.dto).pipe(
-          map((res) => AuthActions.signUpSucesss({ res })),
+          map((res) => AuthApiActions.signUpSucess({ res })),
           catchError((error: ApiErrorResponse) =>
             of(
-              AuthActions.signUpError({
+              AuthApiActions.signUpError({
                 error,
               })
             )
