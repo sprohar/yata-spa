@@ -1,0 +1,39 @@
+<div class="full-height">
+  <div class="form-container">
+    <h1>Sign in</h1>
+
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="passowrd"
+          formControlName="password"
+          (keyup.enter)="handleSignIn()"
+        />
+      </mat-form-field>
+
+      <div class="flex full-width">
+        <button
+          [disabled]="form.invalid"
+          mat-raised-button
+          class="full-width"
+          color="primary"
+          (click)="handleSignIn()"
+        >
+          Sign in
+        </button>
+      </div>
+    </form>
+
+    <p>
+      <span> Don&apos;t have an accont? </span>
+      <a routerLink="/sign-in" class="link">Sign up</a>
+    </p>
+  </div>
+</div>

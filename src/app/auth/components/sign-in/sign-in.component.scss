@@ -1,0 +1,21 @@
+@use "../../../../scss/colors" as colors;
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 350px;
+  row-gap: 16px;
+}
+
+.link {
+  color: colors.$mat-cyan-A100;
+}
+
+@media (prefers-color-scheme: light) {
+  .link {
+    color: colors.$mat-cyan-700;
+  }
+}

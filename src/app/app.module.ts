@@ -36,6 +36,7 @@ import {
   sectionsReducer,
   tasksReducer,
 } from './store/reducers/';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    AuthModule,
     StoreModule.forRoot(
       {
         projects: projectsReducer,
