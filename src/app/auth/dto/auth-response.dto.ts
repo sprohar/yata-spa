@@ -1,9 +1,3 @@
-export class AuthResponseDto {
+export type AuthResponseDto = {
   accessToken: string;
-  refreshToken: string;
-
-  constructor(accessToken: string, refreshToken: string) {
-    this.accessToken = accessToken;
-    this.refreshToken = refreshToken;
-  }
 }
