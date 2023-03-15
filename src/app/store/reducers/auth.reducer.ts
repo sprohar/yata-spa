@@ -4,11 +4,13 @@ import { AuthApiActions } from '../actions/auth-api.actions';
 
 export interface AuthState {
   isAuthenticated: boolean;
+  accessToken: string | null;
   user: User | null;
 }
 
 export const initialState: AuthState = {
   isAuthenticated: false,
+  accessToken: null,
   user: null,
 };
 
@@ -16,8 +18,9 @@ export const authFeature = createFeature({
   name: 'auth',
   reducer: createReducer(
     initialState,
-    on(AuthApiActions.signInSucess, (state, _) => ({
-      user: state.user,
+    on(AuthApiActions.signInSucess, (state, action) => ({
+      ...state,
+      accessToken: action.res.accessToken,
       isAuthenticated: true,
     }))
   ),
@@ -26,6 +29,7 @@ export const authFeature = createFeature({
 export const {
   name,
   reducer,
+  selectAccessToken,
   selectAuthState,
   selectIsAuthenticated,
   selectUser,
