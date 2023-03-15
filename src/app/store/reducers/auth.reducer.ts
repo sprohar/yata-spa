@@ -18,11 +18,16 @@ export const authFeature = createFeature({
   name: 'auth',
   reducer: createReducer(
     initialState,
-    on(AuthApiActions.signInSucess, (state, action) => ({
-      ...state,
-      accessToken: action.res.accessToken,
-      isAuthenticated: true,
-    }))
+    on(
+      AuthApiActions.signInSuccess,
+      AuthApiActions.refreshTokenSuccess,
+      AuthApiActions.signUpSuccess,
+      (state, action) => ({
+        ...state,
+        accessToken: action.res.accessToken,
+        isAuthenticated: true,
+      })
+    )
   ),
 });
 

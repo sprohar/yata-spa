@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of, switchMap } from 'rxjs';
-import { REFRESH_TOKEN_KEY } from '../../auth/constants/storage-keys';
+import { catchError, concatMap, map, mergeMap, of, switchMap } from 'rxjs';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { AuthActions } from '../actions';
@@ -18,21 +17,34 @@ export class AuthEffects {
 
   authenticated$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthApiActions.signInSucess, AuthApiActions.signUpSucess),
-      switchMap((action) => {
-        localStorage.setItem(REFRESH_TOKEN_KEY, action.res.refreshToken);
+      ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
+      switchMap((_) => {
         this.router.navigateByUrl('/');
-        return of(AuthActions.authenticationCompleted());
+        return of(AuthActions.authenticationComplete());
       })
+    )
+  );
+
+  refreshToken$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.refreshToken),
+      mergeMap(() =>
+        this.authenticationService.refreshToken().pipe(
+          map((res) => AuthApiActions.refreshTokenSuccess({ res })),
+          catchError((error: ApiErrorResponse) =>
+            of(AuthApiActions.refreshTokenError({ error }))
+          )
+        )
+      )
     )
   );
 
   signIn$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signIn),
-      concatMap((action) =>
+      mergeMap((action) =>
         this.authenticationService.signIn(action.dto).pipe(
-          map((res) => AuthApiActions.signInSucess({ res })),
+          map((res) => AuthApiActions.signInSuccess({ res })),
           catchError((error: ApiErrorResponse) =>
             of(
               AuthApiActions.signInError({
@@ -50,7 +62,7 @@ export class AuthEffects {
       ofType(AuthActions.signUp),
       concatMap((action) =>
         this.authenticationService.signUp(action.dto).pipe(
-          map((res) => AuthApiActions.signUpSucess({ res })),
+          map((res) => AuthApiActions.signUpSuccess({ res })),
           catchError((error: ApiErrorResponse) =>
             of(
               AuthApiActions.signUpError({

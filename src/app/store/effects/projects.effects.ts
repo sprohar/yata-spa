@@ -89,7 +89,7 @@ export class ProjectsEffects {
 
   getAll$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthApiActions.signInSucess),
+      ofType(AuthApiActions.signInSuccess),
       switchMap(() =>
         this.projectsService.getAll().pipe(
           map((res) =>
