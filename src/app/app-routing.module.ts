@@ -10,8 +10,8 @@ const routes: Routes = [
     component: LandingPageComponent,
   },
   {
-    path: 'sign-in',
-    component: SignInComponent,
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'kanban',
