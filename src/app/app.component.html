@@ -3,6 +3,7 @@
     #drawer
     class="sidenav"
     fixedInViewport
+    [class.hide]="(isAuthenticated$ | async) === false"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
@@ -36,7 +37,8 @@
             *ngFor="let project of projects; trackBy: trackByProjectId"
           >
             <li class="clickable" (click)="handleSetCurrentProject(project)">
-              <mat-icon>{{ getProjectViewIcon(project) }}</mat-icon>&nbsp;
+              <mat-icon>{{ getProjectViewIcon(project) }}</mat-icon
+              >&nbsp;
               <span>{{ project.name }}</span>
             </li>
           </ng-container>
@@ -51,6 +53,7 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
+        [class.hide]="(isAuthenticated$ | async) === false"
         *ngIf="isHandset$ | async"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>

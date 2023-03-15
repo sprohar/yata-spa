@@ -19,7 +19,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     StoreModule.forFeature(authFeature),
     EffectsModule.forFeature([AuthEffects]),
     ReactiveFormsModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
   ],

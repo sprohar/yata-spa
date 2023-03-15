@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { shareReplay } from 'rxjs';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { Project } from './models';
 import { BreakpointService } from './services/breakpoint.service';
 import { AppActions } from './store/actions';
+import { selectIsAuthenticated } from './store/reducers/auth.reducer';
 import { selectProjects } from './store/reducers/projects.reducer';
 
 @Component({
@@ -16,6 +18,7 @@ import { selectProjects } from './store/reducers/projects.reducer';
 export class AppComponent {
   projects$ = this.store.select(selectProjects);
   isHandset$ = this.breakpointService.isHandset$;
+  isAuthenticated$ = this.store.select(selectIsAuthenticated).pipe(shareReplay())
 
   constructor(
     private breakpointService: BreakpointService,
