@@ -27,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtInterceptor } from './auth/interceptors/jwt-interceptor';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import {
   ProjectsEffects,
   SectionsEffects,
@@ -38,7 +39,6 @@ import {
   sectionsReducer,
   tasksReducer,
 } from './store/reducers/';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [

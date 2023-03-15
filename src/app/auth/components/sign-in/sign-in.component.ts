@@ -34,5 +34,7 @@ export class SignInComponent implements OnInit {
         dto: this.form.value,
       })
     );
+
+    this.form.reset();
   }
 }

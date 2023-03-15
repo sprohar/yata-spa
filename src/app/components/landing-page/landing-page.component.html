@@ -2,6 +2,19 @@
   <h1>Yet Another To-Do App (YATA)</h1>
   <hr />
   <div>
-    <a routerLink="/sign-in" class="link">Sign in</a>
+    <ng-container
+      *ngIf="isAuthenticated$ | async as isAuthenticated; else guest"
+    >
+      <p>Signed in!</p>
+      <button (click)="handleRefresh()">Use Refresh Token</button>
+      <ng-container *ngIf="token$ | async as token">
+        <p style="word-wrap: anywhere">
+          {{ token }}
+        </p>
+      </ng-container>
+    </ng-container>
+    <ng-template #guest>
+      <a routerLink="auth/sign-in" class="link">Sign in</a>
+    </ng-template>
   </div>
 </div>
