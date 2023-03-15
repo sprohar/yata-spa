@@ -9,8 +9,8 @@ import {
 import { Observable, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectAccessToken } from '../../store/reducers/auth.reducer';
+import { environment } from '../../../environment/environment';
 
-/** Pass untouched request through to the next request handler. */
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   constructor(private store: Store) {}
@@ -19,13 +19,22 @@ export class JwtInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    if (!req.url.includes(environment.apiUrl)) {
+      return next.handle(req);
+    }
+
     return this.store.select(selectAccessToken).pipe(
       switchMap((jwt: string | null) => {
         if (!jwt) {
-          return next.handle(req);
+          return next.handle(
+            req.clone({
+              withCredentials: true,
+            })
+          );
         }
 
         const authReq = req.clone({
+          withCredentials: true,
           setHeaders: {
             Authorization: `Bearer ${jwt}`,
           },
