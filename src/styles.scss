@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 @use "./scss/foundation/clickable";
 @use "./scss/forms/input";
+@use "./scss/colors" as colors;
 @include mat.core();
 
 $dark-theme: mat.define-dark-theme(
@@ -153,4 +154,14 @@ body {
 ol,
 ul {
   list-style: none;
+}
+
+.link {
+  color: colors.$mat-cyan-A100;
+}
+
+@media (prefers-color-scheme: light) {
+  .link {
+    color: colors.$mat-cyan-A700;
+  }
 }

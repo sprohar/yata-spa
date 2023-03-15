@@ -38,12 +38,14 @@ import {
   sectionsReducer,
   tasksReducer,
 } from './store/reducers/';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateProjectDialogComponent,
     ConfirmationDialogComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,

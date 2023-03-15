@@ -2,8 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignInComponent } from './auth/components/sign-in/sign-in.component';
 import { authenticationGuard } from './auth/guards/authentication.guard';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: LandingPageComponent,
+  },
   {
     path: 'sign-in',
     component: SignInComponent,
