@@ -35,7 +35,7 @@ export class ViewHeaderComponent implements OnDestroy {
   }
 
   switchToKanbanView(project: Project) {
-    this.router.navigate(['kanban', project.id!]);
+    this.router.navigate(['app', 'kanban', project.id!]);
     this.store.dispatch(
       ListViewActions.switchToKanbanView({
         project: {
@@ -47,7 +47,7 @@ export class ViewHeaderComponent implements OnDestroy {
   }
 
   switchToListView(project: Project) {
-    this.router.navigate(['list', project.id!]);
+    this.router.navigate(['app', 'list', project.id!]);
     this.store.dispatch(
       KanbanViewActions.switchToListView({
         project: {
