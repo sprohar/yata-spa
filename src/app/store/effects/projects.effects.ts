@@ -13,7 +13,6 @@ import {
   ViewHeaderActions,
   YataApiActions,
 } from '../actions/';
-import { AuthApiActions } from '../actions/auth-api.actions';
 import { SidenavActions } from '../actions/sidenav.actions';
 
 @Injectable()
@@ -89,7 +88,7 @@ export class ProjectsEffects {
 
   getAll$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthApiActions.signInSuccess),
+      ofType(AppActions.onInit),
       switchMap(() =>
         this.projectsService.getAll().pipe(
           map((res) =>
