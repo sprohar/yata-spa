@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../../../store/actions';
+import { AuthDto } from '../../dto/auth.dto';
 import { User } from '../../models/user.model';
 
 @Component({
@@ -11,6 +12,7 @@ import { User } from '../../models/user.model';
 })
 export class SignInComponent implements OnInit {
   form!: FormGroup;
+  showPassword = false;
 
   constructor(private store: Store, private fb: FormBuilder) {}
 
@@ -24,17 +26,20 @@ export class SignInComponent implements OnInit {
     });
   }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
   handleSignIn() {
     if (this.form.invalid) {
       return;
     }
 
+    const dto = this.form.value as AuthDto;
     this.store.dispatch(
       AuthActions.signIn({
-        dto: this.form.value,
+        dto,
       })
     );
-
-    this.form.reset();
   }
 }
