@@ -1,39 +1,51 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SignInComponent } from './auth/components/sign-in/sign-in.component';
 import { authenticationGuard } from './auth/guards/authentication.guard';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { MainComponent } from './components/main/main.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LandingPageComponent,
+    redirectTo: '/app',
+    pathMatch: 'full',
   },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'kanban',
+    path: 'app',
+    component: MainComponent,
     canActivate: [authenticationGuard],
-    loadChildren: () =>
-      import('./kanban-view/kanban-view.module').then(
-        (m) => m.KanbanViewModule
-      ),
-  },
-  {
-    path: 'list',
-    canActivate: [authenticationGuard],
-    loadChildren: () =>
-      import('./list-view/list-view.module').then((m) => m.ListViewModule),
-  },
-  {
-    path: 'matrix',
-    canActivate: [authenticationGuard],
-    loadChildren: () =>
-      import('./eisenhower-matrix/eisenhower-matrix.module').then(
-        (m) => m.EisenhowerMatrixModule
-      ),
+    children: [
+      {
+        path: '',
+        component: LandingPageComponent,
+      },
+      {
+        path: 'kanban',
+        // canActivate: [authenticationGuard],
+        loadChildren: () =>
+          import('./kanban-view/kanban-view.module').then(
+            (m) => m.KanbanViewModule
+          ),
+      },
+      {
+        path: 'list',
+        // canActivate: [authenticationGuard],
+        loadChildren: () =>
+          import('./list-view/list-view.module').then((m) => m.ListViewModule),
+      },
+      {
+        path: 'matrix',
+        // canActivate: [authenticationGuard],
+        loadChildren: () =>
+          import('./eisenhower-matrix/eisenhower-matrix.module').then(
+            (m) => m.EisenhowerMatrixModule
+          ),
+      },
+    ],
   },
 ];
 

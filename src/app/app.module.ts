@@ -39,6 +39,7 @@ import {
   sectionsReducer,
   tasksReducer,
 } from './store/reducers/';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {
     CreateProjectDialogComponent,
     ConfirmationDialogComponent,
     LandingPageComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
