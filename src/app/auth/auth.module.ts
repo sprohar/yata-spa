@@ -12,9 +12,10 @@ import { authFeature } from '../store/reducers/auth.reducer';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthViewComponent } from './auth-view.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
-  declarations: [SignInComponent, AuthViewComponent],
+  declarations: [SignInComponent, AuthViewComponent, SignUpComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

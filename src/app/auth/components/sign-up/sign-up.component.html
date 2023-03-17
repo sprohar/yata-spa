@@ -1,8 +1,8 @@
 <div class="full-height">
   <div class="form-container">
-    <h1>Sign in</h1>
+    <h1>Sign up</h1>
 
-    <form [formGroup]="form" (ngSubmit)="handleSignIn()">
+    <form [formGroup]="form" (ngSubmit)="handleSignUp()">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="email" />
@@ -32,14 +32,14 @@
           class="full-width"
           color="primary"
         >
-          Sign in
+          Create account
         </button>
       </div>
     </form>
 
     <p>
-      <span> Don't have an account? </span>
-      <a routerLink="/auth/sign-up" class="link">Sign up</a>
+      <span> Already have an account? </span>
+      <a routerLink="/auth/sign-in" class="link">Sign in</a>
     </p>
   </div>
 </div>
