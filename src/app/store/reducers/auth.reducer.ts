@@ -27,6 +27,16 @@ export const authFeature = createFeature({
         accessToken: action.res.accessToken,
         isAuthenticated: true,
       })
+    ),
+    on(
+      AuthApiActions.signInError,
+      AuthApiActions.signUpError,
+      AuthApiActions.refreshTokenError,
+      (_state, _action) => ({
+        accessToken: null,
+        isAuthenticated: false,
+        user: null,
+      })
     )
   ),
 });

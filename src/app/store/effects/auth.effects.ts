@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap, of, switchMap } from 'rxjs';
+import { catchError, concatMap, EMPTY, map, mergeMap, of, switchMap } from 'rxjs';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { AuthActions } from '../actions';
@@ -24,7 +24,21 @@ export class AuthEffects {
       ),
       switchMap((_) => {
         this.router.navigateByUrl('/');
-        return of(AuthActions.authenticationComplete());
+        return of(AuthActions.authFlowComplete());
+      })
+    )
+  );
+
+  authError$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(
+        AuthApiActions.signInError,
+        AuthApiActions.signUpError,
+        AuthApiActions.refreshTokenError
+      ),
+      switchMap((_) => {
+        this.router.navigateByUrl('/auth/sign-in');
+        return of(AuthActions.authFlowComplete());
       })
     )
   );
