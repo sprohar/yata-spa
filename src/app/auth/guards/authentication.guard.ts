@@ -20,7 +20,7 @@ export function authenticationGuard(
       if (isAuthenticated) {
         return of(true);
       }
-      router.navigateByUrl('/sign-in');
+      router.navigateByUrl('/auth/sign-in');
       return of(false);
     }),
     catchError(() => of(false))
