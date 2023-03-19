@@ -36,15 +36,15 @@ export class AuthenticationService extends ApiService {
     );
   }
 
-  refreshToken() {
+  refreshToken(returnUrl?: string) {
     const url = `${authApiUrl}/refresh-tokens`;
     return this.http.post<AuthResponseDto>(url, null).pipe(
-      tap(() => this.startRefreshTokenTimer()),
+      tap(() => this.startRefreshTokenTimer(returnUrl)),
       catchError(this.handleError)
     );
   }
 
-  startRefreshTokenTimer() {
+  startRefreshTokenTimer(returnUrl?: string) {
     if (this.refreshTokenTimeout !== undefined) {
       this.stopRefreshTokenTimer();
     }
@@ -54,7 +54,12 @@ export class AuthenticationService extends ApiService {
     const timeoutSeconds = ttl - oneMinuteInSeconds;
     const timeoutMilliseconds = timeoutSeconds * 1000;
     this.refreshTokenTimeout = setTimeout(
-      () => this.store.dispatch(AuthActions.refreshToken()),
+      () =>
+        this.store.dispatch(
+          AuthActions.refreshToken({
+            returnUrl,
+          })
+        ),
       timeoutMilliseconds
     );
     console.log('rt_timeout has been set');

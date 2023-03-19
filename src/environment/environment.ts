@@ -1,4 +1,7 @@
 export const environment = {
+  app: {
+    entryPath: '/app',
+  },
   apiUrl: 'http://localhost:3000',
   auth: {
     url: 'http://localhost:3000/authentication',

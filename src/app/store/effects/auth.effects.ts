@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of, switchMap } from 'rxjs';
+import { catchError, concatMap, map, of, switchMap, tap } from 'rxjs';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { AuthActions } from '../actions';
@@ -14,20 +14,6 @@ export class AuthEffects {
     private authenticationService: AuthenticationService,
     private router: Router
   ) {}
-
-  authenticated$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(
-        AuthApiActions.signInSuccess,
-        AuthApiActions.signUpSuccess,
-        AuthApiActions.refreshTokenSuccess
-      ),
-      switchMap((_) => {
-        this.router.navigateByUrl('/');
-        return of(AuthActions.authFlowComplete());
-      })
-    )
-  );
 
   authError$ = createEffect(() =>
     this.actions$.pipe(
@@ -46,9 +32,14 @@ export class AuthEffects {
   refreshToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.refreshToken),
-      switchMap(() =>
+      switchMap((action) =>
         this.authenticationService.refreshToken().pipe(
           map((res) => AuthApiActions.refreshTokenSuccess({ res })),
+          tap(() => {
+            if (action.returnUrl) {
+              this.router.navigateByUrl(action.returnUrl).then();
+            }
+          }),
           catchError((error: ApiErrorResponse) =>
             of(AuthApiActions.refreshTokenError({ error }))
           )
@@ -62,6 +53,11 @@ export class AuthEffects {
       ofType(AuthActions.signIn),
       switchMap((action) =>
         this.authenticationService.signIn(action.dto).pipe(
+          tap(() => {
+            if (action.returnUrl) {
+              this.router.navigateByUrl(action.returnUrl);
+            }
+          }),
           map((res) => AuthApiActions.signInSuccess({ res })),
           catchError((error: ApiErrorResponse) =>
             of(

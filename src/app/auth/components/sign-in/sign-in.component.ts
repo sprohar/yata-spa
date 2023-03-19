@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { environment } from '../../../../environment/environment';
 import { AuthActions } from '../../../store/actions';
 import { AuthDto } from '../../dto/auth.dto';
 import { User } from '../../models/user.model';
@@ -13,10 +15,23 @@ import { User } from '../../models/user.model';
 export class SignInComponent implements OnInit {
   form!: FormGroup;
   showPassword = false;
+  returnUrl = environment.app.entryPath;
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    if (returnUrl) {
+      this.returnUrl = returnUrl;
+    }
+  }
+
+  private initForm() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: [
@@ -39,6 +54,7 @@ export class SignInComponent implements OnInit {
     this.store.dispatch(
       AuthActions.signIn({
         dto,
+        returnUrl: this.returnUrl,
       })
     );
   }

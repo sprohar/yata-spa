@@ -27,7 +27,11 @@ export abstract class ApiService {
       error.status === HttpStatusCode.Unauthorized &&
       authEndpoints.some((endpoint) => url.includes(endpoint))
     ) {
-      inject(Store).dispatch(AuthActions.refreshToken());
+      inject(Store).dispatch(
+        AuthActions.refreshToken({
+          returnUrl: environment.app.entryPath,
+        })
+      );
     }
 
     return throwError(() => error.error as ApiErrorResponse);

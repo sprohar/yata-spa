@@ -5,8 +5,8 @@ export const AuthActions = createActionGroup({
   source: 'Authentication',
   events: {
     'Auth Flow Complete': emptyProps(),
-    'Sign In': props<{ dto: AuthDto }>(),
-    'Sign Up': props<{ dto: AuthDto }>(),
-    'Refresh Token': emptyProps(),
+    'Sign In': props<{ dto: AuthDto; returnUrl: string }>(),
+    'Sign Up': props<{ dto: AuthDto; returnUrl: string }>(),
+    'Refresh Token': props<{ returnUrl?: string }>(),
   },
 });
