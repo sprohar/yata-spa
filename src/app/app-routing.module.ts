@@ -21,7 +21,6 @@ const routes: Routes = [
       },
       {
         path: 'kanban',
-        // canActivate: [authenticationGuard],
         loadChildren: () =>
           import('./kanban-view/kanban-view.module').then(
             (m) => m.KanbanViewModule
@@ -29,13 +28,11 @@ const routes: Routes = [
       },
       {
         path: 'list',
-        // canActivate: [authenticationGuard],
         loadChildren: () =>
           import('./list-view/list-view.module').then((m) => m.ListViewModule),
       },
       {
         path: 'matrix',
-        // canActivate: [authenticationGuard],
         loadChildren: () =>
           import('./eisenhower-matrix/eisenhower-matrix.module').then(
             (m) => m.EisenhowerMatrixModule
