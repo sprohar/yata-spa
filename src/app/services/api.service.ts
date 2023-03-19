@@ -1,6 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { throwError } from 'rxjs';
+import { environment } from '../../environment/environment';
 import { ApiErrorResponse } from '../interfaces/api-error-response';
+import { AuthActions } from '../store/actions';
 
 export abstract class ApiService {
   protected handleError(error: HttpErrorResponse) {
@@ -16,8 +20,16 @@ export abstract class ApiService {
       );
     }
 
-    // Return an observable with a user-facing error message.
-    // () => new Error('Something bad happened; please try again later.')
+    const authEndpoints: string[] = environment.auth.endpoints;
+    const url: string | null = error.url;
+    if (
+      url &&
+      error.status === HttpStatusCode.Unauthorized &&
+      authEndpoints.some((endpoint) => url.includes(endpoint))
+    ) {
+      inject(Store).dispatch(AuthActions.refreshToken());
+    }
+
     return throwError(() => error.error as ApiErrorResponse);
   }
 }
