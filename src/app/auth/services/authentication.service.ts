@@ -8,7 +8,7 @@ import { AuthActions } from '../../store/actions';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { AuthDto } from '../dto/auth.dto';
 
-const authApiUrl =  environment.auth.url;
+const authApiUrl = environment.auth.url;
 
 @Injectable({
   providedIn: 'root',
@@ -30,20 +30,22 @@ export class AuthenticationService extends ApiService {
 
   signUp(dto: AuthDto) {
     const url = `${authApiUrl}/sign-up`;
-    return this.http
-      .post<AuthResponseDto>(url, dto)
-      .pipe(catchError(this.handleError));
+    return this.http.post<AuthResponseDto>(url, dto).pipe(
+      tap(() => this.startRefreshTokenTimer()),
+      catchError(this.handleError)
+    );
   }
 
   refreshToken() {
     const url = `${authApiUrl}/refresh-tokens`;
-    return this.http
-      .post<AuthResponseDto>(url, null)
-      .pipe(catchError(this.handleError));
+    return this.http.post<AuthResponseDto>(url, null).pipe(
+      tap(() => this.startRefreshTokenTimer()),
+      catchError(this.handleError)
+    );
   }
 
   startRefreshTokenTimer() {
-    if (this.refreshTokenTimeout) {
+    if (this.refreshTokenTimeout !== undefined) {
       this.stopRefreshTokenTimer();
     }
 
