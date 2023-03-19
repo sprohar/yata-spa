@@ -94,7 +94,7 @@ import {
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
       provide: APP_INITIALIZER,
-      deps: [Store, AuthenticationService],
+      deps: [Store],
       useFactory: initAppFactory,
       multi: true,
     },

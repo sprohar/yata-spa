@@ -1,21 +1,6 @@
 import { Store } from '@ngrx/store';
-import { catchError, of, tap } from 'rxjs';
-import { AuthApiActions } from '../store/actions/auth-api.actions';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthActions } from '../store/actions';
 
-export function initAppFactory(
-  store: Store,
-  authService: AuthenticationService
-) {
-  return () =>
-    authService.refreshToken().pipe(
-      tap((res) =>
-        store.dispatch(
-          AuthApiActions.refreshTokenSuccess({
-            res,
-          })
-        )
-      ),
-      catchError(() => of())
-    );
+export function initAppFactory(store: Store) {
+  return () => store.dispatch(AuthActions.refreshToken());
 }
