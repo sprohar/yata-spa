@@ -2,7 +2,7 @@ import { APP_INITIALIZER, isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { LayoutModule } from '@angular/cdk/layout';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -32,12 +32,14 @@ import { CreateProjectDialogComponent } from './components/create-project-dialog
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
 import {
+  AuthEffects,
   ProjectsEffects,
   SectionsEffects,
   SubtasksEffects,
   TasksEffects,
 } from './store/effects/';
 import {
+  authReducer,
   projectsReducer,
   sectionsReducer,
   tasksReducer,
@@ -60,6 +62,7 @@ import {
     AuthModule,
     StoreModule.forRoot(
       {
+        auth: authReducer,
         projects: projectsReducer,
         sections: sectionsReducer,
         tasks: tasksReducer,
@@ -67,6 +70,7 @@ import {
       {}
     ),
     EffectsModule.forRoot([
+      AuthEffects,
       ProjectsEffects,
       SectionsEffects,
       TasksEffects,
