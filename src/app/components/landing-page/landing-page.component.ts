@@ -4,6 +4,7 @@ import { AuthActions } from '../../store/actions';
 import {
   selectAccessToken,
   selectIsAuthenticated,
+  selectUser,
 } from '../../store/reducers/auth.reducer';
 
 @Component({
@@ -13,11 +14,7 @@ import {
 })
 export class LandingPageComponent {
   isAuthenticated$ = this.store.select(selectIsAuthenticated);
-  token$ = this.store.select(selectAccessToken);
+  user$ = this.store.select(selectUser);
 
   constructor(private store: Store) {}
-
-  handleRefresh() {
-    this.store.dispatch(AuthActions.refreshToken());
-  }
 }

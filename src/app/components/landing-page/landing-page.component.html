@@ -5,12 +5,8 @@
     <ng-container
       *ngIf="isAuthenticated$ | async as isAuthenticated; else guest"
     >
-      <p>Signed in!</p>
-      <button (click)="handleRefresh()">Use Refresh Token</button>
-      <ng-container *ngIf="token$ | async as token">
-        <p style="word-wrap: anywhere">
-          {{ token }}
-        </p>
+      <ng-container *ngIf="user$ | async as user">
+        <p>Welcome back {{ user.email }}</p>
       </ng-container>
     </ng-container>
     <ng-template #guest>
