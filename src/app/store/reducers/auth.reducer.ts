@@ -22,8 +22,8 @@ export const authFeature = createFeature({
       AuthApiActions.signInSuccess,
       AuthApiActions.refreshTokenSuccess,
       AuthApiActions.signUpSuccess,
-      (state, action) => ({
-        ...state,
+      (_state, action) => ({
+        user: action.res.user ?? null,
         accessToken: action.res.accessToken,
         isAuthenticated: true,
       })
