@@ -1,7 +1,7 @@
 export const environment = {
-  apiUrl: 'http://localhost:7070',
+  apiUrl: 'http://localhost:3000',
   auth: {
-    url: 'http://localhost:7070',
+    url: 'http://localhost:3000/authentication',
     token: {
       ttl: 1200,
     },

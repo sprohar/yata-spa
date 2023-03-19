@@ -8,7 +8,7 @@ import { AuthActions } from '../../store/actions';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { AuthDto } from '../dto/auth.dto';
 
-const authApiUrl = 'http://localhost:7070/authentication';
+const authApiUrl =  environment.auth.url;
 
 @Injectable({
   providedIn: 'root',
