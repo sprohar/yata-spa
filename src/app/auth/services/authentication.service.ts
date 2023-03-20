@@ -20,8 +20,13 @@ export class AuthenticationService extends ApiService {
     super();
   }
 
+  logout() {
+    const url = `${authApiUrl}/${environment.auth.endpoint.logout}`;
+    return this.http.post(url, null);
+  }
+
   signIn(dto: AuthDto) {
-    const url = `${authApiUrl}/sign-in`;
+    const url = `${authApiUrl}/${environment.auth.endpoint.signIn}`;
     return this.http.post<AuthResponseDto>(url, dto).pipe(
       tap(() => this.startRefreshTokenTimer()),
       catchError(this.handleError)
@@ -29,7 +34,7 @@ export class AuthenticationService extends ApiService {
   }
 
   signUp(dto: AuthDto) {
-    const url = `${authApiUrl}/sign-up`;
+    const url = `${authApiUrl}/${environment.auth.endpoint.signUp}`;
     return this.http.post<AuthResponseDto>(url, dto).pipe(
       tap(() => this.startRefreshTokenTimer()),
       catchError(this.handleError)
@@ -37,7 +42,7 @@ export class AuthenticationService extends ApiService {
   }
 
   refreshToken(returnUrl?: string) {
-    const url = `${authApiUrl}/refresh-tokens`;
+    const url = `${authApiUrl}/${environment.auth.endpoint.refreshToken}`;
     return this.http.post<AuthResponseDto>(url, null).pipe(
       tap(() => this.startRefreshTokenTimer(returnUrl)),
       catchError(this.handleError)
