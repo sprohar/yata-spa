@@ -22,7 +22,7 @@ export class AuthenticationService extends ApiService {
 
   logout() {
     const url = `${authApiUrl}/${environment.auth.endpoint.logout}`;
-    return this.http.post(url, null);
+    return this.http.post(url, null).pipe(catchError(this.handleError));
   }
 
   signIn(dto: AuthDto) {

@@ -15,6 +15,21 @@ export class AuthEffects {
     private router: Router
   ) {}
 
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.logout),
+      switchMap((_action) =>
+        this.authenticationService.logout().pipe(
+          map(() => AuthApiActions.logoutSuccess()),
+          tap(() => this.router.navigateByUrl('/')),
+          catchError((error: ApiErrorResponse) =>
+            of(AuthApiActions.logoutError({ error }))
+          )
+        )
+      )
+    )
+  );
+
   authError$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
