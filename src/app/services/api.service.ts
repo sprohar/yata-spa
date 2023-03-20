@@ -1,10 +1,6 @@
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { environment } from '../../environment/environment';
 import { ApiErrorResponse } from '../interfaces/api-error-response';
-import { AuthActions } from '../store/actions';
 
 export abstract class ApiService {
   protected handleError(error: HttpErrorResponse) {
@@ -17,20 +13,6 @@ export abstract class ApiService {
       console.error(
         `Backend returned code ${error.status}, body was: `,
         error.error
-      );
-    }
-
-    const authEndpoints: string[] = environment.auth.endpoints;
-    const url: string | null = error.url;
-    if (
-      url &&
-      error.status === HttpStatusCode.Unauthorized &&
-      authEndpoints.some((endpoint) => url.includes(endpoint))
-    ) {
-      inject(Store).dispatch(
-        AuthActions.refreshToken({
-          returnUrl: environment.app.entryPath,
-        })
       );
     }
 

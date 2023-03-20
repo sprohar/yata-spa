@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, tap } from 'rxjs';
+import { catchError, share, take, tap } from 'rxjs';
 import { environment } from '../../../environment/environment';
 import { ApiService } from '../../services/api.service';
 import { AuthActions } from '../../store/actions';
@@ -21,17 +21,21 @@ export class AuthenticationService extends ApiService {
   }
 
   logout() {
+    if (this.refreshTokenTimeout) {
+      this.stopRefreshTokenTimer();
+    }
     const url = `${authApiUrl}/${environment.auth.endpoint.logout}`;
-    return this.http.post(url, null).pipe(
-      tap(() => this.stopRefreshTokenTimer()),
-      catchError(this.handleError)
-    );
+    return this.http
+      .post(url, null)
+      .pipe(take(1), share(), catchError(this.handleError));
   }
 
   signIn(dto: AuthDto) {
     const url = `${authApiUrl}/${environment.auth.endpoint.signIn}`;
     return this.http.post<AuthResponseDto>(url, dto).pipe(
       tap(() => this.startRefreshTokenTimer()),
+      take(1),
+      share(),
       catchError(this.handleError)
     );
   }
@@ -40,6 +44,8 @@ export class AuthenticationService extends ApiService {
     const url = `${authApiUrl}/${environment.auth.endpoint.signUp}`;
     return this.http.post<AuthResponseDto>(url, dto).pipe(
       tap(() => this.startRefreshTokenTimer()),
+      take(1),
+      share(),
       catchError(this.handleError)
     );
   }
@@ -48,6 +54,8 @@ export class AuthenticationService extends ApiService {
     const url = `${authApiUrl}/${environment.auth.endpoint.refreshToken}`;
     return this.http.post<AuthResponseDto>(url, null).pipe(
       tap(() => this.startRefreshTokenTimer(returnUrl)),
+      take(1),
+      share(),
       catchError(this.handleError)
     );
   }

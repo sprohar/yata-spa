@@ -30,7 +30,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthApiActions.logoutSuccess),
       exhaustMap((_action) => {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/auth/sign-in');
         return of(AuthActions.authFlowComplete());
       })
     )
@@ -54,7 +54,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(
         AuthApiActions.signInError,
-        AuthApiActions.signUpError,
+        AuthApiActions.signUpError
         // AuthApiActions.refreshTokenError
       ),
       tap((action) => {
@@ -64,12 +64,12 @@ export class AuthEffects {
           error.statusCode &&
           error.statusCode === HttpStatusCode.Unauthorized
         ) {
-          console.log('error service')
+          console.log('error service');
           this.errorService.setErrorMessage('Invalid credentials');
         }
       }),
       switchMap((_) => {
-        this.router.navigateByUrl('/auth/sign-in');
+        // this.router.navigateByUrl('/auth/sign-in');
         return of(AuthActions.authFlowComplete());
       })
     )
@@ -83,7 +83,7 @@ export class AuthEffects {
           map((res) => AuthApiActions.refreshTokenSuccess({ res })),
           tap(() => {
             if (action.returnUrl) {
-              this.router.navigateByUrl(action.returnUrl).then();
+              this.router.navigateByUrl(action.returnUrl);
             }
           }),
           catchError((error: ApiErrorResponse) =>
@@ -99,11 +99,6 @@ export class AuthEffects {
       ofType(AuthActions.signIn),
       switchMap((action) =>
         this.authenticationService.signIn(action.dto).pipe(
-          tap(() => {
-            if (action.returnUrl) {
-              this.router.navigateByUrl(action.returnUrl);
-            }
-          }),
           map((res) => AuthApiActions.signInSuccess({ res })),
           catchError((error: ApiErrorResponse) =>
             of(
@@ -114,6 +109,16 @@ export class AuthEffects {
           )
         )
       )
+    )
+  );
+
+  authSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
+      concatMap((_action) => {
+        this.router.navigateByUrl('/app');
+        return of(AuthActions.authFlowComplete());
+      })
     )
   );
 

@@ -1,4 +1,5 @@
 import { Store } from '@ngrx/store';
+import { EMPTY } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { AuthActions } from '../store/actions';
 
@@ -10,11 +11,11 @@ export function initAppFactory(store: Store) {
     path.includes(endpoint)
   );
   const returnUrl = !isAuthInProcess ? path : undefined;
+  store.dispatch(
+    AuthActions.refreshToken({
+      returnUrl,
+    })
+  );
 
-  return () =>
-    store.dispatch(
-      AuthActions.refreshToken({
-        returnUrl,
-      })
-    );
+  return () => EMPTY;
 }

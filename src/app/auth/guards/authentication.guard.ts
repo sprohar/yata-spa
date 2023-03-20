@@ -5,7 +5,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { catchError, of, switchMap } from 'rxjs';
+import { catchError, EMPTY, of, share, switchMap, take } from 'rxjs';
 import { selectUser } from '../../store/reducers/auth.reducer';
 
 export function authenticationGuard(
@@ -25,8 +25,10 @@ export function authenticationGuard(
           returnUrl: state.url,
         },
       });
-      return of(false);
+      return EMPTY;
     }),
+    take(1),
+    share(),
     catchError(() => of(false))
   );
 }
