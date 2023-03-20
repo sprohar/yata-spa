@@ -1,3 +1,4 @@
+import { HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -12,6 +13,7 @@ import {
 } from 'rxjs';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../interfaces/api-error-response';
+import { ErrorService } from '../../services/error.service';
 import { AuthActions } from '../actions';
 import { AuthApiActions } from '../actions/auth-api.actions';
 
@@ -19,8 +21,9 @@ import { AuthApiActions } from '../actions/auth-api.actions';
 export class AuthEffects {
   constructor(
     private actions$: Actions,
+    private router: Router,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private errorService: ErrorService
   ) {}
 
   logoutSuccess$ = createEffect(() =>
@@ -52,8 +55,19 @@ export class AuthEffects {
       ofType(
         AuthApiActions.signInError,
         AuthApiActions.signUpError,
-        AuthApiActions.refreshTokenError
+        // AuthApiActions.refreshTokenError
       ),
+      tap((action) => {
+        const error = action.error;
+        console.log(error);
+        if (
+          error.statusCode &&
+          error.statusCode === HttpStatusCode.Unauthorized
+        ) {
+          console.log('error service')
+          this.errorService.setErrorMessage('Invalid credentials');
+        }
+      }),
       switchMap((_) => {
         this.router.navigateByUrl('/auth/sign-in');
         return of(AuthActions.authFlowComplete());
