@@ -9,12 +9,14 @@ import { of } from 'rxjs';
 import { Section, Task } from '../../../models';
 import { CreateTaskComponentActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
+import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 import { CreateTaskComponent } from './create-task.component';
 
 const initialState: AppState = {
+  auth: initialAuthState,
   projects: {
     currentProjectId: 1,
     projects: [{ id: 1, name: 'Project' }],
@@ -34,7 +36,7 @@ describe('CreateTaskComponent', () => {
 
   beforeEach(async () => {
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-    
+
     await TestBed.configureTestingModule({
       declarations: [CreateTaskComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

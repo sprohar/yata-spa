@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { Section } from '../../../models';
 import { SectionOptionsMenuActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
+import { initialAuthState } from '../../../store/reducers/auth.reducer';
 
 import { SectionOptionsMenuComponent } from './section-options-menu.component';
 
@@ -24,6 +25,7 @@ class MatDialogStub {
 }
 
 const initialState: AppState = {
+  auth: initialAuthState,
   projects: {
     currentProjectId: 1,
     projects: [

@@ -9,11 +9,14 @@ import { Section, Task } from '../../../models';
 import { DateTimePickerDialogComponent } from '../../../shared/components/date-time-picker-dialog/date-time-picker-dialog.component';
 import { KanbanViewActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
+import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 
 import { KanbanColumnCreateTaskComponent } from './kanban-column-create-task.component';
 
+
 const initialState: AppState = {
+  auth: initialAuthState,
   projects: {
     currentProjectId: 1,
     projects: [{ id: 1, name: 'Project' }],

@@ -2,10 +2,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { AppState } from '../store/app.state';
+import { initialAuthState } from '../store/reducers/auth.reducer';
 
 import { ListViewComponent } from './list-view.component';
 
 const initialState: AppState = {
+  auth: initialAuthState,
   projects: {
     currentProjectId: 1,
     projects: [{ id: 1, name: 'Project' }],

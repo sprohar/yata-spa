@@ -18,11 +18,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { AppState } from '../../../store/app.state';
+import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 import { TaskDetailsDialogComponent } from './task-details-dialog.component';
 
 const initialState: AppState = {
+  auth: initialAuthState,
   projects: {
     currentProjectId: 1,
     projects: [{ id: 1, name: 'Project' }],

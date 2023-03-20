@@ -10,6 +10,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Subtask, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
+import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { initialSectionsState } from '../../../store/reducers/sections.reducer';
 
 import { SubtaskListItemComponent } from './subtask-list-item.component';
@@ -33,6 +34,7 @@ const taskCollection: Task[] = [
 ];
 
 const initialState: AppState = {
+  auth: initialAuthState,
   sections: initialSectionsState,
   projects: {
     currentProjectId: 1,

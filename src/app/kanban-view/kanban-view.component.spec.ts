@@ -4,10 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { AppState } from '../store/app.state';
+import { initialAuthState } from '../store/reducers/auth.reducer';
 
 import { KanbanViewComponent } from './kanban-view.component';
 
 const initialState: AppState = {
+  auth: initialAuthState,
   projects: {
     currentProjectId: 1,
     projects: [{ id: 1, name: 'Project' }],

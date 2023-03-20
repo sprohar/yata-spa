@@ -7,7 +7,7 @@ export interface AuthState {
   user: User | null;
 }
 
-export const initialState: AuthState = {
+export const initialAuthState: AuthState = {
   accessToken: null,
   user: null,
 };
@@ -15,7 +15,7 @@ export const initialState: AuthState = {
 export const authFeature = createFeature({
   name: 'auth',
   reducer: createReducer(
-    initialState,
+    initialAuthState,
     on(AuthApiActions.logoutSuccess, (_state, _action) => ({
       accessToken: null,
       isAuthenticated: false,

@@ -23,6 +23,7 @@ import {
   ViewHeaderActions,
 } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
+import { initialAuthState } from '../../../store/reducers/auth.reducer';
 
 import { initialSectionsState } from '../../../store/reducers/sections.reducer';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
@@ -35,6 +36,7 @@ const initialState: AppState = {
   },
   sections: initialSectionsState,
   tasks: initialTasksState,
+  auth: initialAuthState,
 };
 
 describe('ViewHeaderComponent', () => {
