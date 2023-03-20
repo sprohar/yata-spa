@@ -25,7 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { initAppFactory } from './auth/init-app-factory';
-import { JwtInterceptor } from './auth/interceptors/jwt-interceptor';
+import { JwtInterceptor } from './auth/interceptors/jwt.interceptor';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
