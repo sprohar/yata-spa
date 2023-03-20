@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { environment } from '../../../../environment/environment';
+import { ErrorService } from '../../../services/error.service';
 import { AuthActions } from '../../../store/actions';
 import { User } from '../../models/user.model';
 
@@ -19,7 +20,8 @@ export class SignUpComponent implements OnInit {
   constructor(
     private store: Store,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public readonly errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
