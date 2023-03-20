@@ -62,6 +62,10 @@ export const tasksFeature = createFeature({
       currentTaskId: state.currentTaskId,
       tasks: state.tasks.concat(action.task),
     })),
+    on(YataApiActions.loadTasksSuccess, (state, action) => ({
+      currentTaskId: null,
+      tasks: action.tasks,
+    })),
     on(YataApiActions.loadProjectSuccess, (state, action) => ({
       currentTaskId: state.currentTaskId,
       tasks: action.project.tasks ?? [],

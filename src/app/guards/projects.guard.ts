@@ -1,44 +1,33 @@
 import { inject } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivateFn,
-  RouterStateSnapshot
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, map, of } from 'rxjs';
 import { ProjectsService } from '../services/projects.service';
-import { SidenavActions, YataApiActions } from '../store/actions';
+import { YataApiActions } from '../store/actions';
 
-export const projectTasksGuard: CanActivateFn = (
+export function projectsGuard(
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-) => {
+) {
   const store = inject(Store);
-  const projectId = parseInt(route.paramMap.get('projectId')!);
-  store.dispatch(
-    SidenavActions.projectSelected({
-      projectId,
-    })
-  );
-
   return inject(ProjectsService)
-    .get(projectId)
+    .getAll()
     .pipe(
-      map((project) => {
+      map((res) => {
         store.dispatch(
-          YataApiActions.loadProjectSuccess({
-            project,
+          YataApiActions.loadProjectsSuccess({
+            projects: res.data,
           })
         );
         return true;
       }),
       catchError((error) => {
         store.dispatch(
-          YataApiActions.loadTasksError({
+          YataApiActions.loadProjectsError({
             error,
           })
         );
         return of(false);
       })
     );
-};
+}

@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  exhaustMap,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { AuthActions } from '../actions';
@@ -15,13 +23,22 @@ export class AuthEffects {
     private router: Router
   ) {}
 
+  logoutSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthApiActions.logoutSuccess),
+      exhaustMap((_action) => {
+        this.router.navigateByUrl('/');
+        return of(AuthActions.authFlowComplete());
+      })
+    )
+  );
+
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.logout),
       switchMap((_action) =>
         this.authenticationService.logout().pipe(
           map(() => AuthApiActions.logoutSuccess()),
-          tap(() => this.router.navigateByUrl('/')),
           catchError((error: ApiErrorResponse) =>
             of(AuthApiActions.logoutError({ error }))
           )

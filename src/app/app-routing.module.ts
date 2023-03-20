@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { authenticationGuard } from './auth/guards/authentication.guard';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
+import { projectsGuard } from './guards/projects.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
   {
     path: 'app',
     component: MainComponent,
-    canActivate: [authenticationGuard],
+    canActivate: [authenticationGuard, projectsGuard],
     children: [
       {
         path: '',

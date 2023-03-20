@@ -68,23 +68,23 @@ export class ProjectsEffects {
     )
   );
 
-  getOne$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(SidenavActions.projectSelected),
-      switchMap((action) =>
-        this.projectsService.get(action.projectId).pipe(
-          map((project) => YataApiActions.loadProjectSuccess({ project })),
-          catchError((error: ApiErrorResponse) =>
-            of(
-              YataApiActions.loadProjectError({
-                error,
-              })
-            )
-          )
-        )
-      )
-    )
-  );
+  // getOne$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(SidenavActions.projectSelected),
+  //     switchMap((action) =>
+  //       this.projectsService.get(action.projectId).pipe(
+  //         map((project) => YataApiActions.loadProjectSuccess({ project })),
+  //         catchError((error: ApiErrorResponse) =>
+  //           of(
+  //             YataApiActions.loadProjectError({
+  //               error,
+  //             })
+  //           )
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
 
   getAll$ = createEffect(() =>
     this.actions$.pipe(

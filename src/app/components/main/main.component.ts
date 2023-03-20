@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Project } from '../../models';
 import { BreakpointService } from '../../services/breakpoint.service';
-import { AppActions, AuthActions } from '../../store/actions';
+import { AuthActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
 import { selectProjects } from '../../store/selectors';
 import { CreateProjectDialogComponent } from '../create-project-dialog/create-project-dialog.component';
@@ -26,9 +26,7 @@ export class MainComponent {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.store.dispatch(AppActions.onInit());
-  }
+  ngOnInit(): void {}
 
   logout() {
     this.store.dispatch(AuthActions.logout());
