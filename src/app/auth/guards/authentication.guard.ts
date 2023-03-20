@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, of, switchMap } from 'rxjs';
-import { selectIsAuthenticated } from '../../store/reducers/auth.reducer';
+import { selectUser } from '../../store/reducers/auth.reducer';
 
 export function authenticationGuard(
   route: ActivatedRouteSnapshot,
@@ -15,9 +15,9 @@ export function authenticationGuard(
   const store = inject(Store);
   const router = inject(Router);
 
-  return store.select(selectIsAuthenticated).pipe(
-    switchMap((isAuthenticated) => {
-      if (isAuthenticated) {
+  return store.select(selectUser).pipe(
+    switchMap((user) => {
+      if (user) {
         return of(true);
       }
       router.navigate(['/auth/sign-in'], {

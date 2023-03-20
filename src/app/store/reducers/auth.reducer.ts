@@ -3,13 +3,11 @@ import { User } from '../../auth/models/user.model';
 import { AuthApiActions } from '../actions/auth-api.actions';
 
 export interface AuthState {
-  isAuthenticated: boolean;
   accessToken: string | null;
   user: User | null;
 }
 
 export const initialState: AuthState = {
-  isAuthenticated: false,
   accessToken: null,
   user: null,
 };
@@ -30,7 +28,6 @@ export const authFeature = createFeature({
       (_state, action) => ({
         user: action.res.user ?? null,
         accessToken: action.res.accessToken,
-        isAuthenticated: true,
       })
     ),
     on(
@@ -39,18 +36,11 @@ export const authFeature = createFeature({
       AuthApiActions.refreshTokenError,
       (_state, _action) => ({
         accessToken: null,
-        isAuthenticated: false,
         user: null,
       })
     )
   ),
 });
 
-export const {
-  name,
-  reducer,
-  selectAccessToken,
-  selectAuthState,
-  selectIsAuthenticated,
-  selectUser,
-} = authFeature;
+export const { name, reducer, selectAccessToken, selectAuthState, selectUser } =
+  authFeature;

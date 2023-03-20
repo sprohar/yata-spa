@@ -1,3 +1,17 @@
+.bottom-bar {
+  height: 48px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  padding: 4px 8px 4px 16px;
+}
+
+.sidenav-lists {
+  height: 100%;
+  overflow-y: auto;
+}
+
 .sidenav-container {
   height: 100%;
 }

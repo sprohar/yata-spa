@@ -2,12 +2,8 @@
   <h1>Yet Another To-Do App (YATA)</h1>
   <hr />
   <div>
-    <ng-container
-      *ngIf="isAuthenticated$ | async as isAuthenticated; else guest"
-    >
-      <ng-container *ngIf="user$ | async as user">
-        <p>Welcome back {{ user.email }}</p>
-      </ng-container>
+    <ng-container *ngIf="user$ | async as user; else guest">
+      <p>Welcome back {{ user.email }}</p>
     </ng-container>
     <ng-template #guest>
       <a routerLink="auth/sign-in" class="link">Sign in</a>
