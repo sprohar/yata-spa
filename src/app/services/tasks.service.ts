@@ -1,17 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Task } from '../models/';
-import { environment } from '../../environment/environment';
 import { ApiService } from './api.service';
-import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService extends ApiService {
-  private readonly baseUrl = environment.apiUrl;
-
   constructor(private http: HttpClient) {
     super();
   }

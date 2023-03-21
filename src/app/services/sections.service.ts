@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
-import { environment } from '../../environment/environment';
 import { Section } from '../models/section.model';
 import { ApiService } from './api.service';
 
@@ -9,8 +8,6 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class SectionsService extends ApiService {
-  private readonly baseUrl = environment.apiUrl;
-
   constructor(private http: HttpClient) {
     super();
   }

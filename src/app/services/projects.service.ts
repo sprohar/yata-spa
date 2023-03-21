@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
-import { environment } from '../../environment/environment';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Project } from '../models/project.model';
 import { ApiService } from './api.service';
@@ -10,8 +9,6 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class ProjectsService extends ApiService {
-  private readonly baseUrl = environment.apiUrl;
-
   constructor(private http: HttpClient) {
     super();
   }
