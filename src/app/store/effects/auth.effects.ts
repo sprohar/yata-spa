@@ -99,7 +99,9 @@ export class AuthEffects {
       ofType(AuthActions.signIn),
       switchMap((action) =>
         this.authenticationService.signIn(action.dto).pipe(
-          map((res) => AuthApiActions.signInSuccess({ res })),
+          map((res) =>
+            AuthApiActions.signInSuccess({ res, returnUrl: action.returnUrl })
+          ),
           catchError((error: ApiErrorResponse) =>
             of(
               AuthApiActions.signInError({
@@ -115,8 +117,8 @@ export class AuthEffects {
   authSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
-      concatMap((_action) => {
-        this.router.navigateByUrl('/app');
+      concatMap((action) => {
+        this.router.navigateByUrl(action.returnUrl ?? '/app');
         return of(AuthActions.authFlowComplete());
       })
     )
@@ -127,7 +129,7 @@ export class AuthEffects {
       ofType(AuthActions.signUp),
       concatMap((action) =>
         this.authenticationService.signUp(action.dto).pipe(
-          map((res) => AuthApiActions.signUpSuccess({ res })),
+          map((res) => AuthApiActions.signUpSuccess({ res, returnUrl: action.returnUrl })),
           catchError((error: ApiErrorResponse) =>
             of(
               AuthApiActions.signUpError({
