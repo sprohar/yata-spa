@@ -29,7 +29,6 @@ export class SignInComponent implements OnInit {
     this.initForm();
 
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-    console.log('return url', returnUrl);
     if (returnUrl) {
       this.returnUrl = returnUrl;
     }

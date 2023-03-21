@@ -26,7 +26,6 @@
     <!-- Change view -->
     <yata-task-list-sort-options></yata-task-list-sort-options>
 
-    <!-- TODO: Show more options -->
     <button
       mat-icon-button
       [matMenuTriggerFor]="projectOptions"
@@ -37,16 +36,16 @@
     <mat-menu #projectOptions xPosition="before" yPosition="below">
       <button mat-menu-item (click)="openEditProjectDialog(project)">
         <mat-icon>edit</mat-icon>
-        <span>Edit Project</span>
+        <span>Rename Project</span>
       </button>
       <button mat-menu-item (click)="openCreateSectionDialog(project)">
         <mat-icon>add</mat-icon>
         <span>Add Section</span>
       </button>
-      <button mat-menu-item>
+      <!-- <button mat-menu-item>
         <mat-icon>history</mat-icon>
         <span>Show History</span>
-      </button>
+      </button> -->
       <mat-divider></mat-divider>
       <button
         mat-menu-item
