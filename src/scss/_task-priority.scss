@@ -1,0 +1,35 @@
+@use "./colors" as colors;
+
+.high-priority {
+  color: colors.$mat-red-A100;
+}
+
+.medium-priority {
+  color: colors.$mat-orange-A100;
+}
+
+.low-priority {
+  color: colors.$mat-blue-A100;
+}
+
+.no-priority {
+  color: colors.$mat-gray-600;
+}
+
+@media (prefers-color-scheme: light) {
+  .high-priority {
+    color: colors.$mat-red-700 !important;
+  }
+
+  .medium-priority {
+    color: colors.$mat-orange-700 !important;
+  }
+
+  .low-priority {
+    color: colors.$mat-blue-700 !important;
+  }
+
+  .no-priority {
+    color: colors.$mat-gray-400 !important;
+  }
+}
