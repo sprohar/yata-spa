@@ -16,6 +16,7 @@ export class SignUpComponent implements OnInit {
   form!: FormGroup;
   showPassword = false;
   returnUrl = environment.app.entryPath;
+  readonly passwordMinLength = User.Password.MinLength;
 
   constructor(
     private store: Store,
