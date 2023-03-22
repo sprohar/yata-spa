@@ -32,6 +32,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { MainComponent } from './components/main/main.component';
 import {
   AuthEffects,
+  ChronoEffects,
   ProjectsEffects,
   SectionsEffects,
   SubtasksEffects,
@@ -70,6 +71,7 @@ import {
     ),
     EffectsModule.forRoot([
       AuthEffects,
+      ChronoEffects,
       ProjectsEffects,
       SectionsEffects,
       TasksEffects,
