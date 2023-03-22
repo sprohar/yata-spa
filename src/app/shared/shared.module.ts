@@ -32,6 +32,8 @@ import { TimeInputComponent } from './components/time-input/time-input.component
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 import { SectionComponent } from './components/section/section.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TaskComponent } from './components/task/task.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { SectionComponent } from './components/section/section.component';
     TaskListSortOptionsComponent,
     EditProjectDialogComponent,
     SectionComponent,
+    TaskComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +73,7 @@ import { SectionComponent } from './components/section/section.component';
     MatNativeDateModule,
     MatDatepickerModule,
     MatChipsModule,
+    DragDropModule,
   ],
   exports: [
     TaskPriorityPipe,
@@ -82,6 +86,7 @@ import { SectionComponent } from './components/section/section.component';
     TaskOptionsMenuComponent,
     DateTimePickerDialogComponent,
     SectionComponent,
+    TaskComponent,
   ],
 })
 export class SharedModule {}

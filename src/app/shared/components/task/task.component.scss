@@ -1,0 +1,15 @@
+@use "../../../../scss/colors" as colors;
+
+.task {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  border-radius: 6px;
+
+  .drag-indicator {
+    transform: scale(0.75);
+    &:hover {
+      cursor: grab;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<li class="task" [attr.data-taskId]="task.id" [formGroup]="form">
+  <span class="drag-indicator">
+    <mat-icon>drag_indicator</mat-icon>
+  </span>
+  <mat-checkbox
+    [checked]="task.completed"
+    (change)="handleChecked($event.checked, task)"
+  ></mat-checkbox>
+  <input type="text" class="input" formControlName="title" (blur)="update()" />
+  <ng-content></ng-content>
+</li>
