@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./section.component.scss']
 })
 export class SectionComponent {
-  @Input() name?: string;
+  @Input() name?: string | null;
   @Input() itemsCount?: number;
   expanded = true;
 
