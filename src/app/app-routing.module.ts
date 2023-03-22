@@ -21,6 +21,11 @@ const routes: Routes = [
         component: LandingPageComponent,
       },
       {
+        path: 'chrono',
+        loadChildren: () =>
+          import('./chrono/chrono.module').then((m) => m.ChronoModule),
+      },
+      {
         path: 'kanban',
         loadChildren: () =>
           import('./kanban-view/kanban-view.module').then(
