@@ -29,7 +29,7 @@ export class ChronoService extends ApiService {
   }
 
   getTasks(params: ChronoQueryParams) {
-    const url = `${this.baseUrl}/${environment.api.endpoints.chrono.today}`;
+    const url = `${this.baseUrl}/${environment.api.endpoints.chrono.tasks}`;
     return this.http
       .get<PaginatedList<Task>>(url, { params: params })
       .pipe(catchError(this.handleError));
