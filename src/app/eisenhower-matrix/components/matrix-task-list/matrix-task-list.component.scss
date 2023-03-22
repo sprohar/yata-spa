@@ -2,16 +2,10 @@ ul {
   margin: 0;
   padding: 0;
 
-  li {
-    padding: 4px 8px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .task-info {
-      font-size: 12px;
-      opacity: 0.87;
-    }
+  .task-info {
+    font-size: 10px;
+    opacity: 0.87;
+    max-width: 150px;
+    min-width: fit-content;
   }
 }

@@ -1,16 +1,12 @@
 <ng-container class="tlist-container" *ngIf="projects$ | async as projects">
   <ul>
     <ng-container *ngFor="let task of tasks">
-      <li (click)="openTaskDetailsDialog(task)" class="clickable">
-        <div>
-          <mat-checkbox [checked]="task.completed"></mat-checkbox>
-          <span> {{ task.title }} </span>
-        </div>
+      <yata-task [task]="task">
         <div class="task-info flex column-gap-1">
           <span>{{ getProjectName(task.projectId, projects) }}</span>
           <span>{{ task.dueDate | date }}</span>
         </div>
-      </li>
+      </yata-task>
       <mat-divider></mat-divider>
     </ng-container>
   </ul>
