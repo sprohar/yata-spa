@@ -1,13 +1,11 @@
-<h1>Next 7 Days</h1>
+<h1 class="p1">Next 7 Days</h1>
 <hr />
 <ng-container *ngIf="sections$ | async as sections">
   <ng-container *ngFor="let section of sections">
     <yata-section [name]="section.name" [itemsCount]="section.tasks?.length">
       <ul>
         <ng-container *ngFor="let task of section.tasks">
-          <li>
-            {{ task.title }} {{ task.dueDate | date : "fullDate" }}
-          </li>
+          <yata-task [task]="task" [isDraggable]="false"></yata-task>
         </ng-container>
       </ul>
     </yata-section>

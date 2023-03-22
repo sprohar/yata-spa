@@ -1,16 +1,21 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav relative"
-    fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
+  <mat-sidenav #drawer class="sidenav relative" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
     <div class="sidenav-lists">
       <mat-nav-list>
-        <a mat-list-item routerLink="/app/chrono/today">Today</a>
-        <a mat-list-item routerLink="/app/chrono/upcoming">Next 7 Days</a>
+        <a mat-list-item routerLink="/app/chrono/today">
+          <div class="flex align-items-center">
+            <mat-icon>today</mat-icon>&nbsp;
+            <span>Today</span>
+          </div>
+        </a>
+        <a mat-list-item routerLink="/app/chrono/upcoming">
+          <div class="flex align-items-center">
+            <mat-icon>date_range</mat-icon>&nbsp;
+            <span>Next 7 Days</span>
+          </div>
+        </a>
       </mat-nav-list>
 
       <mat-divider></mat-divider>
@@ -30,21 +35,14 @@
         <details open class="collapsible-list">
           <summary class="clickable">
             <span> Projects </span>
-            <button
-              mat-icon-button
-              (click)="openAddProjectDialog()"
-              title="Add project"
-            >
+            <button mat-icon-button (click)="openAddProjectDialog()" title="Add project">
               <mat-icon>add</mat-icon>
             </button>
           </summary>
           <ul class="sidenav-list">
-            <ng-container
-              *ngFor="let project of projects; trackBy: trackByProjectId"
-            >
+            <ng-container *ngFor="let project of projects; trackBy: trackByProjectId">
               <li class="clickable" (click)="handleSetCurrentProject(project)">
-                <mat-icon>{{ getProjectViewIcon(project) }}</mat-icon
-                >&nbsp;
+                <mat-icon>{{ getProjectViewIcon(project) }}</mat-icon>&nbsp;
                 <span>{{ project.name }}</span>
               </li>
             </ng-container>
@@ -70,11 +68,7 @@
 
     <div *ngIf="user$ | async as user" class="bottom-bar clickable" matRipple>
       <mat-nav-list>
-        <div
-          mat-list-item
-          class="flex align-items-center space-between"
-          (click)="logout()"
-        >
+        <div mat-list-item class="flex align-items-center space-between" (click)="logout()">
           <p class="text-overflow">
             {{ user.email }}
           </p>
@@ -85,13 +79,8 @@
   </mat-sidenav>
   <mat-sidenav-content class="relative">
     <mat-toolbar color="primary" [class.hide]="(isHandset$ | async) === false">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
-      >
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
     </mat-toolbar>

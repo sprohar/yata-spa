@@ -16,6 +16,7 @@ import { Task } from '../../../models';
 })
 export class TaskComponent {
   @Input() task!: Task;
+  @Input() isDraggable = true;
   form!: FormGroup;
 
   constructor(private store: Store, private fb: FormBuilder) {}
