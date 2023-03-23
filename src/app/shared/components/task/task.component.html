@@ -4,7 +4,10 @@
       <mat-icon>drag_indicator</mat-icon>
     </span>
   </ng-container>
-  <mat-checkbox [checked]="task.completed" (change)="handleChecked($event.checked, task)"></mat-checkbox>
+  <mat-checkbox
+    [checked]="task.completed"
+    (change)="handleChecked($event.checked, task)"
+  ></mat-checkbox>
   <input type="text" class="input" formControlName="title" (blur)="update()" />
   <ng-content></ng-content>
 </li>
