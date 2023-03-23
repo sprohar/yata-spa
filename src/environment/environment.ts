@@ -5,6 +5,7 @@ export const environment = {
   api: {
     baseUrl: 'http://localhost:3000',
     endpoints: {
+      tags: 'tags',
       chrono: {
         tasks: 'chrono/tasks',
         today: 'chrono/today/tasks',
