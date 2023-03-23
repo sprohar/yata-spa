@@ -2,28 +2,29 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, map, of } from 'rxjs';
-import { ProjectsService } from '../services/projects.service';
+import { ApiErrorResponse } from '../interfaces/api-error-response';
+import { TagsService } from '../services/tags.service';
 import { YataApiActions } from '../store/actions';
 
-export function projectsGuard(
+export function tagsGuard(
   _route: ActivatedRouteSnapshot,
   _state: RouterStateSnapshot
 ) {
   const store = inject(Store);
-  return inject(ProjectsService)
+  return inject(TagsService)
     .getAll()
     .pipe(
       map((res) => {
         store.dispatch(
-          YataApiActions.loadProjectsSuccess({
-            projects: res.data,
+          YataApiActions.loadTagsSuccess({
+            tags: res.data,
           })
         );
         return true;
       }),
-      catchError((error) => {
+      catchError((error: ApiErrorResponse) => {
         store.dispatch(
-          YataApiActions.loadProjectsError({
+          YataApiActions.loadTagsError({
             error,
           })
         );
