@@ -31,39 +31,49 @@
 
       <mat-divider></mat-divider>
 
-      <div *ngIf="projects$ | async as projects">
+      <section>
         <details open class="collapsible-list">
           <summary class="clickable">
             <span> Projects </span>
-            <button mat-icon-button (click)="openAddProjectDialog()" title="Add project">
+            <button mat-icon-button (click)="openCreateProjectDialog()" title="Add project">
               <mat-icon>add</mat-icon>
             </button>
           </summary>
-          <ul class="sidenav-list">
-            <ng-container *ngFor="let project of projects; trackBy: trackByProjectId">
-              <li class="clickable" (click)="handleSetCurrentProject(project)">
-                <mat-icon>{{ getProjectViewIcon(project) }}</mat-icon>&nbsp;
-                <span>{{ project.name }}</span>
-              </li>
-            </ng-container>
-          </ul>
+          <ng-container *ngIf="projects$ | async as projects">
+            <ul class="sidenav-list">
+              <ng-container *ngFor="let project of projects; trackBy: trackByProjectId">
+                <li class="clickable" (click)="handleSetCurrentProject(project)">
+                  <mat-icon>{{ getProjectViewIcon(project) }}</mat-icon>&nbsp;
+                  <span>{{ project.name }}</span>
+                </li>
+              </ng-container>
+            </ul>
+          </ng-container>
         </details>
-      </div>
+      </section>
 
-      <!-- <details open class="collapsible-list">
-        <summary class="clickable">
-          <span>Tags</span>
-          <button mat-icon-button title="Add tag">
-            <mat-icon>add</mat-icon>
-          </button>
-        </summary>
-        <ul class="sidenav-list">
-          <li class="clickable">
-            <mat-icon>label</mat-icon>&nbsp;
-            <span>Java</span>
-          </li>
-        </ul>
-      </details> -->
+      <mat-divider></mat-divider>
+
+      <section>
+        <details open class="collapsible-list">
+          <summary class="clickable">
+            <span>Tags</span>
+            <button mat-icon-button title="Add tag" (click)="openCreateTagDialog()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </summary>
+          <ng-container *ngIf="tags$ | async as tags">
+            <ul class="sidenav-list">
+              <ng-container *ngFor="let tag of tags; trackBy: trackByTagId">
+                <li class="clickable" [attr.sidenav-tagid]="tag.id">
+                  <mat-icon [style.color]="tag.colorHexCode">label</mat-icon>&nbsp;
+                  <span>{{ tag.name }}</span>
+                </li>
+              </ng-container>
+            </ul>
+          </ng-container>
+        </details>
+      </section>
     </div>
 
     <div *ngIf="user$ | async as user" class="bottom-bar clickable" matRipple>

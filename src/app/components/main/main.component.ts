@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Project } from '../../models';
+import { CreateTagDialogComponent } from '../../tags/components/create-tag-dialog/create-tag-dialog.component';
+import { Project, Tag } from '../../models';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { AuthActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
-import { selectProjects } from '../../store/selectors';
+import { selectProjects, selectTags } from '../../store/selectors';
 import { CreateProjectDialogComponent } from '../create-project-dialog/create-project-dialog.component';
 
 @Component({
@@ -16,6 +17,7 @@ import { CreateProjectDialogComponent } from '../create-project-dialog/create-pr
 })
 export class MainComponent {
   projects$ = this.store.select(selectProjects);
+  tags$ = this.store.select(selectTags);
   isHandset$ = this.breakpointService.isHandset$;
   user$ = this.store.select(selectUser);
 
@@ -32,12 +34,20 @@ export class MainComponent {
     this.store.dispatch(AuthActions.logout());
   }
 
-  trackByProjectId(index: number, project: Project) {
+  trackByProjectId(_index: number, project: Project) {
     return project.id;
   }
 
-  openAddProjectDialog() {
+  trackByTagId(_index: number, tag: Tag) {
+    return tag.id;
+  }
+
+  openCreateProjectDialog() {
     this.dialog.open(CreateProjectDialogComponent);
+  }
+
+  openCreateTagDialog() {
+    this.dialog.open(CreateTagDialogComponent);
   }
 
   /**
