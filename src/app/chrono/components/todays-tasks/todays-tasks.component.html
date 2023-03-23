@@ -1,5 +1,5 @@
 <h1 class="p1">Today's Tasks</h1>
-<hr />
+<mat-divider></mat-divider>
 <ng-container *ngIf="tasks$ | async as tasks">
   <yata-section [name]="today" [itemsCount]="tasks.length">
     <ul>

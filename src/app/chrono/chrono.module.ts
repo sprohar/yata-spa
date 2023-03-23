@@ -6,6 +6,7 @@ import { ChronoComponent } from './chrono.component';
 import { TodaysTasksComponent } from './components/todays-tasks/todays-tasks.component';
 import { SharedModule } from '../shared/shared.module';
 import { NextSevenDaysComponent } from './components/next-seven-days/next-seven-days.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { NextSevenDaysComponent } from './components/next-seven-days/next-seven-
     CommonModule,
     ChronoRoutingModule,
     SharedModule,
+    MatDividerModule,
   ]
 })
 export class ChronoModule { }

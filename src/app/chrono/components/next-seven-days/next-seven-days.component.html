@@ -1,5 +1,5 @@
 <h1 class="p1">Next 7 Days</h1>
-<hr />
+<mat-divider></mat-divider>
 <ng-container *ngIf="sections$ | async as sections">
   <ng-container *ngFor="let section of sections">
     <yata-section [name]="section.name" [itemsCount]="section.tasks?.length">

@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 
 import { SharedModule } from '../shared/shared.module';
@@ -29,10 +28,9 @@ import { ListViewComponent } from './list-view.component';
     ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDividerModule,
     MatIconModule,
     MatRippleModule,
     DragDropModule,
   ],
 })
-export class ListViewModule {}
+export class ListViewModule { }
