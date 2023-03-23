@@ -128,6 +128,13 @@ body {
   }
 }
 
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  padding: 8px 0;
+}
+
 .flex {
   display: flex;
 }
@@ -137,6 +144,7 @@ body {
 }
 
 .flex-column {
+  display: flex;
   flex-direction: column;
 }
 

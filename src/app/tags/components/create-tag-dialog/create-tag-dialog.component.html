@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Create Tag</h2>
+<mat-dialog-content>
+  <div class="dialog-content" [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input type="text" matInput placeholder="name" formControlName="name" />
+    </mat-form-field>
+
+    <div class="flex align-items-center column-gap-1">
+      <label for="tagColor">Color</label>
+      <input type="color" formControlName="colorHexCode" />
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="handleCreate()">
+    Create
+  </button>
+</mat-dialog-actions>
