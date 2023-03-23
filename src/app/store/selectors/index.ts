@@ -9,4 +9,5 @@ export {
   selectCurrentSectionId,
   selectSections,
 } from '../reducers/sections.reducer';
+export { selectTags, selectCurrentTagId } from '../reducers/tags.reducer';
 export { selectCurrentTaskId, selectTasks } from '../reducers/tasks.reducer';

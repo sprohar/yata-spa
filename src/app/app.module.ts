@@ -5,7 +5,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import {
+  MatDialogModule,
+  MAT_DIALOG_DEFAULT_OPTIONS,
+} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,14 +39,17 @@ import {
   ProjectsEffects,
   SectionsEffects,
   SubtasksEffects,
+  TagsEffects,
   TasksEffects,
 } from './store/effects/';
 import {
   authReducer,
   projectsReducer,
   sectionsReducer,
+  tagsReducer,
   tasksReducer,
 } from './store/reducers/';
+import { TagsModule } from './tags/tags.module';
 
 @NgModule({
   declarations: [
@@ -65,6 +71,7 @@ import {
         auth: authReducer,
         projects: projectsReducer,
         sections: sectionsReducer,
+        tags: tagsReducer,
         tasks: tasksReducer,
       },
       {}
@@ -74,6 +81,7 @@ import {
       ChronoEffects,
       ProjectsEffects,
       SectionsEffects,
+      TagsEffects,
       TasksEffects,
       SubtasksEffects,
     ]),
@@ -89,8 +97,10 @@ import {
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
+    TagsModule,
   ],
   providers: [
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: '350px ' } },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
