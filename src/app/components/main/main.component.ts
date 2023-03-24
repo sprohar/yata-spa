@@ -4,10 +4,11 @@ import { Store } from '@ngrx/store';
 import { CreateTagDialogComponent } from '../../tags/components/create-tag-dialog/create-tag-dialog.component';
 import { Project, Tag } from '../../models';
 import { BreakpointService } from '../../services/breakpoint.service';
-import { AuthActions } from '../../store/actions';
+import { AuthActions, SidenavActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
 import { selectProjects, selectTags } from '../../store/selectors';
 import { CreateProjectDialogComponent } from '../create-project-dialog/create-project-dialog.component';
+import { EditTagDialogComponent } from '../../tags/components/edit-tag-dialog/edit-tag-dialog.component';
 
 @Component({
   selector: 'yata-main',
@@ -27,9 +28,9 @@ export class MainComponent {
     private breakpointService: BreakpointService,
     private store: Store,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   logout() {
     this.store.dispatch(AuthActions.logout());
@@ -49,5 +50,11 @@ export class MainComponent {
 
   openCreateTagDialog() {
     this.dialog.open(CreateTagDialogComponent);
+  }
+
+  openEditTagDialog(tag: Tag) {
+    this.dialog.open(EditTagDialogComponent, {
+      data: tag,
+    });
   }
 }

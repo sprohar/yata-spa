@@ -48,6 +48,7 @@ import {
   tasksReducer,
 } from './store/reducers/';
 import { TagsModule } from './tags/tags.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { TagsModule } from './tags/tags.module';
     MatFormFieldModule,
     MatInputModule,
     TagsModule,
+    MatMenuModule,
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: '350px ' } },
@@ -108,4 +110,4 @@ import { TagsModule } from './tags/tags.module';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

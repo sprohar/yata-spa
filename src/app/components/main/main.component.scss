@@ -71,6 +71,16 @@ details.collapsible-list {
       width: 100%;
       text-decoration: none;
     }
+
+    button.action-button {
+      visibility: hidden;
+    }
+  }
+
+  li:hover {
+    button.action-button {
+      visibility: visible;
+    }
   }
 }
 
