@@ -34,6 +34,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
 import { SectionComponent } from './components/section/section.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskComponent } from './components/task/task.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { TaskComponent } from './components/task/task.component';
     EditProjectDialogComponent,
     SectionComponent,
     TaskComponent,
+    TaskListComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +89,7 @@ import { TaskComponent } from './components/task/task.component';
     DateTimePickerDialogComponent,
     SectionComponent,
     TaskComponent,
+    TaskListComponent,
   ],
 })
 export class SharedModule {}
