@@ -12,6 +12,18 @@ export const initialTagsState: TagsState = {
   currentTagId: null,
 };
 
+function updateTag(tags: Tag[], updatedTag: Tag) {
+  const collection: Tag[] = [];
+  for (const tag of tags) {
+    if (tag.id === updatedTag.id) {
+      collection.push(updatedTag);
+    } else {
+      collection.push(tag);
+    }
+  }
+  return collection;
+}
+
 export const tagsFeature = createFeature({
   name: 'tags',
   reducer: createReducer(
@@ -27,6 +39,10 @@ export const tagsFeature = createFeature({
     on(SidenavActions.selectTag, (state, action) => ({
       tags: state.tags,
       currentTagId: action.tagId,
+    })),
+    on(YataApiActions.updateTagSuccess, (state, action) => ({
+      currentTagId: state.currentTagId,
+      tags: updateTag(state.tags, action.tag),
     }))
   ),
 });

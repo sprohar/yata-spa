@@ -8,5 +8,7 @@ export const SidenavActions = createActionGroup({
     'Create Project': props<{ project: Project }>(),
     'Create Tag': props<{ tag: Tag }>(),
     'Select Tag': props<{ tagId: number }>(),
+    'Edit Tag': props<{ tag: Tag }>(),
+    'Delete Tag': props<{ tag: Tag }>(),
   },
 });

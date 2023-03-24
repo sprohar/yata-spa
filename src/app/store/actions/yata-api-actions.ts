@@ -58,5 +58,7 @@ export const YataApiActions = createActionGroup({
     'Create Tag Error': props<{ error: ApiErrorResponse }>(),
     'Load Tags Success': props<{ tags: Tag[] }>(),
     'Load Tags Error': props<{ error: ApiErrorResponse }>(),
+    'Update Tag Success': props<{ tag: Tag }>(),
+    'Update Tag Error': props<{ error: ApiErrorResponse }>(),
   },
 });

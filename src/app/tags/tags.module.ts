@@ -13,9 +13,15 @@ import { StoreModule } from '@ngrx/store';
 import { tagsFeature } from '../store/reducers/tags.reducer';
 import { TagsEffects } from '../store/effects';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { EditTagDialogComponent } from './components/edit-tag-dialog/edit-tag-dialog.component';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-  declarations: [CreateTagDialogComponent, TagsComponent],
+  declarations: [
+    CreateTagDialogComponent,
+    TagsComponent,
+    EditTagDialogComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -27,7 +33,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatFormFieldModule,
     MatInputModule,
     StoreModule.forFeature(tagsFeature),
+    EffectsModule.forFeature([TagsEffects]),
   ],
-  providers: [TagsEffects],
+  providers: [],
 })
-export class TagsModule { }
+export class TagsModule {}
