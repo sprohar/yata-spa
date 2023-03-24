@@ -31,6 +31,10 @@ export const projectsFeature = createFeature({
   name: 'projects',
   reducer: createReducer(
     projectsInitialState,
+    on(SidenavActions.selectTag, (state, _action) => ({
+      projects: state.projects,
+      currentProjectId: null,
+    })),
     on(SidenavActions.projectSelected, (state, action) => ({
       projects: state.projects,
       currentProjectId: action.projectId,

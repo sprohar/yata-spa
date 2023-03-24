@@ -7,5 +7,6 @@ export const SidenavActions = createActionGroup({
     'Project Selected': props<{ projectId: number }>(),
     'Create Project': props<{ project: Project }>(),
     'Create Tag': props<{ tag: Tag }>(),
+    'Select Tag': props<{ tagId: number }>(),
   },
 });

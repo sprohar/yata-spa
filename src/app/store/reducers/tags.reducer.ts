@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Tag } from '../../models';
-import { YataApiActions } from '../actions';
+import { SidenavActions, YataApiActions } from '../actions';
 
 export interface TagsState {
   tags: Tag[];
@@ -23,6 +23,10 @@ export const tagsFeature = createFeature({
     on(YataApiActions.loadTagsSuccess, (state, action) => ({
       currentTagId: state.currentTagId,
       tags: action.tags,
+    })),
+    on(SidenavActions.selectTag, (state, action) => ({
+      tags: state.tags,
+      currentTagId: action.tagId,
     }))
   ),
 });
