@@ -4,12 +4,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-stroked-button mat-dialog-close>No</button>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="handleConfirm()"
-    cdkFocusInitial
-  >
-    Yes
+  <button mat-raised-button [color]="data.confirmButtonColor ?? 'primary'" (click)="handleConfirm()" cdkFocusInitial>
+    {{ data.confirmButtonText ?? "Yes" }}
   </button>
 </mat-dialog-actions>
