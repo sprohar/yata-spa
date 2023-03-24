@@ -1,5 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Tag } from 'src/app/models';
@@ -19,7 +24,7 @@ export class EditTagDialogComponent implements OnInit {
     private data: Tag,
     private dialogRef: MatDialogRef<EditTagDialogComponent>,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initForm(this.data);
@@ -37,6 +42,15 @@ export class EditTagDialogComponent implements OnInit {
         [Validators.maxLength(Tag.ColorHexCode.MaxLength)],
       ],
     });
+  }
+
+  get colorHexCodeControl() {
+    return this.form.get('colorHexCode') as FormControl;
+  }
+
+  clearColorInput() {
+    this.colorHexCodeControl.setValue(null);
+    this.form.markAsDirty();
   }
 
   handleSave() {

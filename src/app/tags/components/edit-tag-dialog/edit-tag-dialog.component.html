@@ -8,17 +8,15 @@
     <div class="flex align-items-center column-gap-1">
       <label for="tagColor">Color</label>
       <input type="color" formControlName="colorHexCode" />
+      <ng-container *ngIf="colorHexCodeControl.value">
+        <button mat-stroked-button (click)="clearColorInput()">Reset</button>
+      </ng-container>
     </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-stroked-button mat-dialog-close>Cancel</button>
-  <button
-    mat-raised-button
-    color="primary"
-    [disabled]="form.invalid || form.pristine"
-    (click)="handleSave()"
-  >
+  <button mat-raised-button color="primary" [disabled]="form.invalid || form.pristine" (click)="handleSave()">
     Save
   </button>
 </mat-dialog-actions>
