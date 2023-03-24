@@ -39,14 +39,12 @@ import {
   ProjectsEffects,
   SectionsEffects,
   SubtasksEffects,
-  TagsEffects,
   TasksEffects,
 } from './store/effects/';
 import {
   authReducer,
   projectsReducer,
   sectionsReducer,
-  tagsReducer,
   tasksReducer,
 } from './store/reducers/';
 import { TagsModule } from './tags/tags.module';
@@ -71,7 +69,6 @@ import { TagsModule } from './tags/tags.module';
         auth: authReducer,
         projects: projectsReducer,
         sections: sectionsReducer,
-        tags: tagsReducer,
         tasks: tasksReducer,
       },
       {}
@@ -81,7 +78,6 @@ import { TagsModule } from './tags/tags.module';
       ChronoEffects,
       ProjectsEffects,
       SectionsEffects,
-      TagsEffects,
       TasksEffects,
       SubtasksEffects,
     ]),

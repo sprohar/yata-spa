@@ -9,18 +9,25 @@ import { MatInputModule } from '@angular/material/input';
 import { TagsComponent } from './tags.component';
 import { TagsRoutingModule } from './tags-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { tagsFeature } from '../store/reducers/tags.reducer';
+import { TagsEffects } from '../store/effects';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [CreateTagDialogComponent, TagsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    DragDropModule,
     SharedModule,
     TagsRoutingModule,
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    StoreModule.forFeature(tagsFeature),
   ],
+  providers: [TagsEffects],
 })
 export class TagsModule { }
