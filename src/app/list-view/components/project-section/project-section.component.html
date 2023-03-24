@@ -1,5 +1,5 @@
 <details open>
-  <summary class="clickable"  (click)="toggleExpanded()">
+  <summary class="clickable" (click)="toggleExpanded()">
     <div class="summary-content">
       <!-- Section name -->
       <span>
@@ -40,7 +40,15 @@
   </summary>
 
   <yata-task-list
-    [section]="section"
-    [tasks]="section.tasks ?? []"
-  ></yata-task-list>
+    #list
+    cdkDropList
+    [cdkDropListData]="section"
+    (cdkDropListDropped)="list.handleDropped($event)"
+  >
+    <ng-container *ngFor="let task of section.tasks">
+      <yata-task cdkDrag [cdkDragData]="task" [task]="task">
+        <yata-task-options-menu [task]="task"></yata-task-options-menu>
+      </yata-task>
+    </ng-container>
+  </yata-task-list>
 </details>

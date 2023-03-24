@@ -10,14 +10,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from '../shared/shared.module';
 import { CreateSectionTaskListItem } from './components/create-task-list-item/create-section-task-list-item.component';
 import { ProjectSectionComponent } from './components/project-section/project-section.component';
-import { TaskListComponent } from './components/task-list/task-list.component';
 import { ListViewRoutingModule } from './list-view-routing.module';
 import { ListViewComponent } from './list-view.component';
 
 @NgModule({
   declarations: [
     ListViewComponent,
-    TaskListComponent,
     ProjectSectionComponent,
     CreateSectionTaskListItem,
   ],
@@ -33,4 +31,4 @@ import { ListViewComponent } from './list-view.component';
     DragDropModule,
   ],
 })
-export class ListViewModule { }
+export class ListViewModule {}

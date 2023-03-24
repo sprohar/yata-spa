@@ -8,7 +8,25 @@
     <!-- Unsectioned tasks -->
     <ng-container *ngIf="unsectionedTasks$ | async as unsectionedTasks">
       <ng-container *ngIf="unsectionedTasks.length">
-        <yata-task-list [tasks]="unsectionedTasks"></yata-task-list>
+        <yata-section
+          [name]="'Unsectioned'"
+          [itemsCount]="unsectionedTasks.length"
+        >
+          <yata-task-list
+            #list
+            cdkDropList
+            (cdkDropListDropped)="list.handleDropped($event)"
+          >
+            <yata-task
+              *ngFor="let task of unsectionedTasks"
+              [task]="task"
+              cdkDrag
+              [cdkDragData]="task"
+            >
+              <yata-task-options-menu [task]="task"></yata-task-options-menu
+            ></yata-task>
+          </yata-task-list>
+        </yata-section>
       </ng-container>
     </ng-container>
 
@@ -25,7 +43,12 @@
             [name]="'Completed'"
             [itemsCount]="completedTasks.length"
           >
-            <yata-task-list [tasks]="completedTasks"></yata-task-list>
+            <yata-task-list>
+              <yata-task
+                *ngFor="let task of completedTasks"
+                [task]="task"
+              ></yata-task>
+            </yata-task-list>
           </yata-section>
         </ng-container>
       </ng-container>
