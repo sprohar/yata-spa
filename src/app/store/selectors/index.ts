@@ -1,5 +1,6 @@
 export * from './projects.selectors';
 export * from './sections.selectors';
+export * from './tags.selectors';
 export * from './tasks.selectors';
 export {
   selectCurrentProjectId,
