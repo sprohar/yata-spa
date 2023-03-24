@@ -3,10 +3,14 @@
     <h1>#{{ tag.name }}</h1>
   </header>
   <main>
-    <ng-container *ngIf="tasks$ | async as tasks">
-      <yata-task-list *ngFor="let task of tasks">
-        <yata-task [task]="task"></yata-task>
-      </yata-task-list>
-    </ng-container>
+    <div *ngIf="sections$ | async as sections">
+      <yata-section *ngFor="let section of sections" [name]="section.name" [itemsCount]="section.tasks?.length">
+        <ng-container *ngFor="let task of section.tasks">
+          <yata-task-list>
+            <yata-task [isDraggable]="false" [task]="task"></yata-task>
+          </yata-task-list>
+        </ng-container>
+      </yata-section>
+    </div>
   </main>
 </div>
