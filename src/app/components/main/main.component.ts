@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CreateTagDialogComponent } from '../../tags/components/create-tag-dialog/create-tag-dialog.component';
 import { Project, Tag } from '../../models';
@@ -21,14 +20,16 @@ export class MainComponent {
   isHandset$ = this.breakpointService.isHandset$;
   user$ = this.store.select(selectUser);
 
+  readonly KANBAN_VIEW = Project.View.KANBAN;
+  readonly LIST_VIEW = Project.View.LIST;
+
   constructor(
     private breakpointService: BreakpointService,
     private store: Store,
-    private dialog: MatDialog,
-    private router: Router
-  ) {}
+    private dialog: MatDialog
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   logout() {
     this.store.dispatch(AuthActions.logout());
@@ -48,27 +49,5 @@ export class MainComponent {
 
   openCreateTagDialog() {
     this.dialog.open(CreateTagDialogComponent);
-  }
-
-  /**
-   * @see https://fonts.google.com/icons
-   * @param project
-   * @returns
-   */
-  getProjectViewIcon(project: Project) {
-    return project.view === Project.View.LIST ? 'view_list' : 'view_kanban';
-  }
-
-  handleSetCurrentProject(project: Project) {
-    switch (project.view) {
-      case Project.View.KANBAN:
-        this.router.navigate(['app', 'kanban', project.id]);
-        break;
-      case Project.View.LIST:
-        this.router.navigate(['app', 'list', project.id]);
-        break;
-      default:
-        break;
-    }
   }
 }
