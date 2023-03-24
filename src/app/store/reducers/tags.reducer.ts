@@ -43,6 +43,10 @@ export const tagsFeature = createFeature({
     on(YataApiActions.updateTagSuccess, (state, action) => ({
       currentTagId: state.currentTagId,
       tags: updateTag(state.tags, action.tag),
+    })),
+    on(YataApiActions.deleteTagSuccess, (state, action) => ({
+      currentTagId: state.currentTagId,
+      tags: state.tags.filter((tag) => tag.id !== action.tag.id),
     }))
   ),
 });

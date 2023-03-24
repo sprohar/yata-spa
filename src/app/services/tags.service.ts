@@ -21,6 +21,11 @@ export class TagsService extends ApiService {
     return this.http.post<Tag>(url, tag).pipe(catchError(this.handleError));
   }
 
+  delete(tag: Tag) {
+    const url = `${this.baseUrl}/${this.path}/${tag.id}`;
+    return this.http.delete<Tag>(url).pipe(catchError(this.handleError));
+  }
+
   getAll() {
     const url = `${this.baseUrl}/${this.path}`;
     return this.http
