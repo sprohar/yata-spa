@@ -1,0 +1,12 @@
+<div class="p1">
+  <header *ngIf="currentTag$ | async as tag">
+    <h1>#{{ tag.name }}</h1>
+  </header>
+  <main>
+    <ng-container *ngIf="tasks$ | async as tasks">
+      <yata-task-list *ngFor="let task of tasks">
+        <yata-task [task]="task"></yata-task>
+      </yata-task-list>
+    </ng-container>
+  </main>
+</div>

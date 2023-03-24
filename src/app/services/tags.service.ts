@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
-import { Tag } from '../models';
+import { Tag, Task } from '../models';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -25,6 +25,13 @@ export class TagsService extends ApiService {
     const url = `${this.baseUrl}/${this.path}`;
     return this.http
       .get<PaginatedList<Tag>>(url)
+      .pipe(catchError(this.handleError));
+  }
+
+  getTasks(tagId: number) {
+    const url = `${this.baseUrl}/${this.path}/${tagId}/tasks`;
+    return this.http
+      .get<PaginatedList<Task>>(url)
       .pipe(catchError(this.handleError));
   }
 }

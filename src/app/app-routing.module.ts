@@ -44,6 +44,11 @@ const routes: Routes = [
             (m) => m.EisenhowerMatrixModule
           ),
       },
+      {
+        path: 'tags',
+        loadChildren: () =>
+          import('./tags/tags.module').then((m) => m.TagsModule),
+      },
     ],
   },
 ];
@@ -52,4 +57,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

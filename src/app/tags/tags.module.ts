@@ -6,16 +6,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TagsComponent } from './tags.component';
+import { TagsRoutingModule } from './tags-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [CreateTagDialogComponent],
+  declarations: [CreateTagDialogComponent, TagsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    SharedModule,
+    TagsRoutingModule,
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
   ],
 })
-export class TagsModule {}
+export class TagsModule { }

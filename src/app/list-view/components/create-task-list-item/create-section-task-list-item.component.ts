@@ -13,7 +13,7 @@ export class CreateSectionTaskListItem implements OnInit {
   @Input() section!: Section;
   form!: FormGroup;
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(private store: Store, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     if (!this.section) {
@@ -42,9 +42,11 @@ export class CreateSectionTaskListItem implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    
-    this.store.dispatch(ListViewActions.createTaskInSection({
-      task: this.form.value,
-    }))
+
+    this.store.dispatch(
+      ListViewActions.createTaskInSection({
+        task: this.form.value,
+      })
+    );
   }
 }
