@@ -14,7 +14,7 @@ const authApiUrl = environment.auth.baseUrl;
   providedIn: 'root',
 })
 export class AuthenticationService extends ApiService {
-  private refreshTokenTimeout?: any | undefined;
+  private refreshTokenTimeout: ReturnType<typeof setInterval> | null = null;
 
   constructor(private http: HttpClient, private store: Store) {
     super();
@@ -61,7 +61,7 @@ export class AuthenticationService extends ApiService {
   }
 
   startRefreshTokenTimer(returnUrl?: string) {
-    if (this.refreshTokenTimeout !== undefined) {
+    if (this.refreshTokenTimeout) {
       this.stopRefreshTokenTimer();
     }
 
