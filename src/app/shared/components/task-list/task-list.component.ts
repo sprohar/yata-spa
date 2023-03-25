@@ -1,5 +1,5 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
 import { ListViewActions } from '../../../store/actions';
@@ -8,11 +8,10 @@ import { ListViewActions } from '../../../store/actions';
   selector: 'yata-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskListComponent implements OnInit {
-  constructor(private store: Store) {}
-
-  ngOnInit(): void {}
+export class TaskListComponent {
+  constructor(private store: Store) { }
 
   handleDropped(
     event: CdkDragDrop<Section, Section | any | undefined, Task | any>
@@ -20,10 +19,7 @@ export class TaskListComponent implements OnInit {
     const source = event.previousContainer.data;
     const target = event.container.data;
     const task = event.item.data;
-
-    if (source?.id === target?.id) {
-      return;
-    }
+    if (source?.id === target?.id) return;
 
     this.store.dispatch(
       ListViewActions.moveTaskToSection({

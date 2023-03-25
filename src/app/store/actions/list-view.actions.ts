@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Project, Tag, Task } from '../../models';
+import { Project, Task } from '../../models';
 
 export const ListViewActions = createActionGroup({
   source: 'List View',

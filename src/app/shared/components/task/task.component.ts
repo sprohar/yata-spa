@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -13,13 +13,14 @@ import { Task } from '../../../models';
   selector: 'yata-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskComponent {
   @Input() task!: Task;
   @Input() isDraggable = true;
   form!: FormGroup;
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(private store: Store, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     if (!this.task) {
