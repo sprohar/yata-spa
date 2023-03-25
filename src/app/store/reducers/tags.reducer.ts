@@ -24,10 +24,28 @@ function updateTag(tags: Tag[], updatedTag: Tag) {
   return collection;
 }
 
+function ensureDistinct(currentTags: Tag[], taskTags: Tag[] | undefined) {
+  if (taskTags === undefined) return currentTags;
+
+  const tags: Tag[] = [...currentTags];
+  for (const taskTag of taskTags) {
+    if (tags.findIndex((t) => t.id === taskTag.id) === -1) {
+      tags.push(taskTag);
+    }
+  }
+
+  tags.sort((a, b) => a.name.localeCompare(b.name));
+  return tags;
+}
+
 export const tagsFeature = createFeature({
   name: 'tags',
   reducer: createReducer(
     initialTagsState,
+    on(YataApiActions.createTaskSuccess, (state, action) => ({
+      currentTagId: state.currentTagId,
+      tags: ensureDistinct(state.tags, action.task.tags),
+    })),
     on(YataApiActions.createTagSuccess, (state, action) => ({
       currentTagId: state.currentTagId,
       tags: state.tags.concat(action.tag),

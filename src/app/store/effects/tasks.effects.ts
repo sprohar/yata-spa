@@ -31,7 +31,7 @@ export class TasksEffects {
     private tasksService: TasksService,
     private eisenhowerService: EisenhowerService,
     private snackbar: MatSnackBar
-  ) {}
+  ) { }
 
   create$ = createEffect(() =>
     this.actions$.pipe(
