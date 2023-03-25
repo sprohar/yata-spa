@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatrixTaskListComponent } from './components/matrix-task-list/matrix-task-list.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-quadrant.component';
@@ -17,14 +16,13 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
     EisenhowerMatrixComponent,
-    MatrixTaskListComponent,
     MatrixQuadrantComponent,
-    CreateTaskDialogComponent
+    CreateTaskDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +38,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-  ]
+    DragDropModule,
+  ],
 })
 export class EisenhowerMatrixModule { }

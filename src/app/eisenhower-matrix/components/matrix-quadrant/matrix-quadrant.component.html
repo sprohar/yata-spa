@@ -8,11 +8,7 @@
       <button mat-icon-button (click)="openCreateTaskDialog()">
         <mat-icon>add</mat-icon>
       </button>
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="quadrantOptions"
-        title="Quadrant options"
-      >
+      <button mat-icon-button [matMenuTriggerFor]="quadrantOptions" title="Quadrant options">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #quadrantOptions>
@@ -22,27 +18,30 @@
       </mat-menu>
     </div>
   </div>
+
+  <!-- Content -->
   <div class="full-height p-1 relative">
-    <div class="quadrant-content">
-      <ng-container *ngIf="projects$ | async as projects">
-        <ng-container *ngFor="let project of projects">
-          <ng-container *ngIf="getProjectTasks(project) as items">
-            <yata-section
-              *ngIf="items.length"
-              [name]="project.name"
-              [itemsCount]="items.length"
-            >
-              <yata-matrix-task-list [tasks]="items"></yata-matrix-task-list>
-            </yata-section>
-          </ng-container>
+    <div class="quadrant-content" *ngIf="projects$ | async as projects">
+      <ng-container *ngFor="let project of projects">
+        <ng-container *ngIf="getProjectTasks(project) as tasks">
+          <yata-section *ngIf="tasks.length" [name]="project.name" [itemsCount]="tasks.length">
+            <yata-task-list cdkDropList>
+              <yata-task *ngFor="let task of tasks" cdkDrag [cdkDragData]="task" [task]="task">
+                <span class="task-info">{{ task.dueDate | date }}</span>
+                <yata-task-options-menu [task]="task"></yata-task-options-menu>
+              </yata-task>
+            </yata-task-list>
+          </yata-section>
         </ng-container>
       </ng-container>
 
       <ng-container *ngIf="completedItems.length && showCompleted">
         <yata-section [name]="'Completed'" [itemsCount]="completedItems.length">
-          <yata-matrix-task-list
-            [tasks]="completedItems"
-          ></yata-matrix-task-list>
+          <yata-task-list>
+            <yata-task *ngFor="let task of completedItems" [task]="task">
+              <yata-task-options-menu [task]="task"></yata-task-options-menu>
+            </yata-task>
+          </yata-task-list>
         </yata-section>
       </ng-container>
     </div>
