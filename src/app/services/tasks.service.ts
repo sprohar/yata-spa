@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs';
+import { catchError, take } from 'rxjs';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Task } from '../models/';
 import { ApiService } from './api.service';
@@ -15,7 +15,9 @@ export class TasksService extends ApiService {
 
   create(task: Task) {
     const url = `${this.baseUrl}/projects/${task.projectId}/tasks`;
-    return this.http.post<Task>(url, task).pipe(catchError(this.handleError));
+    return this.http
+      .post<Task>(url, task)
+      .pipe(take(1), catchError(this.handleError));
   }
 
   duplicate(task: Task) {

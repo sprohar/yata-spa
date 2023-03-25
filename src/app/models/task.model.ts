@@ -1,4 +1,5 @@
 import { Subtask } from './subtask.model';
+import { Tag } from './tag.model';
 
 export interface Task {
   id?: number;
@@ -13,6 +14,7 @@ export interface Task {
   createdAt?: string;
   updatedAt?: string;
   subtasks?: Subtask[];
+  tags?: Tag[];
   projectId: number;
   sectionId?: number | null;
 }
