@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Subtask } from '../models/subtask.model';
-import { ApiService } from './api.service';
+import { YataApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SubtasksService extends ApiService {
+export class SubtasksService extends YataApiService {
   constructor(private readonly http: HttpClient) {
     super();
   }

@@ -4,12 +4,12 @@ import { catchError, take } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Tag, Task } from '../models';
-import { ApiService } from './api.service';
+import { YataApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TagsService extends ApiService {
+export class TagsService extends YataApiService {
   private readonly path = environment.api.endpoints.tags;
 
   constructor(private http: HttpClient) {

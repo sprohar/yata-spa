@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { catchError, share, take, tap } from 'rxjs';
 import { environment } from '../../../environment/environment';
-import { ApiService } from '../../services/api.service';
+import { YataApiService } from '../../services/api.service';
 import { AuthActions } from '../../store/actions';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { AuthDto } from '../dto/auth.dto';
@@ -13,7 +13,7 @@ const authApiUrl = environment.auth.baseUrl;
 @Injectable({
   providedIn: 'root',
 })
-export class AuthenticationService extends ApiService {
+export class AuthenticationService extends YataApiService {
   private refreshTokenTimeout: ReturnType<typeof setInterval> | null = null;
 
   constructor(private http: HttpClient, private store: Store) {

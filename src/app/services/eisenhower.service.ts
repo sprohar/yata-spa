@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Task } from '../models';
-import { ApiService } from './api.service';
+import { YataApiService } from './api.service';
 
 type QueryParams = {
   skip: number;
@@ -13,7 +13,7 @@ type QueryParams = {
 @Injectable({
   providedIn: 'root',
 })
-export class EisenhowerService extends ApiService {
+export class EisenhowerService extends YataApiService {
   constructor(private http: HttpClient) {
     super();
   }

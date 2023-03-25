@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
 import { Section } from '../models/section.model';
-import { ApiService } from './api.service';
+import { YataApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SectionsService extends ApiService {
+export class SectionsService extends YataApiService {
   constructor(private http: HttpClient) {
     super();
   }

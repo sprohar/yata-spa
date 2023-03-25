@@ -4,7 +4,7 @@ import { catchError } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Task } from '../models';
-import { ApiService } from './api.service';
+import { YataApiService } from './api.service';
 
 type ChronoQueryParams = {
   skip?: number;
@@ -16,7 +16,7 @@ type ChronoQueryParams = {
 @Injectable({
   providedIn: 'root',
 })
-export class ChronoService extends ApiService {
+export class ChronoService extends YataApiService {
   constructor(private http: HttpClient) {
     super();
   }
