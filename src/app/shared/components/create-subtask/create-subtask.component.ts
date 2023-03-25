@@ -1,9 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
@@ -13,6 +20,7 @@ import { TaskDetailsActions } from '../../../store/actions/task-details.actions'
   selector: 'yata-create-subtask',
   templateUrl: './create-subtask.component.html',
   styleUrls: ['./create-subtask.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateSubtaskComponent implements OnInit {
   @Output() save = new EventEmitter<void>();

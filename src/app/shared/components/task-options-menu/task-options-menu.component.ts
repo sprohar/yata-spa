@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
@@ -10,15 +10,16 @@ import { TaskDetailsDialogComponent } from '../task-details-dialog/task-details-
   selector: 'yata-task-options-menu',
   templateUrl: './task-options-menu.component.html',
   styleUrls: ['./task-options-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskOptionsMenuComponent {
   @Input() task!: Task;
-  
+
   sections$ = this.store.select(selectMoveToSectionsOptions);
 
   constructor(private store: Store, private dialog: MatDialog) {}
 
-  trackBySectionId(index: number, section: Section) {
+  trackBySectionId(_index: number, section: Section) {
     return section.id;
   }
 
@@ -39,9 +40,11 @@ export class TaskOptionsMenuComponent {
   }
 
   handleViewTaskDetails() {
-    this.store.dispatch(TaskOptionsMenuActions.viewTaskDetails({
-      taskId: this.task.id!,
-    }));
+    this.store.dispatch(
+      TaskOptionsMenuActions.viewTaskDetails({
+        taskId: this.task.id!,
+      })
+    );
 
     this.dialog.open(TaskDetailsDialogComponent, {
       maxWidth: '600px',

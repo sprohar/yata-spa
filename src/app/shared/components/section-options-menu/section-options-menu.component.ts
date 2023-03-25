@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,6 +20,7 @@ type MenuOptionsDirection = 'vertical' | 'horizontal';
   selector: 'yata-section-options-menu',
   templateUrl: './section-options-menu.component.html',
   styleUrls: ['./section-options-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionOptionsMenuComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
@@ -43,7 +50,7 @@ export class SectionOptionsMenuComponent implements OnDestroy, OnInit {
     return this.direction === 'horizontal' ? 'more_horiz' : 'more_vert';
   }
 
-  trackByProjectId(index: number, project: Project) {
+  trackByProjectId(_index: number, project: Project) {
     return project.id;
   }
 

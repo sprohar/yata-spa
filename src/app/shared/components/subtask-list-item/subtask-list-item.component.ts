@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subtask, Task } from '../../../models';
@@ -8,6 +13,7 @@ import { TaskDetailsActions } from '../../../store/actions';
   selector: 'yata-subtask-list-item',
   templateUrl: './subtask-list-item.component.html',
   styleUrls: ['./subtask-list-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubtaskListItemComponent implements OnInit {
   @Input() subtask!: Subtask;

@@ -1,4 +1,9 @@
-import { Component, EventEmitter, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,7 +14,7 @@ import { Project } from '../../../models';
 import {
   KanbanViewActions,
   ListViewActions,
-  ViewHeaderActions
+  ViewHeaderActions,
 } from '../../../store/actions';
 import { selectCurrentProject } from '../../../store/selectors/projects.selectors';
 import { CreateSectionDialogComponent } from '../create-section-dialog/create-section-dialog.component';
@@ -19,6 +24,7 @@ import { EditProjectDialogComponent } from '../edit-project-dialog/edit-project-
   selector: 'yata-view-header',
   templateUrl: './view-header.component.html',
   styleUrls: ['./view-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewHeaderComponent implements OnDestroy {
   destroy$ = new EventEmitter<void>();
@@ -89,7 +95,7 @@ export class ViewHeaderComponent implements OnDestroy {
   }
 
   openEditProjectDialog(project: Project) {
-    const ref = this.dialog.open(EditProjectDialogComponent, {
+    this.dialog.open(EditProjectDialogComponent, {
       data: project,
     });
   }
