@@ -1,27 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { EisenhowerMatrixActions } from '../../../store/actions';
 import { Project, Task } from '../../../models';
 import { selectProjects } from '../../../store/selectors';
+import { MatrixListData } from '../../interfaces/matrix-list-data';
 import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
 
 @Component({
   selector: 'yata-matrix-quadrant',
   templateUrl: './matrix-quadrant.component.html',
   styleUrls: ['./matrix-quadrant.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatrixQuadrantComponent implements OnInit {
-  projects$ = this.store.select(selectProjects);
   @Input() tasks!: Task[];
   @Input() priority!: Task.Priority;
+  completedTasks?: Task[];
+  projects$ = this.store.select(selectProjects);
   showCompleted = true;
 
-  constructor(private dialog: MatDialog, private store: Store) {}
+  constructor(private dialog: MatDialog, private store: Store) { }
 
-  ngOnInit(): void {}
-
-  get completedItems() {
-    return this.tasks.filter(t => t.completed);
+  ngOnInit(): void {
+    if (this.tasks) {
+      this.completedTasks = this.tasks.filter((t) => t.completed);
+    }
   }
 
   get headerText() {
@@ -49,7 +59,7 @@ export class MatrixQuadrantComponent implements OnInit {
   }
 
   getProjectTasks(project: Project) {
-    return this.tasks.filter(t => t.projectId === project.id);
+    return this.tasks.filter((t) => t.projectId === project.id);
   }
 
   openCreateTaskDialog() {
@@ -57,5 +67,34 @@ export class MatrixQuadrantComponent implements OnInit {
       data: this.priority,
       minWidth: '350px',
     });
+  }
+
+  handleTaskDropped(event: CdkDragDrop<MatrixListData, MatrixListData, Task>) {
+    const source: MatrixListData = event.previousContainer.data;
+    const target: MatrixListData = event.container.data;
+    const task: Task = event.item.data;
+
+    if (
+      source.projectId === target.projectId &&
+      source.priority === target.priority
+    ) {
+      return;
+    }
+
+    const updatedTask: Task = {
+      ...task,
+      projectId: target.projectId,
+      priority: target.priority,
+    };
+
+    if (source.projectId !== target.projectId) {
+      updatedTask.sectionId = null;
+    }
+
+    this.store.dispatch(
+      EisenhowerMatrixActions.moveTask({
+        task: updatedTask,
+      })
+    );
   }
 }

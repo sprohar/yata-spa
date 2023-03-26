@@ -25,7 +25,8 @@
       <ng-container *ngFor="let project of projects">
         <ng-container *ngIf="getProjectTasks(project) as tasks">
           <yata-section *ngIf="tasks.length" [name]="project.name" [itemsCount]="tasks.length">
-            <yata-task-list cdkDropList>
+            <yata-task-list cdkDropList (cdkDropListDropped)="handleTaskDropped($event)"
+              [cdkDropListData]="{ projectId: project.id!, priority: priority }">
               <yata-task *ngFor="let task of tasks" cdkDrag [cdkDragData]="task" [task]="task">
                 <span class="task-info">{{ task.dueDate | date }}</span>
                 <yata-task-options-menu [task]="task"></yata-task-options-menu>
@@ -35,10 +36,10 @@
         </ng-container>
       </ng-container>
 
-      <ng-container *ngIf="completedItems.length && showCompleted">
-        <yata-section [name]="'Completed'" [itemsCount]="completedItems.length">
+      <ng-container *ngIf="completedTasks?.length && showCompleted">
+        <yata-section [name]="'Completed'" [itemsCount]="completedTasks?.length">
           <yata-task-list>
-            <yata-task *ngFor="let task of completedItems" [task]="task">
+            <yata-task *ngFor="let task of completedTasks" [task]="task">
               <yata-task-options-menu [task]="task"></yata-task-options-menu>
             </yata-task>
           </yata-task-list>

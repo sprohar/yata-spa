@@ -10,8 +10,8 @@ import { EisenhowerMatrixActions } from '../../store/actions';
 import { selectTasks } from '../../store/selectors';
 
 export const eisenhowerMatrixGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  _route: ActivatedRouteSnapshot,
+  _state: RouterStateSnapshot
 ) => {
   const store = inject(Store);
   store.dispatch(EisenhowerMatrixActions.onInit());
