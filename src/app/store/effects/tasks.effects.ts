@@ -121,7 +121,8 @@ export class TasksEffects {
         ListViewActions.markTaskAsComplete,
         ListViewActions.markTaskAsIncomplete,
         ListViewActions.moveTaskToSection,
-        ListViewActions.updateTaskListItem
+        ListViewActions.updateTaskListItem,
+        EisenhowerMatrixActions.moveTask
       ),
       concatMap((action) =>
         this.tasksService.update(action.task.id!, action.task).pipe(
