@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs';
+import { catchError, take } from 'rxjs';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Task } from '../models';
-import { YataApiService } from './api.service';
+import { YataApiService } from './yata-api.service';
 
 type QueryParams = {
   skip: number;
@@ -27,6 +27,6 @@ export class EisenhowerService extends YataApiService {
           'Content-Type': 'application/json',
         }),
       })
-      .pipe(catchError(this.handleError));
+      .pipe(take(1), catchError(this.handleError));
   }
 }

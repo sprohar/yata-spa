@@ -1,14 +1,7 @@
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { ApiErrorResponse } from '../interfaces/api-error-response';
-import { AuthActions } from '../store/actions';
-
-function reauthenticate(store = inject(Store)) {
-  store.dispatch(AuthActions.refreshToken({ returnUrl: '/app' }));
-}
 
 export abstract class YataApiService {
   protected readonly baseUrl = environment.api.baseUrl;
@@ -24,16 +17,6 @@ export abstract class YataApiService {
       `Backend returned code ${error.status}, body was: `,
       error.error
     );
-
-    if (error.status !== HttpStatusCode.Unauthorized)
-      return throwError(() => error.error as ApiErrorResponse);
-
-    const authEndpoints: string[] = environment.auth.endpoints;
-    for (const authEndpoint of authEndpoints) {
-      if (error.url && !error.url.includes(authEndpoint)) {
-        reauthenticate();
-      }
-    }
 
     return throwError(() => error.error as ApiErrorResponse);
   }

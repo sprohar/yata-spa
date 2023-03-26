@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs';
+import { catchError, take } from 'rxjs';
 import { Section } from '../models/section.model';
-import { YataApiService } from './api.service';
+import { YataApiService } from './yata-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class SectionsService extends YataApiService {
         `${this.baseUrl}/projects/${section.projectId}/sections`,
         section
       )
-      .pipe(catchError(this.handleError));
+      .pipe(take(1), catchError(this.handleError));
   }
 
   delete(section: Section) {
@@ -27,7 +27,7 @@ export class SectionsService extends YataApiService {
       .delete<void>(
         `${this.baseUrl}/projects/${projectId}/sections/${sectionId}`
       )
-      .pipe(catchError(this.handleError));
+      .pipe(take(1), catchError(this.handleError));
   }
 
   get(projectId: number, sectionId: number) {
@@ -35,13 +35,13 @@ export class SectionsService extends YataApiService {
       .get<Section>(
         `${this.baseUrl}/projects/${projectId}/sections/${sectionId}`
       )
-      .pipe(catchError(this.handleError));
+      .pipe(take(1), catchError(this.handleError));
   }
 
   getAll(projectId: number) {
     return this.http
       .get<Section>(`${this.baseUrl}/projects/${projectId}`)
-      .pipe(catchError(this.handleError));
+      .pipe(take(1), catchError(this.handleError));
   }
 
   update(section: Partial<Section>) {
@@ -50,6 +50,6 @@ export class SectionsService extends YataApiService {
         `${this.baseUrl}/projects/${section.projectId}/sections/${section.id!}`,
         section
       )
-      .pipe(catchError(this.handleError));
+      .pipe(take(1), catchError(this.handleError));
   }
 }
