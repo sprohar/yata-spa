@@ -21,10 +21,10 @@ export interface Task {
 
 export namespace Task {
   export enum Priority {
-    NONE,
-    HIGH,
-    MEDIUM,
-    LOW,
+    NONE = 0,
+    HIGH = 1,
+    MEDIUM = 2,
+    LOW = 3,
   }
 
   export enum Title {
