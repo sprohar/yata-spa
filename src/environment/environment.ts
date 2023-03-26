@@ -13,13 +13,18 @@ export const environment = {
     },
   },
   auth: {
-    baseUrl: 'http://localhost:3000/authentication',
-    endpoints: ['logout', 'sign-in', 'sign-up', 'refresh-tokens'],
+    baseUrl: 'http://localhost:3000',
+    endpoints: [
+      'authentication/logout',
+      'authentication/sign-in',
+      'authentication/sign-up',
+      'authentication/refresh-tokens',
+    ],
     endpoint: {
-      logout: 'logout',
-      signIn: 'sign-in',
-      signUp: 'sign-up',
-      refreshToken: 'refresh-tokens',
+      logout: 'authentication/logout',
+      signIn: 'authentication/sign-in',
+      signUp: 'authentication/sign-up',
+      refreshToken: 'authentication/refresh-tokens',
     },
     token: {
       ttl: 1200,
