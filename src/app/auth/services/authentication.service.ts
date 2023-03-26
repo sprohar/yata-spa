@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, share, take, tap } from 'rxjs';
+import { catchError, share, take, tap, throwError } from 'rxjs';
 import { environment } from '../../../environment/environment';
-import { YataApiService } from '../../services/api.service';
+import { ApiErrorResponse } from '../../interfaces/api-error-response';
 import { AuthActions } from '../../store/actions';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { AuthDto } from '../dto/auth.dto';
@@ -13,12 +13,10 @@ const authApiUrl = environment.auth.baseUrl;
 @Injectable({
   providedIn: 'root',
 })
-export class AuthenticationService extends YataApiService {
+export class AuthenticationService {
   private refreshTokenTimeout: ReturnType<typeof setInterval> | null = null;
 
-  constructor(private http: HttpClient, private store: Store) {
-    super();
-  }
+  constructor(private http: HttpClient, private store: Store) {}
 
   logout() {
     if (this.refreshTokenTimeout) {
@@ -86,5 +84,20 @@ export class AuthenticationService extends YataApiService {
       clearTimeout(this.refreshTokenTimeout);
       console.log('rt_timeout has been cleared');
     }
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+      return throwError(() => error);
+    }
+
+    console.error(
+      `Backend returned code ${error.status}, body was: `,
+      error.error
+    );
+
+    return throwError(() => error.error as ApiErrorResponse);
   }
 }
