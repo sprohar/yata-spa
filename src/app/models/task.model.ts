@@ -1,3 +1,4 @@
+import { TaskRecurrence } from '../interfaces';
 import { Subtask } from './subtask.model';
 import { Tag } from './tag.model';
 
@@ -15,6 +16,7 @@ export interface Task {
   startDate?: string;
   endDate?: string;
   recurrencePattern?: string;
+  recurrence: TaskRecurrence;
   // timestamps
   createdAt?: string;
   updatedAt?: string;

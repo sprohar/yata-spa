@@ -1,4 +1,4 @@
-import { TaskRecurrencePatternParseError } from '../error';
+import { RecurrencePatternParseError } from '../error';
 
 export interface TaskRecurrence {
   frequency: TaskRecurrence.Frequency;
@@ -8,6 +8,7 @@ export interface TaskRecurrence {
 
 export namespace TaskRecurrence {
   export const MAX_END_DATE = '9999-12-31';
+  export const MAX_COUNT = Infinity;
 
   enum PatternKey {
     FREQ = 'FREQ',
@@ -41,36 +42,45 @@ export namespace TaskRecurrence {
   }
 
   export function toPattern(recur: TaskRecurrence) {
-    if (recur.count !== undefined)
-      return `${PatternKey.FREQ}=${recur.frequency};${PatternKey.INTERVAL}=${recur.interval};${PatternKey.COUNT}=${recur.count}`;
+    const freq = `${PatternKey.FREQ}=${recur.frequency}`;
+    const interval = `${PatternKey.INTERVAL}=${recur.interval}`;
+    const count = `${PatternKey.COUNT}=${recur.count}`;
+    return `${freq};${interval};${count}`;
+  }
 
-    return `${PatternKey.FREQ}=${recur.frequency};${PatternKey.INTERVAL}=${recur.interval}`;
+  function parseValue(value: number) {
+    const MIN_VALUE = 1;
+    if (value < MIN_VALUE)
+      throw new RecurrencePatternParseError(
+        `value must be greater than or equal to one`
+      );
+    return value;
   }
 
   export function parse(recurrencePattern: string): TaskRecurrence {
     const tokens = recurrencePattern.split(';');
     let freq = TaskRecurrence.Frequency.ONCE;
     let interval = 1;
-    let count: undefined | number = undefined;
+    let count = 1;
 
     for (const token of tokens) {
       const [key, value] = token.split('=');
       switch (key) {
         case PatternKey.FREQ:
           if (!isValidFrequencyKey(value))
-            throw new TaskRecurrencePatternParseError(
+            throw new RecurrencePatternParseError(
               `"${value}" is not a valid value for ${key}`
             );
           freq = value as TaskRecurrence.Frequency;
           break;
         case PatternKey.COUNT:
-          count = +value;
+          count = parseValue(+value);
           break;
         case PatternKey.INTERVAL:
-          interval = +value;
+          interval = parseValue(+value);
           break;
         default:
-          throw new TaskRecurrencePatternParseError(`Invalid key: ${key}`);
+          throw new RecurrencePatternParseError(`Invalid key: ${key}`);
       }
     }
 
