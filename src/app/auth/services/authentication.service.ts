@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { catchError, share, take, tap, throwError } from 'rxjs';
 import { environment } from '../../../environment/environment';
-import { ApiErrorResponse } from '../../interfaces/api-error-response';
+import { ApiErrorResponse } from '../../error/api-error-response';
 import { AuthActions } from '../../store/actions';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { AuthDto } from '../dto/auth.dto';

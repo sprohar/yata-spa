@@ -1,5 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { ApiErrorResponse } from '../../interfaces/api-error-response';
+import { ApiErrorResponse } from '../../error/api-error-response';
 import { Project, Section, Subtask, Tag, Task } from '../../models';
 
 export const YataApiActions = createActionGroup({

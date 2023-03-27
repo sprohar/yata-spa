@@ -10,7 +10,7 @@ import {
   of,
   tap,
 } from 'rxjs';
-import { ApiErrorResponse } from '../../interfaces/api-error-response';
+import { ApiErrorResponse } from '../../error/api-error-response';
 import { EisenhowerService } from '../../services/eisenhower.service';
 import { TasksService } from '../../services/tasks.service';
 import {
@@ -31,7 +31,7 @@ export class TasksEffects {
     private tasksService: TasksService,
     private eisenhowerService: EisenhowerService,
     private snackbar: MatSnackBar
-  ) { }
+  ) {}
 
   create$ = createEffect(() =>
     this.actions$.pipe(

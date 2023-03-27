@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { environment } from '../../environment/environment';
-import { ApiErrorResponse } from '../interfaces/api-error-response';
+import { ApiErrorResponse } from '../error/api-error-response';
 
 export abstract class YataApiService {
   protected readonly baseUrl = environment.api.baseUrl;

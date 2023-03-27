@@ -11,8 +11,14 @@ export interface Task {
   isAllDay?: boolean;
   dueDate?: string | null;
   completedOn?: string;
+  // recurrence
+  startDate?: string;
+  endDate?: string;
+  recurrencePattern?: string;
+  // timestamps
   createdAt?: string;
   updatedAt?: string;
+  // relations
   subtasks?: Subtask[];
   tags?: Tag[];
   projectId: number;

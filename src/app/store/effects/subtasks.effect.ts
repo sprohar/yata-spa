@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of } from 'rxjs';
-import { ApiErrorResponse } from '../../interfaces/api-error-response';
+import { ApiErrorResponse } from '../../error/api-error-response';
 import { SubtasksService } from '../../services/subtasks.service';
 import { TaskDetailsActions, YataApiActions } from '../actions';
 

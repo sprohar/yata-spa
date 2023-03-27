@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
-import { ApiErrorResponse } from '../../interfaces/api-error-response';
+import { ApiErrorResponse } from '../../error/api-error-response';
 import { TagsService } from '../../services/tags.service';
 import { SidenavActions, YataApiActions } from '../actions';
 
@@ -12,7 +12,7 @@ export class TagsEffects {
     private actions$: Actions,
     private tagsService: TagsService,
     private snackbar: MatSnackBar
-  ) { }
+  ) {}
 
   create$ = createEffect(() =>
     this.actions$.pipe(

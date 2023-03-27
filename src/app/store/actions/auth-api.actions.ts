@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { AuthResponseDto } from '../../auth/dto/auth-response.dto';
-import { ApiErrorResponse } from '../../interfaces/api-error-response';
+import { ApiErrorResponse } from '../../error/api-error-response';
 
 export const AuthApiActions = createActionGroup({
   source: 'Auth Api',

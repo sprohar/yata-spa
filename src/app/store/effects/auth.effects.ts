@@ -12,7 +12,7 @@ import {
   tap,
 } from 'rxjs';
 import { AuthenticationService } from '../../auth/services/authentication.service';
-import { ApiErrorResponse } from '../../interfaces/api-error-response';
+import { ApiErrorResponse } from '../../error/api-error-response';
 import { ErrorService } from '../../services/error.service';
 import { AuthActions } from '../actions';
 import { AuthApiActions } from '../actions/auth-api.actions';
@@ -129,7 +129,9 @@ export class AuthEffects {
       ofType(AuthActions.signUp),
       concatMap((action) =>
         this.authenticationService.signUp(action.dto).pipe(
-          map((res) => AuthApiActions.signUpSuccess({ res, returnUrl: action.returnUrl })),
+          map((res) =>
+            AuthApiActions.signUpSuccess({ res, returnUrl: action.returnUrl })
+          ),
           catchError((error: ApiErrorResponse) =>
             of(
               AuthApiActions.signUpError({
