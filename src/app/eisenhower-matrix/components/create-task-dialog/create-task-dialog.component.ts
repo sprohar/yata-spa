@@ -6,9 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -73,7 +73,7 @@ export class CreateTaskDialogComponent implements OnDestroy, OnInit {
     if (inbox) {
       this.projectIdControl.setValue(inbox.id);
     }
-    
+
     return inbox;
   }
 
@@ -100,6 +100,10 @@ export class CreateTaskDialogComponent implements OnDestroy, OnInit {
   }
 
   handleSave() {
+    if (this.form.invalid) {
+      return;
+    }
+
     this.store.dispatch(
       CreateTaskComponentActions.createTask({
         task: this.form.value,
