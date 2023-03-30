@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideMockStore } from '@ngrx/store/testing';
 import { TaskListComponent } from './task-list.component';
 
 describe('TaskListComponent', () => {
@@ -8,9 +9,9 @@ describe('TaskListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskListComponent ]
-    })
-    .compileComponents();
+      declarations: [TaskListComponent],
+      imports: [provideMockStore()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TaskListComponent);
     component = fixture.componentInstance;

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ChronoComponent } from './chrono.component';
 
 describe('ChronoComponent', () => {
@@ -8,9 +9,9 @@ describe('ChronoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChronoComponent ]
-    })
-    .compileComponents();
+      declarations: [ChronoComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChronoComponent);
     component = fixture.componentInstance;
