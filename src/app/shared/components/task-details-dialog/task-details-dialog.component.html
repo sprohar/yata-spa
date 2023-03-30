@@ -24,11 +24,12 @@
           </ng-container>
           <ng-template #dueDateIsNull>
             <button
-              mat-icon-button
+              mat-stroked-button
               (click)="openDateTimePickerDialog()"
               title="Set a due date"
             >
               <mat-icon>event</mat-icon>
+              <span>Date & Repeat</span>
             </button>
           </ng-template>
         </div>

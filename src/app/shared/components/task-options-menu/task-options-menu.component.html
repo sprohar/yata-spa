@@ -2,7 +2,16 @@
   <mat-icon>more_vert</mat-icon>
 </button>
 <mat-menu #options="matMenu">
-  <button mat-menu-item (click)="handleViewTaskDetails()">View details</button>
-  <button mat-menu-item (click)="handleDuplicate()">Duplicate</button>
-  <button mat-menu-item (click)="handleDelete()">Delete</button>
+  <button mat-menu-item (click)="handleViewTaskDetails()">
+    <mat-icon>info</mat-icon>
+    <span>View details </span>
+  </button>
+  <button mat-menu-item (click)="handleDuplicate()">
+    <mat-icon>content_copy</mat-icon>
+    <span>Duplicate</span>
+  </button>
+  <button mat-menu-item (click)="handleDelete()">
+    <mat-icon>delete</mat-icon>
+    <span>Delete</span>
+  </button>
 </mat-menu>

@@ -109,6 +109,25 @@
     (close)="closeTimePicker()"
     (time)="handleTimeChange($event)"
   ></yata-time-input>
+
+  <!-- Task Recurrence Picker -->
+  <!-- <ng-container *ngIf="!recurrenceText; else recurringTask">
+    <yata-task-recurrence-picker
+      class="full-width"
+      (recurrence)="handleTaskRecurrence($event)"
+    ></yata-task-recurrence-picker>
+  </ng-container>
+  <ng-template #recurringTask>
+    <div class="flex align-items-center">
+      <button mat-stroked-button>
+        <mat-icon>replay</mat-icon>
+        <span>{{ recurrenceText }}</span>
+      </button>
+      <button mat-icon-button title="Remove task recurrence">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </ng-template> -->
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

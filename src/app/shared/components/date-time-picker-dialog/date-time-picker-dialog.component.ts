@@ -1,5 +1,10 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SuggestedDates } from '../../interfaces/suggested-dates';
 import { TimeTokens } from '../../interfaces/time-tokens';
 
@@ -7,11 +12,13 @@ import { TimeTokens } from '../../interfaces/time-tokens';
   selector: 'yata-date-time-picker-dialog',
   templateUrl: './date-time-picker-dialog.component.html',
   styleUrls: ['./date-time-picker-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateTimePickerDialogComponent {
+export class DateTimePickerDialogComponent implements OnInit {
   date: Date | null = null;
   showTimeInput = false;
   suggestedDates!: SuggestedDates;
+  recurrenceText?: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Date | null,
