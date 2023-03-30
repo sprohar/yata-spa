@@ -100,13 +100,46 @@
             "scripts": [],
             "karmaConfig": "karma.conf.js"
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "yata-spa:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "yata-spa:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "yata-spa:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "yata-spa:serve:production"
+            }
+          }
         }
       }
     }
   },
   "cli": {
     "schematicCollections": [
-      "@ngrx/schematics"
+      "@cypress/schematic",
+      "@ngrx/schematics",
+      "@schematics/angular"
     ],
     "analytics": false
   }
