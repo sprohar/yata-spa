@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { CreateCustomRecurrenceDialogComponent } from './components/create-custom-recurrence-dialog/create-custom-recurrence-dialog.component';
 import { CreateSectionDialogComponent } from './components/create-section-dialog/create-section-dialog.component';
 import { CreateSubtaskComponent } from './components/create-subtask/create-subtask.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
@@ -22,19 +24,18 @@ import { EditProjectDialogComponent } from './components/edit-project-dialog/edi
 import { EditSectionDialogComponent } from './components/edit-section-dialog/edit-section-dialog.component';
 import { SectionOptionsMenuComponent } from './components/section-options-menu/section-options-menu.component';
 import { SectionPickerComponent } from './components/section-picker/section-picker.component';
+import { SectionComponent } from './components/section/section.component';
 import { SubtaskListItemComponent } from './components/subtask-list-item/subtask-list-item.component';
 import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
 import { TaskDetailsDialogComponent } from './components/task-details-dialog/task-details-dialog.component';
 import { TaskListSortOptionsComponent } from './components/task-list-sort-options/task-list-sort-options.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskOptionsMenuComponent } from './components/task-options-menu/task-options-menu.component';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
+import { TaskComponent } from './components/task/task.component';
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
-import { SectionComponent } from './components/section/section.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { TaskComponent } from './components/task/task.component';
-import { TaskListComponent } from './components/task-list/task-list.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { TaskListComponent } from './components/task-list/task-list.component';
     SectionComponent,
     TaskComponent,
     TaskListComponent,
+    CreateCustomRecurrenceDialogComponent,
   ],
   imports: [
     CommonModule,

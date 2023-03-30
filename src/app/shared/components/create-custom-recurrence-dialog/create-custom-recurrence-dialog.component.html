@@ -1,0 +1,81 @@
+<mat-dialog-content>
+  <div class="flex-column row-gap-1" [formGroup]="form">
+    <h3>Frequency</h3>
+    <div class="flex column-gap-1">
+      <!-- Interval -->
+      <mat-form-field appearance="outline">
+        <mat-label>Repeat every</mat-label>
+        <input matInput type="number" formControlName="interval" />
+      </mat-form-field>
+      <!-- Frequency -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-select formControlName="frequency">
+          <mat-option
+            *ngFor="let opt of frequencySelectOptions"
+            [value]="opt.frequency"
+          >
+            {{ opt.selectOptionText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="flex-column row-gap-1">
+      <h3>Ends</h3>
+      <div class="flex-column row-gap-1">
+        <!-- Infinite -->
+        <mat-radio-button
+          class="radio-btn"
+          #never
+          [checked]="true"
+          (change)="handleIsInfiniteChange(never.checked)"
+        >
+          Never
+        </mat-radio-button>
+        <!-- End date -->
+        <div class="flex column-gap-1 align-items-center">
+          <mat-radio-button
+            #on
+            class="radio-btn"
+            (change)="handleHasEndDateChange(on.checked)"
+          >
+            On
+          </mat-radio-button>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>End date</mat-label>
+            <input
+              matInput
+              [min]="MIN_END_DATE"
+              [matDatepicker]="picker"
+              formControlName="endDate"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!-- Count -->
+        <div class="flex column-gap-1 align-items-center">
+          <mat-radio-button
+            #after
+            class="radio-btn"
+            (change)="handleIsFiniteChange(after.checked)"
+          >
+            After
+          </mat-radio-button>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Occurrences</mat-label>
+            <input matInput type="number" formControlName="occurrences" />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="handleSave()">Save</button>
+</mat-dialog-actions>
