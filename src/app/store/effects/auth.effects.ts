@@ -52,11 +52,7 @@ export class AuthEffects {
 
   authError$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(
-        AuthApiActions.signInError,
-        AuthApiActions.signUpError
-        // AuthApiActions.refreshTokenError
-      ),
+      ofType(AuthApiActions.signInError, AuthApiActions.signUpError),
       tap((action) => {
         const error = action.error;
         console.log(error);
@@ -64,12 +60,18 @@ export class AuthEffects {
           error.statusCode &&
           error.statusCode === HttpStatusCode.Unauthorized
         ) {
-          console.log('error service');
-          this.errorService.setErrorMessage('Invalid credentials');
+          if (typeof error.message === 'string') {
+            this.errorService.setErrorMessage(
+              error.message ?? 'Invalid credentials'
+            );
+          } else if (Array.isArray(error.message)) {
+            this.errorService.setErrorMessage(
+              error.message.join('\n') ?? 'Invalid credentials'
+            );
+          }
         }
       }),
       switchMap((_) => {
-        // this.router.navigateByUrl('/auth/sign-in');
         return of(AuthActions.authFlowComplete());
       })
     )

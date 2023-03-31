@@ -5,13 +5,14 @@
     <form [formGroup]="form" (ngSubmit)="handleSignIn()">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" />
+        <input matInput type="email" id="email" formControlName="email" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
         <input
           matInput
+          id="password"
           [type]="showPassword ? 'text' : 'password'"
           formControlName="password"
         />
@@ -30,6 +31,7 @@
       <div class="full-width">
         <button
           [disabled]="form.invalid"
+          type="submit"
           mat-raised-button
           class="full-width"
           color="primary"
