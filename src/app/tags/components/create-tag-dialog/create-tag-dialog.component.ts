@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { SidenavActions } from '../../../store/actions';
-import { Tag } from '../../../models';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Tag } from '../../../models';
+import { SidenavActions } from '../../../store/actions';
 
 @Component({
   selector: 'yata-create-tag-dialog',
