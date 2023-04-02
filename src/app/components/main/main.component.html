@@ -42,9 +42,10 @@
             <summary class="clickable">
               <span> Projects </span>
               <button
+                id="createProjectButton"
                 mat-icon-button
                 (click)="openCreateProjectDialog()"
-                title="Add project"
+                title="Create project"
               >
                 <mat-icon>add</mat-icon>
               </button>
@@ -100,8 +101,9 @@
             <summary class="clickable">
               <span>Tags</span>
               <button
+                id="createTagButton"
                 mat-icon-button
-                title="Add tag"
+                title="Create tag"
                 (click)="openCreateTagDialog()"
               >
                 <mat-icon>add</mat-icon>
