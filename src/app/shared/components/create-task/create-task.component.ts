@@ -42,7 +42,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     private store: Store,
     private fb: FormBuilder,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -124,7 +124,10 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
       task.sectionId = this.section.id;
     }
 
-    task.tags = this.intersection(this.selectedTags, this.existingTags);
+    task.tags = this.leftJoinOnTagName(
+      Array.from(this.selectedTags),
+      this.existingTags
+    );
 
     this.store.dispatch(CreateTaskComponentActions.createTask({ task }));
     this.created.emit();
@@ -133,7 +136,25 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     this.selectedTags.clear();
   }
 
-  private intersection(selectedTags: Set<Tag>, existingTags: Tag[]) {
+  /**
+   * Uses a left join to combine the tags that were selected by the user
+   *  and the tags that already exist in the database.
+   * If a tag that was selected by the user already exists in the database,
+   * the tag that already exists in the database is used.
+   * If a tag that was selected by the user does not exist in the database,
+   * the tag that was selected by the user is used.
+   * This is done to prevent duplicate tags from being created.
+   * @example
+   * const selectedTags = [{ name: 'tag1' }, { name: 'tag3' }];
+   * const existingTags = [{ id: 1, name: 'tag1' }, { id: 2, name: 'tag2' }];
+   * const tags = leftJoinOnTagName(selectedTags, existingTags);
+   * // tags = [{ id: 1, name: 'tag1' }, { id: 2, name: 'tag2' }, { name: 'tag3' }]
+   * @param selectedTags The tags that were selected by the user
+   * @param existingTags The tags that already exist in the database
+   * @returns An array of tags that contains the tags that already exist in the database
+   * and the tags that were selected by the user
+   */
+  leftJoinOnTagName(selectedTags: Tag[], existingTags: Tag[]): Tag[] {
     const tags: Tag[] = [];
     let pushed = false;
 
