@@ -5,10 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Tag } from 'src/app/models';
-import { SidenavActions } from 'src/app/store/actions';
+import { Tag } from '../../../models';
+import { SidenavActions } from '../../../store/actions';
 
 @Component({
   selector: 'yata-edit-tag-dialog',
@@ -20,13 +20,15 @@ export class EditTagDialogComponent implements OnInit {
 
   constructor(
     private store: Store,
-    @Inject(MAT_DIALOG_DATA)
-    private data: Tag,
+    private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditTagDialogComponent>,
-    private fb: FormBuilder
-  ) { }
+    @Inject(MAT_DIALOG_DATA) private data: Tag
+  ) {}
 
   ngOnInit(): void {
+    if (!this.data)
+      throw new Error('EditTagDialogComponent requires data to be passed in');
+
     this.initForm(this.data);
   }
 

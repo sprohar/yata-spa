@@ -15,8 +15,16 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-stroked-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" [disabled]="form.invalid || form.pristine" (click)="handleSave()">
+  <button id="cancelEditTagDialogButton" mat-stroked-button mat-dialog-close>
+    Cancel
+  </button>
+  <button
+    id="saveEditTagDialogButton"
+    mat-raised-button
+    color="primary"
+    [disabled]="form.invalid || form.pristine"
+    (click)="handleSave()"
+  >
     Save
   </button>
 </mat-dialog-actions>
