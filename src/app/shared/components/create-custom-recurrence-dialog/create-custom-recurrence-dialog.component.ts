@@ -144,7 +144,7 @@ export class CreateCustomRecurrenceDialogComponent implements OnInit {
     //   count,
     //   isInfinite: true,
     // });
-    
+
     this.dialogRef.close();
   }
 }
