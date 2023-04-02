@@ -1,13 +1,17 @@
 <h1 class="p1">Next 7 Days</h1>
 <mat-divider></mat-divider>
 <ng-container *ngIf="sections$ | async as sections">
-  <ng-container *ngFor="let section of sections">
-    <yata-section [name]="section.name" [itemsCount]="section.tasks?.length">
-      <ul>
-        <ng-container *ngFor="let task of section.tasks">
-          <yata-task [task]="task" [isDraggable]="false"></yata-task>
-        </ng-container>
-      </ul>
-    </yata-section>
-  </ng-container>
+  <yata-section
+    *ngFor="let section of sections"
+    [name]="section.name"
+    [itemsCount]="section.tasks?.length"
+  >
+    <yata-task-list>
+      <yata-task
+        *ngFor="let task of section.tasks"
+        [task]="task"
+        [isDraggable]="false"
+      ></yata-task>
+    </yata-task-list>
+  </yata-section>
 </ng-container>

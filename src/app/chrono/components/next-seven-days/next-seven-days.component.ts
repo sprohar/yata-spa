@@ -11,28 +11,34 @@ import { selectTasks } from '../../../store/selectors';
   styleUrls: ['./next-seven-days.component.scss'],
 })
 export class NextSevenDaysComponent {
-  sections$ = this.store.select(selectTasks).pipe(
-    map((tasks) => this.sectionize(tasks))
-  );
+  sections$ = this.store
+    .select(selectTasks)
+    .pipe(map((tasks) => this.groupByDueDate(tasks)));
 
   constructor(private store: Store) {}
 
-  sectionize(tasks: Task[]) {
+  /**
+   * Groups tasks by due date
+   * @param tasks The tasks to sectionize
+   * @returns An array of sections with the tasks grouped by due date
+   */
+  groupByDueDate(tasks: Task[]) {
     const sections: Section[] = [];
-    const datesSet = new Set<string | undefined>(tasks.map(task => task.dueDate?.split('T').at(0)));
+    const dueDates = tasks.map((task) => task.dueDate?.split('T').at(0));
+    const uniqueDates = new Set<string | undefined>(dueDates);
 
-    datesSet.forEach((date) => {
+    for (const date of uniqueDates) {
       const section: Section = {
         name: formatDate(new Date(date!), 'fullDate', navigator.language),
         projectId: -1,
         tasks: tasks.filter((task) => {
           const dueDate: string = task.dueDate!.split('T')!.at(0)!;
-          return dueDate === date;  
+          return dueDate === date;
         }),
       };
 
       sections.push(section);
-    });
+    }
 
     return sections;
   }
