@@ -2,9 +2,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import {
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -94,7 +94,7 @@ describe('ViewHeaderComponent', () => {
       const spy = routerSpy.navigate as jasmine.Spy;
       const navArgs = spy.calls.first().args[0];
 
-      expect(navArgs).toEqual(['kanban', project.id]);
+      expect(navArgs).toEqual(['app', 'kanban', project.id]);
       expect(store.dispatch).toHaveBeenCalledWith(
         ListViewActions.switchToKanbanView({
           project: {
@@ -115,7 +115,7 @@ describe('ViewHeaderComponent', () => {
       const spy = routerSpy.navigate as jasmine.Spy;
       const navArgs = spy.calls.first().args[0];
 
-      expect(navArgs).toEqual(['list', project.id]);
+      expect(navArgs).toEqual(['app', 'list', project.id]);
       expect(store.dispatch).toHaveBeenCalledWith(
         KanbanViewActions.switchToListView({
           project: {
@@ -164,6 +164,13 @@ describe('ViewHeaderComponent', () => {
   describe('#openCreateSectionDialog', () => {
     it('should open the "CreateSectionDailogComponent"', () => {
       component.openCreateSectionDialog(initialState.projects.projects[0]);
+      expect(matDialogSpy.open).toHaveBeenCalled();
+    });
+  });
+
+  describe('#openEditProjectDialog', () => {
+    it('should open the "EditProjectDailogComponent"', () => {
+      component.openEditProjectDialog(initialState.projects.projects[0]);
       expect(matDialogSpy.open).toHaveBeenCalled();
     });
   });
