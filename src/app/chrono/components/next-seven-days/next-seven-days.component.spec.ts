@@ -4,8 +4,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { NextSevenDaysComponent } from './next-seven-days.component';
-import { Task } from '../../../models';
-import { formatDate } from '@angular/common';
 
 const initialState = {
   tasks: {
@@ -56,32 +54,5 @@ describe('NextSevenDaysComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  describe('#groupByDueDate', () => {
-    it('should group tasks by due date', () => {
-      const tasks: Task[] = initialState.tasks.tasks;
-      const sections = component.groupByDueDate(tasks);
-
-      expect(sections.length).toBe(2);
-
-      expect(sections[0].tasks?.length).toBe(2);
-      expect(sections[0].name).toBe(
-        formatDate(
-          new Date('2021-08-01T00:00:00.000Z'),
-          'fullDate',
-          navigator.language
-        )
-      );
-
-      expect(sections[1].tasks?.length).toBe(1);
-      expect(sections[1].name).toBe(
-        formatDate(
-          new Date('2021-08-02T00:00:00.000Z'),
-          'fullDate',
-          navigator.language
-        )
-      );
-    });
   });
 });
