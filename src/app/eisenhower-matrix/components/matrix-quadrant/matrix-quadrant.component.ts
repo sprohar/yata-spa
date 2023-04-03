@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { Priority, Project, Task } from '../../../models';
 import { EisenhowerMatrixActions } from '../../../store/actions';
-import { Project, Task } from '../../../models';
 import { selectProjects } from '../../../store/selectors';
 import { MatrixListData } from '../../interfaces/matrix-list-data';
 import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
@@ -21,12 +21,12 @@ import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dia
 })
 export class MatrixQuadrantComponent implements OnInit {
   @Input() tasks!: Task[];
-  @Input() priority!: Task.Priority;
+  @Input() priority!: Priority;
   completedTasks?: Task[];
   projects$ = this.store.select(selectProjects);
   showCompleted = true;
 
-  constructor(private dialog: MatDialog, private store: Store) { }
+  constructor(private dialog: MatDialog, private store: Store) {}
 
   ngOnInit(): void {
     if (this.tasks) {
@@ -36,13 +36,13 @@ export class MatrixQuadrantComponent implements OnInit {
 
   get headerText() {
     switch (this.priority) {
-      case Task.Priority.HIGH:
+      case Priority.HIGH:
         return 'Urgent & Important';
-      case Task.Priority.MEDIUM:
+      case Priority.MEDIUM:
         return 'Not Urgent & Important';
-      case Task.Priority.LOW:
+      case Priority.LOW:
         return 'Urgent & Unimportant';
-      case Task.Priority.NONE:
+      case Priority.NONE:
         return 'Not Urgent & Unimportant';
       default:
         return '';
@@ -51,10 +51,10 @@ export class MatrixQuadrantComponent implements OnInit {
 
   get textColorClassName() {
     return {
-      'high-priority': this.priority === Task.Priority.HIGH,
-      'medium-priority': this.priority === Task.Priority.MEDIUM,
-      'low-priority': this.priority === Task.Priority.LOW,
-      'no-priority': this.priority === Task.Priority.NONE,
+      'high-priority': this.priority === Priority.HIGH,
+      'medium-priority': this.priority === Priority.MEDIUM,
+      'low-priority': this.priority === Priority.LOW,
+      'no-priority': this.priority === Priority.NONE,
     };
   }
 

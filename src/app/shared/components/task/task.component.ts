@@ -6,8 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Priority, Task } from '../../../models';
 import { ListViewActions } from '../../../store/actions';
-import { Task } from '../../../models';
 
 @Component({
   selector: 'yata-task',
@@ -20,7 +20,7 @@ export class TaskComponent {
   @Input() isDraggable = true;
   form!: FormGroup;
 
-  constructor(private store: Store, private fb: FormBuilder) { }
+  constructor(private store: Store, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     if (!this.task) {
@@ -81,7 +81,7 @@ export class TaskComponent {
     }
   }
 
-  handlePriorityChange(priority: Task.Priority) {
+  handlePriorityChange(priority: Priority) {
     this.priorityControl.setValue(priority);
     this.priorityControl.markAsDirty();
     this.update();

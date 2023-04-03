@@ -1,9 +1,9 @@
-import { Task } from './task.model';
+import { Priority } from './task.model';
 
 export interface Subtask {
   id?: number;
   title: string;
-  priority?: Task.Priority;
+  priority?: Priority;
   completed?: boolean;
   deleted?: boolean;
   dueDate?: string;

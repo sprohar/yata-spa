@@ -1,19 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Task } from 'src/app/models/task.model';
+import { Priority } from '../../models';
 
 @Pipe({
   name: 'taskPriority',
 })
 export class TaskPriorityPipe implements PipeTransform {
-  transform(value: Task.Priority, ...args: unknown[]): unknown {
+  transform(value: Priority, ...args: unknown[]): unknown {
     switch (value) {
-      case Task.Priority.NONE:
+      case Priority.NONE:
         return 'None';
-      case Task.Priority.HIGH:
+      case Priority.HIGH:
         return 'High';
-      case Task.Priority.MEDIUM:
+      case Priority.MEDIUM:
         return 'Medium';
-      case Task.Priority.LOW:
+      case Priority.LOW:
         return 'Low';
       default:
         throw new Error('enum Priority: Invalid value');

@@ -12,7 +12,7 @@ import {
 } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { Project, Task } from '../../../models';
+import { Priority, Project, Task } from '../../../models';
 import { DateTimePickerDialogComponent } from '../../../shared/components/date-time-picker-dialog/date-time-picker-dialog.component';
 import { CreateTaskComponentActions } from '../../../store/actions';
 import { selectProjects } from '../../../store/selectors';
@@ -31,7 +31,7 @@ export class CreateTaskDialogComponent implements OnDestroy, OnInit {
     private store: Store,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: Task.Priority,
+    @Inject(MAT_DIALOG_DATA) public data: Priority,
     private dialogRef: MatDialogRef<CreateTaskDialogComponent>
   ) {}
 

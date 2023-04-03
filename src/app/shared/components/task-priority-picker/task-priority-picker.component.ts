@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Task } from '../../../models';
+import { Priority } from '../../../models';
 
 @Component({
   selector: 'yata-task-priority-picker',
@@ -14,39 +14,39 @@ import { Task } from '../../../models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskPriorityPickerComponent {
-  @Output() selectionChange = new EventEmitter<Task.Priority>();
-  @Input() value?: Task.Priority;
+  @Output() selectionChange = new EventEmitter<Priority>();
+  @Input() value?: Priority;
   @Input() disabled: boolean = false;
 
   constructor() {}
 
   get flagColor() {
-    const priority: Task.Priority = this.value ?? Task.Priority.NONE;
+    const priority: Priority = this.value ?? Priority.NONE;
     return {
-      'no-priority': priority === Task.Priority.NONE,
-      'high-priority': priority === Task.Priority.HIGH,
-      'medium-priority': priority === Task.Priority.MEDIUM,
-      'low-priority': priority === Task.Priority.LOW,
+      'no-priority': priority === Priority.NONE,
+      'high-priority': priority === Priority.HIGH,
+      'medium-priority': priority === Priority.MEDIUM,
+      'low-priority': priority === Priority.LOW,
     };
   }
 
   handleHighPriorityChange() {
-    this.value = Task.Priority.HIGH;
-    this.selectionChange.emit(Task.Priority.HIGH);
+    this.value = Priority.HIGH;
+    this.selectionChange.emit(Priority.HIGH);
   }
 
   handleMediumPriorityChange() {
-    this.value = Task.Priority.MEDIUM;
-    this.selectionChange.emit(Task.Priority.MEDIUM);
+    this.value = Priority.MEDIUM;
+    this.selectionChange.emit(Priority.MEDIUM);
   }
 
   handleLowPriorityChange() {
-    this.value = Task.Priority.LOW;
-    this.selectionChange.emit(Task.Priority.LOW);
+    this.value = Priority.LOW;
+    this.selectionChange.emit(Priority.LOW);
   }
 
   handleNonePriorityChange() {
-    this.value = Task.Priority.NONE;
-    this.selectionChange.emit(Task.Priority.NONE);
+    this.value = Priority.NONE;
+    this.selectionChange.emit(Priority.NONE);
   }
 }

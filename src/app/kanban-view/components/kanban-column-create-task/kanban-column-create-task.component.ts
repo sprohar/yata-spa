@@ -8,7 +8,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { Section, Task } from '../../../models';
+import { Priority, Section, Task } from '../../../models';
 import { DateTimePickerDialogComponent } from '../../../shared/components/date-time-picker-dialog/date-time-picker-dialog.component';
 import { KanbanViewActions } from '../../../store/actions';
 
@@ -54,7 +54,7 @@ export class KanbanColumnCreateTaskComponent implements OnDestroy, OnInit {
           Validators.maxLength(Task.Title.MaxLength),
         ],
       }),
-      priority: this.fb.control(Task.Priority.NONE, {
+      priority: this.fb.control(Priority.NONE, {
         nonNullable: true,
       }),
       sectionId: this.fb.control(section.id, {
@@ -68,8 +68,7 @@ export class KanbanColumnCreateTaskComponent implements OnDestroy, OnInit {
     });
   }
 
-
-  handlePriorityChange(priority: Task.Priority) {
+  handlePriorityChange(priority: Priority) {
     this.priorityControl.setValue(priority);
   }
 

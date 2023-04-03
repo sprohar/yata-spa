@@ -5,13 +5,13 @@ export interface Task {
   id?: number;
   title: string;
   content?: string;
-  priority?: Task.Priority;
+  priority?: Priority;
   completed?: boolean;
   deleted?: boolean;
   isAllDay?: boolean;
   dueDate?: string | null;
   completedOn?: string;
-  
+
   // recurrence
   startDate?: Date;
   endDate?: Date;
@@ -29,14 +29,14 @@ export interface Task {
   sectionId?: number | null;
 }
 
-export namespace Task {
-  export enum Priority {
-    NONE = 0,
-    HIGH = 1,
-    MEDIUM = 2,
-    LOW = 3,
-  }
+export enum Priority {
+  NONE = 0,
+  LOW = 10,
+  MEDIUM = 100,
+  HIGH = 1000,
+}
 
+export namespace Task {
   export enum Title {
     MaxLength = 1024,
   }

@@ -16,10 +16,10 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { CreateTaskComponentActions } from 'src/app/store/actions';
-import { selectTags } from 'src/app/store/selectors';
-import { Section, Tag, Task } from '../../../models';
+import { Priority, Section, Tag, Task } from '../../../models';
+import { CreateTaskComponentActions } from '../../../store/actions';
 import { selectCurrentProjectId } from '../../../store/reducers/projects.reducer';
+import { selectTags } from '../../../store/selectors';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 @Component({
@@ -62,7 +62,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
         nonNullable: true,
         validators: [Validators.maxLength(Task.Title.MaxLength)],
       }),
-      priority: this.fb.control(Task.Priority.NONE, {
+      priority: this.fb.control(Priority.NONE, {
         nonNullable: true,
       }),
       dueDate: [null],
@@ -99,7 +99,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     this.titleControl.setValue(value.substring(0, start));
   }
 
-  handlePriorityChange(priority: Task.Priority) {
+  handlePriorityChange(priority: Priority) {
     this.priorityControl.setValue(priority);
   }
 

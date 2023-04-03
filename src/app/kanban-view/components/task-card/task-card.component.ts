@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TaskDetailsDialogComponent } from 'src/app/shared/components/task-details-dialog/task-details-dialog.component';
-import { Task } from '../../../models';
+import { Priority, Task } from '../../../models';
+import { TaskDetailsDialogComponent } from '../../../shared/components/task-details-dialog/task-details-dialog.component';
 import { TaskCardActions } from '../../../store/actions';
 
 @Component({
@@ -20,7 +20,7 @@ export class TaskCardComponent implements OnInit {
     private router: Router,
     private store: Store,
     private fb: FormBuilder,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -40,9 +40,9 @@ export class TaskCardComponent implements OnInit {
 
   get borderColor() {
     return {
-      'border-left-red': this.task.priority === Task.Priority.HIGH,
-      'border-left-yellow': this.task.priority === Task.Priority.MEDIUM,
-      'border-left-blue': this.task.priority === Task.Priority.LOW,
+      'border-left-red': this.task.priority === Priority.HIGH,
+      'border-left-yellow': this.task.priority === Priority.MEDIUM,
+      'border-left-blue': this.task.priority === Priority.LOW,
     };
   }
 
@@ -55,12 +55,12 @@ export class TaskCardComponent implements OnInit {
   }
 
   handleViewTask() {
-   this.store.dispatch(
-     TaskCardActions.viewTaskDetails({
+    this.store.dispatch(
+      TaskCardActions.viewTaskDetails({
         taskId: this.task.id!,
-     })
-   );
+      })
+    );
 
-   this.dialog.open(TaskDetailsDialogComponent); 
+    this.dialog.open(TaskDetailsDialogComponent);
   }
 }

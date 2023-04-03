@@ -1,6 +1,6 @@
-import { Task } from '../../models';
+import { Priority } from '../../models';
 
 export interface MatrixListData {
   projectId: number;
-  priority: Task.Priority;
+  priority: Priority;
 }

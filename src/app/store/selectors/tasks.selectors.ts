@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { Grouped } from '../../interfaces';
-import { Task } from '../../models';
+import { Priority, Task } from '../../models';
 import { selectCurrentTaskId, selectTasks } from '../reducers/tasks.reducer';
 
 export const selectCurrentTask = createSelector(
@@ -18,19 +18,19 @@ export const selectCompletedTasks = createSelector(selectTasks, (tasks) =>
 );
 
 export const selectHighPriorityTasks = createSelector(selectTasks, (tasks) =>
-  tasks.filter((t) => t.priority === Task.Priority.HIGH)
+  tasks.filter((t) => t.priority === Priority.HIGH)
 );
 
 export const selectMediumPriorityTasks = createSelector(selectTasks, (tasks) =>
-  tasks.filter((t) => t.priority === Task.Priority.MEDIUM)
+  tasks.filter((t) => t.priority === Priority.MEDIUM)
 );
 
 export const selectLowPriorityTasks = createSelector(selectTasks, (tasks) =>
-  tasks.filter((t) => t.priority === Task.Priority.LOW)
+  tasks.filter((t) => t.priority === Priority.LOW)
 );
 
 export const selectNoPriorityTasks = createSelector(selectTasks, (tasks) =>
-  tasks.filter((t) => t.priority === Task.Priority.NONE)
+  tasks.filter((t) => t.priority === Priority.NONE)
 );
 
 export const selectTodaysTasks = createSelector(selectTasks, (tasks) =>
@@ -78,21 +78,27 @@ export const selectTasksGroupByDueDate = createSelector(selectTasks, (tasks) =>
   }, {})
 );
 
-export const selectTasksGroupByPriority = createSelector(selectTasks, (tasks) =>
-  tasks.reduce((acc: Grouped<Task>, task: Task) => {
-    if (task.priority === undefined) return acc;
-    if (!acc[task.priority as keyof Grouped<Task>]) {
-      acc[task.priority] = [];
+export const selectTasksGroupByPriority = createSelector(
+  selectTasks,
+  (tasks: Task[]) => {
+    const map = new Map<Priority, Task[]>();
+    for (const task of tasks) {
+      if (task.priority === undefined) continue;
+      if (map.has(task.priority)) {
+        map.get(task.priority)?.push(task);
+      } else {
+        map.set(task.priority, [task]);
+      }
     }
 
-    acc[task.priority].push(task);
-    return acc;
-  }, {})
+    return map;
+  }
 );
 
 export const selectTasksGroupByProjectId = createSelector(
   selectTasks,
   (tasks) =>
+  // TODO: Replace this with a map
     tasks.reduce((acc: Grouped<Task>, task: Task) => {
       if (task.projectId === undefined) return acc;
       if (!acc[task.projectId as keyof Grouped<Task>]) {

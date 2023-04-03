@@ -1,5 +1,9 @@
-<main class="matrix-container row-gap-1" cdkDropListGroup>
-  <ng-container *ngIf="highPriorityTasks$ | async as tasks">
+<main
+  class="matrix-container row-gap-1"
+  cdkDropListGroup
+  *ngIf="tasksGroupedByPriority$ | async as grouped"
+>
+  <!-- <ng-container *ngIf="highPriorityTasks$ | async as tasks">
     <yata-matrix-quadrant [tasks]="tasks" [priority]="HIGH_PRIORITY"></yata-matrix-quadrant>
   </ng-container>
 
@@ -13,5 +17,22 @@
 
   <ng-container *ngIf="noPriorityTasks$ | async as tasks">
     <yata-matrix-quadrant [tasks]="tasks" [priority]="NO_PRIORITY"></yata-matrix-quadrant>
-  </ng-container>
+  </ng-container> -->
+
+  <yata-matrix-quadrant
+    [tasks]="grouped.get(HIGH_PRIORITY) || []"
+    [priority]="HIGH_PRIORITY"
+  ></yata-matrix-quadrant>
+  <yata-matrix-quadrant
+    [tasks]="grouped.get(MEDIUM_PRIORITY) || []"
+    [priority]="MEDIUM_PRIORITY"
+  ></yata-matrix-quadrant>
+  <yata-matrix-quadrant
+    [tasks]="grouped.get(LOW_PRIORITY) || []"
+    [priority]="LOW_PRIORITY"
+  ></yata-matrix-quadrant>
+  <yata-matrix-quadrant
+    [tasks]="grouped.get(NO_PRIORITY) || []"
+    [priority]="NO_PRIORITY"
+  ></yata-matrix-quadrant>
 </main>

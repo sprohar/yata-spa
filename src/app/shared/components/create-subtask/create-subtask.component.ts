@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Task } from '../../../models';
+import { Priority, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions/task-details.actions';
 
 @Component({
@@ -48,7 +48,7 @@ export class CreateSubtaskComponent implements OnInit {
         validators: [Validators.required],
         nonNullable: true,
       }),
-      priority: this.fb.control(Task.Priority.NONE, { nonNullable: true }),
+      priority: this.fb.control(Priority.NONE, { nonNullable: true }),
       title: this.fb.control('', {
         validators: [
           Validators.required,
@@ -63,7 +63,7 @@ export class CreateSubtaskComponent implements OnInit {
     return this.form.get('priority') as FormControl;
   }
 
-  handlePriorityChange(priority: Task.Priority) {
+  handlePriorityChange(priority: Priority) {
     this.priorityControl.setValue(priority);
   }
 

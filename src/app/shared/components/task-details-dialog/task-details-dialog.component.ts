@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
-import { Project, Task } from '../../../models';
+import { Priority, Project, Task } from '../../../models';
 import { KanbanViewActions } from '../../../store/actions';
 import { TaskDetailsActions } from '../../../store/actions/task-details.actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
@@ -23,10 +23,10 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
   styleUrls: ['./task-details-dialog.component.scss'],
 })
 export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
-  readonly PRIORITY_NONE = Task.Priority.NONE;
-  readonly PRIORITY_HIGH = Task.Priority.HIGH;
-  readonly PRIORITY_MEDIUM = Task.Priority.MEDIUM;
-  readonly PRIORITY_LOW = Task.Priority.LOW;
+  readonly PRIORITY_NONE = Priority.NONE;
+  readonly PRIORITY_HIGH = Priority.HIGH;
+  readonly PRIORITY_MEDIUM = Priority.MEDIUM;
+  readonly PRIORITY_LOW = Priority.LOW;
 
   destroy$ = new Subject<void>();
   currentTask$?: Observable<Task | undefined>;
@@ -112,7 +112,7 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
-  handlePriorityChange(priority: Task.Priority) {
+  handlePriorityChange(priority: Priority) {
     this.priorityControl.setValue(priority);
   }
 
