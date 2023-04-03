@@ -3,18 +3,41 @@
 // with Intellisense and code completion in your
 // IDE or Text Editor.
 // ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
-//
-// function customCommand(param: any): void {
-//   console.warn(param);
-// }
-//
-// NOTE: You can use it like so:
-// Cypress.Commands.add('customCommand', customCommand);
+declare namespace Cypress {
+  interface Chainable<Subject = any> {
+    login(email: string, password: string): void;
+
+    getBySel(
+      selector: string,
+      ...args: any
+    ): Cypress.Chainable<JQuery<HTMLElement>>;
+
+    getBySelLike(
+      selector: string,
+      ...args: any
+    ): Cypress.Chainable<JQuery<HTMLElement>>;
+  }
+}
+
+function login(email: string, password: string): void {
+  cy.visit('/auth/sign-in');
+  cy.get('#email').type(email);
+  cy.get('#password').type(password);
+  cy.get('button[type="submit"]').click();
+}
+
+function getBySel(selector: string, ...args: any) {
+  return cy.get(`[data-test=${selector}]`, ...args);
+}
+
+function getBySelLike(selector: string, ...args: any) {
+  return cy.get(`[data-test*=${selector}]`, ...args);
+}
+
+Cypress.Commands.add('login', login);
+Cypress.Commands.add('getBySel', getBySel);
+Cypress.Commands.add('getBySelLike', getBySelLike);
+
 //
 // ***********************************************
 // This example commands.js shows you how to

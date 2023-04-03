@@ -42,7 +42,7 @@
             <summary class="clickable">
               <span> Projects </span>
               <button
-                id="createProjectButton"
+                data-test="createProjectButton"
                 mat-icon-button
                 (click)="openCreateProjectDialog()"
                 title="Create project"
@@ -51,7 +51,7 @@
               </button>
             </summary>
             <ng-container *ngIf="projects$ | async as projects">
-              <ul class="sidenav-list">
+              <ul class="sidenav-list" data-test="sidenavProjectsList">
                 <ng-container
                   *ngFor="let project of projects; trackBy: trackByProjectId"
                 >

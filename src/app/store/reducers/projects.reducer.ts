@@ -41,7 +41,9 @@ export const projectsFeature = createFeature({
     })),
     on(YataApiActions.createProjectSuccess, (state, action) => ({
       ...state,
-      projects: state.projects.concat(action.project),
+      projects: state.projects
+        .concat(action.project)
+        .sort((a, b) => a.name.localeCompare(b.name)),
     })),
     on(YataApiActions.deleteProjectSuccess, (state, action) => ({
       currentProjectId: null,

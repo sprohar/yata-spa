@@ -5,6 +5,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Project Name</mat-label>
         <input
+          data-test="newProjectName"
           #input
           matInput
           type="text"
@@ -19,6 +20,7 @@
   <mat-dialog-actions align="end">
     <button mat-stroked-button mat-dialog-close="">Cancel</button>
     <button
+      data-test="submit"
       mat-raised-button
       color="primary"
       (click)="handleSave()"
