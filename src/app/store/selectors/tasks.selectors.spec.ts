@@ -1,4 +1,4 @@
-import { GroupedTasks } from '../../interfaces';
+import { Grouped } from '../../interfaces';
 import { Task } from '../../models';
 import {
   TasksState,
@@ -15,6 +15,8 @@ import {
   selectNoPriorityTasks,
   selectOverdueTasks,
   selectTasksGroupByDueDate,
+  selectTasksGroupByPriority,
+  selectTasksGroupByProjectId,
   selectTodaysTasks,
   selectUnsectionedTasks,
   selectUpcomingTasks,
@@ -218,12 +220,112 @@ describe('Tasks Selectors', () => {
     const todayDate = today.toISOString().split('T')[0];
     const tomorrowDate = tomorrow.toISOString().split('T')[0];
 
-    const tasksGroupedByDueDate: GroupedTasks = {
+    const tasksGroupedByDueDate: Grouped<Task> = {
       [todayDate]: [tasks[0], tasks[1]],
       [tomorrowDate]: [tasks[2], tasks[3]],
     };
 
     const result = selectTasksGroupByDueDate.projector(tasks);
     expect(result).toEqual(tasksGroupedByDueDate);
+  });
+
+  it('should group tasks by priority', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: 'Task 1',
+        content: 'Task 1 content',
+        completed: false,
+        priority: Task.Priority.HIGH,
+        dueDate: null,
+        projectId: 1,
+      },
+      {
+        id: 2,
+        title: 'Task 2',
+        content: 'Task 2 content',
+        completed: false,
+        priority: Task.Priority.MEDIUM,
+        dueDate: null,
+        projectId: 1,
+      },
+      {
+        id: 3,
+        title: 'Task 3',
+        content: 'Task 3 content',
+        completed: false,
+        priority: Task.Priority.LOW,
+        dueDate: null,
+        projectId: 1,
+      },
+      {
+        id: 4,
+        title: 'Task 4',
+        content: 'Task 4 content',
+        completed: true,
+        priority: Task.Priority.NONE,
+        dueDate: null,
+        projectId: 1,
+      },
+    ];
+
+    const tasksGroupedByPriority: Grouped<Task> = {
+      [Task.Priority.HIGH]: [tasks[0]],
+      [Task.Priority.MEDIUM]: [tasks[1]],
+      [Task.Priority.LOW]: [tasks[2]],
+      [Task.Priority.NONE]: [tasks[3]],
+    };
+
+    const result = selectTasksGroupByPriority.projector(tasks);
+    expect(result).toEqual(tasksGroupedByPriority);
+  });
+
+  it('should group tasks by project id', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: 'Task 1',
+        content: 'Task 1 content',
+        completed: false,
+        priority: Task.Priority.HIGH,
+        dueDate: null,
+        projectId: 1,
+      },
+      {
+        id: 2,
+        title: 'Task 2',
+        content: 'Task 2 content',
+        completed: false,
+        priority: Task.Priority.MEDIUM,
+        dueDate: null,
+        projectId: 1,
+      },
+      {
+        id: 3,
+        title: 'Task 3',
+        content: 'Task 3 content',
+        completed: false,
+        priority: Task.Priority.LOW,
+        dueDate: null,
+        projectId: 2,
+      },
+      {
+        id: 4,
+        title: 'Task 4',
+        content: 'Task 4 content',
+        completed: true,
+        priority: Task.Priority.NONE,
+        dueDate: null,
+        projectId: 2,
+      },
+    ];
+
+    const tasksGroupedByProject: Grouped<Task> = {
+      '1': [tasks[0], tasks[1]],
+      '2': [tasks[2], tasks[3]],
+    };
+
+    const result = selectTasksGroupByProjectId.projector(tasks);
+    expect(result).toEqual(tasksGroupedByProject);
   });
 });
