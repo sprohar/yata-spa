@@ -6,27 +6,23 @@ import { ChronoService } from '../../services/chrono.service';
 import { YataApiActions } from '../../store/actions';
 
 export function nextSevenDaysTasksGuard(
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  _route: ActivatedRouteSnapshot,
+  _state: RouterStateSnapshot
 ) {
   const store = inject(Store);
   const chronoService = inject(ChronoService);
-  const today = new Date();
-  today.setHours(0);
-  today.setMinutes(0);
-  today.setSeconds(0);
 
-  const nextWeek = new Date(today);
-  nextWeek.setDate(today.getDate() + 7);
+  const startDate = new Date();
+  startDate.setHours(0, 0, 0, 0);
 
-  const from = today.getTime();
-  const to = nextWeek.getTime();
+  const endDate = new Date(startDate);
+  endDate.setHours(23, 59, 59, 999);
+  endDate.setDate(startDate.getDate() + 7);
 
-  //   TODO: Try it out
   return chronoService
     .getTasks({
-      from: `${from}`,
-      to: `${to}`,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
     })
     .pipe(
       map((res) => {

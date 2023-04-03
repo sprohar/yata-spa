@@ -8,7 +8,6 @@ export const environment = {
       tags: 'tags',
       chrono: {
         tasks: 'chrono/tasks',
-        today: 'chrono/today/tasks',
       },
     },
   },
