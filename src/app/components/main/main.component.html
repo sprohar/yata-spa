@@ -60,6 +60,7 @@
                       *ngIf="project.view === LIST_VIEW; else kanban"
                     >
                       <a
+                        [attr.data-test]="'sidenavProject-' + project.id"
                         class="sidenav-link flex align-items-center"
                         [routerLink]="['/app/list', project.id]"
                       >
@@ -69,6 +70,7 @@
                     </ng-container>
                     <ng-template #kanban>
                       <a
+                        [attr.data-test]="'sidenavProject-' + project.id"
                         class="sidenav-link flex align-items-center"
                         [routerLink]="['/app/kanban', project.id]"
                       >
@@ -77,6 +79,9 @@
                       </a>
                     </ng-template>
                     <button
+                      [attr.data-test]="
+                        'sidenavProjectOptionsButton-' + project.id
+                      "
                       class="action-button"
                       mat-icon-button
                       [matMenuTriggerFor]="tagOptions"
@@ -84,8 +89,23 @@
                       <mat-icon>more_horiz</mat-icon>
                     </button>
                     <mat-menu #tagOptions="matMenu">
-                      <button mat-menu-item>Edit</button>
-                      <button mat-menu-item>Delete</button>
+                      <button
+                        [attr.data-test]="
+                          'sidenavEditProjectDialogButton-' + project.id
+                        "
+                        mat-menu-item
+                        (click)="openEditProjectDialog(project)"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        [attr.data-test]="
+                          'sidenavDeleteProjectDialogButton-' + project.id
+                        "
+                        mat-menu-item
+                      >
+                        Delete
+                      </button>
                     </mat-menu>
                   </li>
                 </ng-container>
@@ -112,7 +132,7 @@
             <ng-container *ngIf="tags$ | async as tags">
               <ul id="sidenavTagsList" class="sidenav-list">
                 <ng-container *ngFor="let tag of tags; trackBy: trackByTagId">
-                  <li class="clickable" [attr.data-sidenav-tag-id]="tag.id">
+                  <li class="clickable">
                     <a
                       class="sidenav-link flex align-items-center"
                       [routerLink]="['/app/tags', tag.id, 'tasks']"

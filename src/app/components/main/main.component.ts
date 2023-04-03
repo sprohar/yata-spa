@@ -1,16 +1,17 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { CreateTagDialogComponent } from '../../tags/components/create-tag-dialog/create-tag-dialog.component';
+import { Subject, takeUntil } from 'rxjs';
 import { Project, Tag } from '../../models';
 import { BreakpointService } from '../../services/breakpoint.service';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { EditProjectDialogComponent } from '../../shared/components/edit-project-dialog/edit-project-dialog.component';
 import { AuthActions, SidenavActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
 import { selectProjects, selectTags } from '../../store/selectors';
-import { CreateProjectDialogComponent } from '../create-project-dialog/create-project-dialog.component';
+import { CreateTagDialogComponent } from '../../tags/components/create-tag-dialog/create-tag-dialog.component';
 import { EditTagDialogComponent } from '../../tags/components/edit-tag-dialog/edit-tag-dialog.component';
-import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
-import { Subject, takeUntil } from 'rxjs';
+import { CreateProjectDialogComponent } from '../create-project-dialog/create-project-dialog.component';
 
 @Component({
   selector: 'yata-main',
@@ -32,13 +33,13 @@ export class MainComponent implements OnDestroy {
     private store: Store,
     private dialog: MatDialog,
     private confirmationDialog: ConfirmationDialogService
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   logout() {
     this.store.dispatch(AuthActions.logout());
@@ -52,9 +53,19 @@ export class MainComponent implements OnDestroy {
     return tag.id;
   }
 
+  // =================== Projects ============================
+
   openCreateProjectDialog() {
     this.dialog.open(CreateProjectDialogComponent);
   }
+
+  openEditProjectDialog(project: Project) {
+    this.dialog.open(EditProjectDialogComponent, {
+      data: project,
+    });
+  }
+
+  // =================== Tags ============================
 
   openCreateTagDialog() {
     this.dialog.open(CreateTagDialogComponent);

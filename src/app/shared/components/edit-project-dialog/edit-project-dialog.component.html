@@ -4,6 +4,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
       <input
+        data-test="editProjectNameInput"
         matInput
         type="text"
         formControlName="name"
@@ -15,6 +16,7 @@
 <mat-dialog-actions align="end">
   <button mat-stroked-button mat-dialog-close>Cancel</button>
   <button
+    data-test="submitEditProjectButton"
     [disabled]="form.invalid || form.pristine"
     mat-raised-button
     color="primary"
