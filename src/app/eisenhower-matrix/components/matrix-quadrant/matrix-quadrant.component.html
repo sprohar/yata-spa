@@ -22,6 +22,7 @@
   <!-- Content -->
   <div class="full-height p-1 relative">
     <div class="quadrant-content" *ngIf="projects$ | async as projects">
+      <!-- TODO: Group by Project selector -->
       <ng-container *ngFor="let project of projects">
         <ng-container *ngIf="getProjectTasks(project) as tasks">
           <yata-section *ngIf="tasks.length" [name]="project.name" [itemsCount]="tasks.length">

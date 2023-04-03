@@ -1,6 +1,7 @@
+import { formatDate } from '@angular/common';
 import { createSelector } from '@ngrx/store';
-import { Grouped } from '../../interfaces';
-import { Priority, Task } from '../../models';
+import { Priority, Project, Task } from '../../models';
+import { selectProjects } from '../reducers/projects.reducer';
 import { selectCurrentTaskId, selectTasks } from '../reducers/tasks.reducer';
 
 export const selectCurrentTask = createSelector(
@@ -65,47 +66,37 @@ export const selectUpcomingTasks = createSelector(selectTasks, (tasks) =>
 );
 
 export const selectTasksGroupByDueDate = createSelector(selectTasks, (tasks) =>
-  tasks.reduce((acc: Grouped<Task>, task: Task) => {
-    if (!task.dueDate) return acc;
+  tasks.reduce((map, task) => {
+    if (!task.dueDate) return map;
     const date = task.dueDate.split('T')[0];
-
-    if (!acc[date as keyof Grouped<Task>]) {
-      acc[date] = [];
-    }
-
-    acc[date].push(task);
-    return acc;
-  }, {})
+    const key = formatDate(date, 'fullDate', navigator.language);
+    const entry = map.get(key);
+    entry === undefined ? map.set(key, [task]) : entry.push(task);
+    return map;
+  }, new Map<string, Task[]>())
 );
 
 export const selectTasksGroupByPriority = createSelector(
   selectTasks,
-  (tasks: Task[]) => {
-    const map = new Map<Priority, Task[]>();
-    for (const task of tasks) {
-      if (task.priority === undefined) continue;
-      if (map.has(task.priority)) {
-        map.get(task.priority)?.push(task);
-      } else {
-        map.set(task.priority, [task]);
-      }
-    }
-
-    return map;
-  }
+  (tasks: Task[]) =>
+    tasks.reduce((map, task) => {
+      if (task.priority === undefined) return map;
+      const entry = map.get(task.priority);
+      entry === undefined ? map.set(task.priority, [task]) : entry.push(task);
+      return map;
+    }, new Map<Priority, Task[]>())
 );
 
-export const selectTasksGroupByProjectId = createSelector(
+export const selectTasksGroupByProject = createSelector(
+  selectProjects,
   selectTasks,
-  (tasks) =>
-  // TODO: Replace this with a map
-    tasks.reduce((acc: Grouped<Task>, task: Task) => {
-      if (task.projectId === undefined) return acc;
-      if (!acc[task.projectId as keyof Grouped<Task>]) {
-        acc[task.projectId] = [];
-      }
-
-      acc[task.projectId].push(task);
-      return acc;
-    }, {})
+  (projects, tasks) =>
+    tasks.reduce((map, task) => {
+      if (task.projectId === undefined) return map;
+      const key = projects.find((project) => project.id === task.projectId);
+      if (key === undefined) return map;
+      const entry = map.get(key);
+      entry === undefined ? map.set(key, [task]) : entry.push(task);
+      return map;
+    }, new Map<Project, Task[]>())
 );
