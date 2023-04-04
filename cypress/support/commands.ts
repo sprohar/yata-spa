@@ -1,10 +1,6 @@
-// ***********************************************
-// This example namespace declaration will help
-// with Intellisense and code completion in your
-// IDE or Text Editor.
-// ***********************************************
 declare namespace Cypress {
   interface Chainable<Subject = any> {
+    refreshTokens(): void;
     login(email: string, password: string): void;
 
     getBySel(
@@ -19,7 +15,43 @@ declare namespace Cypress {
   }
 }
 
+function refreshTokens() {
+  cy.intercept(
+    {
+      method: 'POST',
+      url: `${Cypress.env('authBaseUrl')}/authentication/refresh-tokens`,
+    },
+    {
+      body: {
+        accessToken: Cypress.env('accessToken'),
+      },
+      headers: {
+        'Set-Cookie': Cypress.env('authCookie'),
+      },
+    }
+  ).as('refreshTokens');
+}
+
 function login(email: string, password: string): void {
+  cy.intercept(
+    {
+      method: 'POST',
+      url: `${Cypress.env('authBaseUrl')}/authentication/sign-in`,
+    },
+    {
+      body: {
+        accessToken: Cypress.env('accessToken'),
+        user: {
+          id: 1,
+          email: 'testuser@yata.app',
+        },
+      },
+      headers: {
+        'Set-Cookie': Cypress.env('authCookie'),
+      },
+    }
+  ).as('login');
+
   cy.visit('/auth/sign-in');
   cy.get('#email').type(email);
   cy.get('#password').type(password);
@@ -34,6 +66,7 @@ function getBySelLike(selector: string, ...args: any) {
   return cy.get(`[data-test*=${selector}]`, ...args);
 }
 
+Cypress.Commands.add('refreshTokens', refreshTokens);
 Cypress.Commands.add('login', login);
 Cypress.Commands.add('getBySel', getBySel);
 Cypress.Commands.add('getBySelLike', getBySelLike);

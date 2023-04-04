@@ -65,6 +65,28 @@ export class MainComponent implements OnDestroy {
     });
   }
 
+  openDeleteProjectDialog(project: Project) {
+    const ref = this.confirmationDialog.open({
+      title: 'Confirmation',
+      content: `Delete ${project.name}?`,
+      confirmButtonColor: 'warn',
+      confirmButtonText: 'Delete',
+    });
+
+    ref
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result) {
+          this.store.dispatch(
+            SidenavActions.deleteProject({
+              project,
+            })
+          );
+        }
+      });
+  }
+
   // =================== Tags ============================
 
   openCreateTagDialog() {

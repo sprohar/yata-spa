@@ -68,8 +68,7 @@ export const selectUpcomingTasks = createSelector(selectTasks, (tasks) =>
 export const selectTasksGroupByDueDate = createSelector(selectTasks, (tasks) =>
   tasks.reduce((map, task) => {
     if (!task.dueDate) return map;
-    const date = task.dueDate.split('T')[0];
-    const key = formatDate(date, 'fullDate', navigator.language);
+    const key = task.dueDate.split('T')[0];
     const entry = map.get(key);
     entry === undefined ? map.set(key, [task]) : entry.push(task);
     return map;

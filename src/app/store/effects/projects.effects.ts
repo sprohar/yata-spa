@@ -47,7 +47,7 @@ export class ProjectsEffects {
 
   delete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ViewHeaderActions.deleteProject),
+      ofType(ViewHeaderActions.deleteProject, SidenavActions.deleteProject),
       mergeMap((action) =>
         this.projectsService.delete(action.project.id!).pipe(
           map((_) =>

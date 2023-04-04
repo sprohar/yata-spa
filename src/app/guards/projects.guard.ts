@@ -14,6 +14,7 @@ export function projectsGuard(
     .getAll()
     .pipe(
       map((res) => {
+        console.log
         store.dispatch(
           YataApiActions.loadProjectsSuccess({
             projects: res.data,

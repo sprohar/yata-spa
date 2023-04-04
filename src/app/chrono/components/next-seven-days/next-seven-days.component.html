@@ -3,7 +3,7 @@
 <ng-container *ngIf="map$ | async as map">
   <yata-section
     *ngFor="let entry of map | keyvalue"
-    [name]="entry.key"
+    [name]="entry.key | date: 'fullDate'"
     [itemsCount]="entry.value.length"
   >
     <yata-task-list>
