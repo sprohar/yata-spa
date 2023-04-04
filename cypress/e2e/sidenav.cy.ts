@@ -23,7 +23,7 @@ describe('Sidenav', () => {
       }
     ).as('getTags');
 
-    cy.refreshTokens();
+    cy.interceptRefreshTokensRequest();
     cy.login(Cypress.env('email'), Cypress.env('password'));
     cy.wait(['@getProjects', '@getTags']);
   });

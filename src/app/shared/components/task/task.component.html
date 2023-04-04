@@ -1,4 +1,4 @@
-<li class="task" [attr.data-taskId]="task.id" [formGroup]="form">
+<li class="task" [attr.data-test]="'task-' + task.id" [formGroup]="form">
   <ng-container *ngIf="isDraggable">
     <span class="drag-indicator">
       <mat-icon>drag_indicator</mat-icon>
@@ -8,6 +8,12 @@
     [checked]="task.completed"
     (change)="handleChecked($event.checked, task)"
   ></mat-checkbox>
-  <input type="text" class="input" formControlName="title" (blur)="update()" />
+  <input
+    [attr.data-test]="'taskInput-' + task.id"
+    type="text"
+    class="input"
+    formControlName="title"
+    (blur)="update()"
+  />
   <ng-content></ng-content>
 </li>

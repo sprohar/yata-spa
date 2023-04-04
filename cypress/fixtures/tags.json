@@ -12,6 +12,7 @@
     {
       "id": 2,
       "name": "Tag 2",
+      "colorHexCode": "#FFFF00",
       "userId": 1
     }
   ]

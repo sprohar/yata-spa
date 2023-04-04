@@ -1,7 +1,11 @@
 declare namespace Cypress {
   interface Chainable<Subject = any> {
-    refreshTokens(): void;
+    interceptRefreshTokensRequest(): void;
     login(email: string, password: string): void;
+    getProjects(): void;
+    getListView(): void;
+    getTasks(): void;
+    getTags(): void;
 
     getBySel(
       selector: string,
@@ -15,7 +19,59 @@ declare namespace Cypress {
   }
 }
 
-function refreshTokens() {
+function getProjects() {
+  const apiBaseUrl = Cypress.env('apiBaseUrl');
+  cy.intercept(
+    {
+      method: 'GET',
+      url: `${apiBaseUrl}/projects`,
+    },
+    {
+      fixture: 'projects.json',
+    }
+  ).as('getProjects');
+}
+
+function getTags() {
+  const apiBaseUrl = Cypress.env('apiBaseUrl');
+  cy.intercept(
+    {
+      method: 'GET',
+      url: `${apiBaseUrl}/tags`,
+    },
+    {
+      fixture: 'tags.json',
+    }
+  ).as('getTags');
+}
+
+function getListView() {
+  const apiBaseUrl = Cypress.env('apiBaseUrl');
+  cy.intercept(
+    {
+      method: 'GET',
+      url: `${apiBaseUrl}/projects/1`,
+    },
+    {
+      fixture: 'list-view.json',
+    }
+  ).as('getListView');
+}
+
+function getTasks() {
+  const apiBaseUrl = Cypress.env('apiBaseUrl');
+  cy.intercept(
+    {
+      method: 'GET',
+      url: `${apiBaseUrl}/tasks`,
+    },
+    {
+      fixture: 'tasks.json',
+    }
+  ).as('getTasks');
+}
+
+function interceptRefreshTokensRequest() {
   cy.intercept(
     {
       method: 'POST',
@@ -66,10 +122,17 @@ function getBySelLike(selector: string, ...args: any) {
   return cy.get(`[data-test*=${selector}]`, ...args);
 }
 
-Cypress.Commands.add('refreshTokens', refreshTokens);
+Cypress.Commands.add(
+  'interceptRefreshTokensRequest',
+  interceptRefreshTokensRequest
+);
 Cypress.Commands.add('login', login);
 Cypress.Commands.add('getBySel', getBySel);
 Cypress.Commands.add('getBySelLike', getBySelLike);
+Cypress.Commands.add('getProjects', getProjects);
+Cypress.Commands.add('getTags', getTags);
+Cypress.Commands.add('getTasks', getTasks);
+Cypress.Commands.add('getListView', getListView);
 
 //
 // ***********************************************

@@ -1,17 +1,33 @@
 <ng-container *ngIf="currentProjectId$ | async as projectId">
   <div class="create-task-wrapper">
     <div class="create-task" [formGroup]="form">
-      <mat-form-field class="form-field" appearance="outline" [hideRequiredMarker]="true">
+      <mat-form-field
+        class="form-field"
+        appearance="outline"
+        [hideRequiredMarker]="true"
+      >
         <mat-label>New Task</mat-label>
-        <input matInput type="text" formControlName="title" placeholder="Press Enter to save"
-          (keyup.enter)="handleSave(projectId)" />
+        <input
+          data-test="createTaskInput"
+          matInput
+          type="text"
+          formControlName="title"
+          placeholder="Press Enter to save"
+          (keyup.enter)="handleSave(projectId)"
+        />
       </mat-form-field>
       <div class="create-task-actions">
         <!-- Section picker -->
-        <yata-section-picker (selected)="handleSelectedSection($event)"></yata-section-picker>
+        <yata-section-picker
+          (selected)="handleSelectedSection($event)"
+        ></yata-section-picker>
 
         <!-- Due date picker -->
-        <button mat-icon-button title="Set the due date" (click)="openDateTimePicker()">
+        <button
+          mat-icon-button
+          title="Set the due date"
+          (click)="openDateTimePicker()"
+        >
           <mat-icon>event</mat-icon>
         </button>
         <!-- Priority picker -->
@@ -35,7 +51,11 @@
       </mat-chip-listbox>
       <!-- Tags -->
       <mat-chip-listbox aria-label="Tags">
-        <mat-chip *ngFor="let tag of selectedTags" color="primary">
+        <mat-chip
+          *ngFor="let tag of selectedTags"
+          color="primary"
+          [attr.data-test]="tag.name"
+        >
           {{ tag.name }}
           <button matChipRemove (click)="removeTag(tag)">
             <mat-icon>close</mat-icon>

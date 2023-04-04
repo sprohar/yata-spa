@@ -26,6 +26,7 @@ export interface Task {
   subtasks?: Subtask[];
   tags?: Tag[];
   projectId: number;
+  userId?: number;
   sectionId?: number | null;
 }
 

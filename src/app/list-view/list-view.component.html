@@ -7,16 +7,23 @@
   <div class="sections-wrapper" cdkDropListGroup>
     <!-- Unsectioned tasks -->
     <ng-container *ngIf="unsectionedTasks$ | async as unsectionedTasks">
-      <ng-container *ngIf="unsectionedTasks.length">
-        <yata-section [name]="'Unsectioned'" [itemsCount]="unsectionedTasks.length">
-          <yata-task-list #list cdkDropList (cdkDropListDropped)="list.handleDropped($event)">
-            <ng-container *ngFor="let task of unsectionedTasks">
-              <yata-task cdkDrag [task]="task" [cdkDragData]="task">
-                <yata-task-options-menu [task]="task"></yata-task-options-menu></yata-task>
-            </ng-container>
-          </yata-task-list>
-        </yata-section>
-      </ng-container>
+      <yata-section
+        *ngIf="unsectionedTasks.length"
+        [name]="'Unsectioned'"
+        [itemsCount]="unsectionedTasks.length"
+      >
+        <yata-task-list
+          #list
+          cdkDropList
+          (cdkDropListDropped)="list.handleDropped($event)"
+        >
+          <ng-container *ngFor="let task of unsectionedTasks">
+            <yata-task cdkDrag [task]="task" [cdkDragData]="task">
+              <yata-task-options-menu [task]="task"></yata-task-options-menu>
+            </yata-task>
+          </ng-container>
+        </yata-task-list>
+      </yata-section>
     </ng-container>
 
     <div *ngIf="sections$ | async as sections">
@@ -27,15 +34,21 @@
 
       <!-- Completed sections -->
       <ng-container *ngIf="completedTasks$ | async as completedTasks">
-        <ng-container *ngIf="completedTasks && completedTasks.length > 0">
-          <yata-section [name]="'Completed'" [itemsCount]="completedTasks.length">
-            <yata-task-list #list cdkDropList (cdkDropListDropped)="list.handleDropped($event)">
-              <ng-container *ngFor="let task of completedTasks">
-                <yata-task cdkDrag [task]="task" [cdkDragData]="task"></yata-task>
-              </ng-container>
-            </yata-task-list>
-          </yata-section>
-        </ng-container>
+        <yata-section
+          [*ngIf="completedTasks.length > 0"
+          [name]="'Completed'"
+          [itemsCount]="completedTasks.length"
+        >
+          <yata-task-list
+            #list
+            cdkDropList
+            (cdkDropListDropped)="list.handleDropped($event)"
+          >
+            <ng-container *ngFor="let task of completedTasks">
+              <yata-task cdkDrag [task]="task" [cdkDragData]="task"></yata-task>
+            </ng-container>
+          </yata-task-list>
+        </yata-section>
       </ng-container>
     </div>
   </div>
