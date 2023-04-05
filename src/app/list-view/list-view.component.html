@@ -35,7 +35,7 @@
       <!-- Completed sections -->
       <ng-container *ngIf="completedTasks$ | async as completedTasks">
         <yata-section
-          [*ngIf="completedTasks.length > 0"
+          *ngIf="completedTasks.length"
           [name]="'Completed'"
           [itemsCount]="completedTasks.length"
         >
