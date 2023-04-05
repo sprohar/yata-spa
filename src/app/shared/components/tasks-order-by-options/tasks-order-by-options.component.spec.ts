@@ -4,25 +4,26 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { TasksOrderByOptionsComponent } from './tasks-order-by-options.component';
 
-import { TaskListSortOptionsComponent } from './task-list-sort-options.component';
-
-describe('TaskListSortOptionsComponent', () => {
-  let component: TaskListSortOptionsComponent;
-  let fixture: ComponentFixture<TaskListSortOptionsComponent>;
+describe('TasksOrderByOptionsComponent', () => {
+  let component: TasksOrderByOptionsComponent;
+  let fixture: ComponentFixture<TasksOrderByOptionsComponent>;
   let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskListSortOptionsComponent ],
-      imports: [MatButtonModule, MatIconModule, MatMenuModule, NoopAnimationsModule],
-      providers: [
-        provideMockStore()
-      ]
-    })
-    .compileComponents();
+      declarations: [TasksOrderByOptionsComponent],
+      imports: [
+        MatButtonModule,
+        MatIconModule,
+        MatMenuModule,
+        NoopAnimationsModule,
+      ],
+      providers: [provideMockStore()],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(TaskListSortOptionsComponent);
+    fixture = TestBed.createComponent(TasksOrderByOptionsComponent);
     store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
     fixture.detectChanges();

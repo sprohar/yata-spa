@@ -5,12 +5,12 @@ import { Subtask, Task } from '../../models';
 import {
   EisenhowerMatrixActions,
   TaskCardActions,
+  TaskDetailsActions,
+  TaskOptionsMenuActions,
   TaskResolverActions,
+  TasksOrderByOptions,
   YataApiActions,
 } from '../actions';
-import { TaskDetailsActions } from '../actions/task-details.actions';
-import { TaskListSortOptionsActions } from '../actions/task-list-sort-options.actions';
-import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
 
 export interface TasksState {
   tasks: Task[];
@@ -30,7 +30,7 @@ export const tasksFeature = createFeature({
       ...state,
       tasks: action.tasks,
     })),
-    on(TaskListSortOptionsActions.sortByCreatedAt, (state, _) => ({
+    on(TasksOrderByOptions.orderByDueDate, (state, _) => ({
       ...state,
       tasks: new TaskListSortContext(new TaskCreatedAtSortStrategy()).sort(
         state.tasks

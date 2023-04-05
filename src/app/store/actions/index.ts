@@ -11,6 +11,8 @@ export * from './section-options-menu.actions';
 export * from './sidenav.actions';
 export * from './task-card.actions';
 export * from './task-details.actions';
+export * from './task-options-menu.actions';
 export * from './task-resolver.actions';
+export * from './tasks-order-by-options.actions';
 export * from './view-header.actions';
 export * from './yata-api-actions';

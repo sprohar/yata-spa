@@ -1,0 +1,13 @@
+<button mat-icon-button [matMenuTriggerFor]="options" title="Sort task list">
+  <mat-icon>sort</mat-icon>
+</button>
+<mat-menu #options="matMenu">
+  <button mat-menu-item (click)="orderByDueDate()">
+    <mat-icon>event</mat-icon>
+    Due Date
+  </button>
+  <button mat-menu-item (click)="orderByPriority()">
+    <mat-icon>flag</mat-icon>
+    Priority
+  </button>
+</mat-menu>

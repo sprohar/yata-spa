@@ -28,11 +28,11 @@ import { SectionComponent } from './components/section/section.component';
 import { SubtaskListItemComponent } from './components/subtask-list-item/subtask-list-item.component';
 import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
 import { TaskDetailsDialogComponent } from './components/task-details-dialog/task-details-dialog.component';
-import { TaskListSortOptionsComponent } from './components/task-list-sort-options/task-list-sort-options.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskOptionsMenuComponent } from './components/task-options-menu/task-options-menu.component';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
 import { TaskComponent } from './components/task/task.component';
+import { TasksOrderByOptionsComponent } from './components/tasks-order-by-options/tasks-order-by-options.component';
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
@@ -54,12 +54,12 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     CreateSectionDialogComponent,
     SectionPickerComponent,
     TaskOptionsMenuComponent,
-    TaskListSortOptionsComponent,
     EditProjectDialogComponent,
     SectionComponent,
     TaskComponent,
     TaskListComponent,
     CreateCustomRecurrenceDialogComponent,
+    TasksOrderByOptionsComponent,
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,7 @@ import {
 } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { EisenhowerService } from '../../services/eisenhower.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskComponentActions,
@@ -22,6 +23,7 @@ import {
   TaskDetailsActions,
   YataApiActions,
 } from '../actions';
+import { TasksOrderByOptions } from '../actions/tasks-order-by-options.actions';
 import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
 
 @Injectable()
@@ -30,7 +32,8 @@ export class TasksEffects {
     private actions$: Actions,
     private tasksService: TasksService,
     private eisenhowerService: EisenhowerService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private storage: LocalStorageService
   ) {}
 
   create$ = createEffect(() =>
@@ -106,6 +109,16 @@ export class TasksEffects {
             )
           )
         )
+      )
+    )
+  );
+
+  // TODO: Finish this
+  orderBy$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        TasksOrderByOptions.orderByDueDate,
+        TasksOrderByOptions.orderByPriority
       )
     )
   );
