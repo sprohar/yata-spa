@@ -29,6 +29,8 @@ import { EditProjectDialogComponent } from '../edit-project-dialog/edit-project-
 export class ViewHeaderComponent implements OnDestroy {
   destroy$ = new EventEmitter<void>();
   currentProject$ = this.store.select(selectCurrentProject);
+  readonly LIST_VIEW = Project.View.LIST;
+  readonly KANBAN_VIEW = Project.View.KANBAN;
 
   constructor(
     private store: Store,

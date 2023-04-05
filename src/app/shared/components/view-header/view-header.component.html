@@ -4,7 +4,7 @@
       {{ project.name }}
     </h1>
     <span class="spacer"></span>
-    <ng-container *ngIf="project.view === 'LIST'; else kanban">
+    <ng-container *ngIf="project.view === LIST_VIEW; else kanban">
       <button
         mat-icon-button
         (click)="switchToKanbanView(project)"
