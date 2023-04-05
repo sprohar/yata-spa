@@ -5,7 +5,7 @@
     </span>
   </ng-container>
   <mat-checkbox
-    [checked]="task.completed"
+    [checked]="task.isCompleted"
     (change)="handleChecked($event.checked, task)"
   ></mat-checkbox>
   <input

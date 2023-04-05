@@ -26,7 +26,7 @@ export const selectSectionsWithIncompleteTasks = createSelector(
           (task) =>
             task.sectionId === section.id &&
             task.projectId === projectId &&
-            !task.completed
+            !task.isCompleted
         ),
       });
     }

@@ -63,7 +63,7 @@ export class TaskComponent {
         ListViewActions.markTaskAsComplete({
           task: {
             id: task.id,
-            completed: true,
+            isCompleted: true,
             projectId: task.projectId,
           },
         })
@@ -73,7 +73,7 @@ export class TaskComponent {
         ListViewActions.markTaskAsIncomplete({
           task: {
             id: task.id,
-            completed: false,
+            isCompleted: false,
             projectId: task.projectId,
           },
         })

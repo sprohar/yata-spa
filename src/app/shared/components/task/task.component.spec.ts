@@ -47,7 +47,7 @@ describe('TaskComponent', () => {
           task: {
             id: mockTask.id,
             projectId: mockTask.projectId,
-            completed: isChecked,
+            isCompleted: isChecked,
           },
         })
       );
@@ -65,7 +65,7 @@ describe('TaskComponent', () => {
           task: {
             id: mockTask.id,
             projectId: mockTask.projectId,
-            completed: isChecked,
+            isCompleted: isChecked,
           },
         })
       );

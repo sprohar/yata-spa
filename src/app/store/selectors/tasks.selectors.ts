@@ -15,7 +15,7 @@ export const selectUnsectionedTasks = createSelector(selectTasks, (tasks) =>
 );
 
 export const selectCompletedTasks = createSelector(selectTasks, (tasks) =>
-  tasks.filter((task) => task.completed)
+  tasks.filter((task) => task.isCompleted)
 );
 
 export const selectHighPriorityTasks = createSelector(selectTasks, (tasks) =>

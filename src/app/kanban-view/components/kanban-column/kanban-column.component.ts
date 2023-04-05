@@ -21,8 +21,8 @@ export class KanbanColumnComponent implements OnInit {
       throw new Error('"section" is undefined.');
     }
 
-    this.completedTasks = this.section.tasks?.filter(task => task.completed);
-    this.pendingTasks = this.section.tasks?.filter(task => !task.completed);
+    this.completedTasks = this.section.tasks?.filter(task => task.isCompleted);
+    this.pendingTasks = this.section.tasks?.filter(task => !task.isCompleted);
   }
 
   trackByTaskId(index: number, task: Task) {

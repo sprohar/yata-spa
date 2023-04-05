@@ -4,13 +4,13 @@ import { Tag } from './tag.model';
 export interface Task {
   id?: number;
   title: string;
+  description?: string;
   content?: string;
   priority?: Priority;
-  completed?: boolean;
-  deleted?: boolean;
+  isCompleted?: boolean;
   isAllDay?: boolean;
+  sortOrder?: number;
   dueDate?: string | null;
-  completedOn?: string;
 
   // recurrence
   startDate?: Date;
@@ -19,6 +19,7 @@ export interface Task {
   rruleSet?: string;
 
   // timestamps
+  completedAt?: string;
   createdAt?: string;
   updatedAt?: string;
 
@@ -39,7 +40,11 @@ export enum Priority {
 
 export namespace Task {
   export enum Title {
-    MaxLength = 1024,
+    MaxLength = 4096,
+  }
+
+  export enum Description {
+    MaxLength = 8192,
   }
 
   export enum Content {

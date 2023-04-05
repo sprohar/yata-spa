@@ -30,7 +30,7 @@ describe('Tasks Selectors', () => {
         id: 1,
         title: 'Task 1',
         content: 'Task 1 content',
-        completed: false,
+        isCompleted: false,
         priority: Priority.HIGH,
         dueDate: '2020-01-01T00:00:00.000Z',
         projectId: 1,
@@ -39,7 +39,7 @@ describe('Tasks Selectors', () => {
         id: 12,
         title: 'Task 2',
         content: 'Task 2 content',
-        completed: false,
+        isCompleted: false,
         priority: Priority.MEDIUM,
         dueDate: '2020-01-01T00:00:00.000Z',
         sectionId: 1,
@@ -49,7 +49,7 @@ describe('Tasks Selectors', () => {
         id: 3,
         title: 'Task 3',
         content: 'Task 3 content',
-        completed: false,
+        isCompleted: false,
         priority: Priority.LOW,
         dueDate: '2020-01-02T00:00:00.000Z',
         sectionId: 1,
@@ -59,7 +59,7 @@ describe('Tasks Selectors', () => {
         id: 4,
         title: 'Task 4',
         content: 'Task 4 content',
-        completed: true,
+        isCompleted: true,
         priority: Priority.NONE,
         dueDate: '2020-01-03T00:00:00.000Z',
         sectionId: 1,
@@ -99,7 +99,7 @@ describe('Tasks Selectors', () => {
 
   it('should select the completed tasks', () => {
     const result = selectCompletedTasks.projector(initialState.tasks);
-    const completedTasks = initialState.tasks.filter((task) => task.completed);
+    const completedTasks = initialState.tasks.filter((task) => task.isCompleted);
     expect(result).toEqual(completedTasks);
   });
 

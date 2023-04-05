@@ -84,7 +84,7 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
         [Validators.required, Validators.maxLength(Task.Title.MaxLength)],
       ],
       priority: [task.priority],
-      completed: [task.completed],
+      completed: [task.isCompleted],
       projectId: [task.projectId],
       dueDate: [],
       subtasks: this.fb.array([]),
@@ -123,7 +123,7 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
         task: {
           id: task.id,
           projectId: task.projectId,
-          completed: task.completed,
+          isCompleted: task.isCompleted,
         },
       })
     );

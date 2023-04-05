@@ -30,7 +30,7 @@ export class MatrixQuadrantComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tasks) {
-      this.completedTasks = this.tasks.filter((t) => t.completed);
+      this.completedTasks = this.tasks.filter((t) => t.isCompleted);
     }
   }
 
