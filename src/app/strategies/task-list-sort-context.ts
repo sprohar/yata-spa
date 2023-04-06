@@ -11,4 +11,9 @@ export class TaskListSortContext {
   sort(tasks: Task[]) {
     return this.strategy.sort(tasks);
   }
+
+  setStrategy(strategy: SortStrategy<Task>) {
+    this.strategy = strategy;
+    return this;
+  }
 }
