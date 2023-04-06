@@ -98,3 +98,5 @@ export const selectTasksGroupByProject = createSelector(
       return map;
     }, new Map<Project, Task[]>())
 );
+
+// TODO: selectTasksGroupBySection (default for list-view component)
