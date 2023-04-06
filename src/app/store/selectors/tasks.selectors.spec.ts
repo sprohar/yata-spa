@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Priority, Project, Task } from '../../models';
 import {
   TasksState,
@@ -100,7 +99,9 @@ describe('Tasks Selectors', () => {
 
   it('should select the completed tasks', () => {
     const result = selectCompletedTasks.projector(initialState.tasks);
-    const completedTasks = initialState.tasks.filter((task) => task.isCompleted);
+    const completedTasks = initialState.tasks.filter(
+      (task) => task.isCompleted
+    );
     expect(result).toEqual(completedTasks);
   });
 
@@ -178,13 +179,15 @@ describe('Tasks Selectors', () => {
   it('should group tasks by due date', () => {
     // TODO: Fix this spec
     const today = new Date();
-    const tomorrow = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
+
     const tasks = [
       {
         id: 1,
         title: 'Task 1',
-        content: 'Task 1 content',
         completed: false,
         priority: Priority.HIGH,
         dueDate: today.toISOString(),
@@ -193,7 +196,6 @@ describe('Tasks Selectors', () => {
       {
         id: 2,
         title: 'Task 2',
-        content: 'Task 2 content',
         completed: false,
         priority: Priority.MEDIUM,
         dueDate: today.toISOString(),
@@ -202,7 +204,6 @@ describe('Tasks Selectors', () => {
       {
         id: 3,
         title: 'Task 3',
-        content: 'Task 3 content',
         completed: false,
         priority: Priority.LOW,
         dueDate: tomorrow.toISOString(),
@@ -211,7 +212,6 @@ describe('Tasks Selectors', () => {
       {
         id: 4,
         title: 'Task 4',
-        content: 'Task 4 content',
         completed: true,
         priority: Priority.NONE,
         dueDate: tomorrow.toISOString(),
@@ -223,15 +223,8 @@ describe('Tasks Selectors', () => {
     const tomorrowDate = tomorrow.toISOString().split('T')[0];
 
     const tasksGroupedByDueDate = new Map<string, Task[]>();
-    tasksGroupedByDueDate.set(
-      formatDate(todayDate, 'fullDate', navigator.language),
-      [tasks[0], tasks[1]]
-    );
-
-    tasksGroupedByDueDate.set(
-      formatDate(tomorrowDate, 'fullDate', navigator.language),
-      [tasks[2], tasks[3]]
-    );
+    tasksGroupedByDueDate.set(todayDate, [tasks[0], tasks[1]]);
+    tasksGroupedByDueDate.set(tomorrowDate, [tasks[2], tasks[3]]);
 
     const result = selectTasksGroupByDueDate.projector(tasks);
     expect(result).toEqual(tasksGroupedByDueDate);
