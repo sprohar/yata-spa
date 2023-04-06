@@ -12,16 +12,17 @@ export class TaskDueDateSortStrategy implements SortStrategy<Task> {
   sort(data: Task[]): Task[] {
     const tasks = [...data];
 
-    return tasks.sort((a, b) => {
-      if (a.dueDate === undefined) return 1;
-      if (b.dueDate === undefined) return 1;
+    return tasks.sort((task1, task2) => {
+      // due date is null, so put it at the end
+      if (!task1.dueDate) return 1;
+      if (!task2.dueDate) return -1;
 
-      const ad = new Date(a.dueDate!);
-      const bd = new Date(b.dueDate!);
+      const date1 = new Date(task1.dueDate);
+      const date2 = new Date(task2.dueDate);
 
       return this.sortOrder === SortOrder.ASC
-        ? ad.getTime() - bd.getTime()
-        : bd.getTime() - ad.getTime();
+        ? date1.getTime() - date2.getTime()
+        : date2.getTime() - date1.getTime();
     });
   }
 }
