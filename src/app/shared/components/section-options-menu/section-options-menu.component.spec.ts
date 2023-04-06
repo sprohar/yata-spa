@@ -44,6 +44,7 @@ const initialState: AppState = {
     ],
   },
   tasks: {
+    orderBy: null,
     currentTaskId: null,
     tasks: [{ id: 1, title: 'Task', projectId: 1, sectionId: 1 }],
   },

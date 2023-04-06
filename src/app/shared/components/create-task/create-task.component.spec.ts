@@ -10,8 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import { Section, Tag, Task } from '../../../models';
-import { CreateTaskComponentActions } from '../../../store/actions';
+import { Priority, Section, Tag } from '../../../models';
 import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
@@ -98,7 +97,7 @@ describe('CreateTaskComponent', () => {
 
   describe('#handlePriorityChange', () => {
     it('should set the form control value with the priority value', () => {
-      const priority = Task.Priority.HIGH;
+      const priority = Priority.HIGH;
       component.handlePriorityChange(priority);
       expect(component.priorityControl.value).toBe(priority);
     });
@@ -144,7 +143,10 @@ describe('CreateTaskComponent', () => {
   describe('#leftJoinOnTagName', () => {
     it('should use the existing tags to avoid creating redundant data in the database', () => {
       const selected: Tag[] = [{ name: 'Java' }, { name: 'Spring Boot' }];
-      const existing: Tag[] = [{ id: 1, name: 'TypeScript' }, { id: 2, name: 'Java' }];
+      const existing: Tag[] = [
+        { id: 1, name: 'TypeScript' },
+        { id: 2, name: 'Java' },
+      ];
       const expected: Tag[] = [
         { id: 2, name: 'Java' },
         { name: 'Spring Boot' },

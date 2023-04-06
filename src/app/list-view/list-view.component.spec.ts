@@ -17,6 +17,7 @@ const initialState: AppState = {
     sections: [{ id: 1, name: 'Section', projectId: 1 }],
   },
   tasks: {
+    orderBy: null,
     currentTaskId: null,
     tasks: [{ id: 1, title: 'Task', projectId: 1, sectionId: 1 }],
   },

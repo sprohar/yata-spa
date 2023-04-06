@@ -9,10 +9,10 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Tag } from '../../../models';
 import { EditTagDialogComponent } from './edit-tag-dialog.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('EditTagDialogComponent', () => {
   let component: EditTagDialogComponent;
@@ -65,7 +65,7 @@ describe('EditTagDialogComponent', () => {
 
   it('should close dialog on cancel', () => {
     const button = fixture.nativeElement.querySelector(
-      '#cancelEditTagDialogButton'
+      '[data-test="editTagDialogCancelButton"]'
     );
     button.click();
     expect(dialogRef.close).toHaveBeenCalled();

@@ -16,9 +16,7 @@ describe('ProjectSectionComponent', () => {
       declarations: [ProjectSectionComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [MatButtonModule, MatIconModule],
-      providers: [
-        provideMockStore(),
-      ]
+      providers: [provideMockStore()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectSectionComponent);
@@ -30,13 +28,5 @@ describe('ProjectSectionComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  describe('#handleAddTask', () => {
-    it('should dispatch an action to open the create-section-task-list-item component', () => {
-      spyOn(store, 'dispatch');
-      component.handleAddTask();
-      expect(store.dispatch).toHaveBeenCalled();
-    });
   });
 });

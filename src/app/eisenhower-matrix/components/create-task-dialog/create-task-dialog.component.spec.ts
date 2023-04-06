@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Task } from '../../../models';
+import { Priority } from '../../../models';
 import { CreateTaskDialogComponent } from './create-task-dialog.component';
 
 describe('CreateTaskDialogComponent', () => {
@@ -42,7 +42,7 @@ describe('CreateTaskDialogComponent', () => {
       ],
       providers: [
         provideMockStore(),
-        { provide: MAT_DIALOG_DATA, useValue: Task.Priority.HIGH },
+        { provide: MAT_DIALOG_DATA, useValue: Priority.HIGH },
         { provide: MatDialog, useValue: dialog },
         { provide: MatDialogRef, useValue: dialogRef },
       ],

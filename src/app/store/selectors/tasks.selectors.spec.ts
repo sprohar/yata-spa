@@ -25,6 +25,7 @@ import {
 describe('Tasks Selectors', () => {
   const initialState: TasksState = {
     currentTaskId: 1,
+    orderBy: null,
     tasks: [
       {
         id: 1,
@@ -175,6 +176,7 @@ describe('Tasks Selectors', () => {
   });
 
   it('should group tasks by due date', () => {
+    // TODO: Fix this spec
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);

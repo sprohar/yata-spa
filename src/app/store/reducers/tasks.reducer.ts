@@ -18,11 +18,13 @@ import {
 export interface TasksState {
   tasks: Task[];
   currentTaskId: number | null;
+  orderBy: Task.OrderBy | null;
 }
 
 export const initialTasksState: TasksState = {
   tasks: [],
   currentTaskId: null,
+  orderBy: null,
 };
 
 export const tasksFeature = createFeature({
@@ -50,7 +52,7 @@ export const tasksFeature = createFeature({
       TaskCardActions.viewTaskDetails,
       EisenhowerMatrixActions.viewTaskDetails,
       (state, action) => ({
-        tasks: state.tasks,
+        ...state,
         currentTaskId: action.taskId,
       })
     ),
@@ -68,15 +70,15 @@ export const tasksFeature = createFeature({
       };
     }),
     on(YataApiActions.createTaskSuccess, (state, action) => ({
-      currentTaskId: state.currentTaskId,
+      ...state, // TODO: Maintain sort order
       tasks: state.tasks.concat(action.task),
     })),
     on(YataApiActions.loadTasksSuccess, (state, action) => ({
-      currentTaskId: state.currentTaskId,
+      ...state, // TODO: Maintain sort order
       tasks: action.tasks,
     })),
     on(YataApiActions.loadProjectSuccess, (state, action) => ({
-      currentTaskId: state.currentTaskId,
+      ...state, // TODO: Maintain sort order
       tasks: action.project.tasks ?? [],
     })),
     on(YataApiActions.updateTaskSuccess, (state, action) => {
@@ -90,7 +92,7 @@ export const tasksFeature = createFeature({
       }
 
       return {
-        currentTaskId: state.currentTaskId,
+        ...state,
         tasks,
       };
     }),
@@ -105,16 +107,16 @@ export const tasksFeature = createFeature({
       }
 
       return {
-        currentTaskId: state.currentTaskId,
+        ...state,
         tasks,
       };
     }),
     on(TaskResolverActions.setCurrentTaskId, (state, action) => ({
-      tasks: state.tasks,
+      ...state,
       currentTaskId: action.taskId,
     })),
     on(TaskDetailsActions.resetCurrentTaskId, (state, _) => ({
-      tasks: state.tasks,
+      ...state,
       currentTaskId: null,
     })),
     on(YataApiActions.createSubtaskSuccess, (state, action) => {
@@ -149,7 +151,7 @@ export const tasksFeature = createFeature({
       }
 
       return {
-        currentTaskId: state.currentTaskId,
+        ...state,
         tasks,
       };
     }),
@@ -177,7 +179,7 @@ export const tasksFeature = createFeature({
       }
 
       return {
-        currentTaskId: state.currentTaskId,
+        ...state,
         tasks,
       };
     })

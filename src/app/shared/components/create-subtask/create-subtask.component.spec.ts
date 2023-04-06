@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Subtask, Task } from '../../../models';
+import { Priority, Subtask, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
@@ -41,6 +41,7 @@ const initialState: AppState = {
     projects: [{ id: 1, name: 'Project' }],
   },
   tasks: {
+    orderBy: null,
     currentTaskId: 1,
     tasks: taskCollection,
   },
@@ -79,7 +80,7 @@ describe('CreateSubtaskComponent', () => {
 
   describe('#handlePriorityChanage', () => {
     it('should update the "priority" value in the form', () => {
-      const priority = Task.Priority.HIGH;
+      const priority = Priority.HIGH;
       component.handlePriorityChange(priority);
       expect(component.priorityControl.value).toBe(priority);
     });
@@ -111,7 +112,7 @@ describe('CreateSubtaskComponent', () => {
         title: 'Subtask',
         taskId: 1,
         completed: false,
-        priority: Task.Priority.NONE,
+        priority: Priority.NONE,
       };
 
       component.form.patchValue({

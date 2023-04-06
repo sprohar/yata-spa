@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import { Section, Task } from '../../../models';
+import { Priority, Section, Task } from '../../../models';
 import { DateTimePickerDialogComponent } from '../../../shared/components/date-time-picker-dialog/date-time-picker-dialog.component';
 import { KanbanViewActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
@@ -13,7 +13,6 @@ import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 
 import { KanbanColumnCreateTaskComponent } from './kanban-column-create-task.component';
-
 
 const initialState: AppState = {
   auth: initialAuthState,
@@ -74,7 +73,7 @@ describe('KanbanColumnCreateTaskComponent', () => {
 
   describe('#handlePriorityChange', () => {
     it('should set the form control value with the priority value', () => {
-      const priority = Task.Priority.HIGH;
+      const priority = Priority.HIGH;
       component.handlePriorityChange(priority);
       expect(component.priorityControl.value).toBe(priority);
     });
