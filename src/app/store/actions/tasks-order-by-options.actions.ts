@@ -1,9 +1,10 @@
-import { createActionGroup, emptyProps } from "@ngrx/store";
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Task } from '../../models';
 
 export const TasksOrderByOptions = createActionGroup({
-   source: 'Tasks Order By Options',
-   events: {
-    'Order By Due Date': emptyProps(),
-    'Order By Priority': emptyProps(),
-   },
+  source: 'Tasks Order By Options',
+  events: {
+    'Set Order By': props<{ orderBy: Task.OrderBy }>(),
+    'Clear Order By': emptyProps(),
+  },
 });

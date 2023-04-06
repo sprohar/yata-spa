@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Task } from '../../../models';
 import { TasksOrderByOptions } from '../../../store/actions/tasks-order-by-options.actions';
 
 @Component({
@@ -12,12 +13,18 @@ export class TasksOrderByOptionsComponent {
   constructor(private store: Store) {}
 
   orderByDueDate() {
-    console.log('Order by due date');
-    this.store.dispatch(TasksOrderByOptions.orderByDueDate());
+    this.store.dispatch(
+      TasksOrderByOptions.setOrderBy({
+        orderBy: Task.OrderBy.DUE_DATE,
+      })
+    );
   }
 
   orderByPriority() {
-    console.log('Order by priority');
-    this.store.dispatch(TasksOrderByOptions.orderByPriority());
+    this.store.dispatch(
+      TasksOrderByOptions.setOrderBy({
+        orderBy: Task.OrderBy.PRIORITY,
+      })
+    );
   }
 }

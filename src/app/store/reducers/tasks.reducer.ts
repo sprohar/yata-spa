@@ -35,18 +35,31 @@ export const tasksFeature = createFeature({
       ...state,
       tasks: action.tasks,
     })),
-    on(TasksOrderByOptions.orderByDueDate, (state, _) => ({
+    on(TasksOrderByOptions.clearOrderBy, (state, _) => ({
       ...state,
-      tasks: new TaskListSortContext(new TaskDueDateSortStrategy()).sort(
-        state.tasks
-      ),
+      orderBy: null,
     })),
-    on(TasksOrderByOptions.orderByPriority, (state, _) => ({
-      ...state,
-      tasks: new TaskListSortContext(new TaskPrioritySortStrategy()).sort(
-        state.tasks
-      ),
-    })),
+    on(TasksOrderByOptions.setOrderBy, (state, action) => {
+      const context = new TaskListSortContext(new TaskDueDateSortStrategy());
+      const { orderBy } = action;
+
+      switch (orderBy) {
+        case Task.OrderBy.DUE_DATE:
+          return {
+            ...state,
+            tasks: context.sort(state.tasks),
+          };
+        case Task.OrderBy.PRIORITY:
+          return {
+            ...state,
+            tasks: context
+              .setStrategy(new TaskPrioritySortStrategy())
+              .sort(state.tasks),
+          };
+        default:
+          return state;
+      }
+    }),
     on(
       TaskOptionsMenuActions.viewTaskDetails,
       TaskCardActions.viewTaskDetails,
