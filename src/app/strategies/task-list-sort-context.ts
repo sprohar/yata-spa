@@ -1,5 +1,5 @@
-import { SortStrategy } from '../../interfaces/sort-strategy.interface';
-import { Task } from '../../models';
+import { SortStrategy } from '../interfaces';
+import { Task } from '../models';
 
 export class TaskListSortContext {
   private strategy: SortStrategy<Task>;

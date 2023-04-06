@@ -39,6 +39,11 @@ export enum Priority {
 }
 
 export namespace Task {
+  export enum OrderBy {
+    DUE_DATE = 'dueDate',
+    PRIORITY = 'priority',
+  }
+
   export enum Title {
     MaxLength = 4096,
   }

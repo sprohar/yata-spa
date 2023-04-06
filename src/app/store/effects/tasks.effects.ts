@@ -11,20 +11,23 @@ import {
   tap,
 } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
+import { Task } from '../../models';
 import { EisenhowerService } from '../../services/eisenhower.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TasksService } from '../../services/tasks.service';
+import { StorageKeys } from '../../storage/storage.keys';
 import {
   CreateTaskComponentActions,
   EisenhowerMatrixActions,
   KanbanViewActions,
   ListViewActions,
+  StorageActions,
   TaskCardActions,
   TaskDetailsActions,
   YataApiActions,
 } from '../actions';
-import { TasksOrderByOptions } from '../actions/tasks-order-by-options.actions';
 import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
+import { TasksOrderByOptions } from '../actions/tasks-order-by-options.actions';
 
 @Injectable()
 export class TasksEffects {
@@ -113,13 +116,33 @@ export class TasksEffects {
     )
   );
 
-  // TODO: Finish this
-  orderBy$ = createEffect(() =>
+  orderByDueDate$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(
-        TasksOrderByOptions.orderByDueDate,
-        TasksOrderByOptions.orderByPriority
-      )
+      ofType(TasksOrderByOptions.orderByDueDate),
+      exhaustMap(() => {
+        this.storage.set(StorageKeys.ORDER_BY, Task.OrderBy.DUE_DATE);
+        console.log('storage, due date');
+        return of(
+          StorageActions.setItemSuccess({
+            orderBy: Task.OrderBy.DUE_DATE,
+          })
+        );
+      })
+    )
+  );
+
+  orderByPriority$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TasksOrderByOptions.orderByPriority),
+      exhaustMap(() => {
+        this.storage.set(StorageKeys.ORDER_BY, Task.OrderBy.PRIORITY);
+        console.log('storage, priority');
+        return of(
+          StorageActions.setItemSuccess({
+            orderBy: Task.OrderBy.PRIORITY,
+          })
+        );
+      })
     )
   );
 

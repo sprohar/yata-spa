@@ -1,7 +1,10 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { TaskCreatedAtSortStrategy } from 'src/app/strategies/tasks/task-created-at-sort.strategy';
-import { TaskListSortContext } from 'src/app/strategies/tasks/task-list-sort-context';
 import { Subtask, Task } from '../../models';
+import {
+  TaskDueDateSortStrategy,
+  TaskListSortContext,
+  TaskPrioritySortStrategy,
+} from '../../strategies';
 import {
   EisenhowerMatrixActions,
   TaskCardActions,
@@ -32,7 +35,13 @@ export const tasksFeature = createFeature({
     })),
     on(TasksOrderByOptions.orderByDueDate, (state, _) => ({
       ...state,
-      tasks: new TaskListSortContext(new TaskCreatedAtSortStrategy()).sort(
+      tasks: new TaskListSortContext(new TaskDueDateSortStrategy()).sort(
+        state.tasks
+      ),
+    })),
+    on(TasksOrderByOptions.orderByPriority, (state, _) => ({
+      ...state,
+      tasks: new TaskListSortContext(new TaskPrioritySortStrategy()).sort(
         state.tasks
       ),
     })),
