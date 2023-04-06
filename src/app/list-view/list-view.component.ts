@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Section, Task } from '../models';
-import {
-  selectCompletedTasks,
-  selectSectionsWithIncompleteTasks,
-  selectUnsectionedTasks,
-} from '../store/selectors';
+import { selectCompletedTasks, selectGroupedTasks } from '../store/selectors';
 
 @Component({
   selector: 'yata-list-view',
@@ -14,16 +9,7 @@ import {
 })
 export class ListViewComponent {
   completedTasks$ = this.store.select(selectCompletedTasks);
-  unsectionedTasks$ = this.store.select(selectUnsectionedTasks);
-  sections$ = this.store.select(selectSectionsWithIncompleteTasks);
+  groupedTasks$ = this.store.select(selectGroupedTasks);
 
   constructor(private store: Store) {}
-
-  createCompletedSection(completedTasks: Task[]) {
-    return {
-      name: 'Completed',
-      tasks: completedTasks,
-      projectId: completedTasks[0].projectId,
-    } as Section;
-  }
 }

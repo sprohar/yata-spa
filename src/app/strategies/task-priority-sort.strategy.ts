@@ -6,7 +6,7 @@ export class TaskPrioritySortStrategy implements SortStrategy<Task> {
   private readonly sortOrder: SortOrder;
 
   constructor(sortOrder?: SortOrder) {
-    this.sortOrder = sortOrder ? sortOrder : SortOrder.ASC;
+    this.sortOrder = sortOrder ? sortOrder : SortOrder.DESC;
   }
 
   sort(data: Task[]): Task[] {

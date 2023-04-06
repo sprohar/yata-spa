@@ -16,9 +16,9 @@ import {
 } from '../actions';
 
 export interface TasksState {
-  tasks: Task[];
   currentTaskId: number | null;
   orderBy: Task.OrderBy | null;
+  tasks: Task[];
 }
 
 export const initialTasksState: TasksState = {
@@ -47,11 +47,13 @@ export const tasksFeature = createFeature({
         case Task.OrderBy.DUE_DATE:
           return {
             ...state,
+            orderBy,
             tasks: context.sort(state.tasks),
           };
         case Task.OrderBy.PRIORITY:
           return {
             ...state,
+            orderBy,
             tasks: context
               .setStrategy(new TaskPrioritySortStrategy())
               .sort(state.tasks),
@@ -203,6 +205,7 @@ export const {
   name,
   reducer,
   selectCurrentTaskId,
+  selectOrderBy,
   selectTasks,
   selectTasksState,
 } = tasksFeature;

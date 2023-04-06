@@ -1,7 +1,13 @@
+import { formatDate } from '@angular/common';
 import { createSelector } from '@ngrx/store';
-import { Priority, Project, Task } from '../../models';
+import { Priority, Project, Section, Task } from '../../models';
 import { selectProjects } from '../reducers/projects.reducer';
-import { selectCurrentTaskId, selectTasks } from '../reducers/tasks.reducer';
+import { selectSections } from '../reducers/sections.reducer';
+import {
+  selectCurrentTaskId,
+  selectOrderBy,
+  selectTasks,
+} from '../reducers/tasks.reducer';
 
 export const selectCurrentTask = createSelector(
   selectCurrentTaskId,
@@ -99,4 +105,95 @@ export const selectTasksGroupByProject = createSelector(
     }, new Map<Project, Task[]>())
 );
 
-// TODO: selectTasksGroupBySection (default for list-view component)
+export const selectGroupedTasks = createSelector(
+  selectTasks,
+  selectSections,
+  selectOrderBy,
+  (tasks, sections, orderBy) => {
+    console.log('order by', orderBy);
+    // Group by SECTION
+    if (orderBy === null) {
+      // group by sections
+      const unsectioned: Section = {
+        id: -1,
+        name: 'Unsectioned',
+        projectId: tasks.at(0)!.projectId,
+      };
+
+      return tasks.reduce((map, task) => {
+        if (task.sectionId === undefined) {
+          const value = map.get(unsectioned);
+          value ? value.push(task) : map.set(unsectioned, [task]);
+          return map;
+        }
+
+        const section = sections.find(
+          (section) => section.id === task.sectionId
+        );
+
+        if (!section) return map;
+        const tasks = map.get(section);
+        tasks ? tasks.push(task) : map.set(section, [task]);
+
+        return map;
+      }, new Map<Section, Task[]>());
+    }
+
+    // Group by DUE_DATE
+    if (orderBy === Task.OrderBy.DUE_DATE) {
+      const noDueDateSection: Section = {
+        id: 0,
+        projectId: 0,
+        name: 'No due date',
+      };
+
+      const dateSections: Section[] = [noDueDateSection];
+      return tasks.reduce((map, task) => {
+        if (!task.dueDate) {
+          const value = map.get(noDueDateSection);
+          value ? value.push(task) : map.set(noDueDateSection, [task]);
+          return map;
+        }
+
+        const date = formatDate(
+          task.dueDate.split('T').at(0)!,
+          'fullDate',
+          navigator.language
+        );
+
+        const section = dateSections.find((s) => s.name === date);
+        if (!section) {
+          const newDateSection = { id: 0, projectId: 0, name: date };
+          map.set(newDateSection, [task]);
+          dateSections.push(newDateSection);
+          return map;
+        }
+
+        map.get(section)?.push(task);
+        return map;
+      }, new Map<Section, Task[]>());
+    }
+
+    // group by PRIORITY
+    const prioritySections: Section[] = [
+      { id: Priority.NONE, projectId: 0, name: 'No priority' },
+      { id: Priority.LOW, projectId: 0, name: 'Low priority' },
+      { id: Priority.MEDIUM, projectId: 0, name: 'Medium priority' },
+      { id: Priority.HIGH, projectId: 0, name: 'High priority' },
+    ];
+
+    return tasks.reduce((map, task) => {
+      if (task.priority === undefined) return map;
+
+      const prioritySection = prioritySections.find(
+        (s) => s.id === task.priority
+      );
+
+      if (!prioritySection) return map;
+
+      const tasks = map.get(prioritySection);
+      tasks ? tasks.push(task) : map.set(prioritySection, [task]);
+      return map;
+    }, new Map<Section, Task[]>());
+  }
+);
