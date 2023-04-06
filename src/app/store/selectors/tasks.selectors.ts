@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { createSelector } from '@ngrx/store';
 import { Priority, Project, Task } from '../../models';
 import { selectProjects } from '../reducers/projects.reducer';
