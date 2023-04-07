@@ -38,6 +38,7 @@ import {
   ChronoEffects,
   ProjectsEffects,
   SectionsEffects,
+  StorageEffects,
   SubtasksEffects,
   TasksEffects,
 } from './store/effects/';
@@ -81,6 +82,7 @@ import { MatMenuModule } from '@angular/material/menu';
       SectionsEffects,
       TasksEffects,
       SubtasksEffects,
+      StorageEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,

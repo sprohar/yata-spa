@@ -5,5 +5,6 @@ export const StorageActions = createActionGroup({
   source: 'Local Storage',
   events: {
     'Set Item Success': props<Record<StorageKeys, string | Object>>(),
+    'Remove Item Success': props<Record<StorageKeys, string | Object>>()
   },
 });
