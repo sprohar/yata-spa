@@ -1,17 +1,31 @@
 <button mat-icon-button [matMenuTriggerFor]="options" title="Sort task list">
   <mat-icon>sort</mat-icon>
 </button>
+
+<!-- Main menu -->
 <mat-menu #options="matMenu">
-  <button mat-menu-item (click)="orderByDueDate()">
+  <ng-container *ngIf="orderBy$ | async as orderBy">
+    <button mat-menu-item (click)="defaultSort()">
+      <mat-icon>sort</mat-icon>
+      Custom
+    </button>
+  </ng-container>
+  <button mat-menu-item [matMenuTriggerFor]="dueDate">
     <mat-icon>event</mat-icon>
     Due Date
   </button>
-  <button mat-menu-item (click)="orderByPriority()">
+  <button mat-menu-item [matMenuTriggerFor]="priority">
     <mat-icon>flag</mat-icon>
     Priority
   </button>
-  <button mat-menu-item (click)="orderBySection()">
-    <mat-icon>view_column</mat-icon>
-    Sections
-  </button>
+</mat-menu>
+
+<!-- Submenus -->
+<mat-menu #dueDate="matMenu">
+  <button mat-menu-item (click)="orderByDueDate(SORT_ASC)">ASC</button>
+  <button mat-menu-item (click)="orderByDueDate(SORT_DESC)">DESC</button>
+</mat-menu>
+<mat-menu #priority="matMenu">
+  <button mat-menu-item (click)="orderByPriority(SORT_ASC)">ASC</button>
+  <button mat-menu-item (click)="orderByPriority(SORT_DESC)">DESC</button>
 </mat-menu>

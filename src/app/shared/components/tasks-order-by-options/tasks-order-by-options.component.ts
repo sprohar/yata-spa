@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
 import { TasksOrderByOptionsActions } from '../../../store/actions/tasks-order-by-options.actions';
+import { selectOrderBy } from '../../../store/reducers/tasks.reducer';
+import { SortOrder } from '../../../strategies/sort';
 
 @Component({
   selector: 'yata-tasks-order-by-options',
@@ -10,29 +12,35 @@ import { TasksOrderByOptionsActions } from '../../../store/actions/tasks-order-b
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksOrderByOptionsComponent {
+  readonly SORT_ASC = SortOrder.ASC;
+  readonly SORT_DESC = SortOrder.DESC;
+  orderBy$ = this.store.select(selectOrderBy);
+
   constructor(private store: Store) {}
 
-  orderByDueDate() {
+  orderByDueDate(dir: SortOrder) {
     this.store.dispatch(
       TasksOrderByOptionsActions.setOrderBy({
-        orderBy: Task.OrderBy.DUE_DATE,
+        orderBy: {
+          attribute: Task.OrderBy.DUE_DATE,
+          dir,
+        },
       })
     );
   }
 
-  orderByPriority() {
+  orderByPriority(dir: SortOrder) {
     this.store.dispatch(
       TasksOrderByOptionsActions.setOrderBy({
-        orderBy: Task.OrderBy.PRIORITY,
+        orderBy: {
+          attribute: Task.OrderBy.PRIORITY,
+          dir,
+        },
       })
     );
   }
 
-  orderBySection() {
-    this.store.dispatch(
-      TasksOrderByOptionsActions.setOrderBy({
-        orderBy: Task.OrderBy.SECTION,
-      })
-    );
+  defaultSort() {
+    this.store.dispatch(TasksOrderByOptionsActions.clearOrderBy());
   }
 }

@@ -1,10 +1,11 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Subtask, Task } from '../../models';
 import {
-  TaskDueDateSortStrategy,
-  TaskListSortContext,
-  TaskPrioritySortStrategy,
-} from '../../strategies';
+  SortOrder,
+  TasksDueDateSortStrategy,
+  TasksPrioritySortStrategy,
+  TasksSortContext,
+} from '../../strategies/sort';
 import {
   EisenhowerMatrixActions,
   TaskCardActions,
@@ -15,9 +16,14 @@ import {
   YataApiActions,
 } from '../actions';
 
+export interface TasksOrderByState {
+  attribute: Task.OrderBy;
+  dir: SortOrder;
+}
+
 export interface TasksState {
   currentTaskId: number | null;
-  orderBy: Task.OrderBy | null;
+  orderBy: TasksOrderByState | null;
   tasks: Task[];
 }
 
@@ -39,11 +45,12 @@ export const tasksFeature = createFeature({
       ...state,
       orderBy: null,
     })),
-    on(TasksOrderByOptionsActions.setOrderBy, (state, action) => {
-      const context = new TaskListSortContext(new TaskDueDateSortStrategy());
-      const { orderBy } = action;
+    on(TasksOrderByOptionsActions.setOrderBy, (state, { orderBy }) => {
+      const context = new TasksSortContext(
+        new TasksDueDateSortStrategy(orderBy.dir)
+      );
 
-      switch (orderBy) {
+      switch (orderBy.attribute) {
         case Task.OrderBy.DUE_DATE:
           return {
             ...state,
@@ -55,13 +62,13 @@ export const tasksFeature = createFeature({
             ...state,
             orderBy,
             tasks: context
-              .setStrategy(new TaskPrioritySortStrategy())
+              .setStrategy(new TasksPrioritySortStrategy(orderBy.dir))
               .sort(state.tasks),
           };
         case Task.OrderBy.SECTION:
           return {
             ...state,
-            orderBy: Task.OrderBy.SECTION,
+            orderBy: null,
           };
         default:
           return state;

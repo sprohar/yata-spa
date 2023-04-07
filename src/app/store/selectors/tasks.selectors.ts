@@ -109,19 +109,18 @@ export const selectTasksGroupByProject = createSelector(
     }, new Map<Project, Task[]>())
 );
 
-// TODO: Test & refactor (make it easier to read)
 export const selectGroupedTasks = createSelector(
   selectTasks,
   selectSections,
   selectOrderBy,
   (tasks, sections, orderBy) => {
-    // Group by SECTION
-    if (orderBy === Task.OrderBy.SECTION) {
+    // Group by SECTION is the default
+    if (orderBy === null || orderBy.attribute === Task.OrderBy.SECTION) {
       return groupTasksBySections(sections, tasks);
     }
 
     // Group by DUE_DATE
-    if (orderBy === Task.OrderBy.DUE_DATE) {
+    if (orderBy.attribute === Task.OrderBy.DUE_DATE) {
       return groupTasksByDueDate(tasks);
     }
 
