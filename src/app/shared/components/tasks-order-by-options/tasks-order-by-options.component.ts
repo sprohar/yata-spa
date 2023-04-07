@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
-import { TasksOrderByOptions } from '../../../store/actions/tasks-order-by-options.actions';
+import { TasksOrderByOptionsActions } from '../../../store/actions/tasks-order-by-options.actions';
 
 @Component({
   selector: 'yata-tasks-order-by-options',
@@ -14,7 +14,7 @@ export class TasksOrderByOptionsComponent {
 
   orderByDueDate() {
     this.store.dispatch(
-      TasksOrderByOptions.setOrderBy({
+      TasksOrderByOptionsActions.setOrderBy({
         orderBy: Task.OrderBy.DUE_DATE,
       })
     );
@@ -22,8 +22,16 @@ export class TasksOrderByOptionsComponent {
 
   orderByPriority() {
     this.store.dispatch(
-      TasksOrderByOptions.setOrderBy({
+      TasksOrderByOptionsActions.setOrderBy({
         orderBy: Task.OrderBy.PRIORITY,
+      })
+    );
+  }
+
+  orderBySection() {
+    this.store.dispatch(
+      TasksOrderByOptionsActions.setOrderBy({
+        orderBy: Task.OrderBy.SECTION,
       })
     );
   }

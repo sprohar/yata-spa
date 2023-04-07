@@ -42,6 +42,7 @@ export namespace Task {
   export enum OrderBy {
     DUE_DATE = 'dueDate',
     PRIORITY = 'priority',
+    SECTION = 'section',
   }
 
   export enum Title {

@@ -11,7 +11,7 @@ import {
   TaskDetailsActions,
   TaskOptionsMenuActions,
   TaskResolverActions,
-  TasksOrderByOptions,
+  TasksOrderByOptionsActions,
   YataApiActions,
 } from '../actions';
 
@@ -35,11 +35,11 @@ export const tasksFeature = createFeature({
       ...state,
       tasks: action.tasks,
     })),
-    on(TasksOrderByOptions.clearOrderBy, (state, _) => ({
+    on(TasksOrderByOptionsActions.clearOrderBy, (state, _) => ({
       ...state,
       orderBy: null,
     })),
-    on(TasksOrderByOptions.setOrderBy, (state, action) => {
+    on(TasksOrderByOptionsActions.setOrderBy, (state, action) => {
       const context = new TaskListSortContext(new TaskDueDateSortStrategy());
       const { orderBy } = action;
 
@@ -57,6 +57,11 @@ export const tasksFeature = createFeature({
             tasks: context
               .setStrategy(new TaskPrioritySortStrategy())
               .sort(state.tasks),
+          };
+        case Task.OrderBy.SECTION:
+          return {
+            ...state,
+            orderBy: Task.OrderBy.SECTION,
           };
         default:
           return state;

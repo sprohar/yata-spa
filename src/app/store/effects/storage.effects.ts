@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, of } from 'rxjs';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { StorageKeys } from '../../storage/storage.keys';
-import { StorageActions, TasksOrderByOptions } from '../actions';
+import { StorageActions, TasksOrderByOptionsActions } from '../actions';
 
 @Injectable()
 export class StorageEffects {
@@ -14,7 +14,7 @@ export class StorageEffects {
 
   setItem$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TasksOrderByOptions.setOrderBy),
+      ofType(TasksOrderByOptionsActions.setOrderBy),
       exhaustMap((action) => {
         this.storage.set(StorageKeys.ORDER_BY, action.orderBy);
         return of(

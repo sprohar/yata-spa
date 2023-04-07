@@ -116,7 +116,7 @@ export const selectGroupedTasks = createSelector(
   selectOrderBy,
   (tasks, sections, orderBy) => {
     // Group by SECTION
-    if (orderBy === null) {
+    if (orderBy === Task.OrderBy.SECTION) {
       return groupTasksBySections(sections, tasks);
     }
 
