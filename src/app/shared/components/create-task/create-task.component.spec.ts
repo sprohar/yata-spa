@@ -140,7 +140,7 @@ describe('CreateTaskComponent', () => {
     });
   });
 
-  describe('#leftJoinOnTagName', () => {
+  describe('#intersectOnTagName', () => {
     it('should use the existing tags to avoid creating redundant data in the database', () => {
       const selected: Tag[] = [{ name: 'Java' }, { name: 'Spring Boot' }];
       const existing: Tag[] = [
@@ -152,7 +152,11 @@ describe('CreateTaskComponent', () => {
         { name: 'Spring Boot' },
       ];
 
-      const actual = component.leftJoinOnTagName(selected, existing);
+      const actual = component.intersectOnTagName(
+        new Set<Tag>(selected),
+        new Set<Tag>(existing)
+      );
+
       expect(actual).toEqual(expected);
     });
 
@@ -161,7 +165,11 @@ describe('CreateTaskComponent', () => {
       const existing: Tag[] = [];
       const expected: Tag[] = [{ name: 'Java' }, { name: 'Spring Boot' }];
 
-      const actual = component.leftJoinOnTagName(selected, existing);
+      const actual = component.intersectOnTagName(
+        new Set<Tag>(selected),
+        new Set<Tag>(existing)
+      );
+
       expect(actual).toEqual(expected);
     });
   });

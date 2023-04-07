@@ -26,11 +26,11 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
   selector: 'yata-create-task',
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CreateTaskComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
-  existingTags!: Tag[];
+  existingTags!: Set<Tag>;
   readonly selectedTags = new Set<Tag>();
 
   @Output() created = new EventEmitter<void>();
@@ -53,7 +53,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     this.store
       .select(selectTags)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((tags) => (this.existingTags = tags));
+      .subscribe((tags) => (this.existingTags = new Set<Tag>(tags)));
   }
 
   initForm() {
@@ -110,6 +110,29 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     this.section = section;
   }
 
+  /**
+   * Determines the intersection of two sets based on `name` attribute
+   * of the `Tag` entity.
+   * @param selectedTags The set of the user's selected tags
+   * @param existingTags The set of existing tags
+   * @returns An array of tags
+   */
+  intersectOnTagName(selectedTags: Set<Tag>, existingTags: Set<Tag>) {
+    const map = new Map<string, Tag>();
+    for (let tag of selectedTags) {
+      map.set(tag.name, tag);
+    }
+
+    for (let tag of existingTags) {
+      const entry = map.get(tag.name);
+      if (entry) {
+        map.set(tag.name, tag);
+      }
+    }
+
+    return Array.from(map.values());
+  }
+
   handleSave(projectId: number) {
     if (this.form.invalid) return;
     if (!this.titleControl.value) return;
@@ -124,54 +147,14 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
       task.sectionId = this.section.id;
     }
 
-    task.tags = this.leftJoinOnTagName(
-      Array.from(this.selectedTags),
-      this.existingTags
-    );
-
+    task.tags = this.intersectOnTagName(this.selectedTags, this.existingTags);
     this.store.dispatch(CreateTaskComponentActions.createTask({ task }));
+
     this.created.emit();
     this.form.reset();
+
     this.section = null;
     this.selectedTags.clear();
-  }
-
-  /**
-   * Uses a left join to combine the tags that were selected by the user
-   *  and the tags that already exist in the database.
-   * If a tag that was selected by the user already exists in the database,
-   * the tag that already exists in the database is used.
-   * If a tag that was selected by the user does not exist in the database,
-   * the tag that was selected by the user is used.
-   * This is done to prevent duplicate tags from being created.
-   * @example
-   * const selectedTags = [{ name: 'tag1' }, { name: 'tag3' }];
-   * const existingTags = [{ id: 1, name: 'tag1' }, { id: 2, name: 'tag2' }];
-   * const tags = leftJoinOnTagName(selectedTags, existingTags);
-   * // tags = [{ id: 1, name: 'tag1' }, { id: 2, name: 'tag2' }, { name: 'tag3' }]
-   * @param selectedTags The tags that were selected by the user
-   * @param existingTags The tags that already exist in the database
-   * @returns An array of tags that contains the tags that already exist in the database
-   * and the tags that were selected by the user
-   */
-  leftJoinOnTagName(selectedTags: Tag[], existingTags: Tag[]): Tag[] {
-    const tags: Tag[] = [];
-    let pushed = false;
-
-    for (const selectedTag of selectedTags) {
-      for (const existingTag of existingTags) {
-        if (selectedTag.name.toUpperCase() === existingTag.name.toUpperCase()) {
-          tags.push(existingTag);
-          pushed = true;
-          break;
-        }
-      }
-
-      if (!pushed) tags.push(selectedTag);
-      pushed = false;
-    }
-
-    return tags;
   }
 
   removeDueDate() {

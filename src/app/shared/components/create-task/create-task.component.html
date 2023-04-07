@@ -43,7 +43,7 @@
           </button>
         </mat-chip>
         <mat-chip *ngIf="dueDateControl.value">
-          {{ dueDateControl.value | date : "mediumDate" }}
+          {{ dueDateControl.value | date : "fullDate" }}
           <button matChipRemove (click)="removeDueDate()">
             <mat-icon>close</mat-icon>
           </button>
