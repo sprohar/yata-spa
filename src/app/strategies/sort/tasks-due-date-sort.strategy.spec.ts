@@ -1,8 +1,8 @@
-import { SortOrder } from '../enums/sort-order.enum';
-import { Task } from '../models';
-import { TaskDueDateSortStrategy } from './task-due-date-sort.strategy';
+import { Task } from '../../models';
+import { SortOrder } from './sort-order.enum';
+import { TasksDueDateSortStrategy } from './tasks-due-date-sort.strategy';
 
-describe('TaskDueDateSortStrategy', () => {
+describe('TasksDueDateSortStrategy', () => {
   describe('#sort', () => {
     it('should sort tasks by due date in ascending order', () => {
       const tasks: Task[] = [
@@ -12,7 +12,7 @@ describe('TaskDueDateSortStrategy', () => {
         { id: 4, title: 'Task 3', dueDate: '2020-01-03', projectId: 1 },
       ];
 
-      const strategy = new TaskDueDateSortStrategy();
+      const strategy = new TasksDueDateSortStrategy();
       const sortedTasks = strategy.sort(tasks);
 
       expect(sortedTasks[0].id).toBe(2);
@@ -29,7 +29,7 @@ describe('TaskDueDateSortStrategy', () => {
         { id: 4, title: 'Task 3', dueDate: '2020-01-03', projectId: 1 },
       ];
 
-      const strategy = new TaskDueDateSortStrategy(SortOrder.DESC);
+      const strategy = new TasksDueDateSortStrategy(SortOrder.DESC);
       const sortedTasks = strategy.sort(tasks);
 
       expect(sortedTasks[0].id).toBe(4);

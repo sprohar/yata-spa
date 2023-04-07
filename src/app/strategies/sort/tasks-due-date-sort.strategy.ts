@@ -1,8 +1,8 @@
-import { SortOrder } from '../enums/sort-order.enum';
-import { SortStrategy } from '../interfaces/sort-strategy.interface';
-import { Task } from '../models';
+import { Task } from '../../models';
+import { SortOrder } from './sort-order.enum';
+import { SortStrategy } from './sort.strategy';
 
-export class TaskDueDateSortStrategy implements SortStrategy<Task> {
+export class TasksDueDateSortStrategy implements SortStrategy<Task> {
   private readonly sortOrder: SortOrder;
 
   constructor(sortOrder?: SortOrder) {

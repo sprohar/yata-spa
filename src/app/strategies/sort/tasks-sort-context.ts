@@ -1,7 +1,7 @@
-import { SortStrategy } from '../interfaces';
-import { Task } from '../models';
+import { Task } from '../../models';
+import { SortStrategy } from './sort.strategy';
 
-export class TaskListSortContext {
+export class TasksSortContext {
   private strategy: SortStrategy<Task>;
 
   constructor(strategy: SortStrategy<Task>) {

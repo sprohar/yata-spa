@@ -1,8 +1,8 @@
-import { SortOrder } from '../enums/sort-order.enum';
-import { SortStrategy } from '../interfaces/sort-strategy.interface';
-import { Task } from '../models';
+import { Task } from '../../models';
+import { SortOrder } from './sort-order.enum';
+import { SortStrategy } from './sort.strategy';
 
-export class TaskPrioritySortStrategy implements SortStrategy<Task> {
+export class TasksPrioritySortStrategy implements SortStrategy<Task> {
   private readonly sortOrder: SortOrder;
 
   constructor(sortOrder?: SortOrder) {
@@ -13,8 +13,8 @@ export class TaskPrioritySortStrategy implements SortStrategy<Task> {
     const tasks = [...data];
     return tasks.sort((a, b) => {
       return this.sortOrder === SortOrder.ASC
-      ? a.priority! - b.priority!
-      : b.priority! - a.priority!;
+        ? a.priority! - b.priority!
+        : b.priority! - a.priority!;
     });
   }
 }
