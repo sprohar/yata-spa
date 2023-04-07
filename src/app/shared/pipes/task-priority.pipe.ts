@@ -5,7 +5,7 @@ import { Priority } from '../../models';
   name: 'taskPriority',
 })
 export class TaskPriorityPipe implements PipeTransform {
-  transform(value: Priority, ...args: unknown[]): unknown {
+  transform(value: Priority, ..._args: unknown[]): unknown {
     switch (value) {
       case Priority.NONE:
         return 'None';

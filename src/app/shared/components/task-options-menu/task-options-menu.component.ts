@@ -46,9 +46,6 @@ export class TaskOptionsMenuComponent {
       })
     );
 
-    this.dialog.open(TaskDetailsDialogComponent, {
-      maxWidth: '600px',
-      width: '80%',
-    });
+    this.dialog.open(TaskDetailsDialogComponent);
   }
 }

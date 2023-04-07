@@ -7,13 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Priority, Project, Task } from '../../../models';
 import { KanbanViewActions } from '../../../store/actions';
 import { TaskDetailsActions } from '../../../store/actions/task-details.actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
+import { selectSections } from '../../../store/selectors';
 import { selectCurrentTask } from '../../../store/selectors/tasks.selectors';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
@@ -23,22 +23,21 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
   styleUrls: ['./task-details-dialog.component.scss'],
 })
 export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
+  private readonly destroy$ = new Subject<void>();
   readonly PRIORITY_NONE = Priority.NONE;
   readonly PRIORITY_HIGH = Priority.HIGH;
   readonly PRIORITY_MEDIUM = Priority.MEDIUM;
   readonly PRIORITY_LOW = Priority.LOW;
 
-  destroy$ = new Subject<void>();
   currentTask$?: Observable<Task | undefined>;
   projects$ = this.store.select(selectProjects);
+  sections$ = this.store.select(selectSections);
   isAddingSubtask = false;
   form!: FormGroup;
 
   constructor(
     private store: Store,
     private fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
     private dialog: MatDialog
   ) {}
 
@@ -66,13 +65,16 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     ref
       .afterClosed()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((dueDate) => {
-        this.dueDateControl.setValue(dueDate);
-        this.dueDateControl.markAsDirty();
+      .subscribe((dueDate: string | Date | null) => {
+        // When the user clicks the cancel button, an empty string is returned
+        if (typeof dueDate !== 'string') {
+          this.dueDateControl.setValue(dueDate);
+          this.dueDateControl.markAsDirty();
+        }
       });
   }
 
-  trackByProjectId(index: number, project: Project) {
+  trackByProjectId(_index: number, project: Project) {
     return project.id;
   }
 
@@ -84,11 +86,15 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
         [Validators.required, Validators.maxLength(Task.Title.MaxLength)],
       ],
       priority: [task.priority],
-      completed: [task.isCompleted],
+      isCompleted: [task.isCompleted],
+      isAllDay: [task.isAllDay],
       projectId: [task.projectId],
       dueDate: [],
       subtasks: this.fb.array([]),
-      content: [task.content, [Validators.maxLength(Task.Content.MaxLength)]],
+      description: [
+        task.content,
+        [Validators.maxLength(Task.Description.MaxLength)],
+      ],
     });
 
     if (task.dueDate) {
@@ -100,6 +106,10 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     return this.form.get('priority') as FormControl;
   }
 
+  get isCompletedControl() {
+    return this.form.get('isCompleted') as FormControl;
+  }
+
   get subtasksControls() {
     return this.form.get('subtasks') as FormArray;
   }
@@ -108,8 +118,14 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     return this.form.get('dueDate') as FormControl;
   }
 
-  handleGoBack() {
-    this.router.navigate(['../..'], { relativeTo: this.route });
+  get isAllDayControl() {
+    return this.form.get('isAllDay') as FormControl;
+  }
+
+  removeDueDate() {
+    this.form.patchValue({
+      dueDate: null,
+    });
   }
 
   handlePriorityChange(priority: Priority) {
