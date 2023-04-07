@@ -42,9 +42,7 @@ export class DateTimePickerDialogComponent implements OnInit {
 
   initSuggestedDates() {
     const today = new Date();
-    today.setHours(0);
-    today.setMinutes(0);
-    today.setSeconds(0);
+    today.setHours(0, 0, 0, 0);
 
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
@@ -100,6 +98,10 @@ export class DateTimePickerDialogComponent implements OnInit {
     this.date.setSeconds(0);
   }
 
+  handleSuggestedDateSelected(date: Date) {
+    this.dialogRef.close(date);
+  }
+
   handleSelectedDate(date: Date) {
     this.date = date;
   }
@@ -118,12 +120,12 @@ export class DateTimePickerDialogComponent implements OnInit {
     if (!this.date) {
       return;
     }
-    this.date.setSeconds(0);
 
-    // if (this.isAllDay(date)) {
-    //   date.setHours(23);
-    //   date.setMinutes(59);
-    // }
+    if (this.isAllDay(this.date)) {
+      this.date.setHours(23, 59, 59, 999);
+    } else {
+      this.date.setSeconds(0);
+    }
 
     this.dialogRef.close(this.date);
   }

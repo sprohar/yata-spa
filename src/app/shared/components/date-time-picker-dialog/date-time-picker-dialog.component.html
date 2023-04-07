@@ -13,7 +13,10 @@
   <!-- Suggested dates -->
   <div class="suggested-dates-list">
     <div class="suggested-date-item">
-      <button mat-button (click)="handleSelectedDate(suggestedDates.today)">
+      <button
+        mat-button
+        (click)="handleSuggestedDateSelected(suggestedDates.today)"
+      >
         <mat-icon class="icon">today</mat-icon>
         <span class="flex">
           <span>Today</span>
@@ -26,7 +29,10 @@
     </div>
 
     <div class="suggested-date-item">
-      <button mat-button (click)="handleSelectedDate(suggestedDates.tomorrow)">
+      <button
+        mat-button
+        (click)="handleSuggestedDateSelected(suggestedDates.tomorrow)"
+      >
         <mat-icon class="icon">sunny</mat-icon>
         <span>Tomorrow</span>
       </button>
@@ -38,7 +44,7 @@
     <div *ngIf="suggestedDates.thisWeekend" class="suggested-date-item">
       <button
         mat-button
-        (click)="handleSelectedDate(suggestedDates.thisWeekend)"
+        (click)="handleSuggestedDateSelected(suggestedDates.thisWeekend)"
       >
         <mat-icon class="icon">weekend</mat-icon>
         <span>This Weekend</span>
@@ -49,7 +55,10 @@
     </div>
 
     <div class="suggested-date-item">
-      <button mat-button (click)="handleSelectedDate(suggestedDates.nextWeek)">
+      <button
+        mat-button
+        (click)="handleSuggestedDateSelected(suggestedDates.nextWeek)"
+      >
         <mat-icon class="icon">next_week</mat-icon>
         <span>Next week</span>
       </button>
