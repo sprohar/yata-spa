@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
 import { TaskOptionsActions } from '../../../store/actions/task-options.actions';
@@ -16,7 +17,12 @@ export class TaskOptionsComponent {
 
   sections$ = this.store.select(selectMoveToSectionsOptions);
 
-  constructor(private store: Store, private dialog: MatDialog) {}
+  constructor(
+    private store: Store,
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   trackBySectionId(_index: number, section: Section) {
     return section.id;
@@ -39,12 +45,8 @@ export class TaskOptionsComponent {
   }
 
   handleViewTaskDetails() {
-    this.store.dispatch(
-      TaskOptionsActions.viewDetails({
-        task: this.task,
-      })
-    );
-
-    this.dialog.open(TaskDetailsDialogComponent);
+    this.router.navigate(['tasks', this.task.id!], {
+      relativeTo: this.route,
+    });
   }
 }

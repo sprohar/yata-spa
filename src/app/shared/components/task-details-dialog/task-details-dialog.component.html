@@ -159,15 +159,17 @@
               <mat-icon>add</mat-icon>
             </button>
           </div>
+          <mat-chip-listbox>
+            <mat-chip-option *ngFor="let tag of task.tags" color="primary">
+              {{ tag.name }}
+            </mat-chip-option>
+          </mat-chip-listbox>
         </div>
       </div>
     </div>
-
-    <mat-divider></mat-divider>
-
-    <div class="buttons-bar pt-1">
-      <button mat-stroked-button mat-dialog-close>Cancel</button>
-      <button mat-raised-button color="primary">Save</button>
-    </div>
   </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary">Save</button>
+  </mat-dialog-actions>
 </ng-container>

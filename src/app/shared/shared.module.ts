@@ -36,6 +36,7 @@ import { TasksOrderByOptionsComponent } from './components/tasks-order-by-option
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
+import { TaskDetailsDialogEntryComponent } from './components/task-details-dialog-entry/task-details-dialog-entry.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskListComponent,
     CreateCustomRecurrenceDialogComponent,
     TasksOrderByOptionsComponent,
+    TaskDetailsDialogEntryComponent,
   ],
   imports: [
     CommonModule,
@@ -92,6 +94,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     SectionComponent,
     TaskComponent,
     TaskListComponent,
+    TaskDetailsDialogEntryComponent,
   ],
 })
 export class SharedModule {}
