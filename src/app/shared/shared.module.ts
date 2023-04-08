@@ -29,7 +29,7 @@ import { SubtaskListItemComponent } from './components/subtask-list-item/subtask
 import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
 import { TaskDetailsDialogComponent } from './components/task-details-dialog/task-details-dialog.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
-import { TaskOptionsMenuComponent } from './components/task-options-menu/task-options-menu.component';
+import { TaskOptionsComponent } from './components/task-options/task-options.component';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
 import { TaskComponent } from './components/task/task.component';
 import { TasksOrderByOptionsComponent } from './components/tasks-order-by-options/tasks-order-by-options.component';
@@ -53,7 +53,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     SectionOptionsMenuComponent,
     CreateSectionDialogComponent,
     SectionPickerComponent,
-    TaskOptionsMenuComponent,
+    TaskOptionsComponent,
     EditProjectDialogComponent,
     SectionComponent,
     TaskComponent,
@@ -87,7 +87,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskDetailsDialogComponent,
     TaskPriorityPickerComponent,
     SectionOptionsMenuComponent,
-    TaskOptionsMenuComponent,
+    TaskOptionsComponent,
     DateTimePickerDialogComponent,
     SectionComponent,
     TaskComponent,

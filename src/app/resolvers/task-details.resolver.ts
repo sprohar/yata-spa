@@ -12,7 +12,7 @@ import { TaskResolverActions, YataApiActions } from '../store/actions';
 
 export const taskResolver: ResolveFn<Task> = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  _state: RouterStateSnapshot
 ) => {
   const store = inject(Store);
   const projectId = parseInt(route.paramMap.get('projectId')!);

@@ -10,7 +10,7 @@ import {
   EisenhowerMatrixActions,
   TaskCardActions,
   TaskDetailsActions,
-  TaskOptionsMenuActions,
+  TaskOptionsActions,
   TaskResolverActions,
   TasksOrderByOptionsActions,
   YataApiActions,
@@ -37,6 +37,13 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialTasksState,
+    on(YataApiActions.loadTaskSuccess, (state, action) => ({
+      ...state,
+      currentTaskId: action.task.id!,
+      tasks: state.tasks.map((t) =>
+        t.id === action.task.id ? action.task : t
+      ),
+    })),
     on(YataApiActions.loadTasksSuccess, (state, action) => ({
       ...state,
       tasks: action.tasks,
@@ -75,7 +82,6 @@ export const tasksFeature = createFeature({
       }
     }),
     on(
-      TaskOptionsMenuActions.viewTaskDetails,
       TaskCardActions.viewTaskDetails,
       EisenhowerMatrixActions.viewTaskDetails,
       (state, action) => ({

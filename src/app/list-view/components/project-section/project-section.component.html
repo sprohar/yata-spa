@@ -39,7 +39,7 @@
   >
     <ng-container *ngFor="let task of section.tasks">
       <yata-task cdkDrag [cdkDragData]="task" [task]="task">
-        <yata-task-options-menu [task]="task"></yata-task-options-menu>
+        <yata-task-options [task]="task"></yata-task-options>
       </yata-task>
     </ng-container>
   </yata-task-list>

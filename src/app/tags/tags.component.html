@@ -4,11 +4,15 @@
   </header>
   <main>
     <div *ngIf="sections$ | async as sections">
-      <yata-section *ngFor="let section of sections" [name]="section.name" [itemsCount]="section.tasks?.length">
+      <yata-section
+        *ngFor="let section of sections"
+        [name]="section.name"
+        [itemsCount]="section.tasks?.length"
+      >
         <ng-container *ngFor="let task of section.tasks">
           <yata-task-list>
             <yata-task [isDraggable]="false" [task]="task">
-              <yata-task-options-menu [task]="task"></yata-task-options-menu>
+              <yata-task-options [task]="task"></yata-task-options>
             </yata-task>
           </yata-task-list>
         </ng-container>

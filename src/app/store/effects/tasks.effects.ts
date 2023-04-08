@@ -8,6 +8,7 @@ import {
   map,
   mergeMap,
   of,
+  switchMap,
   tap,
 } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
@@ -20,9 +21,9 @@ import {
   ListViewActions,
   TaskCardActions,
   TaskDetailsActions,
+  TaskOptionsActions,
   YataApiActions,
 } from '../actions';
-import { TaskOptionsMenuActions } from '../actions/task-options-menu.actions';
 
 @Injectable()
 export class TasksEffects {
@@ -32,6 +33,24 @@ export class TasksEffects {
     private eisenhowerService: EisenhowerService,
     private snackbar: MatSnackBar
   ) {}
+
+  loadTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskOptionsActions.viewDetails),
+      switchMap((action) =>
+        this.tasksService.get(action.task.projectId, action.task.id!).pipe(
+          map((task) => YataApiActions.loadTaskSuccess({ task })),
+          catchError((error: ApiErrorResponse) =>
+            of(
+              YataApiActions.loadTaskError({
+                error,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
 
   create$ = createEffect(() =>
     this.actions$.pipe(
@@ -57,7 +76,7 @@ export class TasksEffects {
 
   duplicate$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TaskOptionsMenuActions.duplicateTask),
+      ofType(TaskOptionsActions.duplicateTask),
       concatMap((action) =>
         this.tasksService.duplicate(action.task).pipe(
           map((task) => YataApiActions.createTaskSuccess({ task })),
@@ -75,7 +94,7 @@ export class TasksEffects {
 
   delete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TaskOptionsMenuActions.deleteTask),
+      ofType(TaskOptionsActions.deleteTask),
       mergeMap((action) =>
         this.tasksService.delete(action.task).pipe(
           map(() => YataApiActions.deleteTaskSuccess({ task: action.task })),

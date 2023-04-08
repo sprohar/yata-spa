@@ -18,7 +18,7 @@
         >
           <ng-container *ngFor="let task of map.value">
             <yata-task cdkDrag [task]="task" [cdkDragData]="task">
-              <yata-task-options-menu [task]="task"></yata-task-options-menu>
+              <yata-task-options [task]="task"></yata-task-options>
             </yata-task>
           </ng-container>
         </yata-task-list>
@@ -34,7 +34,7 @@
         <yata-task-list #list cdkDropList>
           <ng-container *ngFor="let task of completedTasks">
             <yata-task [task]="task" [isDraggable]="false">
-              <yata-task-options-menu [task]="task"></yata-task-options-menu>
+              <yata-task-options [task]="task"></yata-task-options>
             </yata-task>
           </ng-container>
         </yata-task-list>
