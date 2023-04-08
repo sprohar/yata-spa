@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {
   MatSnackBarModule,
@@ -39,7 +40,6 @@ import {
   ProjectsEffects,
   SectionsEffects,
   StorageEffects,
-  SubtasksEffects,
   TasksEffects,
 } from './store/effects/';
 import {
@@ -49,7 +49,6 @@ import {
   tasksReducer,
 } from './store/reducers/';
 import { TagsModule } from './tags/tags.module';
-import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -81,7 +80,6 @@ import { MatMenuModule } from '@angular/material/menu';
       ProjectsEffects,
       SectionsEffects,
       TasksEffects,
-      SubtasksEffects,
       StorageEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
@@ -112,4 +110,4 @@ import { MatMenuModule } from '@angular/material/menu';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

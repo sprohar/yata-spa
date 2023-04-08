@@ -58,19 +58,22 @@
 
         <!-- Subtasks -->
         <div class="subtasks-container" formArrayName="subtasks">
-          <ng-container *ngIf="task.subtasks && task.subtasks.length > 0">
-            <div class="subtasks-container">
-              <p>Subtasks</p>
-              <yata-subtask-list [subtasks]="task.subtasks"></yata-subtask-list>
-            </div>
-          </ng-container>
+          <div
+            class="subtasks-container"
+            *ngIf="task.subtasks && task.subtasks.length"
+          >
+            <h5>Subtasks</h5>
+            <!-- <yata-subtask-list [subtasks]="task.subtasks"></yata-subtask-list> -->
+            <yata-task-list>
+              <yata-task
+                *ngFor="let subtask of task.subtasks"
+                [task]="subtask"
+              ></yata-task>
+            </yata-task-list>
+          </div>
 
           <ng-container *ngIf="isAddingSubtask">
-            <yata-create-subtask
-              [task]="task"
-              (saved)="isAddingSubtask = false"
-              (cancel)="isAddingSubtask = false"
-            ></yata-create-subtask>
+            <p>Need to create a component to add a subtask</p>
           </ng-container>
 
           <ng-container *ngIf="!isAddingSubtask">

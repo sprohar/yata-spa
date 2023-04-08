@@ -17,7 +17,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { CreateCustomRecurrenceDialogComponent } from './components/create-custom-recurrence-dialog/create-custom-recurrence-dialog.component';
 import { CreateSectionDialogComponent } from './components/create-section-dialog/create-section-dialog.component';
-import { CreateSubtaskComponent } from './components/create-subtask/create-subtask.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { DateTimePickerDialogComponent } from './components/date-time-picker-dialog/date-time-picker-dialog.component';
 import { EditProjectDialogComponent } from './components/edit-project-dialog/edit-project-dialog.component';
@@ -25,8 +24,7 @@ import { EditSectionDialogComponent } from './components/edit-section-dialog/edi
 import { SectionOptionsMenuComponent } from './components/section-options-menu/section-options-menu.component';
 import { SectionPickerComponent } from './components/section-picker/section-picker.component';
 import { SectionComponent } from './components/section/section.component';
-import { SubtaskListItemComponent } from './components/subtask-list-item/subtask-list-item.component';
-import { SubtaskListComponent } from './components/subtask-list/subtask-list.component';
+import { TaskDetailsDialogEntryComponent } from './components/task-details-dialog-entry/task-details-dialog-entry.component';
 import { TaskDetailsDialogComponent } from './components/task-details-dialog/task-details-dialog.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskOptionsComponent } from './components/task-options/task-options.component';
@@ -36,7 +34,6 @@ import { TasksOrderByOptionsComponent } from './components/tasks-order-by-option
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
-import { TaskDetailsDialogEntryComponent } from './components/task-details-dialog-entry/task-details-dialog-entry.component';
 
 @NgModule({
   declarations: [
@@ -46,9 +43,6 @@ import { TaskDetailsDialogEntryComponent } from './components/task-details-dialo
     EditSectionDialogComponent,
     TaskDetailsDialogComponent,
     TaskPriorityPickerComponent,
-    SubtaskListComponent,
-    SubtaskListItemComponent,
-    CreateSubtaskComponent,
     TimeInputComponent,
     DateTimePickerDialogComponent,
     SectionOptionsMenuComponent,

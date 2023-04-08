@@ -1,6 +1,6 @@
 import { createActionGroup, props } from '@ngrx/store';
 import { ApiErrorResponse } from '../../error/api-error-response';
-import { Project, Section, Subtask, Tag, Task } from '../../models';
+import { Project, Section, Tag, Task } from '../../models';
 
 export const YataApiActions = createActionGroup({
   source: 'Yata API',
@@ -45,13 +45,13 @@ export const YataApiActions = createActionGroup({
     'Mark Task As Incomplete Success': props<{ task: Task }>(),
     'Mark Task As Incomplete Error': props<{ error: ApiErrorResponse }>(),
     // Subtasks
-    'Create Subtask Success': props<{ subtask: Subtask }>(),
+    'Create Subtask Success': props<{ subtask: Task }>(),
     'Create Subtask Error': props<{ error: ApiErrorResponse }>(),
-    'Delete Subtask Success': props<{ subtask: Subtask }>(),
+    'Delete Subtask Success': props<{ subtask: Task }>(),
     'Delete Subtask Error': props<{ error: ApiErrorResponse }>(),
-    'Load Subtask Success': props<{ subtask: Subtask }>(),
+    'Load Subtask Success': props<{ subtask: Task }>(),
     'Load Subtask Error': props<{ error: ApiErrorResponse }>(),
-    'Update Subtask Success': props<{ subtask: Subtask }>(),
+    'Update Subtask Success': props<{ subtask: Task }>(),
     'Update Subtask Error': props<{ error: ApiErrorResponse }>(),
     // Tags
     'Create Tag Success': props<{ tag: Tag }>(),
