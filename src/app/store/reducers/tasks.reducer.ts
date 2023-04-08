@@ -128,21 +128,12 @@ export const tasksFeature = createFeature({
         tasks,
       };
     }),
-    on(YataApiActions.loadTaskSuccess, (state, action) => {
-      const tasks: Task[] = [];
-      for (const task of state.tasks) {
-        if (task.id === action.task.id) {
-          tasks.push(action.task);
-        } else {
-          tasks.push(task);
-        }
-      }
-
-      return {
-        ...state,
-        tasks,
-      };
-    }),
+    on(YataApiActions.loadTaskSuccess, (state, action) => ({
+      ...state,
+      tasks: state.tasks.map((task) =>
+        task.id === action.task.id ? action.task : task
+      ),
+    })),
     on(TaskResolverActions.setCurrentTaskId, (state, action) => ({
       ...state,
       currentTaskId: action.taskId,
