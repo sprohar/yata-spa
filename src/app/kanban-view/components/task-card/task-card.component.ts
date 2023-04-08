@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Priority, Task } from '../../../models';
-import { TaskDetailsDialogComponent } from '../../../shared/components/task-details-dialog/task-details-dialog.component';
 import { TaskCardActions } from '../../../store/actions';
 
 @Component({
@@ -18,9 +16,9 @@ export class TaskCardComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private store: Store,
-    private fb: FormBuilder,
-    private dialog: MatDialog
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -55,12 +53,6 @@ export class TaskCardComponent implements OnInit {
   }
 
   handleViewTask() {
-    this.store.dispatch(
-      TaskCardActions.viewTaskDetails({
-        taskId: this.task.id!,
-      })
-    );
-
-    this.dialog.open(TaskDetailsDialogComponent);
+    this.router.navigate(['tasks', this.task.id!], { relativeTo: this.route });
   }
 }

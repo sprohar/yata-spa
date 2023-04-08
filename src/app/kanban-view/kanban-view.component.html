@@ -35,10 +35,7 @@
                 ></yata-create-kanban-column>
               </ng-container>
               <ng-template #hideAddKanbanColumnComponent>
-                <button
-                  mat-stroked-button
-                  (click)="handleAddColumn()"
-                >
+                <button mat-stroked-button (click)="handleAddColumn()">
                   <mat-icon>add</mat-icon>
                   <span>Add column</span>
                 </button>
@@ -50,3 +47,4 @@
     </div>
   </div>
 </ng-container>
+<router-outlet></router-outlet>
