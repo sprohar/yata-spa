@@ -6,11 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { TaskOptionsMenuComponent } from './task-options-menu.component';
+import { TaskOptionsComponent } from './task-options.component';
 
-describe('TaskOptionsMenuComponent', () => {
-  let component: TaskOptionsMenuComponent;
-  let fixture: ComponentFixture<TaskOptionsMenuComponent>;
+describe('TaskOptionsComponent', () => {
+  let component: TaskOptionsComponent;
+  let fixture: ComponentFixture<TaskOptionsComponent>;
   let dialog: jasmine.SpyObj<MatDialog>;
   let store: MockStore;
 
@@ -18,7 +18,7 @@ describe('TaskOptionsMenuComponent', () => {
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [TaskOptionsMenuComponent],
+      declarations: [TaskOptionsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [MatDialogModule, MatMenuModule, MatButtonModule, MatIconModule],
       providers: [
@@ -30,7 +30,7 @@ describe('TaskOptionsMenuComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TaskOptionsMenuComponent);
+    fixture = TestBed.createComponent(TaskOptionsComponent);
     store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
     fixture.detectChanges();

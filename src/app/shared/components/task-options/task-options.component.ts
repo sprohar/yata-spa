@@ -2,17 +2,16 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
-import { TaskOptionsMenuActions } from '../../../store/actions/task-options-menu.actions';
+import { TaskOptionsActions } from '../../../store/actions/task-options.actions';
 import { selectMoveToSectionsOptions } from '../../../store/selectors';
 import { TaskDetailsDialogComponent } from '../task-details-dialog/task-details-dialog.component';
 
 @Component({
-  selector: 'yata-task-options-menu',
-  templateUrl: './task-options-menu.component.html',
-  styleUrls: ['./task-options-menu.component.scss'],
+  selector: 'yata-task-options',
+  templateUrl: './task-options.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskOptionsMenuComponent {
+export class TaskOptionsComponent {
   @Input() task!: Task;
 
   sections$ = this.store.select(selectMoveToSectionsOptions);
@@ -25,7 +24,7 @@ export class TaskOptionsMenuComponent {
 
   handleDelete() {
     this.store.dispatch(
-      TaskOptionsMenuActions.deleteTask({
+      TaskOptionsActions.deleteTask({
         task: this.task,
       })
     );
@@ -33,7 +32,7 @@ export class TaskOptionsMenuComponent {
 
   handleDuplicate() {
     this.store.dispatch(
-      TaskOptionsMenuActions.duplicateTask({
+      TaskOptionsActions.duplicateTask({
         task: this.task,
       })
     );
@@ -41,8 +40,8 @@ export class TaskOptionsMenuComponent {
 
   handleViewTaskDetails() {
     this.store.dispatch(
-      TaskOptionsMenuActions.viewTaskDetails({
-        taskId: this.task.id!,
+      TaskOptionsActions.viewDetails({
+        task: this.task,
       })
     );
 
