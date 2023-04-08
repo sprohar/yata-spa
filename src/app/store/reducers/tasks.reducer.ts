@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { Subtask, Task } from '../../models';
+import { Task } from '../../models';
 import {
   SortOrder,
   TasksDueDateSortStrategy,
@@ -113,21 +113,12 @@ export const tasksFeature = createFeature({
       ...state, // TODO: Maintain sort order
       tasks: action.project.tasks ?? [],
     })),
-    on(YataApiActions.updateTaskSuccess, (state, action) => {
-      const tasks: Task[] = [];
-      for (const task of state.tasks) {
-        if (task.id === action.task.id) {
-          tasks.push(action.task);
-        } else {
-          tasks.push(task);
-        }
-      }
-
-      return {
-        ...state,
-        tasks,
-      };
-    }),
+    on(YataApiActions.updateTaskSuccess, (state, action) => ({
+      ...state,
+      tasks: state.tasks.map((task) =>
+        task.id === action.task.id ? action.task : task
+      ),
+    })),
     on(YataApiActions.loadTaskSuccess, (state, action) => ({
       ...state,
       tasks: state.tasks.map((task) =>
@@ -143,67 +134,46 @@ export const tasksFeature = createFeature({
       currentTaskId: null,
     })),
     on(YataApiActions.createSubtaskSuccess, (state, action) => {
-      const tasks: Task[] = [];
-      for (const task of state.tasks) {
-        if (task.id === action.subtask.taskId) {
-          tasks.push({
-            ...task,
-            subtasks: task.subtasks?.concat(action.subtask) ?? [action.subtask],
-          });
-        } else {
-          tasks.push(task);
-        }
-      }
-
       return {
         ...state,
-        tasks,
+        tasks: state.tasks.map((task) => {
+          if (task.id !== action.subtask.parentId) return task;
+          // else: we found the parent!
+          return {
+            ...task,
+            subtasks: task.subtasks
+              ? task.subtasks.concat(action.subtask)
+              : [action.subtask],
+          } as Task;
+        }),
       };
     }),
     on(YataApiActions.deleteSubtaskSuccess, (state, action) => {
-      const tasks: Task[] = [];
-      for (const task of state.tasks) {
-        if (task.id === action.subtask.taskId) {
-          tasks.push({
-            ...task,
-            subtasks: task.subtasks?.filter((s) => s.id !== action.subtask.id),
-          });
-        } else {
-          tasks.push(task);
-        }
-      }
-
       return {
         ...state,
-        tasks,
+        tasks: state.tasks.map((task) => {
+          if (task.id !== action.subtask.parentId) return task;
+          return {
+            ...task,
+            subtasks: task.subtasks?.filter(
+              (subtask) => subtask.id !== action.subtask.id
+            ),
+          };
+        }),
       };
     }),
     on(YataApiActions.updateSubtaskSuccess, (state, action) => {
-      const tasks: Task[] = [];
-      for (const task of state.tasks) {
-        if (task.id === action.subtask.taskId) {
-          const subtasks: Subtask[] = [];
-
-          for (const subtask of task.subtasks!) {
-            if (subtask.id === action.subtask.id) {
-              subtasks.push(action.subtask);
-            } else {
-              subtasks.push(subtask);
-            }
-          }
-
-          tasks.push({
-            ...task,
-            subtasks,
-          });
-        } else {
-          tasks.push(task);
-        }
-      }
-
       return {
         ...state,
-        tasks,
+        tasks: state.tasks.map((task) => {
+          if (task.id !== action.subtask.parentId) return task;
+          return {
+            ...task,
+            subtasks: task.subtasks?.map((subtask) =>
+              subtask.id === action.subtask.id ? action.subtask : subtask
+            ),
+          };
+        }),
       };
     })
   ),
