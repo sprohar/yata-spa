@@ -10,7 +10,6 @@ import {
   EisenhowerMatrixActions,
   TaskCardActions,
   TaskDetailsActions,
-  TaskOptionsActions,
   TaskResolverActions,
   TasksOrderByOptionsActions,
   YataApiActions,

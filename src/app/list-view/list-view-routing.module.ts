@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { projectResolver } from '../resolvers';
+import { taskResolver } from '../resolvers/task-details.resolver';
+import { TaskDetailsDialogEntryComponent } from '../shared/components/task-details-dialog-entry/task-details-dialog-entry.component';
 import { ListViewComponent } from './list-view.component';
 
 const routes: Routes = [
@@ -10,6 +12,15 @@ const routes: Routes = [
     resolve: {
       project: projectResolver,
     },
+    children: [
+      {
+        path: 'tasks/:taskId',
+        component: TaskDetailsDialogEntryComponent,
+        resolve: {
+          task: taskResolver,
+        },
+      },
+    ],
   },
 ];
 

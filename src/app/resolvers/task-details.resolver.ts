@@ -13,7 +13,7 @@ import { Task } from '../models';
 import { TasksService } from '../services/tasks.service';
 import { YataApiActions } from '../store/actions';
 
-export const taskResolver: ResolveFn<Task> = (
+export const taskDetailsResolver: ResolveFn<Task> = (
   route: ActivatedRouteSnapshot,
   _state: RouterStateSnapshot
 ) => {
