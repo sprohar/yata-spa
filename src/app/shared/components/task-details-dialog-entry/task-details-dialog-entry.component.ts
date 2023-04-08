@@ -34,7 +34,12 @@ export class TaskDetailsDialogEntryComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.router.navigate(['../..'], { relativeTo: this.route });
+        const url = this.router.url;
+        if (url.includes('matrix')) {
+          this.router.navigate(['/app/matrix']);
+        } else {
+          this.router.navigate(['../..'], { relativeTo: this.route });
+        }
       });
   }
 

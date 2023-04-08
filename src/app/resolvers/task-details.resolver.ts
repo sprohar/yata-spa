@@ -18,7 +18,9 @@ export const taskDetailsResolver: ResolveFn<Task> = (
   _state: RouterStateSnapshot
 ) => {
   const store = inject(Store);
-  const projectId = parseInt(route.parent?.paramMap.get('projectId')!);
+  const projectId = parseInt(
+    route.paramMap.get('projectId') || route.parent?.paramMap.get('projectId')!
+  );
   const taskId = parseInt(route.paramMap.get('taskId')!);
   const router = inject(Router);
   const thisRoute = inject(ActivatedRoute);

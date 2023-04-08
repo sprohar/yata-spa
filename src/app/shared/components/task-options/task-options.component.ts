@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
 import { TaskOptionsActions } from '../../../store/actions/task-options.actions';
 import { selectMoveToSectionsOptions } from '../../../store/selectors';
-import { TaskDetailsDialogComponent } from '../task-details-dialog/task-details-dialog.component';
 
 @Component({
   selector: 'yata-task-options',
@@ -14,12 +12,10 @@ import { TaskDetailsDialogComponent } from '../task-details-dialog/task-details-
 })
 export class TaskOptionsComponent {
   @Input() task!: Task;
-
   sections$ = this.store.select(selectMoveToSectionsOptions);
 
   constructor(
     private store: Store,
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -45,8 +41,15 @@ export class TaskOptionsComponent {
   }
 
   handleViewTaskDetails() {
-    this.router.navigate(['tasks', this.task.id!], {
-      relativeTo: this.route,
-    });
+    const url = this.router.url;
+    if (url.split('/').includes('matrix')) {
+      this.router.navigate(['p', this.task.projectId, 'tasks', this.task.id!], {
+        relativeTo: this.route,
+      });
+    } else {
+      this.router.navigate(['tasks', this.task.id!], {
+        relativeTo: this.route,
+      });
+    }
   }
 }
