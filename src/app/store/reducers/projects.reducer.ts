@@ -1,6 +1,10 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Project } from '../../models';
-import { SidenavActions, YataApiActions } from '../actions';
+import {
+  EisenhowerMatrixActions,
+  SidenavActions,
+  YataApiActions,
+} from '../actions';
 
 export interface ProjectsState {
   projects: Project[];
@@ -12,25 +16,14 @@ export const projectsInitialState: ProjectsState = {
   currentProjectId: null,
 };
 
-function updateProject(
-  projects: Project[],
-  updatedProject: Project
-): Project[] {
-  const collection: Project[] = [];
-  for (const project of projects) {
-    if (project.id === updatedProject.id) {
-      collection.push(updatedProject);
-    } else {
-      collection.push(project);
-    }
-  }
-  return collection;
-}
-
 export const projectsFeature = createFeature({
   name: 'projects',
   reducer: createReducer(
     projectsInitialState,
+    on(EisenhowerMatrixActions.onInit, (state, _) => ({
+      ...state,
+      currentProjectId: null,
+    })),
     on(SidenavActions.selectTag, (state, _action) => ({
       projects: state.projects,
       currentProjectId: null,
@@ -55,7 +48,9 @@ export const projectsFeature = createFeature({
     })),
     on(YataApiActions.updateProjectSuccess, (state, action) => ({
       currentProjectId: state.currentProjectId,
-      projects: updateProject(state.projects, action.project),
+      projects: state.projects.map((project) =>
+        project.id === action.project.id ? action.project : project
+      ),
     }))
   ),
 });
