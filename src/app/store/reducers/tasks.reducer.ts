@@ -138,7 +138,6 @@ export const tasksFeature = createFeature({
         ...state,
         tasks: state.tasks.map((task) => {
           if (task.id !== action.subtask.parentId) return task;
-          // else: we found the parent!
           return {
             ...task,
             subtasks: task.subtasks
@@ -158,7 +157,7 @@ export const tasksFeature = createFeature({
             subtasks: task.subtasks?.filter(
               (subtask) => subtask.id !== action.subtask.id
             ),
-          };
+          } as Task;
         }),
       };
     }),
@@ -172,7 +171,7 @@ export const tasksFeature = createFeature({
             subtasks: task.subtasks?.map((subtask) =>
               subtask.id === action.subtask.id ? action.subtask : subtask
             ),
-          };
+          } as Task;
         }),
       };
     })

@@ -11,7 +11,7 @@ export function groupTasksBySections(
   };
 
   return tasks.reduce((map, task) => {
-    if (task.sectionId === undefined) {
+    if (task.sectionId === undefined || task.sectionId === null) {
       const value = map.get(unsectioned);
       value ? value.push(task) : map.set(unsectioned, [task]);
       return map;
