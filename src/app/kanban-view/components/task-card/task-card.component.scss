@@ -18,40 +18,18 @@
 .task {
   min-height: 56px;
   padding: 8px 16px;
-
-  .task-content-row {
-    display: flex;
-    align-items: center;
-    column-gap: 16px;
-  }
-
-  .icons {
-    display: flex;
-    column-gap: 8px;
-    margin-left: 56px;
-
-    .icon {
-      transform: scale(0.7);
-      opacity: 0.54;
-    }
-
-    .icon:focus {
-      opacity: 0.87;
-    }
-  }
 }
 
 @media (prefers-color-scheme: light) {
   .border-left-red {
     border-left-color: colors.$mat-red-700 !important;
   }
-  
+
   .border-left-blue {
     border-left-color: colors.$mat-blue-700 !important;
   }
-  
+
   .border-left-yellow {
     border-left-color: colors.$mat-yellow-700 !important;
   }
 }
-

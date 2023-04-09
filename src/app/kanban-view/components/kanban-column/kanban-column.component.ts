@@ -1,7 +1,9 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
+import { CreateTaskDialogComponent } from '../../../shared/components/create-task-dialog/create-task-dialog.component';
 import { KanbanViewActions } from '../../../store/actions';
 
 @Component({
@@ -13,20 +15,29 @@ export class KanbanColumnComponent implements OnInit {
   @Input() section!: Section;
   completedTasks?: Task[];
   pendingTasks?: Task[];
+  isAddingTask = false;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     if (!this.section) {
       throw new Error('"section" is undefined.');
     }
 
-    this.completedTasks = this.section.tasks?.filter(task => task.isCompleted);
-    this.pendingTasks = this.section.tasks?.filter(task => !task.isCompleted);
+    this.completedTasks = this.section.tasks?.filter(
+      (task) => task.isCompleted
+    );
+    this.pendingTasks = this.section.tasks?.filter((task) => !task.isCompleted);
   }
 
   trackByTaskId(index: number, task: Task) {
     return task.id;
+  }
+
+  openCreateTaskDialog() {
+    this.dialog.open(CreateTaskDialogComponent, {
+      data: this.section,
+    });
   }
 
   handleTaskCardDrop(event: CdkDragDrop<Section, Section, Task>) {

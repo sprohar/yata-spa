@@ -11,17 +11,18 @@
         {{ completedTasks.length }}
       </p>
     </div>
-    <yata-section-options-menu
-      [section]="section"
-      [direction]="'vertical'"
-    ></yata-section-options-menu>
+    <div class="flex">
+      <button mat-icon-button title="Add task" (click)="openCreateTaskDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <yata-section-options-menu
+        [section]="section"
+        [direction]="'vertical'"
+      ></yata-section-options-menu>
+    </div>
   </div>
 
   <div class="tasks-container">
-    <div class="create-task-container">
-      <!-- TODO: Add task -->
-    </div>
-
     <ul
       #taskList
       class="task-list"
