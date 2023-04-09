@@ -39,7 +39,6 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
   declarations: [
     TaskPriorityPipe,
     ViewHeaderComponent,
-    CreateTaskComponent,
     EditSectionDialogComponent,
     TaskDetailsDialogComponent,
     TaskPriorityPickerComponent,
@@ -56,6 +55,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     CreateCustomRecurrenceDialogComponent,
     TasksOrderByOptionsComponent,
     TaskDetailsDialogEntryComponent,
+    CreateTaskComponent,
   ],
   imports: [
     CommonModule,
@@ -78,7 +78,6 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
   exports: [
     TaskPriorityPipe,
     ViewHeaderComponent,
-    CreateTaskComponent,
     EditSectionDialogComponent,
     TaskDetailsDialogComponent,
     TaskPriorityPickerComponent,
@@ -89,6 +88,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskComponent,
     TaskListComponent,
     TaskDetailsDialogEntryComponent,
+    CreateTaskComponent,
   ],
 })
 export class SharedModule {}

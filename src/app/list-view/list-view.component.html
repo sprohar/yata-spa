@@ -1,9 +1,5 @@
 <yata-view-header></yata-view-header>
 <main>
-  <div class="create-task-container">
-    <yata-create-task></yata-create-task>
-  </div>
-
   <div class="sections-wrapper" *ngIf="groupedTasks$ | async as groupedTasks">
     <div cdkDropListGroup>
       <yata-section
