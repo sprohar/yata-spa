@@ -51,7 +51,7 @@ describe('TaskListComponent', () => {
         },
       };
 
-      component.handleDropped(event as CdkDragDrop<any, any>);
+      component.handleDropped({ event: event as CdkDragDrop<any, any> });
       expect(store.dispatch).not.toHaveBeenCalled();
     });
 
@@ -75,7 +75,7 @@ describe('TaskListComponent', () => {
         },
       };
 
-      component.handleDropped(event as CdkDragDrop<any, any>);
+      component.handleDropped({ event: event as CdkDragDrop<any, any> });
       expect(store.dispatch).toHaveBeenCalled();
     });
   });

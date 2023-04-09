@@ -3,9 +3,12 @@ import { Priority, Project, Task } from '../../models';
 import {
   groupTasksByDueDate,
   groupTasksByPriority,
-  groupTasksBySections,
+  groupProjectTasksBySection,
 } from '../../strategies/group-by';
-import { selectProjects } from '../reducers/projects.reducer';
+import {
+  selectCurrentProjectId,
+  selectProjects,
+} from '../reducers/projects.reducer';
 import { selectSections } from '../reducers/sections.reducer';
 import {
   selectCurrentTaskId,
@@ -109,14 +112,15 @@ export const selectTasksGroupByProject = createSelector(
     }, new Map<Project, Task[]>())
 );
 
-export const selectGroupedTasks = createSelector(
+export const selectProjectTasksGroupedBySection = createSelector(
   selectTasks,
   selectSections,
   selectOrderBy,
-  (tasks, sections, orderBy) => {
+  selectCurrentProjectId,
+  (tasks, sections, orderBy, currentProjectId) => {
     // Group by SECTION is the default
     if (orderBy === null || orderBy.attribute === Task.OrderBy.SECTION) {
-      return groupTasksBySections(sections, tasks);
+      return groupProjectTasksBySection(sections, tasks, currentProjectId!);
     }
 
     // Group by DUE_DATE

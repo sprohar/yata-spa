@@ -11,7 +11,7 @@ import { ListViewActions } from '../../../store/actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent {
-  constructor(private store: Store) { }
+  constructor(private store: Store) {}
 
   handleDropped(
     event: CdkDragDrop<Section, Section | any | undefined, Task | any>
@@ -19,7 +19,10 @@ export class TaskListComponent {
     const source = event.previousContainer.data;
     const target = event.container.data;
     const task = event.item.data;
-    if (source?.id === target?.id) return;
+    console.log('source', source);
+    console.log('target', target);
+    console.log(task);
+    if (source && target && source.id === target.id) return;
 
     this.store.dispatch(
       ListViewActions.moveTaskToSection({
