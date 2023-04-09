@@ -11,7 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Project, Section } from '../../../models';
 import { ConfirmationDialogService } from '../../../services/confirmation-dialog.service';
 import { SectionOptionsMenuActions } from '../../../store/actions';
-import { selectProjectsDropdown } from '../../../store/selectors';
+import { selectProjects } from '../../../store/selectors';
 import { EditSectionDialogComponent } from '../edit-section-dialog/edit-section-dialog.component';
 
 type MenuOptionsDirection = 'vertical' | 'horizontal';
@@ -28,7 +28,7 @@ export class SectionOptionsMenuComponent implements OnDestroy, OnInit {
   @Input() direction: MenuOptionsDirection = 'vertical';
   @Input() section?: Section;
 
-  projects$ = this.store.select(selectProjectsDropdown);
+  projects$ = this.store.select(selectProjects);
 
   constructor(
     private store: Store,

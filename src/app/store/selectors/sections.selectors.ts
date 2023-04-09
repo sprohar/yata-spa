@@ -1,6 +1,9 @@
 import { createSelector } from '@ngrx/store';
-import { Section } from '../../models';
-import { selectCurrentProjectId } from '../reducers/projects.reducer';
+import { Project, Section } from '../../models';
+import {
+  selectCurrentProjectId,
+  selectProjects,
+} from '../reducers/projects.reducer';
 import {
   selectCurrentSectionId,
   selectSections,
@@ -60,4 +63,17 @@ export const selectMoveToSectionsOptions = createSelector(
     currentSectionId === null
       ? []
       : sections.filter((section) => section.id !== currentSectionId)
+);
+
+export const selectSectionsGroupedByProject = createSelector(
+  selectSections,
+  selectProjects,
+  (sections, projects) =>
+    projects.reduce((map, project) => {
+      map.set(
+        project,
+        sections.filter((section) => section.projectId === project.id)
+      );
+      return map;
+    }, new Map<Project, Array<Section>>())
 );
