@@ -9,12 +9,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 
 import { SharedModule } from '../shared/shared.module';
-import { ProjectSectionComponent } from './components/project-section/project-section.component';
 import { ListViewRoutingModule } from './list-view-routing.module';
 import { ListViewComponent } from './list-view.component';
 
 @NgModule({
-  declarations: [ListViewComponent, ProjectSectionComponent],
+  declarations: [ListViewComponent],
   imports: [
     CommonModule,
     ListViewRoutingModule,
