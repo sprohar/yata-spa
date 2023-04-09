@@ -1,5 +1,10 @@
 <ng-container *ngIf="projects$ | async as projects">
-  <button mat-icon-button [matMenuTriggerFor]="options" title="Section options">
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="options"
+    title="Section options"
+    (click)="$event.stopPropagation()"
+  >
     <mat-icon>{{ icon }}</mat-icon>
   </button>
   <mat-menu #options="matMenu">
