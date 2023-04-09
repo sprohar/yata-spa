@@ -154,7 +154,7 @@ export const tasksFeature = createFeature({
           if (task.id !== action.subtask.parentId) return task;
           return {
             ...task,
-            subtasks: task.subtasks?.filter(
+            subtasks: task.subtasks!.filter(
               (subtask) => subtask.id !== action.subtask.id
             ),
           } as Task;

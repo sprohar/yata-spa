@@ -63,12 +63,16 @@
             *ngIf="task.subtasks && task.subtasks.length"
           >
             <h5>Subtasks</h5>
-            <!-- <yata-subtask-list [subtasks]="task.subtasks"></yata-subtask-list> -->
             <yata-task-list>
               <yata-task
                 *ngFor="let subtask of task.subtasks"
                 [task]="subtask"
-              ></yata-task>
+                [isDraggable]="false"
+              >
+                <button mat-icon-button (click)="handleDeleteSubtask(subtask)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </yata-task>
             </yata-task-list>
           </div>
 
@@ -106,46 +110,44 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-divider></mat-divider>
-
           <h5>Due date</h5>
-          <ng-container *ngIf="dueDateControl.value; else dueDateIsNull">
-            <div class="flex space-between align-items-center">
-              <button
-                mat-button
-                (click)="openDateTimePickerDialog()"
-                title="Due date"
-              >
-                <ng-container
-                  *ngIf="isAllDayControl.value; else renderTimePortion"
+          <div class="due-date-container">
+            <ng-container *ngIf="dueDateControl.value; else dueDateIsNull">
+              <div class="flex space-between align-items-center">
+                <button
+                  mat-button
+                  (click)="openDateTimePickerDialog()"
+                  title="Due date"
                 >
-                  {{ dueDateControl.value | date : "mediumDate" }}
-                </ng-container>
-                <ng-template #renderTimePortion>
-                  {{ dueDateControl.value | date : "MMM d, y, hh:mm a" }}
-                </ng-template>
-              </button>
+                  <ng-container
+                    *ngIf="isAllDayControl.value; else renderTimePortion"
+                  >
+                    {{ dueDateControl.value | date : "mediumDate" }}
+                  </ng-container>
+                  <ng-template #renderTimePortion>
+                    {{ dueDateControl.value | date : "MMM d, y, hh:mm a" }}
+                  </ng-template>
+                </button>
+                <button
+                  mat-icon-button
+                  title="Remove due date"
+                  (click)="removeDueDate()"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </ng-container>
+            <ng-template #dueDateIsNull>
               <button
-                mat-icon-button
-                title="Remove due date"
-                (click)="removeDueDate()"
+                mat-stroked-button
+                (click)="openDateTimePickerDialog()"
+                title="Set a due date"
               >
-                <mat-icon>close</mat-icon>
+                <mat-icon>event</mat-icon>
+                <span>Date & Repeat</span>
               </button>
-            </div>
-          </ng-container>
-          <ng-template #dueDateIsNull>
-            <button
-              mat-stroked-button
-              (click)="openDateTimePickerDialog()"
-              title="Set a due date"
-            >
-              <mat-icon>event</mat-icon>
-              <span>Date & Repeat</span>
-            </button>
-          </ng-template>
-
-          <mat-divider></mat-divider>
+            </ng-template>
+          </div>
 
           <h5>Priority</h5>
           <div class="flex align-items-center">
@@ -155,6 +157,8 @@
             ></yata-task-priority-picker>
             {{ priorityControl.value | taskPriority }}
           </div>
+
+          <mat-divider></mat-divider>
 
           <div class="flex space-between align-items-center">
             <h5>Tags</h5>

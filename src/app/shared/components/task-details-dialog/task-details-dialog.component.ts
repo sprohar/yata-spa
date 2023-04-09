@@ -128,6 +128,14 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     });
   }
 
+  handleDeleteSubtask(subtask: Task) {
+    this.store.dispatch(
+      TaskDetailsActions.deleteSubtask({
+        subtask,
+      })
+    );
+  }
+
   handlePriorityChange(priority: Priority) {
     this.priorityControl.setValue(priority);
   }

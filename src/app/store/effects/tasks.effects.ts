@@ -74,6 +74,24 @@ export class TasksEffects {
     )
   );
 
+  createSubtask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskDetailsActions.createSubtask),
+      concatMap((action) =>
+        this.tasksService.create(action.subtask).pipe(
+          map((subtask) => YataApiActions.createSubtaskSuccess({ subtask })),
+          catchError((error: ApiErrorResponse) =>
+            of(
+              YataApiActions.createSubtaskError({
+                error,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
   duplicate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TaskOptionsActions.duplicateTask),
@@ -102,6 +120,27 @@ export class TasksEffects {
           catchError((error: ApiErrorResponse) =>
             of(
               YataApiActions.deleteTaskError({
+                error,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  deleteSubtask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskDetailsActions.deleteSubtask),
+      mergeMap((action) =>
+        this.tasksService.delete(action.subtask).pipe(
+          map(() =>
+            YataApiActions.deleteSubtaskSuccess({ subtask: action.subtask })
+          ),
+          tap(() => this.snackbar.open('Removed subtask')),
+          catchError((error: ApiErrorResponse) =>
+            of(
+              YataApiActions.deleteSubtaskError({
                 error,
               })
             )
