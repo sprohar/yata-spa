@@ -13,7 +13,7 @@
 }
 
 .no-priority {
-  color: colors.$mat-gray-600;
+  color: inherit;
 }
 
 @media (prefers-color-scheme: light) {
@@ -27,9 +27,5 @@
 
   .low-priority {
     color: colors.$mat-blue-700 !important;
-  }
-
-  .no-priority {
-    color: colors.$mat-gray-400 !important;
   }
 }
