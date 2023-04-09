@@ -19,6 +19,16 @@
       />
     </mat-form-field>
 
+    <!-- Tags -->
+    <mat-chip-listbox aria-label="Tags" class="tags">
+      <mat-chip *ngFor="let tag of selectedTags" [attr.data-test]="tag.name">
+        {{ tag.name }}
+        <button matChipRemove (click)="removeTag(tag)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-chip>
+    </mat-chip-listbox>
+
     <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
       <textarea
@@ -28,6 +38,36 @@
         formControlName="description"
       ></textarea>
     </mat-form-field>
+
+    <div class="flex column-gap-1">
+      <!-- Projects -->
+      <mat-form-field appearance="outline">
+        <mat-label>Project</mat-label>
+        <mat-select formControlName="projectId">
+          <mat-option
+            *ngFor="let entry of group | keyvalue"
+            [value]="entry.key.id"
+          >
+            {{ entry.key.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Sections -->
+      <mat-form-field appearance="outline" *ngIf="projectIdControl.value">
+        <mat-label>Section</mat-label>
+        <mat-select formControlName="sectionId">
+          <mat-option
+            *ngFor="
+              let section of getProjectSections(projectIdControl.value, group)
+            "
+            [value]="section.id"
+          >
+            {{ section.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 
   <div class="flex column-gap-1 align-items-center">
@@ -37,8 +77,8 @@
       title="Priority"
     >
       <mat-icon [ngClass]="getPriorityCssClass()">flag</mat-icon>
-      <ng-container *ngIf="priority.value; else noPriority">
-        {{ priority.value | taskPriority }}
+      <ng-container *ngIf="priorityControl.value; else noPriority">
+        {{ priorityControl.value | taskPriority }}
       </ng-container>
       <ng-template #noPriority>Priority</ng-template>
     </button>
@@ -62,18 +102,7 @@
     </mat-menu>
 
     <!-- Due date picker -->
-    <ng-container *ngIf="!dueDate.value; else hasDueDate">
-      <button
-        data-test="dueDatePickerButton"
-        mat-stroked-button
-        title="Due date"
-        (click)="openDateTimePicker()"
-      >
-        <mat-icon>event</mat-icon>
-        Due date
-      </button>
-    </ng-container>
-    <ng-template #hasDueDate>
+    <ng-container *ngIf="dueDateControl.value; else datePicker">
       <div class="flex align-items-center">
         <button
           data-test="dueDatePickerButton"
@@ -81,7 +110,7 @@
           title="Change due date"
           (click)="openDateTimePicker()"
         >
-          {{ dueDate.value | date : "mediumDate" }}
+          {{ dueDateControl.value | date : "mediumDate" }}
         </button>
         <button
           mat-icon-button
@@ -91,67 +120,38 @@
           <mat-icon>close</mat-icon>
         </button>
       </div>
+    </ng-container>
+    <ng-template #datePicker>
+      <button
+        data-test="dueDatePickerButton"
+        mat-stroked-button
+        title="Due date"
+        (click)="openDateTimePicker()"
+      >
+        <mat-icon>event</mat-icon>
+        Due date
+      </button>
     </ng-template>
-
-    <!-- Tags -->
-    <mat-chip-listbox aria-label="Tags">
-      <mat-chip *ngFor="let tag of selectedTags" [attr.data-test]="tag.name">
-        {{ tag.name }}
-        <button matChipRemove (click)="removeTag(tag)">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-chip>
-    </mat-chip-listbox>
   </div>
 
   <mat-divider></mat-divider>
-
-  <div class="flex space-between align-items-center">
-    <div class="flex column-gap-1">
-      <!-- Projects -->
-      <mat-form-field appearance="outline">
-        <mat-label>Project</mat-label>
-        <mat-select formControlName="projectId">
-          <mat-option
-            *ngFor="let entry of group | keyvalue"
-            [value]="entry.key.id"
-          >
-            {{ entry.key.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <!-- Sections -->
-      <mat-form-field appearance="outline" *ngIf="projectId.value">
-        <mat-label>Section</mat-label>
-        <mat-select formControlName="sectionId">
-          <mat-option
-            *ngFor="let section of getProjectSections(projectId.value, group)"
-            [value]="section.id"
-          >
-            {{ section.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="flex column-gap-1">
-      <button
-        data-test="cancelButton"
-        mat-stroked-button
-        (click)="handleCancel()"
-      >
-        Cancel
-      </button>
-      <button
-        data-test="addTaskButton"
-        type="submit"
-        mat-raised-button
-        color="primary"
-        (click)="handleSave()"
-      >
-        Add
-      </button>
-    </div>
+  <div class="flex column-gap-1 justify-end">
+    <button
+      data-test="cancelButton"
+      mat-stroked-button
+      (click)="handleCancel()"
+    >
+      Cancel
+    </button>
+    <button
+      [disabled]="form.invalid"
+      data-test="addTaskButton"
+      type="submit"
+      mat-raised-button
+      color="primary"
+      (click)="handleSave()"
+    >
+      Add
+    </button>
   </div>
 </form>

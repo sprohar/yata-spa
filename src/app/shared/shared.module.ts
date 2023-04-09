@@ -17,6 +17,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { CreateCustomRecurrenceDialogComponent } from './components/create-custom-recurrence-dialog/create-custom-recurrence-dialog.component';
 import { CreateSectionDialogComponent } from './components/create-section-dialog/create-section-dialog.component';
+import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { DateTimePickerDialogComponent } from './components/date-time-picker-dialog/date-time-picker-dialog.component';
 import { EditProjectDialogComponent } from './components/edit-project-dialog/edit-project-dialog.component';
@@ -56,6 +57,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TasksOrderByOptionsComponent,
     TaskDetailsDialogEntryComponent,
     CreateTaskComponent,
+    CreateTaskDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -89,6 +91,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskListComponent,
     TaskDetailsDialogEntryComponent,
     CreateTaskComponent,
+    CreateTaskDialogComponent,
   ],
 })
 export class SharedModule {}

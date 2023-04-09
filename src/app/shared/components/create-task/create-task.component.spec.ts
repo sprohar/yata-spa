@@ -131,7 +131,7 @@ describe('CreateTaskComponent', () => {
 
     it('should dispatch the "createTask" action', () => {
       const projectId: number = initialState.projects.currentProjectId!;
-      component.title.setValue('Title');
+      component.titleControl.setValue('Title');
       fixture.detectChanges();
 
       component.handleSave(projectId);
@@ -183,7 +183,7 @@ describe('CreateTaskComponent', () => {
 
       component.openDateTimePicker();
 
-      expect(component.dueDate.value).toEqual(dueDate);
+      expect(component.dueDateControl.value).toEqual(dueDate);
     });
 
     it('should set the due date with null value', () => {
@@ -193,7 +193,7 @@ describe('CreateTaskComponent', () => {
 
       component.openDateTimePicker();
 
-      expect(component.dueDate.value).toBeNull();
+      expect(component.dueDateControl.value).toBeNull();
     });
   });
 
