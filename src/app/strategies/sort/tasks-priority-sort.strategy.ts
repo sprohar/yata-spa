@@ -10,11 +10,12 @@ export class TasksPrioritySortStrategy implements SortStrategy<Task> {
   }
 
   sort(data: Task[]): Task[] {
-    const tasks = [...data];
-    return tasks.sort((a, b) => {
-      return this.sortOrder === SortOrder.ASC
-        ? a.priority! - b.priority!
-        : b.priority! - a.priority!;
-    });
+    return data
+      .filter((task) => task.priority !== undefined)
+      .sort((a, b) =>
+        this.sortOrder === SortOrder.ASC
+          ? a.priority! - b.priority!
+          : b.priority! - a.priority!
+      );
   }
 }
