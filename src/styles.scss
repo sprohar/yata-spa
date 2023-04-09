@@ -75,7 +75,7 @@ body {
 }
 
 .text-grey {
-  color: rgba(255, 255, 255, 0.8);
+  color: lightgray;
 }
 
 .text-overflow {
@@ -150,6 +150,10 @@ body {
   position: relative;
 }
 
+.transform-scale-75 {
+  transform: scale(0.75);
+}
+
 .mat-button-full-width {
   width: 100%;
   &.mdc-button {
@@ -214,5 +218,9 @@ ul {
 @media (prefers-color-scheme: light) {
   .link {
     color: colors.$mat-cyan-A700;
+  }
+
+  .text-grey {
+    color: gray;
   }
 }
