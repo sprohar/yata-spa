@@ -1,50 +1,14 @@
-.ng-valid[required],
-.ng-valid.required {
-  border-color: inherit;
+@use "../../../../scss/task-priority.scss" as colors;
+
+form {
+  padding: 16px;
+  border: thin solid;
+  border-radius: 6px;
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-.create-task-wrapper {
-  display: flex;
-  flex-direction: column;
-
-  .create-task {
-    position: relative;
-
-    .form-field {
-      width: 100%;
-
-      input[type="text"] {
-        width: 55%;
-      }
-    }
-
-    .create-task-actions {
-      position: absolute;
-      top: 4px;
-      bottom: 0;
-      right: 2px;
-
-      mat-icon {
-        transform: scale(0.75);
-      }
-    }
-  }
-
-  .chip-list-container {
-    margin-top: -12px;
-    display: flex;
-    column-gap: 16px;
-  }
-}
-
-@media only screen and (min-width: 600px) {
-  .create-task-wrapper {
-    .create-task {
-      .form-field {
-        input[type="text"] {
-          width: 75%;
-        }
-      }
-    }
+@media (prefers-color-scheme: light) {
+  form {
+    border-color: rgba(0, 0, 0, 0.12);
   }
 }

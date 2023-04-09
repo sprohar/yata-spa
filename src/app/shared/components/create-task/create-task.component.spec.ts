@@ -99,7 +99,7 @@ describe('CreateTaskComponent', () => {
     it('should set the form control value with the priority value', () => {
       const priority = Priority.HIGH;
       component.handlePriorityChange(priority);
-      expect(component.priorityControl.value).toBe(priority);
+      expect(component.priority.value).toBe(priority);
     });
   });
 
@@ -131,7 +131,7 @@ describe('CreateTaskComponent', () => {
 
     it('should dispatch the "createTask" action', () => {
       const projectId: number = initialState.projects.currentProjectId!;
-      component.titleControl.setValue('Title');
+      component.title.setValue('Title');
       fixture.detectChanges();
 
       component.handleSave(projectId);
@@ -183,7 +183,7 @@ describe('CreateTaskComponent', () => {
 
       component.openDateTimePicker();
 
-      expect(component.dueDateControl.value).toEqual(dueDate);
+      expect(component.dueDate.value).toEqual(dueDate);
     });
 
     it('should set the due date with null value', () => {
@@ -193,7 +193,7 @@ describe('CreateTaskComponent', () => {
 
       component.openDateTimePicker();
 
-      expect(component.dueDateControl.value).toBeNull();
+      expect(component.dueDate.value).toBeNull();
     });
   });
 

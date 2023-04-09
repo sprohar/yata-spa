@@ -1,67 +1,157 @@
-<ng-container *ngIf="currentProjectId$ | async as projectId">
-  <div class="create-task-wrapper">
-    <div class="create-task" [formGroup]="form">
-      <mat-form-field
-        class="form-field"
-        appearance="outline"
-        [hideRequiredMarker]="true"
-      >
-        <mat-label>New Task</mat-label>
-        <input
-          data-test="createTaskInput"
-          matInput
-          type="text"
-          formControlName="title"
-          placeholder="Press Enter to save"
-          (keyup.enter)="handleSave(projectId)"
-        />
-      </mat-form-field>
-      <div class="create-task-actions">
-        <!-- Section picker -->
-        <yata-section-picker
-          (selected)="handleSelectedSection($event)"
-        ></yata-section-picker>
+<form
+  class="flex flex-column row-gap-1"
+  [formGroup]="form"
+  *ngIf="group$ | async as group"
+>
+  <div class="flex flex-column">
+    <mat-form-field
+      class="form-field"
+      appearance="outline"
+      [hideRequiredMarker]="true"
+    >
+      <mat-label>Task</mat-label>
+      <input
+        data-test="titleInput"
+        matInput
+        type="text"
+        formControlName="title"
+        placeholder="Press Enter to save"
+      />
+    </mat-form-field>
 
-        <!-- Due date picker -->
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        data-test="descriptionInput"
+        matInput
+        cdkTextareaAutosize
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="flex column-gap-1 align-items-center">
+    <button
+      mat-stroked-button
+      [matMenuTriggerFor]="priorityOptions"
+      title="Priority"
+    >
+      <mat-icon [ngClass]="getPriorityCssClass()">flag</mat-icon>
+      <ng-container *ngIf="priority.value; else noPriority">
+        {{ priority.value | taskPriority }}
+      </ng-container>
+      <ng-template #noPriority>Priority</ng-template>
+    </button>
+    <mat-menu #priorityOptions="matMenu">
+      <button mat-menu-item (click)="handlePriorityChange(HIGH_PRIORITY)">
+        <mat-icon class="high-priority">flag</mat-icon>
+        High
+      </button>
+      <button mat-menu-item (click)="handlePriorityChange(MEDIUM_PRIORITY)">
+        <mat-icon class="medium-priority">flag</mat-icon>
+        Medium
+      </button>
+      <button mat-menu-item (click)="handlePriorityChange(LOW_PRIORITY)">
+        <mat-icon class="low-priority">flag</mat-icon>
+        Low
+      </button>
+      <button mat-menu-item (click)="handlePriorityChange(NO_PRIORITY)">
+        <mat-icon>flag</mat-icon>
+        None
+      </button>
+    </mat-menu>
+
+    <!-- Due date picker -->
+    <ng-container *ngIf="!dueDate.value; else hasDueDate">
+      <button
+        data-test="dueDatePickerButton"
+        mat-stroked-button
+        title="Due date"
+        (click)="openDateTimePicker()"
+      >
+        <mat-icon>event</mat-icon>
+        Due date
+      </button>
+    </ng-container>
+    <ng-template #hasDueDate>
+      <div class="flex align-items-center">
         <button
-          mat-icon-button
-          title="Set the due date"
+          data-test="dueDatePickerButton"
+          mat-stroked-button
+          title="Change due date"
           (click)="openDateTimePicker()"
         >
-          <mat-icon>event</mat-icon>
+          {{ dueDate.value | date : "mediumDate" }}
         </button>
-        <!-- Priority picker -->
-        <yata-task-priority-picker></yata-task-priority-picker>
-      </div>
-    </div>
-    <div class="chip-list-container">
-      <mat-chip-listbox>
-        <mat-chip *ngIf="section">
-          Section: {{ section.name }}
-          <button matChipRemove (click)="removeSection()">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-chip>
-        <mat-chip *ngIf="dueDateControl.value">
-          {{ dueDateControl.value | date : "fullDate" }}
-          <button matChipRemove (click)="removeDueDate()">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-chip>
-      </mat-chip-listbox>
-      <!-- Tags -->
-      <mat-chip-listbox aria-label="Tags">
-        <mat-chip
-          *ngFor="let tag of selectedTags"
-          color="primary"
-          [attr.data-test]="tag.name"
+        <button
+          mat-icon-button
+          title="Remove due date"
+          (click)="removeDueDate()"
         >
-          {{ tag.name }}
-          <button matChipRemove (click)="removeTag(tag)">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-chip>
-      </mat-chip-listbox>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+
+    <!-- Tags -->
+    <mat-chip-listbox aria-label="Tags">
+      <mat-chip *ngFor="let tag of selectedTags" [attr.data-test]="tag.name">
+        {{ tag.name }}
+        <button matChipRemove (click)="removeTag(tag)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-chip>
+    </mat-chip-listbox>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="flex space-between align-items-center">
+    <div class="flex column-gap-1">
+      <!-- Projects -->
+      <mat-form-field appearance="outline">
+        <mat-label>Project</mat-label>
+        <mat-select formControlName="projectId">
+          <mat-option
+            *ngFor="let entry of group | keyvalue"
+            [value]="entry.key.id"
+          >
+            {{ entry.key.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Sections -->
+      <mat-form-field appearance="outline" *ngIf="projectId.value">
+        <mat-label>Section</mat-label>
+        <mat-select formControlName="sectionId">
+          <mat-option
+            *ngFor="let section of getProjectSections(projectId.value, group)"
+            [value]="section.id"
+          >
+            {{ section.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="flex column-gap-1">
+      <button
+        data-test="cancelButton"
+        mat-stroked-button
+        (click)="handleCancel()"
+      >
+        Cancel
+      </button>
+      <button
+        data-test="addTaskButton"
+        type="submit"
+        mat-raised-button
+        color="primary"
+        (click)="handleSave()"
+      >
+        Add
+      </button>
     </div>
   </div>
-</ng-container>
+</form>

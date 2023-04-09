@@ -15,11 +15,12 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
-import { Priority, Section, Tag, Task } from '../../../models';
-import { CreateTaskComponentActions } from '../../../store/actions';
-import { selectCurrentProjectId } from '../../../store/reducers/projects.reducer';
-import { selectTags } from '../../../store/selectors';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { Priority, Project, Section, Tag, Task } from '../../../models';
+import {
+  selectSectionsGroupedByProject,
+  selectTags,
+} from '../../../store/selectors';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 @Component({
@@ -30,13 +31,23 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
 })
 export class CreateTaskComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
-  existingTags!: Set<Tag>;
   readonly selectedTags = new Set<Tag>();
+  existingTags!: Set<Tag>;
 
-  @Output() created = new EventEmitter<void>();
+  @Output() canceled = new EventEmitter<void>();
+  @Output() created = new EventEmitter<Task>();
+  @Input() project?: Project;
   @Input() section?: Section | null;
-  currentProjectId$ = this.store.select(selectCurrentProjectId);
   form!: FormGroup;
+
+  readonly HIGH_PRIORITY = Priority.HIGH;
+  readonly MEDIUM_PRIORITY = Priority.MEDIUM;
+  readonly LOW_PRIORITY = Priority.LOW;
+  readonly NO_PRIORITY = Priority.NONE;
+
+  group$: Observable<Map<Project, Section[]>> = this.store.select(
+    selectSectionsGroupedByProject
+  );
 
   constructor(
     private store: Store,
@@ -62,28 +73,58 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
         nonNullable: true,
         validators: [Validators.maxLength(Task.Title.MaxLength)],
       }),
+      description: ['', [Validators.maxLength(Task.Description.MaxLength)]],
       priority: this.fb.control(Priority.NONE, {
         nonNullable: true,
       }),
       dueDate: [null],
+      projectId: [null, [Validators.required]],
       sectionId: [null],
     });
 
-    this.titleControl.valueChanges
+    this.title.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(this.handleParseInputForTags.bind(this));
   }
 
-  get titleControl() {
+  get projectId() {
+    return this.form.get('projectId') as FormControl;
+  }
+
+  get sectionId() {
+    return this.form.get('sectionId') as FormControl;
+  }
+
+  get title() {
     return this.form.get('title') as FormControl;
   }
 
-  get priorityControl() {
+  get priority() {
     return this.form.get('priority') as FormControl;
   }
 
-  get dueDateControl() {
+  get dueDate() {
     return this.form.get('dueDate') as FormControl;
+  }
+
+  getProjectSections(projectId: number, group: Map<Project, Section[]>) {
+    for (const [project, sections] of group) {
+      if (project.id === projectId) return sections;
+    }
+    return [];
+  }
+
+  getPriorityCssClass() {
+    switch (this.priority.value) {
+      case Priority.LOW:
+        return 'low-priority';
+      case Priority.MEDIUM:
+        return 'medium-priority';
+      case Priority.HIGH:
+        return 'high-priority';
+      default:
+        return '';
+    }
   }
 
   handleParseInputForTags(value: string) {
@@ -96,18 +137,11 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
 
     const tagName = value.substring(start + 1, end);
     this.selectedTags.add({ name: tagName });
-    this.titleControl.setValue(value.substring(0, start));
+    this.title.setValue(value.substring(0, start));
   }
 
   handlePriorityChange(priority: Priority) {
-    this.priorityControl.setValue(priority);
-  }
-
-  handleSelectedSection(section: Section) {
-    this.form.patchValue({
-      sectionId: section.id,
-    });
-    this.section = section;
+    this.priority.setValue(priority);
   }
 
   /**
@@ -133,36 +167,36 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     return Array.from(map.values());
   }
 
-  handleSave(projectId: number) {
+  handleSave() {
     if (this.form.invalid) return;
-    if (!this.titleControl.value) return;
-    if ((this.titleControl.value as string).trim() === '') return;
+    if (!this.title.value) return;
+    if ((this.title.value as string).trim() === '') return;
 
-    const task: Task = {
-      ...this.form.value,
-      projectId,
-    };
+    // const task: Task = {
+    //   ...this.form.value,
+    //   projectId,
+    // };
+    //
+    // if (this.section) {
+    //   task.sectionId = this.section.id;
+    // }
+    //
+    // task.tags = this.intersectOnTagName(this.selectedTags, this.existingTags);
+    // this.store.dispatch(CreateTaskComponentActions.createTask({ task }));
+    //
+    // this.created.emit();
+    // this.form.reset();
+    //
+    // this.section = null;
+    // this.selectedTags.clear();
+  }
 
-    if (this.section) {
-      task.sectionId = this.section.id;
-    }
-
-    task.tags = this.intersectOnTagName(this.selectedTags, this.existingTags);
-    this.store.dispatch(CreateTaskComponentActions.createTask({ task }));
-
-    this.created.emit();
-    this.form.reset();
-
-    this.section = null;
-    this.selectedTags.clear();
+  handleCancel() {
+    this.canceled.emit();
   }
 
   removeDueDate() {
-    this.dueDateControl.setValue(null);
-  }
-
-  removeSection() {
-    this.section = null;
+    this.dueDate.setValue(null);
   }
 
   removeTag(tag: Tag) {
@@ -171,14 +205,14 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
 
   openDateTimePicker() {
     const ref = this.dialog.open(DateTimePickerDialogComponent, {
-      data: this.dueDateControl.value,
+      data: this.dueDate.value,
     });
 
     ref
       .afterClosed()
       .pipe(takeUntil(this.destroy$))
       .subscribe((result) => {
-        this.dueDateControl.setValue(result);
+        this.dueDate.setValue(result);
       });
   }
 }
