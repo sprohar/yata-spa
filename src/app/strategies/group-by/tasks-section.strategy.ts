@@ -5,8 +5,7 @@ export function groupTasksBySections(
   tasks: Task[]
 ): Map<Section, Task[]> {
   const unsectioned: Section = {
-    id: -1,
-    name: 'Unsectioned',
+    name: 'No section',
     projectId: tasks.at(0)!.projectId,
   };
 
