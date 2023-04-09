@@ -1,29 +1,24 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { SharedModule } from '../shared/shared.module';
+import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-quadrant.component';
 import { EisenhowerMatrixRoutingModule } from './eisenhower-matrix-routing.module';
 import { EisenhowerMatrixComponent } from './eisenhower-matrix.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-quadrant.component';
-import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
-import { SharedModule } from '../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations: [
-    EisenhowerMatrixComponent,
-    MatrixQuadrantComponent,
-    CreateTaskDialogComponent,
-  ],
+  declarations: [EisenhowerMatrixComponent, MatrixQuadrantComponent],
   imports: [
     CommonModule,
     EisenhowerMatrixRoutingModule,
@@ -41,4 +36,4 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     DragDropModule,
   ],
 })
-export class EisenhowerMatrixModule { }
+export class EisenhowerMatrixModule {}

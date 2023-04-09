@@ -8,10 +8,10 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Priority, Project, Task } from '../../../models';
+import { CreateTaskDialogComponent } from '../../../shared/components/create-task-dialog/create-task-dialog.component';
 import { EisenhowerMatrixActions } from '../../../store/actions';
 import { selectProjects } from '../../../store/selectors';
 import { MatrixListData } from '../../interfaces/matrix-list-data';
-import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
 
 @Component({
   selector: 'yata-matrix-quadrant',
@@ -64,8 +64,9 @@ export class MatrixQuadrantComponent implements OnInit {
 
   openCreateTaskDialog() {
     this.dialog.open(CreateTaskDialogComponent, {
-      data: this.priority,
-      minWidth: '350px',
+      data: {
+        priority: this.priority,
+      },
     });
   }
 
