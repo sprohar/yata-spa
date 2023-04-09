@@ -16,7 +16,7 @@ export class TaskPriorityPipe implements PipeTransform {
       case Priority.LOW:
         return 'Low';
       default:
-        throw new Error('enum Priority: Invalid value');
+        return '';
     }
   }
 }
