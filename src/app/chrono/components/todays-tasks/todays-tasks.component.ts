@@ -1,8 +1,5 @@
-import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
-import { Task } from '../../../models';
 import { selectTasks } from '../../../store/selectors';
 
 @Component({
@@ -11,16 +8,8 @@ import { selectTasks } from '../../../store/selectors';
   styleUrls: ['./todays-tasks.component.scss'],
 })
 export class TodaysTasksComponent {
-  tasks$ = this.store.select(selectTasks).pipe(
-    tap((tasks) => {
-      this.today = this.getSectionName(tasks.at(0)!) ?? ''
-    })
-  );
-  today = '';
+  today = new Date();
+  tasks$ = this.store.select(selectTasks);
 
-  constructor(private store: Store) { }
-
-  getSectionName(task: Task) {
-    return new DatePipe(navigator.language).transform(task.dueDate, 'fullDate');
-  }
+  constructor(private store: Store) {}
 }

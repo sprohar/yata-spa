@@ -1,17 +1,25 @@
 <h1 class="p1">Next 7 Days</h1>
 <mat-divider></mat-divider>
-<ng-container *ngIf="map$ | async as map">
-  <yata-section
-    *ngFor="let entry of map | keyvalue"
-    [name]="entry.key | date: 'fullDate'"
-    [itemsCount]="entry.value.length"
-  >
-    <yata-task-list>
-      <yata-task
-        *ngFor="let task of entry.value"
-        [task]="task"
-        [isDraggable]="false"
-      ></yata-task>
-    </yata-task-list>
-  </yata-section>
-</ng-container>
+<main class="flex-column row-gap-1 mt-1">
+  <ng-container *ngIf="map$ | async as map">
+    <mat-expansion-panel *ngFor="let entry of map | keyvalue" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>{{ entry.key | date : "fullDate" }}</span>
+          &nbsp;
+          <span>({{ entry.value.length }})</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <yata-task-list>
+        <yata-task
+          *ngFor="let task of entry.value"
+          [task]="task"
+          [isDraggable]="false"
+        >
+          <yata-task-options [task]="task"></yata-task-options>
+        </yata-task>
+      </yata-task-list>
+    </mat-expansion-panel>
+  </ng-container>
+</main>
+<router-outlet></router-outlet>

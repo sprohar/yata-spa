@@ -1,11 +1,19 @@
-<h1 class="p1">Today's Tasks</h1>
+<h1 class="p1">Today</h1>
 <mat-divider></mat-divider>
-<ng-container *ngIf="tasks$ | async as tasks">
-  <yata-section [name]="today" [itemsCount]="tasks.length">
-    <ul>
-      <ng-container *ngFor="let task of tasks">
-        <yata-task [task]="task" [isDraggable]="false"></yata-task>
-      </ng-container>
-    </ul>
-  </yata-section>
-</ng-container>
+<main class="flex-column row-gap-1 mt-1">
+  <mat-expansion-panel *ngIf="tasks$ | async as tasks" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span>{{ today | date : "fullDate" }}</span>
+        &nbsp;
+        <span>({{ tasks.length }})</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <yata-task-list>
+      <yata-task *ngFor="let task of tasks" [task]="task" [isDraggable]="false">
+        <yata-task-options [task]="task"></yata-task-options>
+      </yata-task>
+    </yata-task-list>
+  </mat-expansion-panel>
+</main>
+<router-outlet></router-outlet>
