@@ -9,7 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
-import { Priority, Project, Tag, Task } from '../../../models';
+import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { KanbanViewActions } from '../../../store/actions';
 import { TaskDetailsActions } from '../../../store/actions/task-details.actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
@@ -78,6 +78,10 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     return project.id;
   }
 
+  trackBySectionId(_index: number, section: Section) {
+    return section.id;
+  }
+
   initForm(task: Task) {
     this.form = this.fb.group({
       id: [task.id],
@@ -89,7 +93,7 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
       isCompleted: [task.isCompleted],
       isAllDay: [task.isAllDay],
       projectId: [task.projectId],
-      dueDate: [],
+      dueDate: [null],
       subtasks: this.fb.array([]),
       description: [
         task.content,
@@ -152,7 +156,7 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   handleChecked() {
     const task: Task = this.form.value;
     this.store.dispatch(
-      KanbanViewActions.updateTask({
+      TaskDetailsActions.updateTask({
         task: {
           id: task.id,
           projectId: task.projectId,

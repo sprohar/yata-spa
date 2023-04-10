@@ -180,9 +180,13 @@
         </div>
       </div>
     </div>
+
+    <mat-divider></mat-divider>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-stroked-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="primary">Save</button>
+    <button mat-raised-button color="primary" (click)="handleSave()">
+      Save
+    </button>
   </mat-dialog-actions>
 </ng-container>
