@@ -76,7 +76,10 @@ export class TasksEffects {
 
   createSubtask$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TaskDetailsActions.createSubtask),
+      ofType(
+        TaskDetailsActions.createSubtask,
+        CreateTaskComponentActions.createSubtask
+      ),
       concatMap((action) =>
         this.tasksService.create(action.subtask).pipe(
           map((subtask) => YataApiActions.createSubtaskSuccess({ subtask })),
