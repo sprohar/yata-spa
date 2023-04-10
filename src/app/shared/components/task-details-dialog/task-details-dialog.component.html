@@ -76,16 +76,19 @@
             </yata-task-list>
           </div>
 
-          <ng-container *ngIf="isAddingSubtask">
-            <p>Need to create a component to add a subtask</p>
+          <ng-container *ngIf="isAddingSubtask; else notAddingSubtask">
+            <yata-create-task
+              [parent]="task"
+              (canceled)="isAddingSubtask = false"
+              (created)="isAddingSubtask = false"
+            ></yata-create-task>
           </ng-container>
-
-          <ng-container *ngIf="!isAddingSubtask">
+          <ng-template #notAddingSubtask>
             <button mat-stroked-button (click)="isAddingSubtask = true">
               <mat-icon>checklist</mat-icon>
               <span>Add Subtask</span>
             </button>
-          </ng-container>
+          </ng-template>
         </div>
       </div>
 
@@ -139,6 +142,7 @@
             </ng-container>
             <ng-template #dueDateIsNull>
               <button
+                class="full-width"
                 mat-stroked-button
                 (click)="openDateTimePickerDialog()"
                 title="Set a due date"

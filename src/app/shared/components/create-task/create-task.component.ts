@@ -39,6 +39,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
 
   @Output() canceled = new EventEmitter<void>();
   @Output() created = new EventEmitter<Task>();
+  @Input() parent?: Task;
   @Input() project?: Project;
   @Input() section?: Section | null;
   @Input() priority? = Priority.NONE;
@@ -65,7 +66,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm();
+    this.initForm(this.parent);
     this.store
       .select(selectTags)
       .pipe(takeUntil(this.destroy$))
@@ -78,7 +79,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
       });
   }
 
-  initForm() {
+  initForm(parent?: Task) {
     this.form = this.fb.group({
       title: this.fb.control('', {
         nonNullable: true,
@@ -88,11 +89,12 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
         ],
       }),
       description: ['', [Validators.maxLength(Task.Description.MaxLength)]],
-      priority: this.fb.control(this.priority, {
+      priority: this.fb.control(this.priority ?? Priority.NONE, {
         nonNullable: true,
       }),
       projectId: [this.project?.id, [Validators.required]],
-      sectionId: [this.section?.id],
+      sectionId: [this.section?.id ?? parent?.sectionId],
+      parentId: [parent?.id],
       dueDate: [null],
     });
 
@@ -216,7 +218,16 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     };
 
     task.tags = this.intersectOnTagName(this.selectedTags, this.existingTags);
-    this.store.dispatch(CreateTaskComponentActions.createTask({ task }));
+    if (this.form.get('parentId')?.value) {
+      this.store.dispatch(
+        CreateTaskComponentActions.createSubtask({
+          subtask: task,
+        })
+      );
+    } else {
+      this.store.dispatch(CreateTaskComponentActions.createTask({ task }));
+    }
+
     this.created.emit();
   }
 }
