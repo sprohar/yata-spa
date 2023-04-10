@@ -31,7 +31,7 @@
     <!-- Main content -->
     <div class="flex column-gap-1">
       <div class="left-column task-details">
-        <h5 aria-labelledby="title">Title</h5>
+        <h5 aria-labelledby="title">Task</h5>
         <div class="form-field-container">
           <mat-form-field class="full-width" appearance="outline">
             <input
@@ -173,6 +173,13 @@
           <mat-chip-listbox>
             <mat-chip-option *ngFor="let tag of task.tags" color="primary">
               {{ tag.name }}
+              <button
+                matChipRemove
+                [ariaLabel]="'Remove ' + tag.name"
+                (click)="removeTag(task, tag)"
+              >
+                <mat-icon>cancel</mat-icon>
+              </button>
             </mat-chip-option>
           </mat-chip-listbox>
         </div>

@@ -9,7 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
-import { Priority, Project, Task } from '../../../models';
+import { Priority, Project, Tag, Task } from '../../../models';
 import { KanbanViewActions } from '../../../store/actions';
 import { TaskDetailsActions } from '../../../store/actions/task-details.actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
@@ -126,6 +126,15 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     this.form.patchValue({
       dueDate: null,
     });
+  }
+
+  removeTag(task: Task, tag: Tag) {
+    this.store.dispatch(
+      TaskDetailsActions.removeTagFromTask({
+        task,
+        tag,
+      })
+    );
   }
 
   handleDeleteSubtask(subtask: Task) {
