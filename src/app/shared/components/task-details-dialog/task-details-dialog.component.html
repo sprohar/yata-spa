@@ -30,9 +30,9 @@
 
     <!-- Main content -->
     <div class="flex column-gap-1">
-      <div class="left-column task-details">
+      <div class="flex-column row-gap-1 p-1 full-width">
         <h5 aria-labelledby="title">Task</h5>
-        <div class="form-field-container">
+        <div class="flex-column align-items-center full-width">
           <mat-form-field class="full-width" appearance="outline">
             <input
               id="title"
@@ -45,7 +45,7 @@
         </div>
 
         <h5 aria-labelledby="description">Description</h5>
-        <div class="form-field-container">
+        <div class="flex-column align-items-center full-width">
           <mat-form-field class="full-width" appearance="outline">
             <textarea
               id="description"
@@ -57,11 +57,8 @@
         </div>
 
         <!-- Subtasks -->
-        <div class="subtasks-container" formArrayName="subtasks">
-          <div
-            class="subtasks-container"
-            *ngIf="task.subtasks && task.subtasks.length"
-          >
+        <div class="flex-column row-gap-1" formArrayName="subtasks">
+          <ng-container *ngIf="task.subtasks && task.subtasks.length">
             <h5>Subtasks</h5>
             <yata-task-list>
               <yata-task
@@ -69,12 +66,10 @@
                 [task]="subtask"
                 [isDraggable]="false"
               >
-                <button mat-icon-button (click)="handleDeleteSubtask(subtask)">
-                  <mat-icon>close</mat-icon>
-                </button>
+                <yata-task-options [task]="subtask"></yata-task-options>
               </yata-task>
             </yata-task-list>
-          </div>
+          </ng-container>
 
           <ng-container *ngIf="isAddingSubtask; else notAddingSubtask">
             <yata-create-task
@@ -94,7 +89,7 @@
 
       <mat-divider [vertical]="true"></mat-divider>
 
-      <div class="right-column">
+      <div class="p-1">
         <div class="flex flex-column row-gap-1">
           <h5 aria-labelledby="projectId">Project</h5>
           <mat-form-field appearance="outline">
