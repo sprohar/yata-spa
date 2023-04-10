@@ -171,6 +171,20 @@ export class TasksEffects {
     )
   );
 
+  removeTagFromTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskDetailsActions.removeTagFromTask),
+      mergeMap((action) =>
+        this.tasksService.removeTag(action.task, action.tag).pipe(
+          map((task) => YataApiActions.updateTaskSuccess({ task })),
+          catchError((error: ApiErrorResponse) =>
+            of(YataApiActions.updateTaskError({ error }))
+          )
+        )
+      )
+    )
+  );
+
   update$ = createEffect(() =>
     this.actions$.pipe(
       ofType(

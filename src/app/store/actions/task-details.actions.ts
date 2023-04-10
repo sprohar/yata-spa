@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Task } from '../../models';
+import { Tag, Task } from '../../models';
 
 export const TaskDetailsActions = createActionGroup({
   source: 'Task Details',
@@ -10,5 +10,6 @@ export const TaskDetailsActions = createActionGroup({
     'Create Subtask': props<{ subtask: Task }>(),
     'Delete Subtask': props<{ subtask: Task }>(),
     'Update Subtask': props<{ subtask: Partial<Task> }>(),
+    'Remove Tag From Task': props<{ task: Task; tag: Tag }>(),
   },
 });
