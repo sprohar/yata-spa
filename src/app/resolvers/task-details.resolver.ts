@@ -18,14 +18,12 @@ export const taskDetailsResolver: ResolveFn<Task> = (
   _state: RouterStateSnapshot
 ) => {
   const store = inject(Store);
-  const projectId = parseInt(
-    route.paramMap.get('projectId') || route.parent?.paramMap.get('projectId')!
-  );
   const taskId = parseInt(route.paramMap.get('taskId')!);
   const router = inject(Router);
   const thisRoute = inject(ActivatedRoute);
+
   return inject(TasksService)
-    .get(projectId, taskId)
+    .get(taskId)
     .pipe(
       tap((task) => store.dispatch(YataApiActions.loadTaskSuccess({ task }))),
       catchError((error: ApiErrorResponse) => {

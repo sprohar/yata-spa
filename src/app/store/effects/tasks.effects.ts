@@ -12,7 +12,6 @@ import {
   tap,
 } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
-import { EisenhowerService } from '../../services/eisenhower.service';
 import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskComponentActions,
@@ -30,7 +29,6 @@ export class TasksEffects {
   constructor(
     private actions$: Actions,
     private tasksService: TasksService,
-    private eisenhowerService: EisenhowerService,
     private snackbar: MatSnackBar
   ) {}
 
@@ -38,7 +36,7 @@ export class TasksEffects {
     this.actions$.pipe(
       ofType(TaskOptionsActions.viewDetails),
       switchMap((action) =>
-        this.tasksService.get(action.task.projectId, action.task.id!).pipe(
+        this.tasksService.get(action.task.id!).pipe(
           map((task) => YataApiActions.loadTaskSuccess({ task })),
           catchError((error: ApiErrorResponse) =>
             of(
@@ -153,11 +151,11 @@ export class TasksEffects {
     )
   );
 
-  getAllTasks$ = createEffect(() =>
+  getAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(EisenhowerMatrixActions.onInit),
       exhaustMap((_) =>
-        this.eisenhowerService.getAllTasks().pipe(
+        this.tasksService.getAll().pipe(
           map((res) => YataApiActions.loadTasksSuccess({ tasks: res.data })),
           catchError((error: ApiErrorResponse) =>
             of(

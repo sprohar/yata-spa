@@ -14,45 +14,45 @@ export class TasksService extends YataApiService {
   }
 
   create(task: Task) {
-    const url = `${this.baseUrl}/projects/${task.projectId}/tasks`;
+    const url = `${this.baseUrl}/tasks`;
     return this.http
       .post<Task>(url, task)
       .pipe(take(1), catchError(this.handleError));
   }
 
   duplicate(task: Task) {
-    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}/duplicate`;
+    const url = `${this.baseUrl}/tasks/${task.id}/duplicate`;
     return this.http
       .post<Task>(url, task)
       .pipe(take(1), catchError(this.handleError));
   }
 
-  getAll(projectId: number) {
-    const url = `${this.baseUrl}/projects/${projectId}/tasks`;
+  getAll() {
+    const url = `${this.baseUrl}/tasks`;
     return this.http
       .get<PaginatedList<Task>>(url)
       .pipe(take(1), catchError(this.handleError));
   }
 
   delete(task: Task) {
-    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}`;
+    const url = `${this.baseUrl}/tasks/${task.id}`;
     return this.http.delete(url).pipe(take(1), catchError(this.handleError));
   }
 
   removeTag(task: Task, tag: Tag) {
-    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}/tags/${tag.id}`;
+    const url = `${this.baseUrl}/tasks/${task.id}/tags/${tag.id}`;
     return this.http
       .delete<Task>(url)
       .pipe(take(1), catchError(this.handleError));
   }
 
-  get(projectId: number, taskId: number) {
-    const url = `${this.baseUrl}/projects/${projectId}/tasks/${taskId}`;
+  get(taskId: number) {
+    const url = `${this.baseUrl}/tasks/${taskId}`;
     return this.http.get<Task>(url).pipe(take(1), catchError(this.handleError));
   }
 
   update(id: number, task: Task | Partial<Task>) {
-    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${id}`;
+    const url = `${this.baseUrl}/tasks/${id}`;
     return this.http
       .patch<Task>(url, task)
       .pipe(take(1), catchError(this.handleError));

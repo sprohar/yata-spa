@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, take } from 'rxjs';
-import { environment } from '../../environment/environment';
+// import { environment } from '../../environment/environment';
 import { ChronoQueryParams, PaginatedList } from '../interfaces/';
 import { Task } from '../models';
 import { YataApiService } from './yata-api.service';
@@ -21,7 +21,7 @@ export class ChronoService extends YataApiService {
     const endDate = new Date(startDate);
     endDate.setHours(23, 59, 59, 999);
 
-    const url = `${this.baseUrl}/${environment.api.endpoints.chrono.tasks}`;
+    const url = `${this.baseUrl}/tasks`;
     const params = new HttpParams()
       .set('startDate', startDate.toISOString())
       .set('endDate', endDate.toISOString());
@@ -32,7 +32,7 @@ export class ChronoService extends YataApiService {
   }
 
   getTasks(queryParams: ChronoQueryParams) {
-    const url = `${this.baseUrl}/${environment.api.endpoints.chrono.tasks}`;
+    const url = `${this.baseUrl}/tasks`;
     const params = new HttpParams({
       fromObject: { ...queryParams },
     });
