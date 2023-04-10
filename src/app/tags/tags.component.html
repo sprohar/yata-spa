@@ -2,21 +2,26 @@
   <header *ngIf="currentTag$ | async as tag">
     <h1>#{{ tag.name }}</h1>
   </header>
-  <main>
-    <div *ngIf="sections$ | async as sections">
-      <yata-section
-        *ngFor="let section of sections"
-        [name]="section.name"
-        [itemsCount]="section.tasks?.length"
-      >
-        <ng-container *ngFor="let task of section.tasks">
-          <yata-task-list>
-            <yata-task [isDraggable]="false" [task]="task">
-              <yata-task-options [task]="task"></yata-task-options>
-            </yata-task>
-          </yata-task-list>
-        </ng-container>
-      </yata-section>
-    </div>
+  <main
+    *ngIf="sections$ | async as sections"
+    class="flex-column row-gap-1 mt-1"
+  >
+    <mat-expansion-panel *ngFor="let section of sections" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>{{ section.name }}</span>
+          &nbsp;
+          <span>({{ section.tasks?.length }})</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-container *ngFor="let task of section.tasks">
+        <yata-task-list>
+          <yata-task [isDraggable]="false" [task]="task">
+            <yata-task-options [task]="task"></yata-task-options>
+          </yata-task>
+        </yata-task-list>
+      </ng-container>
+    </mat-expansion-panel>
   </main>
 </div>
+<router-outlet></router-outlet>
