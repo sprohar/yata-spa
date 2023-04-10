@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, take } from 'rxjs';
-// import { environment } from '../../environment/environment';
 import { ChronoQueryParams, PaginatedList } from '../interfaces/';
 import { Task } from '../models';
 import { YataApiService } from './yata-api.service';

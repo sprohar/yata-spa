@@ -6,9 +6,8 @@ export const environment = {
     baseUrl: 'http://localhost:3000',
     endpoints: {
       tags: 'tags',
-      chrono: {
-        tasks: 'chrono/tasks',
-      },
+      tasks: 'tasks',
+      projects: 'projects',
     },
   },
   auth: {
