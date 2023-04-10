@@ -35,6 +35,7 @@ import { TasksOrderByOptionsComponent } from './components/tasks-order-by-option
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
+import { SubtaskDetailsDailogComponent } from './components/subtask-details-dailog/subtask-details-dailog.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskDetailsDialogEntryComponent,
     CreateTaskComponent,
     CreateTaskDialogComponent,
+    SubtaskDetailsDailogComponent,
   ],
   imports: [
     CommonModule,
