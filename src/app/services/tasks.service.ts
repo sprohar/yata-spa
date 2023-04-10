@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, take } from 'rxjs';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
-import { Task } from '../models/';
+import { Tag, Task } from '../models/';
 import { YataApiService } from './yata-api.service';
 
 @Injectable({
@@ -37,6 +37,13 @@ export class TasksService extends YataApiService {
   delete(task: Task) {
     const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}`;
     return this.http.delete(url).pipe(take(1), catchError(this.handleError));
+  }
+
+  removeTag(task: Task, tag: Tag) {
+    const url = `${this.baseUrl}/projects/${task.projectId}/tasks/${task.id}/tags/${tag.id}`;
+    return this.http
+      .delete<Task>(url)
+      .pipe(take(1), catchError(this.handleError));
   }
 
   get(projectId: number, taskId: number) {
