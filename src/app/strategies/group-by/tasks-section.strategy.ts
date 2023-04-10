@@ -8,9 +8,6 @@ export function groupProjectTasksBySection(
   const unsectioned: Section = {
     name: 'No section',
     projectId,
-    dragDropData: {
-      sectionId: null,
-    },
   };
 
   const map = new Map<Section, Task[]>();

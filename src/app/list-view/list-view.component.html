@@ -32,9 +32,10 @@
         </mat-expansion-panel-header>
 
         <yata-task-list
+          #taskList
           cdkDropList
           [cdkDropListData]="map.key"
-          (cdkDropListDropped)="handleMoveTaskToSection($event)"
+          (cdkDropListDropped)="taskList.handleMoveTaskToSection($event)"
         >
           <yata-task
             *ngFor="let task of map.value"

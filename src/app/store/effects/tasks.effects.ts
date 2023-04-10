@@ -23,6 +23,7 @@ import {
   TaskOptionsActions,
   YataApiActions,
 } from '../actions';
+import { TaskListActions } from '../actions/task-list.actions';
 
 @Injectable()
 export class TasksEffects {
@@ -177,6 +178,25 @@ export class TasksEffects {
           map((task) => YataApiActions.updateTaskSuccess({ task })),
           catchError((error: ApiErrorResponse) =>
             of(YataApiActions.updateTaskError({ error }))
+          )
+        )
+      )
+    )
+  );
+
+  moveTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskListActions.moveTask),
+      concatMap((action) =>
+        this.tasksService.update(action.task.id!, action.task).pipe(
+          map((task) => YataApiActions.updateTaskSuccess({ task })),
+          tap(() => this.snackbar.open('Updated task')),
+          catchError((error: ApiErrorResponse) =>
+            of(
+              YataApiActions.updateTaskError({
+                error,
+              })
+            )
           )
         )
       )

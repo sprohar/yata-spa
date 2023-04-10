@@ -1,10 +1,8 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Section, Task } from '../models';
+import { Section } from '../models';
 import { CreateTaskDialogComponent } from '../shared/components/create-task-dialog/create-task-dialog.component';
-import { ListViewActions } from '../store/actions';
 import {
   selectCompletedTasks,
   selectProjectTasksGroupedBySection,
@@ -29,44 +27,5 @@ export class ListViewComponent {
         section,
       },
     });
-  }
-
-  handleMoveTaskToSection(event: CdkDragDrop<Section, Section, Task>) {
-    const source = event.previousContainer.data;
-    const target = event.container.data;
-    const task = event.item.data;
-
-    if (source.id && target.id && source.id === target.id) return;
-    if (!(source.dragDropData && target.dragDropData)) {
-      this.store.dispatch(
-        ListViewActions.moveTaskToSection({
-          task: {
-            id: task.id,
-            projectId: task.projectId,
-            sectionId: target ? target.id : null,
-          },
-        })
-      );
-    } else if (source.dragDropData.dueDate || target.dragDropData.dueDate) {
-      this.store.dispatch(
-        ListViewActions.updateTaskListItem({
-          task: {
-            id: task.id,
-            projectId: task.projectId,
-            dueDate: target.dragDropData.dueDate,
-          },
-        })
-      );
-    } else if (source.dragDropData.priority || target.dragDropData.priority) {
-      this.store.dispatch(
-        ListViewActions.updateTaskListItem({
-          task: {
-            id: task.id,
-            projectId: task.projectId,
-            priority: target.dragDropData.priority,
-          },
-        })
-      );
-    }
   }
 }
