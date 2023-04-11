@@ -10,11 +10,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
-import { KanbanViewActions } from '../../../store/actions';
-import { TaskDetailsActions } from '../../../store/actions/task-details.actions';
+import { TaskDetailsActions } from '../../../store/actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
-import { selectSections } from '../../../store/selectors';
-import { selectCurrentTask } from '../../../store/selectors/tasks.selectors';
+import { selectCurrentTask, selectSections } from '../../../store/selectors';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 @Component({
@@ -159,7 +157,6 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
       TaskDetailsActions.updateTask({
         task: {
           id: task.id,
-          projectId: task.projectId,
           isCompleted: task.isCompleted,
         },
       })
