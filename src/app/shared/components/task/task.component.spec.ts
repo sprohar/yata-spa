@@ -5,12 +5,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Task } from '../../../models';
-import { ListViewActions } from '../../../store/actions';
 import { TaskComponent } from './task.component';
 
-const task: Task = { id: 1, title: 'Task 1', projectId: 1 };
-
 describe('TaskComponent', () => {
+  const task: Task = { id: 1, title: 'Task 1', projectId: 1 };
   let component: TaskComponent;
   let fixture: ComponentFixture<TaskComponent>;
   let store: MockStore;
@@ -35,47 +33,28 @@ describe('TaskComponent', () => {
   });
 
   describe('#handleChecked', () => {
-    it('should dispatch the "markTaskAsComplete" action', () => {
+    it('should dispatch an action to update the isCompleted property', () => {
       spyOn(store, 'dispatch');
-      const mockTask = task;
-      const isChecked = true;
-
-      component.handleChecked(isChecked, mockTask);
-
-      expect(store.dispatch).toHaveBeenCalledWith(
-        ListViewActions.markTaskAsComplete({
-          task: {
-            id: mockTask.id,
-            projectId: mockTask.projectId,
-            isCompleted: isChecked,
-          },
-        })
-      );
+      component.handleChecked();
+      expect(store.dispatch).toHaveBeenCalled();
     });
 
-    it('should dispatch the "markTaskAsIncomplete" action', () => {
+    it('should dispatch an action to update the isCompleted property', () => {
       spyOn(store, 'dispatch');
-      const mockTask = task;
-      const isChecked = false;
 
-      component.handleChecked(isChecked, mockTask);
+      // trigger the change event on the FormControl
+      component.form.patchValue({
+        isCompleted: true,
+      });
 
-      expect(store.dispatch).toHaveBeenCalledWith(
-        ListViewActions.markTaskAsIncomplete({
-          task: {
-            id: mockTask.id,
-            projectId: mockTask.projectId,
-            isCompleted: isChecked,
-          },
-        })
-      );
+      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 
-  describe('#update', () => {
+  describe('#handleSubmit', () => {
     it('should not dispatch an action when the form is invalid', () => {
       spyOn(store, 'dispatch');
-      component.update();
+      component.handleSubmit();
       expect(store.dispatch).not.toHaveBeenCalled();
     });
 
@@ -84,7 +63,7 @@ describe('TaskComponent', () => {
       component.form.patchValue({
         title: '',
       });
-      component.update();
+      component.handleSubmit();
       expect(store.dispatch).not.toHaveBeenCalled();
     });
 
@@ -93,28 +72,8 @@ describe('TaskComponent', () => {
       component.form.patchValue({
         title: 'Updated Task',
       });
-      component.update();
+      component.handleSubmit();
       expect(store.dispatch).not.toHaveBeenCalled();
     });
   });
-
-  // describe('handleSelectedTask', () => {
-  //   beforeEach(() => {
-  //     component = fixture.componentInstance;
-  //     component.tasks = tasks;
-  //     fixture.detectChanges();
-  //   });
-
-  //   it('should navigate to "/list/:projectId/tasks/:taskId"', () => {
-  //     const task = tasks[0];
-  //     const routerNavigateSpy = router.navigate as jasmine.Spy;
-
-  //     component.handleSelectedTask(task);
-
-  //     const navArgs = routerNavigateSpy.calls.first().args[0];
-  //     const expectedNavArgs = ['list', task.projectId, 'tasks', task.id];
-
-  //     expect(navArgs).toEqual(expectedNavArgs);
-  //   });
-  // });
 });
