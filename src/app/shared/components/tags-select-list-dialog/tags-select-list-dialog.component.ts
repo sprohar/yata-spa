@@ -42,7 +42,7 @@ export class TagsSelectListDialogComponent implements OnInit {
   initForm() {
     this.form = this.fb.group({
       name: [
-        null,
+        '',
         [Validators.minLength(1), Validators.maxLength(Tag.Name.MaxLength)],
       ],
       tags: this.fb.control([], [Validators.required]),
@@ -62,7 +62,8 @@ export class TagsSelectListDialogComponent implements OnInit {
   }
 
   handleCreateTag() {
-    const name = this.nameControl.value as string;
+    const name: string | null = this.nameControl.value;
+    if (!name) return;
     if (name.trim().length === 0) return;
 
     const tag: Tag = { name };
@@ -73,7 +74,7 @@ export class TagsSelectListDialogComponent implements OnInit {
     );
   }
 
-  handleSave() {
+  handleSubmit() {
     if (this.form.invalid) return;
     const tags: number[] = this.form.value.tags;
 
@@ -81,7 +82,7 @@ export class TagsSelectListDialogComponent implements OnInit {
       TaskDetailsActions.updateTask({
         task: {
           id: this.data.id,
-          tags: tags.map((value) => ({ id: value, name: '' })),
+          tags: tags.map((value) => ({ id: value } as Tag)),
         },
       })
     );

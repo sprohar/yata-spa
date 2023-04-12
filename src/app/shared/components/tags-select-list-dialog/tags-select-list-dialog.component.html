@@ -16,6 +16,7 @@
     formControlName="tags"
   >
     <mat-list-option
+      [attr.data-test]="'tag-' + tag.id"
       *ngFor="let tag of tags; trackBy: trackByTagId"
       [value]="tag.id"
     >
@@ -24,12 +25,19 @@
   </mat-selection-list>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-stroked-button mat-dialog-close>Cancel</button>
   <button
+    data-test="tagsSelectListCancelButton"
+    mat-stroked-button
+    mat-dialog-close
+  >
+    Cancel
+  </button>
+  <button
+    data-test="tagsSelectListSubmitButton"
     [disabled]="form.invalid"
     mat-raised-button
     color="primary"
-    (click)="handleSave()"
+    (click)="handleSubmit()"
   >
     Save
   </button>
