@@ -1,4 +1,4 @@
-import { Priority, Project, Task } from '../../models';
+import { Priority, Project, Tag, Task } from '../../models';
 import {
   TasksState,
   initialTasksState,
@@ -16,6 +16,7 @@ import {
   selectTasksGroupByDueDate,
   selectTasksGroupByPriority,
   selectTasksGroupByProject,
+  selectTasksGroupedByTag,
   selectTodaysTasks,
   selectUnsectionedTasks,
   selectUpcomingTasks,
@@ -331,5 +332,60 @@ describe('Tasks Selectors', () => {
 
     const result = selectTasksGroupByProject.projector(projects, tasks);
     expect(result).toEqual(tasksGroupedByProject);
+  });
+
+  describe('selectTasksGroupedByTag', () => {
+    it('should group tasks by tag', () => {
+      const tags: Tag[] = [
+        { id: 1, name: 'Tag 1' },
+        { id: 2, name: 'Tag 2' },
+      ];
+
+      const tasks: Task[] = [
+        {
+          id: 1,
+          title: 'Task 1',
+          content: 'Task 1 content',
+          isCompleted: false,
+          priority: Priority.HIGH,
+          projectId: 1,
+          tags: [tags[0]],
+        },
+        {
+          id: 2,
+          title: 'Task 2',
+          content: 'Task 2 content',
+          isCompleted: false,
+          priority: Priority.MEDIUM,
+          projectId: 1,
+          tags: [tags[0]],
+        },
+        {
+          id: 3,
+          title: 'Task 3',
+          content: 'Task 3 content',
+          isCompleted: false,
+          priority: Priority.LOW,
+          projectId: 2,
+          tags: [tags[1]],
+        },
+        {
+          id: 4,
+          title: 'Task 4',
+          content: 'Task 4 content',
+          isCompleted: true,
+          priority: Priority.NONE,
+          projectId: 2,
+          tags: [tags[1]],
+        },
+      ];
+
+      const tasksGroupedByTag = new Map<Tag, Task[]>();
+      tasksGroupedByTag.set(tags[0], [tasks[0], tasks[1]]);
+      tasksGroupedByTag.set(tags[1], [tasks[2], tasks[3]]);
+
+      const result = selectTasksGroupedByTag.projector(tasks, tags);
+      expect(result).toEqual(tasksGroupedByTag);
+    });
   });
 });
