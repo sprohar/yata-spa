@@ -57,7 +57,7 @@
         </div>
 
         <!-- Subtasks -->
-        <div class="flex-column row-gap-1" formArrayName="subtasks">
+        <div class="flex-column row-gap-1">
           <ng-container *ngIf="task.subtasks && task.subtasks.length">
             <h5>Subtasks</h5>
             <yata-task-list>
@@ -161,7 +161,11 @@
 
           <div class="flex space-between align-items-center">
             <h5>Tags</h5>
-            <button mat-icon-button title="Add tag">
+            <button
+              mat-icon-button
+              title="Add tag"
+              (click)="openTagsSelectListDialog(task)"
+            >
               <mat-icon>add</mat-icon>
             </button>
           </div>

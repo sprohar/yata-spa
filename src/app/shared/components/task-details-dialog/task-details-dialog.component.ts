@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -12,8 +12,13 @@ import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
-import { selectCurrentTask, selectSections } from '../../../store/selectors';
+import {
+  selectCurrentTask,
+  selectSections,
+  selectTags,
+} from '../../../store/selectors';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
+import { TagsSelectListDialogComponent } from '../tags-select-list-dialog/tags-select-list-dialog.component';
 
 @Component({
   selector: 'yata-task-details-dialog',
@@ -30,13 +35,16 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   currentTask$?: Observable<Task | undefined>;
   projects$ = this.store.select(selectProjects);
   sections$ = this.store.select(selectSections);
+  tags$ = this.store.select(selectTags);
+
   isAddingSubtask = false;
   form!: FormGroup;
 
   constructor(
     private store: Store,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnDestroy(): void {
@@ -52,6 +60,21 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
         }
       })
     );
+  }
+
+  openTagsSelectListDialog(task: Task) {
+    const ref = this.dialog.open(TagsSelectListDialogComponent, {
+      data: task,
+    });
+
+    ref
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result) {
+          this.changeDetectorRef.detectChanges();
+        }
+      });
   }
 
   openDateTimePickerDialog() {
@@ -91,17 +114,30 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
       isCompleted: [task.isCompleted],
       isAllDay: [task.isAllDay],
       projectId: [task.projectId],
-      dueDate: [null],
-      subtasks: this.fb.array([]),
+      dueDate: [task.dueDate ? new Date(task.dueDate) : null],
+      // subtasks: this.fb.array([]),
+      tags: this.fb.array([]),
       description: [
         task.content,
         [Validators.maxLength(Task.Description.MaxLength)],
       ],
     });
 
-    if (task.dueDate) {
-      this.dueDateControl.setValue(new Date(task.dueDate));
+    if (task.tags) {
+      const formArray = this.form.get('tags') as FormArray;
+      for (const tag of task.tags) {
+        formArray.push(
+          this.fb.group({
+            id: [tag.id],
+            name: [tag.name],
+          })
+        );
+      }
     }
+  }
+
+  get tagsControl() {
+    return this.form.get('tags') as FormArray;
   }
 
   get priorityControl() {
@@ -110,10 +146,6 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
 
   get isCompletedControl() {
     return this.form.get('isCompleted') as FormControl;
-  }
-
-  get subtasksControls() {
-    return this.form.get('subtasks') as FormArray;
   }
 
   get dueDateControl() {
