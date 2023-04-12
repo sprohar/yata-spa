@@ -12,39 +12,15 @@ export const initialTagsState: TagsState = {
   tags: [],
 };
 
-function updateTag(tags: Tag[], updatedTag: Tag) {
-  const collection: Tag[] = [];
-  for (const tag of tags) {
-    if (tag.id === updatedTag.id) {
-      collection.push(updatedTag);
-    } else {
-      collection.push(tag);
-    }
-  }
-  return collection;
-}
-
-function ensureDistinct(currentTags: Tag[], taskTags: Tag[] | undefined) {
-  if (taskTags === undefined) return currentTags;
-
-  const tags: Tag[] = [...currentTags];
-  for (const taskTag of taskTags) {
-    if (tags.findIndex((t) => t.id === taskTag.id) === -1) {
-      tags.push(taskTag);
-    }
-  }
-
-  tags.sort((a, b) => a.name.localeCompare(b.name));
-  return tags;
-}
-
 export const tagsFeature = createFeature({
   name: 'tags',
   reducer: createReducer(
     initialTagsState,
     on(YataApiActions.createTaskSuccess, (state, action) => ({
       currentTagId: state.currentTagId,
-      tags: ensureDistinct(state.tags, action.task.tags),
+      tags: state.tags
+        .concat(action.task.tags ?? [])
+        .sort((a, b) => a.name.localeCompare(b.name)),
     })),
     on(YataApiActions.createTagSuccess, (state, action) => ({
       currentTagId: state.currentTagId,
@@ -59,8 +35,10 @@ export const tagsFeature = createFeature({
       currentTagId: action.tagId,
     })),
     on(YataApiActions.updateTagSuccess, (state, action) => ({
-      currentTagId: state.currentTagId,
-      tags: updateTag(state.tags, action.tag),
+      ...state,
+      tags: state.tags.map((tag) =>
+        tag.id === action.tag.id ? action.tag : tag
+      ),
     })),
     on(YataApiActions.deleteTagSuccess, (state, action) => ({
       currentTagId: state.currentTagId,
