@@ -50,7 +50,13 @@ describe('KanbanColumnComponent', () => {
         MatButtonModule,
         MatCardModule,
       ],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore(),
+        {
+          provide: MatDialog,
+          useValue: dialog,
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(KanbanColumnComponent);
