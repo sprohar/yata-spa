@@ -74,7 +74,7 @@ export class SectionOptionsComponent implements OnDestroy, OnInit {
   handleDelete() {
     const ref = this.confirmationDialog.open({
       title: 'Delete Column',
-      content: 'All tasks in this column will be removed. Continue?',
+      message: 'All tasks in this column will be removed. Continue?',
     });
 
     ref

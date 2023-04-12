@@ -10,7 +10,7 @@ import { SectionOptionsActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
 
-import { SectionOptionsComponent } from './section-options-menu.component';
+import { SectionOptionsComponent } from './section-options.component';
 
 class MatDialogRefStub {
   afterClosed() {
