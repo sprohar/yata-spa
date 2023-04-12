@@ -5,15 +5,15 @@
     </span>
   </ng-container>
   <mat-checkbox
-    [checked]="task.isCompleted"
-    (change)="handleChecked($event.checked, task)"
+    data-test="taskIsCompletedCheckbox"
+    formControlName="isCompleted"
   ></mat-checkbox>
   <input
     [attr.data-test]="'taskInput-' + task.id"
     type="text"
     class="input"
     formControlName="title"
-    (blur)="update()"
+    (blur)="handleSubmit()"
   />
   <ng-content></ng-content>
 </li>

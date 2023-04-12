@@ -14,6 +14,7 @@ export * from './task-card.actions';
 export * from './task-details.actions';
 export * from './task-options.actions';
 export * from './task-resolver.actions';
+export * from './task.actions';
 export * from './tasks-order-by-options.actions';
 export * from './view-header.actions';
 export * from './yata-api-actions';

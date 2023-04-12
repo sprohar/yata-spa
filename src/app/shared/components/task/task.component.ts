@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Priority, Task } from '../../../models';
-import { ListViewActions } from '../../../store/actions';
+import { Subject } from 'rxjs';
+import { Task } from '../../../models';
+import { TaskActions } from '../../../store/actions/task.actions';
 
 @Component({
   selector: 'yata-task',
@@ -15,29 +16,33 @@ import { ListViewActions } from '../../../store/actions';
   styleUrls: ['./task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskComponent {
+export class TaskComponent implements OnDestroy {
+  private readonly destroy$ = new Subject<void>();
   @Input() task!: Task;
   @Input() isDraggable = true;
   form!: FormGroup;
 
   constructor(private store: Store, private fb: FormBuilder) {}
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
+
   ngOnInit(): void {
     if (!this.task) {
       throw new Error(`"task" is undefined`);
     }
-    this.initForm(this.task);
-  }
 
-  get priorityControl() {
-    return this.form.get('priority') as FormControl;
+    this.initForm(this.task);
+    this.form.get('isCompleted')?.valueChanges.subscribe((checked) => {
+      this.handleChecked();
+    });
   }
 
   initForm(task: Task) {
     this.form = this.fb.group({
       id: [task.id],
-      projectId: [task.projectId],
-      priority: [task.priority],
+      isCompleted: [task.isCompleted],
       title: [
         task.title,
         [Validators.required, Validators.maxLength(Task.Title.MaxLength)],
@@ -45,45 +50,27 @@ export class TaskComponent {
     });
   }
 
-  update() {
+  handleChecked() {
+    const task = this.form.value;
+    this.store.dispatch(
+      TaskActions.updateTask({
+        task: {
+          id: task.id,
+          isCompleted: task.isCompleted,
+        },
+      })
+    );
+  }
+
+  handleSubmit() {
     if (this.form.invalid || this.form.pristine) {
       return;
     }
 
     this.store.dispatch(
-      ListViewActions.updateTaskListItem({
+      TaskActions.updateTask({
         task: this.form.value,
       })
     );
-  }
-
-  handleChecked(checked: boolean, task: Task) {
-    if (checked) {
-      this.store.dispatch(
-        ListViewActions.markTaskAsComplete({
-          task: {
-            id: task.id,
-            isCompleted: true,
-            projectId: task.projectId,
-          },
-        })
-      );
-    } else {
-      this.store.dispatch(
-        ListViewActions.markTaskAsIncomplete({
-          task: {
-            id: task.id,
-            isCompleted: false,
-            projectId: task.projectId,
-          },
-        })
-      );
-    }
-  }
-
-  handlePriorityChange(priority: Priority) {
-    this.priorityControl.setValue(priority);
-    this.priorityControl.markAsDirty();
-    this.update();
   }
 }

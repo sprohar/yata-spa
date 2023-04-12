@@ -24,6 +24,7 @@ import {
   YataApiActions,
 } from '../actions';
 import { TaskListActions } from '../actions/task-list.actions';
+import { TaskActions } from '../actions/task.actions';
 
 @Injectable()
 export class TasksEffects {
@@ -212,10 +213,8 @@ export class TasksEffects {
         TaskDetailsActions.updateTask,
         TaskDetailsActions.updateSubtask,
         TaskDetailsActions.moveTaskToProject,
-        ListViewActions.markTaskAsComplete,
-        ListViewActions.markTaskAsIncomplete,
         ListViewActions.moveTaskToSection,
-        ListViewActions.updateTaskListItem,
+        TaskActions.updateTask,
         EisenhowerMatrixActions.moveTask
       ),
       concatMap((action) =>
