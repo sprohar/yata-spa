@@ -20,8 +20,7 @@ export class ListViewComponent {
 
   constructor(private store: Store, private dialog: MatDialog) {}
 
-  openCreateTaskDialog(event: Event, section: Section) {
-    event.stopPropagation();
+  openCreateTaskDialog(section: Section) {
     this.dialog.open(CreateTaskDialogComponent, {
       data: {
         section,

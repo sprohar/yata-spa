@@ -19,7 +19,7 @@
             <button
               mat-icon-button
               class="transform-scale-75"
-              (click)="openCreateTaskDialog($event, map.key)"
+              (click)="$event.stopPropagation(); openCreateTaskDialog(map.key)"
             >
               <mat-icon>add</mat-icon>
             </button>
@@ -32,6 +32,7 @@
         </mat-expansion-panel-header>
 
         <yata-task-list
+          [attr.data-test]="'section-' + map.key.id + '-tasks'"
           #taskList
           cdkDropList
           [cdkDropListData]="map.key"
@@ -58,7 +59,7 @@
             <span>({{ completedTasks.length }})</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <yata-task-list #list cdkDropList>
+        <yata-task-list data-test="completedTasks">
           <yata-task
             *ngFor="let task of completedTasks"
             [task]="task"
