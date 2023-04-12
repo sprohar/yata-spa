@@ -9,7 +9,7 @@ export const TaskDetailsActions = createActionGroup({
     'Move Task To Project': props<{ task: Partial<Task> }>(),
     'Create Subtask': props<{ subtask: Task }>(),
     'Delete Subtask': props<{ subtask: Task }>(),
-    'Update Subtask': props<{ subtask: Partial<Task> }>(),
+    'Update Subtask': props<{ task: Partial<Task> }>(),
     'Remove Tag From Task': props<{ task: Task; tag: Tag }>(),
     'Create Tag': props<{ tag: Tag }>(),
   },

@@ -12,9 +12,9 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -57,28 +57,24 @@ export class SubtaskDetailsDailogComponent implements OnDestroy, OnInit {
     this.destroy$.next();
   }
 
-  initForm(task: Task) {
+  initForm(subtask: Task) {
     this.form = this.fb.group({
-      id: [task.id],
+      id: [subtask.id],
       title: [
-        task.title,
+        subtask.title,
         [Validators.required, Validators.maxLength(Task.Title.MaxLength)],
       ],
-      priority: [task.priority],
-      isCompleted: [task.isCompleted],
-      isAllDay: [task.isAllDay],
-      parentId: [task.parentId],
-      projectId: [task.projectId],
-      dueDate: [null],
+      priority: [subtask.priority],
+      isCompleted: [subtask.isCompleted],
+      isAllDay: [subtask.isAllDay],
+      parentId: [subtask.parentId],
+      projectId: [subtask.projectId],
+      dueDate: [subtask.dueDate ? new Date(subtask.dueDate) : null],
       description: [
-        task.content,
+        subtask.content,
         [Validators.maxLength(Task.Description.MaxLength)],
       ],
     });
-
-    if (task.dueDate) {
-      this.dueDateControl.setValue(new Date(task.dueDate));
-    }
   }
 
   get parentIdControl() {
@@ -152,7 +148,6 @@ export class SubtaskDetailsDailogComponent implements OnDestroy, OnInit {
       TaskDetailsActions.updateTask({
         task: {
           id: task.id,
-          projectId: task.projectId,
           isCompleted: task.isCompleted,
         },
       })
@@ -164,8 +159,8 @@ export class SubtaskDetailsDailogComponent implements OnDestroy, OnInit {
       return;
     }
 
-    const task: Task = this.form.value;
-    this.store.dispatch(TaskDetailsActions.updateTask({ task }));
+    const subtask: Task = this.form.value;
+    this.store.dispatch(TaskDetailsActions.updateSubtask({ task: subtask }));
     this.dialogRef.close();
   }
 }

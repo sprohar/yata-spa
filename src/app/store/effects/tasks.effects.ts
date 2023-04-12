@@ -210,6 +210,7 @@ export class TasksEffects {
         TaskCardActions.updateTask,
         KanbanViewActions.moveTaskToSection,
         TaskDetailsActions.updateTask,
+        TaskDetailsActions.updateSubtask,
         TaskDetailsActions.moveTaskToProject,
         ListViewActions.markTaskAsComplete,
         ListViewActions.markTaskAsIncomplete,
