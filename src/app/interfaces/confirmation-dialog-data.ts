@@ -1,6 +1,7 @@
 export interface ConfirmationDialogData {
   title: string;
-  content: string;
+  message: string;
   confirmButtonColor?: 'accent' | 'primary' | 'warn';
   confirmButtonText?: string;
+  cancelButtonText?: string;
 }

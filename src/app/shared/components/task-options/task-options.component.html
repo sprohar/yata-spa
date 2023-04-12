@@ -1,16 +1,33 @@
-<button mat-icon-button [matMenuTriggerFor]="options" title="Task options">
+<button
+  data-test="taskOptionsButton"
+  mat-icon-button
+  [matMenuTriggerFor]="options"
+  title="Task options"
+>
   <mat-icon>more_vert</mat-icon>
 </button>
 <mat-menu #options="matMenu">
-  <button mat-menu-item (click)="handleViewTaskDetails()">
+  <button
+    data-test="taskOptionViewDetails"
+    mat-menu-item
+    (click)="handleViewTaskDetails()"
+  >
     <mat-icon>info</mat-icon>
     <span>View details </span>
   </button>
-  <button mat-menu-item (click)="handleDuplicate()">
+  <button
+    data-test="taskOptionDuplicateTask"
+    mat-menu-item
+    (click)="handleDuplicate()"
+  >
     <mat-icon>content_copy</mat-icon>
     <span>Duplicate</span>
   </button>
-  <button mat-menu-item (click)="handleDelete()">
+  <button
+    data-test="taskOptionDeleteTask"
+    mat-menu-item
+    (click)="handleDelete()"
+  >
     <mat-icon>delete</mat-icon>
     <span>Delete</span>
   </button>

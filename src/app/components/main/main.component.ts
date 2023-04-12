@@ -68,7 +68,7 @@ export class MainComponent implements OnDestroy {
   openDeleteProjectDialog(project: Project) {
     const ref = this.confirmationDialog.open({
       title: 'Confirmation',
-      content: `Delete ${project.name}?`,
+      message: `Delete ${project.name}?`,
       confirmButtonColor: 'warn',
       confirmButtonText: 'Delete',
     });
@@ -102,7 +102,7 @@ export class MainComponent implements OnDestroy {
   openDeleteTagConfirmationDialog(tag: Tag) {
     const ref = this.confirmationDialog.open({
       title: 'Confirmation',
-      content: 'Delete tag?',
+      message: 'Delete tag?',
       confirmButtonColor: 'warn',
       confirmButtonText: 'Delete',
     });

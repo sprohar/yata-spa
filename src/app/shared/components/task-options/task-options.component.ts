@@ -6,6 +6,7 @@ import { Section, Task } from '../../../models';
 import { TaskOptionsActions } from '../../../store/actions/task-options.actions';
 import { selectMoveToSectionsOptions } from '../../../store/selectors';
 import { SubtaskDetailsDailogComponent } from '../subtask-details-dailog/subtask-details-dailog.component';
+import { ConfirmationDialogService } from '../../../services';
 
 @Component({
   selector: 'yata-task-options',
@@ -20,7 +21,8 @@ export class TaskOptionsComponent {
     private store: Store,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private confirmationDialog: ConfirmationDialogService
   ) {}
 
   trackBySectionId(_index: number, section: Section) {
@@ -28,6 +30,13 @@ export class TaskOptionsComponent {
   }
 
   handleDelete() {
+    this.confirmationDialog.open({
+      title: 'Delete Task',
+      message: 'Are you sure you want to delete this task?',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    });
+
     this.store.dispatch(
       TaskOptionsActions.deleteTask({
         task: this.task,

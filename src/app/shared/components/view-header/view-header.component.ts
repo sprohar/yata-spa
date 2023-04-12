@@ -69,7 +69,7 @@ export class ViewHeaderComponent implements OnDestroy {
   openDeleteProjectConfirmationDialog(project: Project) {
     const dialogData: ConfirmationDialogData = {
       title: 'Delete Project',
-      content: 'Deleting a project will also delete all tasks. Continue?',
+      message: 'Deleting a project will also delete all tasks. Continue?',
     };
 
     const ref = this.dialog.open(ConfirmationDialogComponent, {
