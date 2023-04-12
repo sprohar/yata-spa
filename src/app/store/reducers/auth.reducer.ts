@@ -18,7 +18,6 @@ export const authFeature = createFeature({
     initialAuthState,
     on(AuthApiActions.logoutSuccess, (_state, _action) => ({
       accessToken: null,
-      isAuthenticated: false,
       user: null,
     })),
     on(
