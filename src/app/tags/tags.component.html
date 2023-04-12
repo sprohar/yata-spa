@@ -2,8 +2,15 @@
   <header *ngIf="currentTag$ | async as tag">
     <h1>#{{ tag.name }}</h1>
   </header>
-  <main *ngIf="groupedTasks$ | async as map" class="flex-column row-gap-1 mt-1">
-    <mat-expansion-panel *ngFor="let entry of map | keyvalue" [expanded]="true">
+  <main
+    *ngIf="tasksGroupedByTags$ | async as map"
+    class="flex-column row-gap-1 mt-1"
+  >
+    <mat-expansion-panel
+      [attr.data-test]="'project-' + entry.key.name + '-panel'"
+      *ngFor="let entry of map | keyvalue"
+      [expanded]="true"
+    >
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span>{{ entry.key.name }}</span>

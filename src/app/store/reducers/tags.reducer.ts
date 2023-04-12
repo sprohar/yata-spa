@@ -3,13 +3,13 @@ import { Tag } from '../../models';
 import { SidenavActions, YataApiActions } from '../actions';
 
 export interface TagsState {
-  tags: Tag[];
   currentTagId: number | null;
+  tags: Tag[];
 }
 
 export const initialTagsState: TagsState = {
-  tags: [],
   currentTagId: null,
+  tags: [],
 };
 
 function updateTag(tags: Tag[], updatedTag: Tag) {
