@@ -62,47 +62,6 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     );
   }
 
-  openTagsSelectListDialog(task: Task) {
-    const ref = this.dialog.open(TagsSelectListDialogComponent, {
-      data: task,
-    });
-
-    ref
-      .afterClosed()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((result) => {
-        if (result) {
-          this.changeDetectorRef.detectChanges();
-        }
-      });
-  }
-
-  openDateTimePickerDialog() {
-    const dueDate: Date | null = this.dueDateControl.value;
-    const ref = this.dialog.open(DateTimePickerDialogComponent, {
-      data: dueDate,
-    });
-
-    ref
-      .afterClosed()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((dueDate: string | Date | null) => {
-        // When the user clicks the cancel button, an empty string is returned
-        if (typeof dueDate !== 'string') {
-          this.dueDateControl.setValue(dueDate);
-          this.dueDateControl.markAsDirty();
-        }
-      });
-  }
-
-  trackByProjectId(_index: number, project: Project) {
-    return project.id;
-  }
-
-  trackBySectionId(_index: number, section: Section) {
-    return section.id;
-  }
-
   initForm(task: Task) {
     this.form = this.fb.group({
       id: [task.id],
@@ -115,7 +74,6 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
       isAllDay: [task.isAllDay],
       projectId: [task.projectId],
       dueDate: [task.dueDate ? new Date(task.dueDate) : null],
-      // subtasks: this.fb.array([]),
       tags: this.fb.array([]),
       description: [
         task.content,
@@ -134,6 +92,58 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
         );
       }
     }
+  }
+
+  openTagsSelectListDialog(task: Task) {
+    const ref = this.dialog.open(TagsSelectListDialogComponent, {
+      data: task,
+    });
+
+    ref
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result: boolean | string) => {
+        if (result) {
+          // A tag was added
+          this.changeDetectorRef.detectChanges();
+        }
+      });
+  }
+
+  openDateTimePickerDialog() {
+    const dueDate: Date | null = this.dueDateControl.value;
+    const ref = this.dialog.open(DateTimePickerDialogComponent, {
+      data: dueDate,
+    });
+
+    ref
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((dueDate: string | Date | null) => {
+        // When the user clicks the cancel button, an empty string is returned
+        if (typeof dueDate === 'string') {
+          return;
+        }
+
+        this.dueDateControl.setValue(dueDate);
+        this.dueDateControl.markAsDirty();
+        this.store.dispatch(
+          TaskDetailsActions.updateTask({
+            task: {
+              id: this.form.value.id,
+              dueDate: dueDate ? dueDate.toISOString() : null,
+            },
+          })
+        );
+      });
+  }
+
+  trackByProjectId(_index: number, project: Project) {
+    return project.id;
+  }
+
+  trackBySectionId(_index: number, section: Section) {
+    return section.id;
   }
 
   get tagsControl() {
@@ -156,13 +166,22 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     return this.form.get('isAllDay') as FormControl;
   }
 
-  removeDueDate() {
+  handleRemoveDueDate() {
     this.form.patchValue({
       dueDate: null,
     });
+
+    this.store.dispatch(
+      TaskDetailsActions.updateTask({
+        task: {
+          id: this.form.value.id,
+          dueDate: null,
+        },
+      })
+    );
   }
 
-  removeTag(task: Task, tag: Tag) {
+  handleRemoveTag(task: Task, tag: Tag) {
     this.store.dispatch(
       TaskDetailsActions.removeTagFromTask({
         task,
@@ -193,14 +212,5 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
         },
       })
     );
-  }
-
-  handleSave() {
-    if (this.form.invalid || this.form.pristine) {
-      return;
-    }
-
-    const task: Task = this.form.value;
-    this.store.dispatch(TaskDetailsActions.updateTask({ task }));
   }
 }

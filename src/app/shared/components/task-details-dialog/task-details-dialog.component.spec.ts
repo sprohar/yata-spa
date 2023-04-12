@@ -21,7 +21,18 @@ import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
+import { Priority, Tag, Task } from '../../../models';
+import { TaskDetailsActions } from '../../../store/actions';
+import { SharedModule } from '../../shared.module';
 import { TaskDetailsDialogComponent } from './task-details-dialog.component';
+
+const task: Task = {
+  id: 1,
+  title: 'Task',
+  projectId: 1,
+  priority: Priority.NONE,
+  isCompleted: false,
+};
 
 const initialState: AppState = {
   auth: initialAuthState,
@@ -36,11 +47,11 @@ const initialState: AppState = {
   tasks: {
     currentTaskId: 1,
     orderBy: null,
-    tasks: [{ id: 1, title: 'Task', projectId: 1 }],
+    tasks: [task],
   },
 };
 
-describe('TaskDetailsComponent', () => {
+describe('TaskDetailsDialogComponent', () => {
   let component: TaskDetailsDialogComponent;
   let fixture: ComponentFixture<TaskDetailsDialogComponent>;
   let route: jasmine.SpyObj<ActivatedRoute>;
@@ -66,6 +77,7 @@ describe('TaskDetailsComponent', () => {
         MatSelectModule,
         MatDividerModule,
         MatCheckboxModule,
+        SharedModule,
       ],
       providers: [
         provideMockStore({ initialState }),
@@ -85,15 +97,116 @@ describe('TaskDetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#openDateTimePickerDialog', () => {
-    it('should open the date-time-picker-dialog', () => {
+  describe('#openTagsSelectListDialog', () => {
+    it('should open the tags-select-list-dialog', () => {
       matDialog.open.and.returnValue({
         afterClosed: () => of(true),
+      } as MatDialogRef<DateTimePickerDialogComponent>);
+
+      component.openTagsSelectListDialog(task);
+
+      expect(matDialog.open).toHaveBeenCalled();
+    });
+  });
+
+  describe('#openDateTimePickerDialog', () => {
+    it('should dispatch updateTask action when a Date value is returned', () => {
+      spyOn(store, 'dispatch');
+      const dueDate = new Date();
+
+      matDialog.open.and.returnValue({
+        afterClosed: () => of(dueDate),
       } as MatDialogRef<DateTimePickerDialogComponent>);
 
       component.openDateTimePickerDialog();
 
       expect(matDialog.open).toHaveBeenCalled();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        TaskDetailsActions.updateTask({
+          task: { id: task.id, dueDate: dueDate.toISOString() },
+        })
+      );
+    });
+
+    it('should dispatch updateTask action when a null value is returned', () => {
+      spyOn(store, 'dispatch');
+
+      matDialog.open.and.returnValue({
+        afterClosed: () => of(null),
+      } as MatDialogRef<DateTimePickerDialogComponent>);
+
+      component.openDateTimePickerDialog();
+
+      expect(matDialog.open).toHaveBeenCalled();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        TaskDetailsActions.updateTask({
+          task: { id: task.id, dueDate: null },
+        })
+      );
+    });
+
+    it('should NOT dispatch updateTask action when the Cancel button is clicked', () => {
+      spyOn(store, 'dispatch');
+
+      matDialog.open.and.returnValue({
+        afterClosed: () => of(''),
+      } as MatDialogRef<DateTimePickerDialogComponent>);
+
+      component.openDateTimePickerDialog();
+
+      expect(matDialog.open).toHaveBeenCalled();
+      expect(store.dispatch).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('#handleRemoveDueDate', () => {
+    it('should set the dueDate field to null & dispatch updateTask action', () => {
+      spyOn(store, 'dispatch');
+
+      component.handleRemoveDueDate();
+
+      expect(component.form.value.dueDate).toBeNull();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        TaskDetailsActions.updateTask({
+          task: { id: task.id, dueDate: null },
+        })
+      );
+    });
+  });
+
+  describe('#handleRemoveTag', () => {
+    it('should dispatch the removeTagFromTask action', () => {
+      spyOn(store, 'dispatch');
+      const tag: Tag = { id: 1, name: 'Tag' };
+
+      component.handleRemoveTag(task, tag);
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        TaskDetailsActions.removeTagFromTask({
+          task,
+          tag,
+        })
+      );
+    });
+  });
+
+  describe('#handleDeleteSubtask', () => {
+    it('should dispatch the deleteSubtask action', () => {
+      spyOn(store, 'dispatch');
+      const subtask: Task = { id: 1, title: 'Subtask', projectId: 1 };
+
+      component.handleDeleteSubtask(subtask);
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        TaskDetailsActions.deleteSubtask({ subtask })
+      );
+    });
+  });
+
+  describe('#handlePriorityChange', () => {
+    it('should update the priority form control', () => {
+      component.handlePriorityChange(Priority.HIGH);
+      expect(component.form.value.priority).toBe(Priority.HIGH);
     });
   });
 
@@ -102,32 +215,6 @@ describe('TaskDetailsComponent', () => {
       spyOn(store, 'dispatch');
       component.handleChecked();
       expect(store.dispatch).toHaveBeenCalled();
-    });
-  });
-
-  describe('#handleSave', () => {
-    it('should not dispatch an action when the form is invalid', () => {
-      spyOn(store, 'dispatch');
-      component.form.patchValue({
-        title: '',
-      });
-      component.handleSave();
-      expect(store.dispatch).not.toHaveBeenCalled();
-    });
-
-    it('should not dispatch an action when the form is prisitine', () => {
-      spyOn(store, 'dispatch');
-      component.handleSave();
-      expect(store.dispatch).not.toHaveBeenCalled();
-    });
-
-    it('should dispatch an action to update a task', () => {
-      spyOn(store, 'dispatch');
-      component.form.patchValue({
-        title: 'Updated Task',
-      });
-      component.handleSave();
-      expect(store.dispatch).not.toHaveBeenCalled();
     });
   });
 });
