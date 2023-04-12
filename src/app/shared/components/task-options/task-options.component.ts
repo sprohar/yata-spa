@@ -1,19 +1,26 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 import { Section, Task } from '../../../models';
+import { ConfirmationDialogService } from '../../../services';
 import { TaskOptionsActions } from '../../../store/actions/task-options.actions';
 import { selectMoveToSectionsOptions } from '../../../store/selectors';
 import { SubtaskDetailsDailogComponent } from '../subtask-details-dailog/subtask-details-dailog.component';
-import { ConfirmationDialogService } from '../../../services';
 
 @Component({
   selector: 'yata-task-options',
   templateUrl: './task-options.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskOptionsComponent {
+export class TaskOptionsComponent implements OnDestroy {
+  private readonly destroy$ = new Subject<void>();
   @Input() task!: Task;
   sections$ = this.store.select(selectMoveToSectionsOptions);
 
@@ -25,23 +32,31 @@ export class TaskOptionsComponent {
     private confirmationDialog: ConfirmationDialogService
   ) {}
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
+
   trackBySectionId(_index: number, section: Section) {
     return section.id;
   }
 
   handleDelete() {
-    this.confirmationDialog.open({
+    const ref = this.confirmationDialog.open({
       title: 'Delete Task',
       message: 'Are you sure you want to delete this task?',
       confirmButtonText: 'Delete',
       cancelButtonText: 'Cancel',
     });
 
-    this.store.dispatch(
-      TaskOptionsActions.deleteTask({
-        task: this.task,
-      })
-    );
+    ref.afterClosed().subscribe((isConfirmed) => {
+      if (isConfirmed) {
+        this.store.dispatch(
+          TaskOptionsActions.deleteTask({
+            task: this.task,
+          })
+        );
+      }
+    });
   }
 
   handleDuplicate() {
@@ -52,15 +67,11 @@ export class TaskOptionsComponent {
     );
   }
 
-  openSubtaskDetailsDialog(subtask: Task) {
-    this.dialog.open(SubtaskDetailsDailogComponent, {
-      data: subtask,
-    });
-  }
-
   handleViewTaskDetails() {
     if (this.task.parentId) {
-      this.openSubtaskDetailsDialog(this.task);
+      this.dialog.open(SubtaskDetailsDailogComponent, {
+        data: this.task,
+      });
       return;
     }
 
