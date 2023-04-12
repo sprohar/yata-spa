@@ -2,6 +2,7 @@
   <mat-dialog-content>
     <header class="flex flex-row space-between">
       <mat-checkbox
+        data-test="subtaskIsCompletedCheckbox"
         (change)="handleChecked()"
         formControlName="isCompleted"
         color="primary"
@@ -11,16 +12,7 @@
         }}
       </mat-checkbox>
       <div class="flex">
-        <button mat-icon-button title="Previous task">
-          <mat-icon>expand_less</mat-icon>
-        </button>
-        <button mat-icon-button title="Next task">
-          <mat-icon>expand_more</mat-icon>
-        </button>
-        <button mat-icon-button title="Task options">
-          <mat-icon>more_horiz</mat-icon>
-        </button>
-        <button mat-icon-button mat-dialog-close title="Close dialog">
+        <button m =A  mat-icon-button mat-dialog-close title="Close dialog">
           <mat-icon>close</mat-icon>
         </button>
       </div>
