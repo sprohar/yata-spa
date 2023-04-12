@@ -45,6 +45,7 @@ export class TaskListComponent {
         );
       }
     } else {
+      // Moving to an action Section entity
       if (source.id === target.id) return;
       this.store.dispatch(
         TaskListActions.moveTask({
