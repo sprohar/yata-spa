@@ -1,16 +1,53 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateTaskDialogComponent } from './create-task-dialog.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Priority } from '../../../models';
+import {
+  CreateTaskDialogComponent,
+  CreateTaskDialogData,
+} from './create-task-dialog.component';
 
 describe('CreateTaskDialogComponent', () => {
   let component: CreateTaskDialogComponent;
   let fixture: ComponentFixture<CreateTaskDialogComponent>;
+  let dialogRef: MatDialogRef<CreateTaskDialogComponent>;
+  let data: CreateTaskDialogData = {
+    section: {
+      id: 1,
+      name: 'Section 1',
+      projectId: 1,
+    },
+    project: {
+      id: 1,
+      name: 'Project 1',
+    },
+    priority: Priority.HIGH,
+  };
 
   beforeEach(async () => {
+    dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+
     await TestBed.configureTestingModule({
-      declarations: [ CreateTaskDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateTaskDialogComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [MatDialogModule, NoopAnimationsModule],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: dialogRef,
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: data,
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreateTaskDialogComponent);
     component = fixture.componentInstance;
