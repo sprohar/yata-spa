@@ -1,0 +1,36 @@
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>New Tag</mat-label>
+    <input
+      data-test="newTagNameInput"
+      type="text"
+      matInput
+      formControlName="name"
+      placeholder="Press Enter to save"
+      (keyup.enter)="handleCreateTag()"
+    />
+  </mat-form-field>
+  <mat-selection-list
+    *ngIf="tags$ | async as tags"
+    color="primary"
+    formControlName="tags"
+  >
+    <mat-list-option
+      *ngFor="let tag of tags; trackBy: trackByTagId"
+      [value]="tag.id"
+    >
+      {{ tag.name }}
+    </mat-list-option>
+  </mat-selection-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>Cancel</button>
+  <button
+    [disabled]="form.invalid"
+    mat-raised-button
+    color="primary"
+    (click)="handleSave()"
+  >
+    Save
+  </button>
+</mat-dialog-actions>

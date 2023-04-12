@@ -11,5 +11,6 @@ export const TaskDetailsActions = createActionGroup({
     'Delete Subtask': props<{ subtask: Task }>(),
     'Update Subtask': props<{ subtask: Partial<Task> }>(),
     'Remove Tag From Task': props<{ task: Task; tag: Tag }>(),
+    'Create Tag': props<{ tag: Tag }>(),
   },
 });

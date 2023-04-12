@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { TagsService } from '../../services/tags.service';
-import { SidenavActions, YataApiActions } from '../actions';
+import { SidenavActions, TaskDetailsActions, YataApiActions } from '../actions';
 
 @Injectable()
 export class TagsEffects {
@@ -16,7 +16,7 @@ export class TagsEffects {
 
   create$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SidenavActions.createTag),
+      ofType(SidenavActions.createTag, TaskDetailsActions.createTag),
       concatMap((action) =>
         this.tagsService.create(action.tag).pipe(
           map((tag) => YataApiActions.createTagSuccess({ tag })),

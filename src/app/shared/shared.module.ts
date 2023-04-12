@@ -12,6 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,6 +26,8 @@ import { EditSectionDialogComponent } from './components/edit-section-dialog/edi
 import { SectionOptionsMenuComponent } from './components/section-options-menu/section-options-menu.component';
 import { SectionPickerComponent } from './components/section-picker/section-picker.component';
 import { SectionComponent } from './components/section/section.component';
+import { SubtaskDetailsDailogComponent } from './components/subtask-details-dailog/subtask-details-dailog.component';
+import { TagsSelectListDialogComponent } from './components/tags-select-list-dialog/tags-select-list-dialog.component';
 import { TaskDetailsDialogEntryComponent } from './components/task-details-dialog-entry/task-details-dialog-entry.component';
 import { TaskDetailsDialogComponent } from './components/task-details-dialog/task-details-dialog.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
@@ -35,7 +38,6 @@ import { TasksOrderByOptionsComponent } from './components/tasks-order-by-option
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
 import { TaskPriorityPipe } from './pipes/task-priority.pipe';
-import { SubtaskDetailsDailogComponent } from './components/subtask-details-dailog/subtask-details-dailog.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,7 @@ import { SubtaskDetailsDailogComponent } from './components/subtask-details-dail
     CreateTaskComponent,
     CreateTaskDialogComponent,
     SubtaskDetailsDailogComponent,
+    TagsSelectListDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -78,6 +81,7 @@ import { SubtaskDetailsDailogComponent } from './components/subtask-details-dail
     MatDatepickerModule,
     MatChipsModule,
     DragDropModule,
+    MatListModule,
   ],
   exports: [
     TaskPriorityPipe,

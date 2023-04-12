@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { Priority, Project, Task } from '../../models';
+import { Priority, Project, Tag, Task } from '../../models';
 import {
   groupTasksByDueDate,
   groupTasksByPriority,
@@ -10,6 +10,7 @@ import {
   selectProjects,
 } from '../reducers/projects.reducer';
 import { selectSections } from '../reducers/sections.reducer';
+import { selectTags } from '../reducers/tags.reducer';
 import {
   selectCurrentTaskId,
   selectOrderBy,
@@ -130,5 +131,21 @@ export const selectProjectTasksGroupedBySection = createSelector(
 
     // group by PRIORITY
     return groupTasksByPriority(tasks);
+  }
+);
+
+export const selectAvailableTagsForCurrentTask = createSelector(
+  selectCurrentTask,
+  selectTags,
+  (task: Task | undefined, tags: Tag[]) => {
+    if (!task) return [];
+    if (!task.tags) return [];
+    return tags.reduce((acc, tag) => {
+      if (!task.tags) return acc;
+      const isAssociated = task.tags.findIndex((t) => t.id === tag.id) !== -1;
+      if (isAssociated) return acc;
+      acc.push(tag);
+      return acc;
+    }, [] as Tag[]);
   }
 );
