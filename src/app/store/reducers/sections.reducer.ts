@@ -42,21 +42,12 @@ export const sectionsFeature = createFeature({
         (section) => section.id !== action.section.id
       ),
     })),
-    on(YataApiActions.updateSectionSuccess, (state, action) => {
-      const sections: Section[] = [];
-      for (const section of state.sections) {
-        if (section.id === action.section.id) {
-          sections.push(action.section);
-        } else {
-          sections.push(section);
-        }
-      }
-
-      return {
-        currentSectionId: state.currentSectionId,
-        sections,
-      };
-    })
+    on(YataApiActions.updateSectionSuccess, (state, action) => ({
+      ...state,
+      sections: state.sections.map((section) =>
+        section.id === action.section.id ? action.section : section
+      ),
+    }))
   ),
 });
 
