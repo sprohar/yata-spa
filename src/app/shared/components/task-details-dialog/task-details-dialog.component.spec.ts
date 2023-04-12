@@ -97,18 +97,6 @@ describe('TaskDetailsComponent', () => {
     });
   });
 
-  describe('#handleGoBack', () => {
-    it('should navigate up two levels', () => {
-      const spy = router.navigate as jasmine.Spy;
-
-      component.handleGoBack();
-
-      const navArgs = spy.calls.first().args.at(0);
-
-      expect(navArgs).toEqual(['../..']);
-    });
-  });
-
   describe('#handleChecked', () => {
     it('should dispatch an action to toggle the "checked" field in a Task', () => {
       spyOn(store, 'dispatch');
