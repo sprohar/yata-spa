@@ -20,40 +20,41 @@ export const selectSectionsWithIncompleteTasks = createSelector(
   selectCurrentProjectId,
   selectSections,
   selectTasks,
-  (projectId, sections, tasks) => {
-    const collection: Section[] = [];
-    for (const section of sections) {
-      collection.push({
-        ...section,
-        tasks: tasks.filter(
-          (task) =>
-            task.sectionId === section.id &&
-            task.projectId === projectId &&
-            !task.isCompleted
-        ),
-      });
-    }
-    return collection;
-  }
+  (projectId, sections, tasks) =>
+    sections.reduce((collection, section) => {
+      const tasksForSection = tasks.filter(
+        (task) =>
+          task.sectionId === section.id &&
+          task.projectId === projectId &&
+          !task.isCompleted
+      );
+      if (tasksForSection.length > 0) {
+        collection.push({
+          ...section,
+          tasks: tasksForSection,
+        });
+      }
+      return collection;
+    }, [] as Section[])
 );
 
 export const selectSectionsWithTasks = createSelector(
   selectCurrentProjectId,
   selectSections,
   selectTasks,
-  (projectId, sections, tasks) => {
-    const collection: Section[] = [];
-    for (const section of sections) {
-      collection.push({
-        ...section,
-        tasks: tasks.filter(
-          (task) =>
-            task.sectionId === section.id && task.projectId === projectId
-        ),
-      });
-    }
-    return collection;
-  }
+  (projectId, sections, tasks) =>
+    sections.reduce((collection, section) => {
+      const tasksForSection = tasks.filter(
+        (task) => task.sectionId === section.id && task.projectId === projectId
+      );
+      if (tasksForSection.length > 0) {
+        collection.push({
+          ...section,
+          tasks: tasksForSection,
+        });
+      }
+      return collection;
+    }, [] as Section[])
 );
 
 export const selectMoveToSectionsOptions = createSelector(
