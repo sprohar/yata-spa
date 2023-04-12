@@ -135,6 +135,7 @@
   </div>
 
   <mat-divider></mat-divider>
+
   <div class="flex column-gap-1 justify-end">
     <button
       data-test="cancelButton"
@@ -145,13 +146,13 @@
     </button>
     <button
       [disabled]="form.invalid"
-      data-test="addTaskButton"
+      data-test="createTaskSubmitButton"
       type="submit"
       mat-raised-button
       color="primary"
-      (click)="handleSave()"
+      (click)="handleSubmit()"
     >
-      Add
+      Save
     </button>
   </div>
 </form>

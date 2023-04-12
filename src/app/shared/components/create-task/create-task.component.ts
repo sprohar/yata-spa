@@ -66,20 +66,26 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm(this.parent);
+    this.initForm();
+
     this.store
       .select(selectTags)
       .pipe(takeUntil(this.destroy$))
       .subscribe((tags) => (this.existingTags = new Set<Tag>(tags)));
+
     this.store
       .select(selectCurrentProjectId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((projectId) => {
         if (projectId) this.projectIdControl.setValue(projectId);
       });
+
+    if (this.project) this.projectIdControl.setValue(this.project.id);
+    if (this.section) this.sectionIdControl.setValue(this.section.id);
+    if (this.parent) this.parentIdControl.setValue(this.parent.id);
   }
 
-  initForm(parent?: Task) {
+  initForm() {
     this.form = this.fb.group({
       title: this.fb.control('', {
         nonNullable: true,
@@ -88,13 +94,13 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
           Validators.maxLength(Task.Title.MaxLength),
         ],
       }),
-      description: ['', [Validators.maxLength(Task.Description.MaxLength)]],
-      priority: this.fb.control(this.priority ?? Priority.NONE, {
+      priority: this.fb.control(this.priority, {
         nonNullable: true,
       }),
-      projectId: [this.project?.id, [Validators.required]],
-      sectionId: [this.section?.id ?? parent?.sectionId],
-      parentId: [parent?.id],
+      description: [null, [Validators.maxLength(Task.Description.MaxLength)]],
+      projectId: [null, [Validators.required]],
+      sectionId: [null],
+      parentId: [null],
       dueDate: [null],
     });
 
@@ -121,6 +127,10 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
 
   get dueDateControl() {
     return this.form.get('dueDate') as FormControl;
+  }
+
+  get parentIdControl() {
+    return this.form.get('parentId') as FormControl;
   }
 
   getProjectSections(projectId: number, group: Map<Project, Section[]>) {
@@ -204,21 +214,26 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
       .afterClosed()
       .pipe(takeUntil(this.destroy$))
       .subscribe((result) => {
+        if (typeof result === 'string') return; // Cancelled
         this.dueDateControl.setValue(result);
         this.changeDetectionRef.detectChanges();
       });
   }
 
-  handleSave() {
+  handleSubmit() {
     if (this.form.invalid) return;
     if ((this.titleControl.value as string).trim() === '') return;
 
-    const task: Task = {
-      ...this.form.value,
-    };
-
+    const task: Task = this.form.value;
     task.tags = this.intersectOnTagName(this.selectedTags, this.existingTags);
-    if (this.form.get('parentId')?.value) {
+
+    Object.keys(task).forEach((key) => {
+      if (task[key as keyof Task] === null) delete task[key as keyof Task];
+    });
+
+    if (task.tags.length === 0) delete task.tags;
+
+    if (this.parentIdControl.value) {
       this.store.dispatch(
         CreateTaskComponentActions.createSubtask({
           subtask: task,

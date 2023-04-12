@@ -10,7 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import { Priority, Section, Tag } from '../../../models';
+import { Priority, Tag, Task } from '../../../models';
 import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
@@ -22,6 +22,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CreateTaskComponent } from './create-task.component';
+import { MatSelectModule } from '@angular/material/select';
+import { CreateTaskComponentActions } from '../../../store/actions';
 
 const initialState: AppState = {
   auth: initialAuthState,
@@ -58,6 +60,7 @@ describe('CreateTaskComponent', () => {
         MatInputModule,
         MatButtonModule,
         MatIconModule,
+        MatSelectModule,
       ],
       providers: [
         provideMockStore({ initialState }),
@@ -92,51 +95,6 @@ describe('CreateTaskComponent', () => {
       expectedTags.add({ name: 'tag' });
       expectedTags.add({ name: 'uniquetag' });
       expect(component.selectedTags.values()).toEqual(expectedTags.values());
-    });
-  });
-
-  describe('#handlePriorityChange', () => {
-    it('should set the form control value with the priority value', () => {
-      const priority = Priority.HIGH;
-      component.handlePriorityChange(priority);
-      expect(component.priority.value).toBe(priority);
-    });
-  });
-
-  describe('#handleSelectedSection', () => {
-    it('should set the form control value with the section value', () => {
-      const section: Section = {
-        id: 1,
-        name: 'Section',
-        projectId: 1,
-      };
-
-      component.handleSelectedSection(section);
-
-      expect(component.form.get('sectionId')?.value).toBe(section.id);
-    });
-  });
-
-  describe('#handleSave', () => {
-    beforeEach(() => {
-      spyOn(store, 'dispatch');
-    });
-
-    it('should not dispatch an action when the form is invalid', () => {
-      const projectId: number = initialState.projects.currentProjectId!;
-      component.handleSave(projectId);
-
-      expect(store.dispatch).not.toHaveBeenCalled();
-    });
-
-    it('should dispatch the "createTask" action', () => {
-      const projectId: number = initialState.projects.currentProjectId!;
-      component.titleControl.setValue('Title');
-      fixture.detectChanges();
-
-      component.handleSave(projectId);
-
-      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 
@@ -197,12 +155,42 @@ describe('CreateTaskComponent', () => {
     });
   });
 
-  describe('#handleSelectedSection', () => {
-    it('should select the provided section', () => {
-      const section: Section = initialState.sections.sections.at(0)!;
-      component.handleSelectedSection(section);
-      expect(component.section).toEqual(section);
-      expect(component.form.get('sectionId')?.value).toBe(section.id);
+  describe('#handleSubmit', () => {
+    beforeEach(() => {
+      spyOn(store, 'dispatch');
+    });
+
+    it('should dispatch a createTask action', () => {
+      const task: Task = {
+        title: 'Task',
+        projectId: 1,
+        priority: Priority.NONE,
+      };
+
+      component.form.patchValue(task);
+      component.handleSubmit();
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        CreateTaskComponentActions.createTask({ task })
+      );
+    });
+
+    it('should dispatch a createSubtask action', () => {
+      const subtask: Task = {
+        title: 'Subtask',
+        projectId: 1,
+        parentId: 1,
+        priority: Priority.NONE,
+      };
+
+      component.form.patchValue(subtask);
+      component.handleSubmit();
+
+      expect(store.dispatch).toHaveBeenCalled();
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        CreateTaskComponentActions.createSubtask({ subtask })
+      );
     });
   });
 });
