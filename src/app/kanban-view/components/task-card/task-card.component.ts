@@ -32,7 +32,7 @@ export class TaskCardComponent implements OnInit {
     this.form = this.fb.group({
       id: [task.id, [Validators.required]],
       projectId: [task.projectId, [Validators.required]],
-      completed: [task.isCompleted, [Validators.required]],
+      isCompleted: [task.isCompleted, [Validators.required]],
     });
   }
 

@@ -1,12 +1,20 @@
 <ng-container *ngIf="task" [formGroup]="form">
-  <mat-card matRipple [ngClass]="borderColor" class="clickable">
+  <mat-card
+    [attr.data-test]="'task-' + task.id"
+    matRipple
+    [ngClass]="borderColor"
+    class="clickable"
+  >
     <mat-card-content class="task flex-column">
       <div class="flex column-gap-1 align-items-center">
         <mat-checkbox
-          formControlName="completed"
+          [attr.data-test]="'task-' + task.id + '-isCompleted'"
+          formControlName="isCompleted"
           (change)="handleChecked()"
         ></mat-checkbox>
-        <p class="text-overflow" (click)="handleViewTask()">{{ task.title }}</p>
+        <p class="text-overflow" (click)="handleViewTask()">
+          {{ task.title }}
+        </p>
       </div>
       <div class="flex column-gap-1 justify-end" (click)="handleViewTask()">
         <ng-container *ngIf="task.dueDate">
