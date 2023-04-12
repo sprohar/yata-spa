@@ -10,23 +10,24 @@ import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { Project, Section } from '../../../models';
 import { ConfirmationDialogService } from '../../../services/confirmation-dialog.service';
-import { SectionOptionsMenuActions } from '../../../store/actions';
+import { SectionOptionsActions } from '../../../store/actions';
 import { selectProjects } from '../../../store/selectors';
 import { EditSectionDialogComponent } from '../edit-section-dialog/edit-section-dialog.component';
 
 type MenuOptionsDirection = 'vertical' | 'horizontal';
 
 @Component({
-  selector: 'yata-section-options-menu',
-  templateUrl: './section-options-menu.component.html',
-  styleUrls: ['./section-options-menu.component.scss'],
+  selector: 'yata-section-options',
+  templateUrl: './section-options.component.html',
+  styleUrls: ['./section-options.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SectionOptionsMenuComponent implements OnDestroy, OnInit {
+export class SectionOptionsComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
 
   @Input() direction: MenuOptionsDirection = 'vertical';
   @Input() section?: Section;
+  @Input() project?: Project;
 
   projects$ = this.store.select(selectProjects);
 
@@ -56,7 +57,7 @@ export class SectionOptionsMenuComponent implements OnDestroy, OnInit {
 
   handleMoveToProject(targetProjectId: number) {
     this.store.dispatch(
-      SectionOptionsMenuActions.moveToProject({
+      SectionOptionsActions.moveToProject({
         sourceProjectId: this.section?.projectId!,
         targetProjectId,
         section: this.section!,
@@ -82,7 +83,7 @@ export class SectionOptionsMenuComponent implements OnDestroy, OnInit {
       .subscribe((confirmed: boolean) => {
         if (confirmed) {
           this.store.dispatch(
-            SectionOptionsMenuActions.deleteSection({
+            SectionOptionsActions.deleteSection({
               section: this.section!,
             })
           );

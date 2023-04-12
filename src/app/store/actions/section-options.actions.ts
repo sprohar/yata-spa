@@ -1,8 +1,8 @@
 import { createActionGroup, props } from '@ngrx/store';
 import { Section } from '../../models';
 
-export const SectionOptionsMenuActions = createActionGroup({
-  source: 'Section Options Menu',
+export const SectionOptionsActions = createActionGroup({
+  source: 'Section Options',
   events: {
     'Delete Section': props<{ section: Section }>(),
     'Move To Project': props<{

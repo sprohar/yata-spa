@@ -7,7 +7,7 @@ import { SectionsService } from '../../services/sections.service';
 import {
   EditSectionDialogActions,
   KanbanViewActions,
-  SectionOptionsMenuActions,
+  SectionOptionsActions,
   ViewHeaderActions,
   YataApiActions,
 } from '../actions';
@@ -40,7 +40,7 @@ export class SectionsEffects {
 
   delete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SectionOptionsMenuActions.deleteSection),
+      ofType(SectionOptionsActions.deleteSection),
       mergeMap((action) =>
         this.sectionsService.delete(action.section).pipe(
           map(() =>
@@ -61,7 +61,7 @@ export class SectionsEffects {
 
   moveToProject$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SectionOptionsMenuActions.moveToProject),
+      ofType(SectionOptionsActions.moveToProject),
       concatMap((action) =>
         this.sectionsService
           .update({

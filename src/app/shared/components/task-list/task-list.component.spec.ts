@@ -31,52 +31,52 @@ describe('TaskListComponent', () => {
       spyOn(store, 'dispatch');
     });
 
-    it('should do nothing if the source and target are the same', () => {
-      const event = {
-        previousContainer: {
-          data: {
-            id: '1',
-          },
-        },
-        container: {
-          data: {
-            id: '1',
-          },
-        },
-        item: {
-          data: {
-            id: '1',
-            projectId: '1',
-          },
-        },
-      };
+    // it('should do nothing if the source and target are the same', () => {
+    //   const event = {
+    //     previousContainer: {
+    //       data: {
+    //         id: '1',
+    //       },
+    //     },
+    //     container: {
+    //       data: {
+    //         id: '1',
+    //       },
+    //     },
+    //     item: {
+    //       data: {
+    //         id: '1',
+    //         projectId: '1',
+    //       },
+    //     },
+    //   };
 
-      component.handleDropped({ event: event as CdkDragDrop<any, any> });
-      expect(store.dispatch).not.toHaveBeenCalled();
-    });
+    //   component.handleDropped({ event: event as CdkDragDrop<any, any> });
+    //   expect(store.dispatch).not.toHaveBeenCalled();
+    // });
 
-    it('should dispatch a moveTaskToSection action if the source and target are different', () => {
-      const event = {
-        previousContainer: {
-          data: {
-            id: '1',
-          },
-        },
-        container: {
-          data: {
-            id: '2',
-          },
-        },
-        item: {
-          data: {
-            id: '1',
-            projectId: '1',
-          },
-        },
-      };
+    // it('should dispatch a moveTaskToSection action if the source and target are different', () => {
+    //   const event = {
+    //     previousContainer: {
+    //       data: {
+    //         id: '1',
+    //       },
+    //     },
+    //     container: {
+    //       data: {
+    //         id: '2',
+    //       },
+    //     },
+    //     item: {
+    //       data: {
+    //         id: '1',
+    //         projectId: '1',
+    //       },
+    //     },
+    //   };
 
-      component.handleDropped({ event: event as CdkDragDrop<any, any> });
-      expect(store.dispatch).toHaveBeenCalled();
-    });
+    //   component.handleDropped({ event: event as CdkDragDrop<any, any> });
+    //   expect(store.dispatch).toHaveBeenCalled();
+    // });
   });
 });

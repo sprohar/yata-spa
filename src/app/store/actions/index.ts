@@ -7,7 +7,7 @@ export * from './edit-section-dialog.actions';
 export * from './eisenhower-matrix.actions';
 export * from './kanban-view.actions';
 export * from './list-view.actions';
-export * from './section-options-menu.actions';
+export * from './section-options.actions';
 export * from './sidenav.actions';
 export * from './storage.actions';
 export * from './task-card.actions';

@@ -6,11 +6,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { Section } from '../../../models';
-import { SectionOptionsMenuActions } from '../../../store/actions';
+import { SectionOptionsActions } from '../../../store/actions';
 import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
 
-import { SectionOptionsMenuComponent } from './section-options-menu.component';
+import { SectionOptionsComponent } from './section-options-menu.component';
 
 class MatDialogRefStub {
   afterClosed() {
@@ -50,18 +50,18 @@ const initialState: AppState = {
   },
 };
 
-describe('SectionOptionsMenuComponent', () => {
+describe('SectionOptionsComponent', () => {
   const section: Section = initialState.sections.sections[0];
   const currentProjectId = section.projectId;
   const targetProjectId = 2;
-  let component: SectionOptionsMenuComponent;
-  let fixture: ComponentFixture<SectionOptionsMenuComponent>;
+  let component: SectionOptionsComponent;
+  let fixture: ComponentFixture<SectionOptionsComponent>;
   let matDialog = new MatDialogStub();
   let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SectionOptionsMenuComponent],
+      declarations: [SectionOptionsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [MatMenuModule, MatButtonModule],
       providers: [
@@ -73,7 +73,7 @@ describe('SectionOptionsMenuComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SectionOptionsMenuComponent);
+    fixture = TestBed.createComponent(SectionOptionsComponent);
     store = TestBed.inject(MockStore);
   });
 
@@ -104,7 +104,7 @@ describe('SectionOptionsMenuComponent', () => {
       spyOn(store, 'dispatch');
       component.handleMoveToProject(targetProjectId);
       expect(store.dispatch).toHaveBeenCalledWith(
-        SectionOptionsMenuActions.moveToProject({
+        SectionOptionsActions.moveToProject({
           sourceProjectId: currentProjectId,
           targetProjectId,
           section,
@@ -138,7 +138,7 @@ describe('SectionOptionsMenuComponent', () => {
       spyOn(store, 'dispatch');
       component.handleDelete();
       expect(store.dispatch).toHaveBeenCalledWith(
-        SectionOptionsMenuActions.deleteSection({
+        SectionOptionsActions.deleteSection({
           section,
         })
       );
