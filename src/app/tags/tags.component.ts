@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectCategorizedTasks, selectCurrentTag } from '../store/selectors';
+import { selectCurrentTag, selectTasksGroupedByTag } from '../store/selectors';
 
 @Component({
   selector: 'yata-tags',
@@ -9,7 +9,7 @@ import { selectCategorizedTasks, selectCurrentTag } from '../store/selectors';
 })
 export class TagsComponent {
   currentTag$ = this.store.select(selectCurrentTag);
-  sections$ = this.store.select(selectCategorizedTasks);
+  groupedTasks$ = this.store.select(selectTasksGroupedByTag);
 
   constructor(private store: Store) {}
 }

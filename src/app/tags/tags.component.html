@@ -2,19 +2,16 @@
   <header *ngIf="currentTag$ | async as tag">
     <h1>#{{ tag.name }}</h1>
   </header>
-  <main
-    *ngIf="sections$ | async as sections"
-    class="flex-column row-gap-1 mt-1"
-  >
-    <mat-expansion-panel *ngFor="let section of sections" [expanded]="true">
+  <main *ngIf="groupedTasks$ | async as map" class="flex-column row-gap-1 mt-1">
+    <mat-expansion-panel *ngFor="let entry of map | keyvalue" [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span>{{ section.name }}</span>
+          <span>{{ entry.key.name }}</span>
           &nbsp;
-          <span>({{ section.tasks?.length }})</span>
+          <span>({{ entry.value.length }})</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <ng-container *ngFor="let task of section.tasks">
+      <ng-container *ngFor="let task of entry.value">
         <yata-task-list>
           <yata-task [isDraggable]="false" [task]="task">
             <yata-task-options [task]="task"></yata-task-options>

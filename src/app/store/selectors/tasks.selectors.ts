@@ -149,3 +149,17 @@ export const selectAvailableTagsForCurrentTask = createSelector(
     }, [] as Tag[]);
   }
 );
+
+export const selectTasksGroupedByTag = createSelector(
+  selectTasks,
+  selectTags,
+  (tasks, tags) =>
+    tags.reduce((map, tag) => {
+      const entry = tasks.filter((task) => {
+        if (!task.tags) return false;
+        return task.tags.findIndex((t) => t.id === tag.id) !== -1;
+      });
+      map.set(tag, entry);
+      return map;
+    }, new Map<Tag, Task[]>())
+);
