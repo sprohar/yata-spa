@@ -6,11 +6,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { SharedModule } from '../shared/shared.module';
 import { ChronoRoutingModule } from './chrono-routing.module';
 import { ChronoComponent } from './chrono.component';
-import { NextSevenDaysComponent } from './components/next-seven-days/next-seven-days.component';
 import { TodaysTasksComponent } from './components/todays-tasks/todays-tasks.component';
 
 @NgModule({
-  declarations: [ChronoComponent, TodaysTasksComponent, NextSevenDaysComponent],
+  declarations: [ChronoComponent, TodaysTasksComponent],
   imports: [
     CommonModule,
     ChronoRoutingModule,
