@@ -27,10 +27,14 @@ export interface TasksState {
 }
 
 export const initialTasksState: TasksState = {
-  tasks: [],
   currentTaskId: null,
   orderBy: null,
+  tasks: [],
 };
+
+const context = new TasksSortContext(
+  new TasksDueDateSortStrategy(SortOrder.ASC)
+);
 
 export const tasksFeature = createFeature({
   name: 'tasks',
@@ -38,9 +42,9 @@ export const tasksFeature = createFeature({
     initialTasksState,
     on(YataApiActions.loadTaskSuccess, (state, action) => ({
       ...state,
-      currentTaskId: action.task.id!,
-      tasks: state.tasks.map((t) =>
-        t.id === action.task.id ? action.task : t
+      currentTaskId: action.task.id ?? null,
+      tasks: state.tasks.map((task) =>
+        task.id === action.task.id ? action.task : task
       ),
     })),
     on(YataApiActions.loadTasksSuccess, (state, action) => ({
@@ -52,16 +56,14 @@ export const tasksFeature = createFeature({
       orderBy: null,
     })),
     on(TasksOrderByOptionsActions.setOrderBy, (state, { orderBy }) => {
-      const context = new TasksSortContext(
-        new TasksDueDateSortStrategy(orderBy.dir)
-      );
-
       switch (orderBy.attribute) {
         case Task.OrderBy.DUE_DATE:
           return {
             ...state,
             orderBy,
-            tasks: context.sort(state.tasks),
+            tasks: context
+              .setStrategy(new TasksDueDateSortStrategy(orderBy.dir))
+              .sort(state.tasks),
           };
         case Task.OrderBy.PRIORITY:
           return {
@@ -102,24 +104,18 @@ export const tasksFeature = createFeature({
       };
     }),
     on(YataApiActions.createTaskSuccess, (state, action) => ({
-      ...state, // TODO: Maintain sort order
-      tasks: state.tasks.concat(action.task),
-    })),
-    on(YataApiActions.loadTasksSuccess, (state, action) => ({
-      ...state, // TODO: Maintain sort order
-      tasks: action.tasks,
+      ...state,
+      tasks: context
+        .fromOrderBy(state.orderBy)
+        .sort(state.tasks.concat(action.task)),
     })),
     on(YataApiActions.loadProjectSuccess, (state, action) => ({
-      ...state, // TODO: Maintain sort order
-      tasks: action.project.tasks ?? [],
+      ...state,
+      tasks: context
+        .fromOrderBy(state.orderBy)
+        .sort(action.project.tasks ?? []),
     })),
     on(YataApiActions.updateTaskSuccess, (state, action) => ({
-      ...state,
-      tasks: state.tasks.map((task) =>
-        task.id === action.task.id ? action.task : task
-      ),
-    })),
-    on(YataApiActions.loadTaskSuccess, (state, action) => ({
       ...state,
       tasks: state.tasks.map((task) =>
         task.id === action.task.id ? action.task : task
@@ -129,7 +125,7 @@ export const tasksFeature = createFeature({
       ...state,
       currentTaskId: action.taskId,
     })),
-    on(TaskDetailsActions.resetCurrentTaskId, (state, _) => ({
+    on(TaskDetailsActions.clearCurrentTaskId, (state, _) => ({
       ...state,
       currentTaskId: null,
     })),
