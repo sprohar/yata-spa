@@ -4,7 +4,7 @@ import { Tag, Task } from '../../models';
 export const TaskDetailsActions = createActionGroup({
   source: 'Task Details',
   events: {
-    'Reset Current Task Id': emptyProps(),
+    'Clear Current Task Id': emptyProps(),
     'Update Task': props<{ task: Partial<Task> }>(),
     'Move Task To Project': props<{ task: Partial<Task> }>(),
     'Create Subtask': props<{ subtask: Task }>(),

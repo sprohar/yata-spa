@@ -48,7 +48,7 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnDestroy(): void {
-    this.store.dispatch(TaskDetailsActions.resetCurrentTaskId());
+    this.store.dispatch(TaskDetailsActions.clearCurrentTaskId());
     this.destroy$.next();
   }
 
