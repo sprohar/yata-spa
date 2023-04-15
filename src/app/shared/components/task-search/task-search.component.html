@@ -20,7 +20,11 @@
       [matAutocomplete]="auto"
       (blur)="handleBlur()"
     />
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      (optionSelected)="handleSelectedOption($event.option.value)"
+    >
       <mat-option *ngFor="let task of resultSet$ | async" [value]="task.id">
         {{ task.title }}
       </mat-option>

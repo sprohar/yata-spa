@@ -10,6 +10,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   debounceTime,
@@ -39,7 +41,9 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
   constructor(
     private store: Store,
     private fb: FormBuilder,
-    private tasksService: TasksService
+    private tasksService: TasksService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnDestroy(): void {
@@ -71,6 +75,11 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
         })
       )
     );
+  }
+
+  handleSelectedOption(taskId: number) {
+    this.router.navigate(['tasks', taskId], { relativeTo: this.route });
+    this.query.setValue('', { emitEvent: false, onlySelf: true });
   }
 
   handleSearchButtonClicked() {
