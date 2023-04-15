@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
 import {
   HttpEvent,
-  HttpInterceptor,
   HttpHandler,
+  HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { Observable, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectAccessToken } from '../../store/reducers/auth.reducer';
-import { environment } from '../../../environment/environment';
+import { Observable, switchMap } from 'rxjs';
+import { environment } from '../../environment/environment';
+import { selectAccessToken } from '../store/reducers/auth.reducer';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
