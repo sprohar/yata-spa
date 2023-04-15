@@ -1,7 +1,9 @@
+import { A11yModule } from '@angular/cdk/a11y';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -33,6 +35,7 @@ import { TaskDetailsDialogComponent } from './components/task-details-dialog/tas
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskOptionsComponent } from './components/task-options/task-options.component';
 import { TaskPriorityPickerComponent } from './components/task-priority-picker/task-priority-picker.component';
+import { TaskSearchComponent } from './components/task-search/task-search.component';
 import { TaskComponent } from './components/task/task.component';
 import { TasksOrderByOptionsComponent } from './components/tasks-order-by-options/tasks-order-by-options.component';
 import { TimeInputComponent } from './components/time-input/time-input.component';
@@ -63,6 +66,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     CreateTaskDialogComponent,
     SubtaskDetailsDailogComponent,
     TagsSelectListDialogComponent,
+    TaskSearchComponent,
   ],
   imports: [
     CommonModule,
@@ -82,6 +86,8 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     MatChipsModule,
     DragDropModule,
     MatListModule,
+    MatAutocompleteModule,
+    A11yModule,
   ],
   exports: [
     TaskPriorityPipe,

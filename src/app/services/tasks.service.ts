@@ -5,12 +5,23 @@ import { PaginatedList } from '../interfaces/paginated-list.interface';
 import { Tag, Task } from '../models/';
 import { YataApiService } from './yata-api.service';
 
+type SearchArgs = { query: string; projectId?: number };
+
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService extends YataApiService {
   constructor(private http: HttpClient) {
     super();
+  }
+
+  search(args: SearchArgs) {
+    const url = `${this.baseUrl}/tasks/search`;
+    return this.http
+      .get<Task[]>(url, {
+        params: args,
+      })
+      .pipe(take(1), catchError(this.handleError));
   }
 
   create(task: Task) {

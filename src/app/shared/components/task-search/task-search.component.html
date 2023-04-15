@@ -1,0 +1,29 @@
+<button
+  mat-icon-button
+  [class.hide]="isSearching"
+  (click)="handleSearchButtonClicked()"
+>
+  <mat-icon>search</mat-icon>
+</button>
+<form [formGroup]="form" [class.hide]="!isSearching">
+  <div class="flex align-items-center">
+    <label for="searchTaskQuery" class="invisible">Search query</label>
+    <input
+      matInput
+      [cdkTrapFocus]="isSearching"
+      [cdkTrapFocusAutoCapture]="isSearching"
+      formControlName="query"
+      data-test="searchTaskInput"
+      id="searchTaskQuery"
+      placeholder="Search"
+      class="input"
+      [matAutocomplete]="auto"
+      (blur)="handleBlur()"
+    />
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let task of resultSet$ | async" [value]="task.id">
+        {{ task.title }}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+</form>

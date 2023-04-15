@@ -4,6 +4,7 @@
       {{ project.name }}
     </h1>
     <span class="spacer"></span>
+    <yata-task-search></yata-task-search>
     <ng-container *ngIf="project.view === LIST_VIEW; else kanban">
       <button
         mat-icon-button
