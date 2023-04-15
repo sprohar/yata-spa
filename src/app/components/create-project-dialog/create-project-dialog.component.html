@@ -1,12 +1,17 @@
-<ng-container [formGroup]="form">
-  <h2 mat-dialog-title>Create Project</h2>
+<h2 mat-dialog-title>Create Project</h2>
+<form [formGroup]="form">
   <mat-dialog-content>
-    <div class="create-project-dialog-container">
-      <mat-form-field appearance="outline">
-        <mat-label>Project Name</mat-label>
+    <div class="flex-column p-1 row-gap-1">
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+        floatLabel="always"
+      >
+        <mat-label>Name</mat-label>
         <input
-          data-test="newProjectName"
+          data-test="projectNameInput"
           #input
+          autofocus
           matInput
           type="text"
           formControlName="name"
@@ -15,18 +20,33 @@
         />
         <mat-hint>{{ input.value.length }} / {{ nameMaxLength }}</mat-hint>
       </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>View</mat-label>
+        <mat-select data-test="projectViewSelect" formControlName="view">
+          <mat-option [value]="LIST_VIEW">
+            <mat-icon>view_list</mat-icon>
+            {{ LIST_VIEW | titlecase }}
+          </mat-option>
+          <mat-option [value]="KANBAN_VIEW">
+            <mat-icon>view_kanban</mat-icon>
+            {{ KANBAN_VIEW | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-stroked-button mat-dialog-close="">Cancel</button>
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
     <button
       data-test="submit"
+      type="submit"
       mat-raised-button
       color="primary"
       (click)="handleSave()"
-      [disabled]="nameControl.invalid"
+      [disabled]="form.invalid"
     >
       Save
     </button>
   </mat-dialog-actions>
-</ng-container>
+</form>

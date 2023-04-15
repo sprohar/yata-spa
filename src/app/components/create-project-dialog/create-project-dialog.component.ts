@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import {
   FormBuilder,
-  Validators,
   FormControl,
+  FormGroup,
+  Validators,
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -14,10 +20,16 @@ import { SidenavActions } from '../../store/actions';
   selector: 'yata-create-project-dialog',
   templateUrl: './create-project-dialog.component.html',
   styleUrls: ['./create-project-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateProjectDialogComponent implements OnInit {
   readonly nameMaxLength = Project.Name.MaxLength;
+  readonly LIST_VIEW = Project.View.LIST;
+  readonly KANBAN_VIEW = Project.View.KANBAN;
   form!: FormGroup;
+
+  @ViewChild('input', { static: true })
+  inputElement?: ElementRef;
 
   constructor(
     private store: Store,
@@ -27,25 +39,24 @@ export class CreateProjectDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: this.fb.control('', [
-        Validators.required,
-        Validators.maxLength(Project.Name.MaxLength),
-      ]),
+      name: [
+        '',
+        [Validators.required, Validators.maxLength(Project.Name.MaxLength)],
+      ],
+      view: [Project.View.LIST, []],
     });
-  }
 
-  get nameControl() {
-    return this.form.get('name') as FormControl;
+    if (this.inputElement) {
+      this.inputElement.nativeElement.focus();
+    }
   }
 
   handleSave() {
-    if (this.nameControl.invalid) {
+    if (this.form.invalid) {
       return;
     }
 
-    const project: Project = {
-      name: this.nameControl.value!.trim(),
-    };
+    const project: Project = this.form.value;
     this.store.dispatch(SidenavActions.createProject({ project }));
     this.dialogRef.close();
   }

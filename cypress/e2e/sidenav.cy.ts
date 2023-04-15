@@ -60,7 +60,7 @@ describe('Sidenav', () => {
       ).as('createProject');
 
       cy.getBySel('sidenavCreateProjectButton').click();
-      cy.getBySel('newProjectName').type('Test Project', {
+      cy.getBySel('projectNameInput').type('Test Project', {
         force: true,
       });
 
