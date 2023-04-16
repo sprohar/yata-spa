@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, take } from 'rxjs';
 import { PaginatedList } from '../interfaces/paginated-list.interface';
@@ -17,9 +17,12 @@ export class TasksService extends YataApiService {
 
   search(args: SearchArgs) {
     const url = `${this.baseUrl}/tasks/search`;
+    const httpParams = new HttpParams().set('query', args.query);
     return this.http
       .get<Task[]>(url, {
-        params: args,
+        params: args.projectId
+          ? httpParams.set('projectId', args.projectId)
+          : httpParams,
       })
       .pipe(take(1), catchError(this.handleError));
   }
