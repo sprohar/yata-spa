@@ -1,14 +1,9 @@
-<ng-container *ngIf="data" [formGroup]="form">
+<form *ngIf="data" [formGroup]="form">
   <h2 mat-dialog-title>Create Section</h2>
   <mat-dialog-content>
-    <mat-form-field class="form-field">
+    <mat-form-field class="form-field" appearance="outline">
       <mat-label>Name</mat-label>
-      <input
-        matInput
-        type="text"
-        formControlName="name"
-        (keyup.enter)="handleCreateSection()"
-      />
+      <input matInput type="text" formControlName="name" />
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
@@ -22,4 +17,4 @@
       Create
     </button>
   </mat-dialog-actions>
-</ng-container>
+</form>
