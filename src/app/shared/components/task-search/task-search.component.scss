@@ -14,6 +14,10 @@ label {
   border-radius: 6px;
 }
 
+.search-input:focus {
+  border-color: #00bcd4;
+}
+
 .search-bar-shortcut {
   position: absolute;
   top: 4px;

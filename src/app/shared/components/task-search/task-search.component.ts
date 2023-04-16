@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
-  Renderer2,
   ViewChild,
 } from '@angular/core';
 import {
@@ -35,10 +35,8 @@ import { selectCurrentProjectId } from '../../../store/selectors';
 })
 export class TaskSearchComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
-  private shortcutKeyHandler?: ReturnType<typeof this.renderer.listen>;
   resultSet$?: Observable<Task[]>;
   currentProjectId?: number;
-  isFocused = false;
   form!: FormGroup;
 
   @ViewChild('searchInput')
@@ -49,13 +47,11 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
     private fb: FormBuilder,
     private tasksService: TasksService,
     private router: Router,
-    private route: ActivatedRoute,
-    private renderer: Renderer2
+    private route: ActivatedRoute
   ) {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
-    if (this.shortcutKeyHandler) this.shortcutKeyHandler();
   }
 
   ngOnInit(): void {
@@ -66,23 +62,12 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
       .subscribe((value: number | null) => {
         if (value) this.currentProjectId = value;
       });
-
-    this.addKeyboardShortcutListener();
   }
 
-  private addKeyboardShortcutListener() {
-    this.shortcutKeyHandler = this.renderer.listen(
-      'document',
-      'keydown',
-      (event: KeyboardEvent) => {
-        if (event.key === '/') {
-          event.preventDefault();
-          if (this.searchInput) {
-            this.searchInput.nativeElement.focus();
-          }
-        }
-      }
-    );
+  @HostListener('document:keydown./')
+  addKeyboardShortcutListener() {
+    if (this.searchInput) this.searchInput.nativeElement.focus();
+    return false;
   }
 
   private initForm() {
@@ -107,17 +92,8 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
     this.query.setValue('', { emitEvent: false, onlySelf: true });
   }
 
-  handleFocus() {
-    this.isFocused = true;
-    if (this.shortcutKeyHandler) {
-      this.shortcutKeyHandler();
-    }
-  }
-
   handleBlur() {
-    this.isFocused = false;
     this.query.setValue('', { emitEvent: false, onlySelf: true });
-    this.addKeyboardShortcutListener();
   }
 
   get query() {

@@ -1,21 +1,17 @@
 <form [formGroup]="form">
   <div class="flex align-items-center">
     <label for="searchTaskQuery" class="invisible">Search query</label>
-    <div class="relative flex">
-      <input
-        #searchInput
-        matInput
-        formControlName="query"
-        data-test="searchTaskInput"
-        id="searchTaskQuery"
-        placeholder="Search"
-        class="input search-input"
-        [matAutocomplete]="auto"
-        (focus)="handleFocus()"
-        (blur)="handleBlur()"
-      />
-      <div class="search-bar-shortcut" [class.hide]="isFocused">/</div>
-    </div>
+    <input
+      #searchInput
+      matInput
+      formControlName="query"
+      data-test="searchTaskInput"
+      id="searchTaskQuery"
+      placeholder="Search (/)"
+      class="input search-input"
+      [matAutocomplete]="auto"
+      (blur)="handleBlur()"
+    />
     <mat-autocomplete
       autoActiveFirstOption
       #auto="matAutocomplete"
