@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -14,6 +20,7 @@ import { selectCurrentProjectId } from '../../../store/reducers/projects.reducer
   selector: 'yata-create-kanban-column',
   templateUrl: './create-kanban-column.component.html',
   styleUrls: ['./create-kanban-column.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateKanbanColumnComponent implements OnInit {
   @Output() close = new EventEmitter<void>();

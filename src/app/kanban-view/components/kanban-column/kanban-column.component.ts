@@ -1,5 +1,10 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Section, Task } from '../../../models';
@@ -10,6 +15,7 @@ import { KanbanViewActions } from '../../../store/actions';
   selector: 'yata-kanban-column',
   templateUrl: './kanban-column.component.html',
   styleUrls: ['./kanban-column.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanColumnComponent implements OnInit {
   @Input() section!: Section;
