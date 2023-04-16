@@ -1,6 +1,9 @@
+header {
+  min-height: 80px;
+  padding: 16px 16px 0 16px;
+}
+
 .matrix-container {
-  height: 100%;
-  padding: 1em;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;

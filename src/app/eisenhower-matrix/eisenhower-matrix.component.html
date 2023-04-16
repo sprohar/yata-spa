@@ -1,5 +1,9 @@
+<header class="flex space-between align-items-center">
+  <h1>Eisenhower Matrix</h1>
+  <yata-task-search></yata-task-search>
+</header>
 <main
-  class="matrix-container row-gap-1"
+  class="matrix-container row-gap-1 p-1 full-height"
   cdkDropListGroup
   *ngIf="tasksGroupedByPriority$ | async as grouped"
 >
