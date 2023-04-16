@@ -13,6 +13,8 @@ import { KanbanViewActions } from '../../../store/actions';
 })
 export class KanbanColumnComponent implements OnInit {
   @Input() section!: Section;
+  @Input() tasks!: Task[];
+
   completedTasks?: Task[];
   pendingTasks?: Task[];
   isAddingTask = false;
@@ -24,13 +26,11 @@ export class KanbanColumnComponent implements OnInit {
       throw new Error('"section" is undefined.');
     }
 
-    this.completedTasks = this.section.tasks?.filter(
-      (task) => task.isCompleted
-    );
-    this.pendingTasks = this.section.tasks?.filter((task) => !task.isCompleted);
+    this.completedTasks = this.tasks.filter((task) => task.isCompleted);
+    this.pendingTasks = this.tasks.filter((task) => !task.isCompleted);
   }
 
-  trackByTaskId(index: number, task: Task) {
+  trackByTaskId(_index: number, task: Task) {
     return task.id;
   }
 

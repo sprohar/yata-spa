@@ -1,20 +1,18 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Section, Task } from '../models';
 import { BreakpointService } from '../services/breakpoint.service';
 import { selectCurrentProject } from '../store/selectors/projects.selectors';
-import { selectSectionsWithTasks } from '../store/selectors/sections.selectors';
-import { selectUnsectionedTasks } from '../store/selectors/tasks.selectors';
+import { selectKanbanColumns } from '../store/selectors/tasks.selectors';
 
 @Component({
   selector: 'yata-kanban-view',
   templateUrl: './kanban-view.component.html',
   styleUrls: ['./kanban-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanViewComponent {
   currentProject$ = this.store.select(selectCurrentProject);
-  columns$ = this.store.select(selectSectionsWithTasks);
-  unsectionedTasks$ = this.store.select(selectUnsectionedTasks);
+  columns$ = this.store.select(selectKanbanColumns);
   showAddKanbanColumnComponent = false;
 
   constructor(public breakpoint: BreakpointService, private store: Store) {}
@@ -25,13 +23,5 @@ export class KanbanViewComponent {
 
   handleAddKanbanColumnComponentClosed() {
     this.showAddKanbanColumnComponent = false;
-  }
-
-  toSection(tasks: Task[]) {
-    return {
-      name: 'Not Sectioned',
-      projectId: tasks[0].projectId,
-      tasks,
-    } as Section;
   }
 }

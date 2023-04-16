@@ -4,23 +4,16 @@
       <yata-view-header></yata-view-header>
       <main>
         <div class="kanban-view">
-          <div class="columns full-height" cdkDropListGroup>
-            <!-- Unsectioned Tasks -->
-            <ng-container *ngIf="unsectionedTasks$ | async as unsectionedTasks">
-              <ng-container *ngIf="unsectionedTasks.length > 0">
-                <yata-kanban-column
-                  [section]="toSection(unsectionedTasks)"
-                ></yata-kanban-column>
-              </ng-container>
-            </ng-container>
-
-            <!-- Columns -->
-            <ng-container *ngIf="columns$ | async as sections">
-              <yata-kanban-column
-                *ngFor="let section of sections"
-                [section]="section"
-              ></yata-kanban-column>
-            </ng-container>
+          <div
+            class="columns full-height"
+            cdkDropListGroup
+            *ngIf="columns$ | async as map"
+          >
+            <yata-kanban-column
+              *ngFor="let entry of map | keyvalue"
+              [section]="entry.key"
+              [tasks]="entry.value"
+            ></yata-kanban-column>
 
             <!-- Create column -->
             <div class="column-last-child">
