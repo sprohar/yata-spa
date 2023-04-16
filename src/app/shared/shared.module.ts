@@ -104,6 +104,7 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskDetailsDialogEntryComponent,
     CreateTaskComponent,
     CreateTaskDialogComponent,
+    TaskSearchComponent,
   ],
 })
 export class SharedModule {}
