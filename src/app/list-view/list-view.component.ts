@@ -5,7 +5,7 @@ import { Section } from '../models';
 import { CreateTaskDialogComponent } from '../shared/components/create-task-dialog/create-task-dialog.component';
 import {
   selectCompletedTasks,
-  selectProjectTasksGroupedBySection,
+  selectTasksGroupByProjectSections,
 } from '../store/selectors';
 
 @Component({
@@ -16,7 +16,7 @@ import {
 })
 export class ListViewComponent {
   completedTasks$ = this.store.select(selectCompletedTasks);
-  groupedTasks$ = this.store.select(selectProjectTasksGroupedBySection);
+  groupedTasks$ = this.store.select(selectTasksGroupByProjectSections);
 
   constructor(private store: Store, private dialog: MatDialog) {}
 

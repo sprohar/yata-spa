@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { Priority, Project, Tag, Task } from '../../models';
+import { Priority, Project, Section, Tag, Task } from '../../models';
 import {
   groupTasksByDueDate,
   groupTasksByPriority,
@@ -113,7 +113,7 @@ export const selectTasksGroupByProject = createSelector(
     }, new Map<Project, Task[]>())
 );
 
-export const selectProjectTasksGroupedBySection = createSelector(
+export const selectTasksGroupByProjectSections = createSelector(
   selectTasks,
   selectSections,
   selectOrderBy,
@@ -162,4 +162,31 @@ export const selectTasksGroupedByTag = createSelector(
       map.set(tag, entry);
       return map;
     }, new Map<Tag, Task[]>())
+);
+
+export const selectKanbanColumns = createSelector(
+  selectSections,
+  selectTasks,
+  (sections: Section[], tasks: Task[]) => {
+    const unsectioned: Section = {
+      name: 'No section',
+      projectId: -1,
+    };
+
+    const map = new Map<Section, Task[]>();
+    map.set(
+      unsectioned,
+      tasks.filter((task) => !task.sectionId)
+    );
+
+    return sections.reduce((group, section) => {
+      group.set(
+        section,
+        tasks.filter(
+          (task) => !task.isCompleted && task.sectionId === section.id
+        )
+      );
+      return group;
+    }, map);
+  }
 );
