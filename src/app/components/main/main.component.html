@@ -20,7 +20,7 @@
             ]"
           >
             <div class="flex align-items-center">
-              <mat-icon>inbox</mat-icon>&nbsp;
+              <mat-icon>inbox</mat-icon>
               <span>Inbox</span>
             </div>
           </a>
@@ -32,7 +32,7 @@
         <mat-nav-list>
           <a mat-list-item routerLink="/app/chrono/today">
             <div class="flex align-items-center">
-              <mat-icon>today</mat-icon>&nbsp;
+              <mat-icon>today</mat-icon>
               <span>Today</span>
             </div>
           </a>
@@ -44,7 +44,7 @@
         <mat-nav-list>
           <a mat-list-item routerLink="/app/matrix">
             <div class="flex align-items-center">
-              <mat-icon>grid_view</mat-icon>&nbsp;
+              <mat-icon>grid_view</mat-icon>
               <span>Eisenhower Matrix</span>
             </div>
           </a>
@@ -85,7 +85,6 @@
                         project.view === LIST_VIEW ? "view_list" : "view_kanban"
                       }}
                     </mat-icon>
-                    &nbsp;
                     <span>{{ project.name }}</span>
                   </a>
                   <button
@@ -156,8 +155,7 @@
                     class="sidenav-link flex align-items-center"
                     [routerLink]="['/app/tags', tag.id]"
                   >
-                    <mat-icon [style.color]="tag.colorHexCode">label</mat-icon
-                    >&nbsp;
+                    <mat-icon [style.color]="tag.colorHexCode">label</mat-icon>
                     <span>{{ tag.name }}</span>
                   </a>
                   <button
@@ -200,15 +198,14 @@
       <div *ngIf="user$ | async as user" class="bottom-bar clickable" matRipple>
         <mat-nav-list>
           <div
+            data-test="logoutButton"
             id="logout"
             mat-list-item
-            class="flex align-items-center space-between"
+            class="flex align-items-center"
             (click)="logout()"
           >
-            <p class="text-overflow">
-              {{ user.email }}
-            </p>
             <mat-icon>logout</mat-icon>
+            <span>Sign out</span>
           </div>
         </mat-nav-list>
       </div>
@@ -226,7 +223,6 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
     </mat-toolbar>
-    <!-- Add Content Here -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

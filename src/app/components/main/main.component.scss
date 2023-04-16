@@ -65,7 +65,7 @@ details.collapsible-list {
     display: flex;
     align-items: center;
 
-    a.sidenav-link {
+    .sidenav-link {
       color: inherit;
       height: inherit;
       width: 100%;
@@ -81,6 +81,13 @@ details.collapsible-list {
     button.action-button {
       visibility: visible;
     }
+  }
+}
+
+.sidenav-link,
+mat-nav-list {
+  mat-icon {
+    margin-right: 8px;
   }
 }
 
