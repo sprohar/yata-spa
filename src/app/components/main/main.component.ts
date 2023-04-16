@@ -8,7 +8,11 @@ import { ConfirmationDialogService } from '../../services/confirmation-dialog.se
 import { EditProjectDialogComponent } from '../../shared/components/edit-project-dialog/edit-project-dialog.component';
 import { AuthActions, SidenavActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
-import { selectProjects, selectTags } from '../../store/selectors';
+import {
+  selectInbox,
+  selectProjectsForSidenav,
+  selectTags,
+} from '../../store/selectors';
 import { CreateTagDialogComponent } from '../../tags/components/create-tag-dialog/create-tag-dialog.component';
 import { EditTagDialogComponent } from '../../tags/components/edit-tag-dialog/edit-tag-dialog.component';
 import { CreateProjectDialogComponent } from '../create-project-dialog/create-project-dialog.component';
@@ -20,7 +24,8 @@ import { CreateProjectDialogComponent } from '../create-project-dialog/create-pr
 })
 export class MainComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  projects$ = this.store.select(selectProjects);
+  projects$ = this.store.select(selectProjectsForSidenav);
+  inbox$ = this.store.select(selectInbox);
   tags$ = this.store.select(selectTags);
   isHandset$ = this.breakpointService.isHandset$;
   user$ = this.store.select(selectUser);

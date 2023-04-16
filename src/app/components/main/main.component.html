@@ -9,6 +9,25 @@
   >
     <div class="relative full-height">
       <div class="sidenav-lists">
+        <!-- Inbox -->
+        <mat-nav-list *ngIf="inbox$ | async as inbox">
+          <a
+            mat-list-item
+            data-test="inbox"
+            [routerLink]="[
+              inbox.view === LIST_VIEW ? '/app/list' : '/app/kanban',
+              inbox.id
+            ]"
+          >
+            <div class="flex align-items-center">
+              <mat-icon>inbox</mat-icon>&nbsp;
+              <span>Inbox</span>
+            </div>
+          </a>
+        </mat-nav-list>
+
+        <mat-divider></mat-divider>
+
         <!-- Chrono -->
         <mat-nav-list>
           <a mat-list-item routerLink="/app/chrono/today">
@@ -53,26 +72,22 @@
                   class="clickable"
                   *ngFor="let project of projects; trackBy: trackByProjectId"
                 >
-                  <ng-container *ngIf="project.view === LIST_VIEW; else kanban">
-                    <a
-                      [attr.data-test]="'sidenavProject-' + project.id"
-                      class="sidenav-link flex align-items-center"
-                      [routerLink]="['/app/list', project.id]"
-                    >
-                      <mat-icon>view_list</mat-icon>&nbsp;
-                      <span>{{ project.name }}</span>
-                    </a>
-                  </ng-container>
-                  <ng-template #kanban>
-                    <a
-                      [attr.data-test]="'sidenavProject-' + project.id"
-                      class="sidenav-link flex align-items-center"
-                      [routerLink]="['/app/kanban', project.id]"
-                    >
-                      <mat-icon>view_kanban</mat-icon>&nbsp;
-                      <span>{{ project.name }}</span>
-                    </a>
-                  </ng-template>
+                  <a
+                    [attr.data-test]="'sidenavProject-' + project.id"
+                    class="sidenav-link flex align-items-center"
+                    [routerLink]="[
+                      project.view === LIST_VIEW ? '/app/list' : '/app/kanban',
+                      project.id
+                    ]"
+                  >
+                    <mat-icon>
+                      {{
+                        project.view === LIST_VIEW ? "view_list" : "view_kanban"
+                      }}
+                    </mat-icon>
+                    &nbsp;
+                    <span>{{ project.name }}</span>
+                  </a>
                   <button
                     [attr.data-test]="
                       'sidenavProjectOptionsButton-' + project.id
