@@ -17,10 +17,18 @@
 
 .task {
   min-height: 56px;
-  padding: 8px 16px;
+  cursor: move;
+
+  label {
+    cursor: pointer;
+  }
 
   .options {
     visibility: hidden;
+  }
+
+  .date {
+    font-size: 0.9em;
   }
 }
 

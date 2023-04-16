@@ -4,20 +4,18 @@
       {{ name }}
       <ng-container *ngIf="itemsCount">
         &nbsp;
-        <span class="badge-task-count">
-          &lpar;{{ itemsCount }}&rpar;
-        </span>
+        <span class="badge-task-count"> &lpar;{{ itemsCount }}&rpar; </span>
       </ng-container>
     </span>
 
     <!-- Toggle section visibility -->
     <ng-container *ngIf="expanded; else notExpanded">
-      <button mat-icon-button [disabled]="true">
+      <button mat-icon-button [disabled]="true" title="Close">
         <mat-icon>expand_less</mat-icon>
       </button>
     </ng-container>
     <ng-template #notExpanded>
-      <button mat-icon-button [disabled]="true">
+      <button mat-icon-button [disabled]="true" title="Open">
         <mat-icon>expand_more</mat-icon>
       </button>
     </ng-template>

@@ -5,11 +5,11 @@
     </span>
   </ng-container>
   <mat-checkbox
-    data-test="taskIsCompletedCheckbox"
+    [attr.data-test]="'task-' + task.id + 'checkbox'"
     formControlName="isCompleted"
   ></mat-checkbox>
   <input
-    [attr.data-test]="'taskInput-' + task.id"
+    [attr.data-test]="'task-' + task.id + 'input'"
     type="text"
     class="input"
     formControlName="title"
