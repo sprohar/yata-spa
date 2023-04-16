@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,6 +15,7 @@ import { TaskCardActions } from '../../../store/actions';
   selector: 'yata-task-card',
   templateUrl: './task-card.component.html',
   styleUrls: ['./task-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskCardComponent implements OnInit {
   @Input() task!: Task;
@@ -18,7 +25,8 @@ export class TaskCardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private store: Store,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +58,8 @@ export class TaskCardComponent implements OnInit {
         task: this.form.value,
       })
     );
+
+    this.changeDetector.detectChanges();
   }
 
   handleViewTask() {

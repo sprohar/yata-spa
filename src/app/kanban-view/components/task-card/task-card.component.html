@@ -6,17 +6,20 @@
     class="clickable"
   >
     <mat-card-content class="task flex-column">
-      <div class="flex column-gap-1 align-items-center">
+      <div class="flex column-gap-1 align-items-center space-between">
         <mat-checkbox
           [attr.data-test]="'task-' + task.id + '-isCompleted'"
           formControlName="isCompleted"
           (change)="handleChecked()"
-        ></mat-checkbox>
-        <p class="text-overflow" (click)="handleViewTask()">
-          {{ task.title }}
-        </p>
+        >
+          <p class="text-overflow">
+            {{ task.title }}
+          </p>
+        </mat-checkbox>
+
+        <yata-task-options class="options" [task]="task"></yata-task-options>
       </div>
-      <div class="flex column-gap-1 justify-end" (click)="handleViewTask()">
+      <div class="flex column-gap-1 justify-end">
         <ng-container *ngIf="task.dueDate">
           <p class="text-grey">{{ task.dueDate | date : "shortDate" }}</p>
         </ng-container>
