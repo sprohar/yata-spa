@@ -25,39 +25,33 @@
 
   <!-- Content -->
   <div class="full-height p-1 relative">
-    <div class="quadrant-content" *ngIf="projects$ | async as projects">
-      <!-- TODO: Group by Project selector -->
-      <ng-container *ngFor="let project of projects">
-        <ng-container *ngIf="getProjectTasks(project) as tasks">
-          <yata-section
-            *ngIf="tasks.length"
-            [name]="project.name"
-            [itemsCount]="tasks.length"
+    <div class="quadrant-content">
+      <ng-container *ngFor="let entry of groupedTasks | keyvalue">
+        <yata-section
+          *ngIf="entry.value.length"
+          [name]="entry.key.name"
+          [itemsCount]="entry.value.length"
+        >
+          <yata-task-list
+            cdkDropList
+            (cdkDropListDropped)="handleTaskDropped($event)"
+            [cdkDropListData]="{ projectId: entry.key.id!, priority: priority }"
           >
-            <yata-task-list
-              cdkDropList
-              (cdkDropListDropped)="handleTaskDropped($event)"
-              [cdkDropListData]="{ projectId: project.id!, priority: priority }"
+            <yata-task
+              *ngFor="let task of entry.value; trackBy: trackByTaskid"
+              cdkDrag
+              [cdkDragData]="task"
+              [task]="task"
             >
-              <yata-task
-                *ngFor="let task of tasks"
-                cdkDrag
-                [cdkDragData]="task"
-                [task]="task"
-              >
-                <span class="task-info">{{ task.dueDate | date }}</span>
-                <yata-task-options [task]="task"></yata-task-options>
-              </yata-task>
-            </yata-task-list>
-          </yata-section>
-        </ng-container>
+              <span class="task-info">{{ task.dueDate | date }}</span>
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task>
+          </yata-task-list>
+        </yata-section>
       </ng-container>
 
-      <ng-container *ngIf="completedTasks?.length && showCompleted">
-        <yata-section
-          [name]="'Completed'"
-          [itemsCount]="completedTasks?.length"
-        >
+      <ng-container *ngIf="showCompleted && completedTasks.length">
+        <yata-section [name]="'Completed'" [itemsCount]="completedTasks.length">
           <yata-task-list>
             <yata-task *ngFor="let task of completedTasks" [task]="task">
               <yata-task-options [task]="task"></yata-task-options>

@@ -2,7 +2,17 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Priority, Task } from '../models';
-import { selectTasksGroupByPriority } from '../store/selectors';
+import {
+  selectCompletedHighPriorityTasks,
+  selectCompletedLowPriorityTasks,
+  selectCompletedMediumPriorityTasks,
+  selectCompletedNoPriorityTasks,
+  selectHighPriorityTasksGroupByProject,
+  selectLowPriorityTasksGroupByProject,
+  selectMediumPriorityTasksGroupByProject,
+  selectNoPriorityTasksGroupByProject,
+  selectTasksGroupByPriority,
+} from '../store/selectors';
 
 @Component({
   selector: 'yata-eisenhower-matrix',
@@ -17,6 +27,24 @@ export class EisenhowerMatrixComponent {
 
   tasksGroupedByPriority$: Observable<Map<Priority, Task[]>> =
     this.store.select(selectTasksGroupByPriority);
+
+  noPriorityGroup$ = this.store.select(selectNoPriorityTasksGroupByProject);
+  lowPriorityGroup$ = this.store.select(selectLowPriorityTasksGroupByProject);
+  mediumPriorityGroup$ = this.store.select(
+    selectMediumPriorityTasksGroupByProject
+  );
+  highPriorityGroup$ = this.store.select(selectHighPriorityTasksGroupByProject);
+
+  noPriorityCompletedTasks$ = this.store.select(selectCompletedNoPriorityTasks);
+  lowPriorityCompletedTasks$ = this.store.select(
+    selectCompletedLowPriorityTasks
+  );
+  mediumPriorityCompletedTasks$ = this.store.select(
+    selectCompletedMediumPriorityTasks
+  );
+  highPriorityCompletedTasks$ = this.store.select(
+    selectCompletedHighPriorityTasks
+  );
 
   constructor(private store: Store) {}
 }

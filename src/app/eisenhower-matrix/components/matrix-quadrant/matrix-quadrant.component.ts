@@ -10,7 +10,6 @@ import { Store } from '@ngrx/store';
 import { Priority, Project, Task } from '../../../models';
 import { CreateTaskDialogComponent } from '../../../shared/components/create-task-dialog/create-task-dialog.component';
 import { EisenhowerMatrixActions } from '../../../store/actions';
-import { selectProjects } from '../../../store/selectors';
 import { MatrixListData } from '../../interfaces/matrix-list-data';
 
 @Component({
@@ -20,18 +19,17 @@ import { MatrixListData } from '../../interfaces/matrix-list-data';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatrixQuadrantComponent implements OnInit {
-  @Input() tasks!: Task[];
+  @Input() groupedTasks!: Map<Project, Task[]>;
+  @Input() completedTasks!: Task[];
   @Input() priority!: Priority;
-  completedTasks?: Task[];
-  projects$ = this.store.select(selectProjects);
   showCompleted = true;
 
   constructor(private dialog: MatDialog, private store: Store) {}
 
-  ngOnInit(): void {
-    if (this.tasks) {
-      this.completedTasks = this.tasks.filter((t) => t.isCompleted);
-    }
+  ngOnInit(): void {}
+
+  trackByTaskid(index: number, task: Task) {
+    return task.id ?? index;
   }
 
   get headerText() {
@@ -56,10 +54,6 @@ export class MatrixQuadrantComponent implements OnInit {
       'low-priority': this.priority === Priority.LOW,
       'no-priority': this.priority === Priority.NONE,
     };
-  }
-
-  getProjectTasks(project: Project) {
-    return this.tasks.filter((t) => t.projectId === project.id);
   }
 
   openCreateTaskDialog() {

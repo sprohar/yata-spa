@@ -8,19 +8,30 @@
   *ngIf="tasksGroupedByPriority$ | async as grouped"
 >
   <yata-matrix-quadrant
-    [tasks]="grouped.get(HIGH_PRIORITY) || []"
+    *ngIf="highPriorityGroup$ | async as group"
+    [groupedTasks]="group"
+    [completedTasks]="(highPriorityCompletedTasks$ | async) ?? []"
     [priority]="HIGH_PRIORITY"
   ></yata-matrix-quadrant>
+
   <yata-matrix-quadrant
-    [tasks]="grouped.get(MEDIUM_PRIORITY) || []"
+    *ngIf="mediumPriorityGroup$ | async as group"
+    [groupedTasks]="group"
+    [completedTasks]="(mediumPriorityCompletedTasks$ | async) ?? []"
     [priority]="MEDIUM_PRIORITY"
   ></yata-matrix-quadrant>
+
   <yata-matrix-quadrant
-    [tasks]="grouped.get(LOW_PRIORITY) || []"
+    *ngIf="lowPriorityGroup$ | async as group"
+    [groupedTasks]="group"
+    [completedTasks]="(lowPriorityCompletedTasks$ | async) ?? []"
     [priority]="LOW_PRIORITY"
   ></yata-matrix-quadrant>
+
   <yata-matrix-quadrant
-    [tasks]="grouped.get(NO_PRIORITY) || []"
+    *ngIf="noPriorityGroup$ | async as group"
+    [groupedTasks]="group"
+    [completedTasks]="(noPriorityCompletedTasks$ | async) ?? []"
     [priority]="NO_PRIORITY"
   ></yata-matrix-quadrant>
 </main>
