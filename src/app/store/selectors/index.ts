@@ -1,3 +1,4 @@
+export * from './eisenhower-matrix.selectors';
 export * from './projects.selectors';
 export * from './sections.selectors';
 export * from './tags.selectors';
