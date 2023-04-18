@@ -206,6 +206,12 @@ body {
   display: flex;
 }
 
+.flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .flex-row {
   flex-direction: row;
 }
