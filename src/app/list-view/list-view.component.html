@@ -35,6 +35,7 @@
           [attr.data-test]="'section-' + map.key.id + '-tasks'"
           #taskList
           cdkDropList
+          cdkDropListSortingDisabled
           [cdkDropListData]="map.key"
           (cdkDropListDropped)="taskList.handleMoveTaskToSection($event)"
         >
