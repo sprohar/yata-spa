@@ -7,11 +7,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthViewComponent } from './auth-view.component';
+import { LogoComponent } from './components/logo/logo.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
-  declarations: [SignInComponent, AuthViewComponent, SignUpComponent],
+  declarations: [
+    SignInComponent,
+    AuthViewComponent,
+    SignUpComponent,
+    LogoComponent,
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,

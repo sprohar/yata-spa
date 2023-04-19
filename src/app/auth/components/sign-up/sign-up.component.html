@@ -1,10 +1,7 @@
-<div class="full-height">
-  <div class="form-container">
-    <div class="flex-centered">
-      <img src="assets/images/logo_transparent.png" alt="logo" width="350px" />
-    </div>
-
-    <div class="flex-column row-gap-1">
+<div class="flex full-height">
+  <div class="card flex-centered mat-elevation-z8">
+    <yata-logo></yata-logo>
+    <div class="flex-column row-gap-1 p-1">
       <h1>Sign up</h1>
 
       <form [formGroup]="form" (ngSubmit)="handleSignUp()">
