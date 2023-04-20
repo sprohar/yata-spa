@@ -1,12 +1,9 @@
-<div class="landing-page">
-  <h1>Yet Another To-Do App (YATA)</h1>
-  <hr />
-  <div>
-    <ng-container *ngIf="user$ | async as user; else guest">
-      <p>Welcome back {{ user.email }}</p>
-    </ng-container>
-    <ng-template #guest>
-      <a routerLink="auth/sign-in" class="link">Sign in</a>
-    </ng-template>
-  </div>
-</div>
+<nav>
+  <mat-toolbar class="flex space-between">
+    <span class="spacer"></span>
+    <yata-login-button></yata-login-button>
+  </mat-toolbar>
+</nav>
+<main class="flex-centered">
+  <h1>Welcome to YATA</h1>
+</main>
