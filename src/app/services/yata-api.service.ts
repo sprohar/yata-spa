@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { environment } from '../../environment/environment';
+import { environment } from '../../environment/environment.dev';
 import { ApiErrorResponse } from '../error/api-error-response';
 
 export abstract class YataApiService {

@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Observable, switchMap } from 'rxjs';
-import { environment } from '../../environment/environment';
+import { environment } from '../../environment/environment.dev';
 import { selectAccessToken } from '../store/reducers/auth.reducer';
 
 @Injectable()

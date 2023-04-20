@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { EMPTY } from 'rxjs';
-import { environment } from '../../environment/environment';
+import { environment } from '../../environment/environment.dev';
 import { AuthActions } from '../store/actions';
 
 export function initAppFactory(store: Store) {

@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { catchError, share, take, tap, throwError } from 'rxjs';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environment/environment.dev';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { AuthActions } from '../../store/actions';
 import { AuthResponseDto } from '../dto/auth-response.dto';
