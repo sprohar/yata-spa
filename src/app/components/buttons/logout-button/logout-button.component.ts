@@ -5,6 +5,15 @@ import { AuthService } from '@auth0/auth0-angular';
 @Component({
   selector: 'yata-logout-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [
+    `
+      #logout {
+        mat-icon {
+          margin-right: 0.5rem;
+        }
+      }
+    `,
+  ],
   template: `
     <div
       data-test="logoutButton"
