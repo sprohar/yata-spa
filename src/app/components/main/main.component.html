@@ -197,15 +197,8 @@
 
       <div *ngIf="user$ | async as user" class="bottom-bar clickable" matRipple>
         <mat-nav-list>
-          <div
-            data-test="logoutButton"
-            id="logout"
-            mat-list-item
-            class="flex align-items-center"
-            (click)="logout()"
-          >
-            <mat-icon>logout</mat-icon>
-            <span>Sign out</span>
+          <div mat-list-item>
+            <yata-logout-button></yata-logout-button>
           </div>
         </mat-nav-list>
       </div>

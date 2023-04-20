@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { Project, Tag } from '../../models';
@@ -7,7 +8,6 @@ import { BreakpointService } from '../../services/breakpoint.service';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 import { EditProjectDialogComponent } from '../../shared/components/edit-project-dialog/edit-project-dialog.component';
 import { AuthActions, SidenavActions } from '../../store/actions';
-import { selectUser } from '../../store/reducers/auth.reducer';
 import {
   selectInbox,
   selectProjectsForSidenav,
@@ -28,7 +28,7 @@ export class MainComponent implements OnDestroy {
   inbox$ = this.store.select(selectInbox);
   tags$ = this.store.select(selectTags);
   isHandset$ = this.breakpointService.isHandset$;
-  user$ = this.store.select(selectUser);
+  user$ = this.auth.user$;
 
   readonly KANBAN_VIEW = Project.View.KANBAN;
   readonly LIST_VIEW = Project.View.LIST;
@@ -37,7 +37,8 @@ export class MainComponent implements OnDestroy {
     private breakpointService: BreakpointService,
     private store: Store,
     private dialog: MatDialog,
-    private confirmationDialog: ConfirmationDialogService
+    private confirmationDialog: ConfirmationDialogService,
+    private auth: AuthService
   ) {}
 
   ngOnDestroy(): void {

@@ -1,7 +1,8 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Provider } from '@angular/core';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 // import { CachingInterceptor } from './caching.interceptor';
-import { JwtInterceptor } from './jwt.interceptor';
+// import { JwtInterceptor } from './jwt.interceptor';
 
 export const httpInterceptors: Provider[] = [
   // {
@@ -9,9 +10,14 @@ export const httpInterceptors: Provider[] = [
   //   useClass: CachingInterceptor,
   //   multi: true,
   // },
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: JwtInterceptor,
+  //   multi: true,
+  // },
   {
     provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptor,
+    useClass: AuthHttpInterceptor,
     multi: true,
   },
 ];
