@@ -28,7 +28,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
+// import { AuthModule } from './auth/auth.module';
 import { initAppFactory } from './auth/init-app-factory';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
@@ -50,6 +50,11 @@ import {
   tasksReducer,
 } from './store/reducers/';
 import { TagsModule } from './tags/tags.module';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment } from '../environment/environment.dev';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { LoginButtonComponent } from './components/login-button/login-button.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +63,9 @@ import { TagsModule } from './tags/tags.module';
     ConfirmationDialogComponent,
     LandingPageComponent,
     MainComponent,
+    HomePageComponent,
+    PageNotFoundComponent,
+    LoginButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +73,10 @@ import { TagsModule } from './tags/tags.module';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AuthModule,
+    AuthModule.forRoot({
+      ...environment.auth0,
+    }),
+    // AuthModule,
     StoreModule.forRoot(
       {
         auth: authReducer,
@@ -103,12 +114,12 @@ import { TagsModule } from './tags/tags.module';
     ...httpInterceptors,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: '350px ' } },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
-    {
-      provide: APP_INITIALIZER,
-      deps: [Store],
-      useFactory: initAppFactory,
-      multi: true,
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   deps: [Store],
+    //   useFactory: initAppFactory,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

@@ -1,24 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@auth0/auth0-angular';
 import { authenticationGuard } from './auth/guards/authentication.guard';
+import { HomePageComponent } from './components/home-page/home-page.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { projectsGuard, tagsGuard } from './guards/';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app',
-    pathMatch: 'full',
+    component: LandingPageComponent,
   },
   {
     path: 'app',
     component: MainComponent,
-    canActivate: [authenticationGuard, projectsGuard, tagsGuard],
+    // canActivate: [AuthGuard, projectsGuard, tagsGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
-        component: LandingPageComponent,
+        component: HomePageComponent,
       },
       {
         path: 'chrono',
@@ -51,10 +54,14 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

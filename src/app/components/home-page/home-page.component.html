@@ -1,0 +1,12 @@
+<div class="landing-page">
+  <h1>Yet Another To-Do App (YATA)</h1>
+  <hr />
+  <div>
+    <ng-container *ngIf="user$ | async as user; else guest">
+      <p>Welcome back {{ user.email }}</p>
+    </ng-container>
+    <ng-template #guest>
+      <a routerLink="auth/sign-in" class="link">Sign in</a>
+    </ng-template>
+  </div>
+</div>
