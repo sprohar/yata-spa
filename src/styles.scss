@@ -88,6 +88,12 @@ body {
   opacity: 0.54;
 }
 
+.horizontal-line {
+  height: 1px;
+  width: 100%;
+  border: thin solid rgba(255, 255, 255, 0.08);
+}
+
 .hide {
   display: none !important;
 }
@@ -262,5 +268,9 @@ ul {
 
   .text-grey {
     color: gray;
+  }
+
+  .horizontal-line {
+    border-color: rgba(0, 0, 0, 0.08);
   }
 }

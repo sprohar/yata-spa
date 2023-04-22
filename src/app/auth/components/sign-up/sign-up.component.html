@@ -1,7 +1,7 @@
 <div class="flex full-height">
   <div class="card flex-centered mat-elevation-z8">
     <yata-logo></yata-logo>
-    <div class="flex-column row-gap-1 p-1">
+    <div class="form-container flex-column row-gap-1 p-1">
       <h1>Sign up</h1>
 
       <form [formGroup]="form" (ngSubmit)="handleSignUp()">
@@ -47,10 +47,22 @@
         </div>
       </form>
 
-      <p>
-        <span> Already have an account? </span>
-        <a routerLink="/auth/sign-in" class="link">Sign in</a>
-      </p>
+      <div class="flex align-items-center">
+        <div class="horizontal-line"></div>
+        <span class="mx-1">OR</span>
+        <div class="horizontal-line"></div>
+      </div>
+
+      <div class="flex-column row-gap-1">
+        <yata-google-login-button></yata-google-login-button>
+      </div>
+
+      <div class="mt-1">
+        <p>
+          <span> Already have an account? </span>
+          <a routerLink="/auth/sign-in" class="link">Sign in</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>

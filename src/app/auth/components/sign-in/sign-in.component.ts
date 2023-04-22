@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { environment } from '../../../../environment/environment';
 import { ErrorService } from '../../../services/error.service';
 import { AuthActions } from '../../../store/actions';
 import { AuthDto } from '../../dto/auth.dto';
@@ -16,7 +15,7 @@ import { User } from '../../models/user.model';
 export class SignInComponent implements OnInit {
   form!: FormGroup;
   showPassword = false;
-  returnUrl = environment.app.entryPath;
+  returnUrl = '/app';
 
   constructor(
     private store: Store,

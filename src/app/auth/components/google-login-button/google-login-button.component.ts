@@ -13,7 +13,6 @@ import { GoogleOAuthResponseDto } from '../../dto';
 @Component({
   selector: 'yata-google-login-button',
   templateUrl: './google-login-button.component.html',
-  styleUrls: ['./google-login-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GoogleLoginButtonComponent implements OnInit {
@@ -29,23 +28,18 @@ export class GoogleLoginButtonComponent implements OnInit {
     this.returnUrl =
       this.route.snapshot.queryParamMap.get('returnUrl') ?? '/app';
 
-    this.ngZone.run(() => {
-      // @ts-ignore
-      google.accounts.id.initialize({
-        client_id: environment.oauth.google.clientId,
-        callback: this.handleOAuthSignIn.bind(this),
-      });
-      
-      // @ts-ignore
-      google.accounts.id.renderButton(
-        document.getElementById('googleButton')!,
-        {
-          theme: 'filled_blue',
-          size: 'large',
-          width: '400px',
-          type: 'standard',
-        }
-      );
+    // @ts-ignore
+    google.accounts.id.initialize({
+      client_id: environment.oauth.google.clientId,
+      callback: this.handleOAuthSignIn.bind(this),
+    });
+
+    // @ts-ignore
+    google.accounts.id.renderButton(document.getElementById('googleButton')!, {
+      theme: 'filled_blue',
+      size: 'large',
+      width: '400px',
+      type: 'standard',
     });
   }
 

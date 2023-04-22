@@ -63,11 +63,11 @@ import { TagsModule } from './tags/tags.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AuthModule,
+    AppRoutingModule,
     StoreModule.forRoot(
       {
         auth: authReducer,
