@@ -3,7 +3,7 @@ import { Provider } from '@angular/core';
 // import { CachingInterceptor } from './caching.interceptor';
 import { JwtInterceptor } from './jwt.interceptor';
 
-export const httpInterceptors: Provider[] = [
+export const httpInterceptorProviders: Provider[] = [
   // {
   //   provide: HTTP_INTERCEPTORS,
   //   useClass: CachingInterceptor,

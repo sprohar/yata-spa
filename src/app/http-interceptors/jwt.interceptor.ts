@@ -19,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!req.url.includes(environment.api.baseUrl)) {
+    if (!req.url.includes(environment.api.serverUrl)) {
       return next.handle(req);
     }
 

@@ -23,18 +23,20 @@ import {
 } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appInitFactory } from './app-init-factory';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
-import { initAppFactory } from './auth/init-app-factory';
+import { AuthenticationService } from './auth/services/authentication.service';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
-import { httpInterceptors } from './http-interceptors';
+import { httpInterceptorProviders } from './http-interceptors';
 import {
   AuthEffects,
   ChronoEffects,
@@ -100,13 +102,13 @@ import { TagsModule } from './tags/tags.module';
     MatSelectModule,
   ],
   providers: [
-    ...httpInterceptors,
+    httpInterceptorProviders,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: '350px ' } },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
     {
       provide: APP_INITIALIZER,
-      deps: [Store],
-      useFactory: initAppFactory,
+      deps: [Store, AuthenticationService, Router],
+      useFactory: appInitFactory,
       multi: true,
     },
   ],
