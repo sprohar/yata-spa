@@ -4,7 +4,7 @@ import { environment } from '../../environment/environment';
 import { ApiErrorResponse } from '../error/api-error-response';
 
 export abstract class YataApiService {
-  protected readonly baseUrl = environment.api.baseUrl;
+  protected readonly baseUrl = environment.api.serverUrl;
 
   protected handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
