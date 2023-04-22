@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authenticationGuard } from './auth/guards/authentication.guard';
+import { authGuard } from './auth/guards/authentication.guard';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
 import { projectsGuard, tagsGuard } from './guards/';
@@ -14,7 +14,8 @@ const routes: Routes = [
   {
     path: 'app',
     component: MainComponent,
-    canActivate: [authenticationGuard, projectsGuard, tagsGuard],
+    canMatch: [authGuard],
+    canActivate: [projectsGuard, tagsGuard],
     children: [
       {
         path: '',
@@ -57,4 +58,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

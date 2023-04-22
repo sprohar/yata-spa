@@ -1,19 +1,13 @@
 import { inject } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { CanMatchFn, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { catchError, EMPTY, of, switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { selectUser } from '../../store/reducers/auth.reducer';
 
-export function authenticationGuard(
-  _route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) {
+export const authGuard: CanMatchFn = () => {
   const store = inject(Store);
   const router = inject(Router);
+  const state = router.routerState.snapshot;
 
   return store.select(selectUser).pipe(
     switchMap((user) => {
@@ -29,4 +23,4 @@ export function authenticationGuard(
     }),
     catchError(() => of(false))
   );
-}
+};
