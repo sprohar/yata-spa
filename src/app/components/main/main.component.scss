@@ -3,9 +3,11 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 2px;
-  padding: 4px 8px 4px 16px;
-  border-top: thin solid rgba(255, 255, 255, 0.12);
+  bottom: 8px;
+
+  a {
+    border-top: thin solid rgba(255, 255, 255, 0.12);
+  }
 }
 
 .sidenav-lists {
@@ -92,7 +94,7 @@ mat-nav-list {
 }
 
 @media (prefers-color-scheme: light) {
-  .bottom-bar {
+  .bottom-bar a {
     border-color: rgba(0, 0, 0, 0.12);
   }
 }

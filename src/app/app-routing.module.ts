@@ -50,6 +50,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./tags/tags.module').then((m) => m.TagsModule),
       },
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('./features/settings/settings.module').then(
+            (m) => m.SettingsModule
+          ),
+      },
     ],
   },
 ];

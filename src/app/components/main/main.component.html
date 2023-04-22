@@ -195,20 +195,14 @@
         <mat-divider></mat-divider>
       </div>
 
-      <div *ngIf="user$ | async as user" class="bottom-bar clickable" matRipple>
-        <mat-nav-list>
-          <div
-            data-test="logoutButton"
-            id="logout"
-            mat-list-item
-            class="flex align-items-center"
-            (click)="logout()"
-          >
-            <mat-icon>logout</mat-icon>
-            <span>Sign out</span>
+      <mat-nav-list *ngIf="user$ | async as user" class="bottom-bar">
+        <a mat-list-item routerLink="/app/settings">
+          <div class="flex align-items-center">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
           </div>
-        </mat-nav-list>
-      </div>
+        </a>
+      </mat-nav-list>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="relative">

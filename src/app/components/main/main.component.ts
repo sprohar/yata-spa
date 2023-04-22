@@ -6,7 +6,7 @@ import { Project, Tag } from '../../models';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 import { EditProjectDialogComponent } from '../../shared/components/edit-project-dialog/edit-project-dialog.component';
-import { AuthActions, SidenavActions } from '../../store/actions';
+import { SidenavActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
 import {
   selectInbox,
@@ -45,10 +45,6 @@ export class MainComponent implements OnDestroy {
   }
 
   ngOnInit(): void {}
-
-  logout() {
-    this.store.dispatch(AuthActions.logout());
-  }
 
   trackByProjectId(_index: number, project: Project) {
     return project.id;
