@@ -9,13 +9,17 @@ import {
   map,
   of,
   switchMap,
+  take,
   tap,
 } from 'rxjs';
+import { AuthResponseDto } from '../../auth/dto';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { ErrorService } from '../../services/error.service';
+import { OAuthService } from '../../services/oauth.service';
 import { AuthActions } from '../actions';
 import { AuthApiActions } from '../actions/auth-api.actions';
+import { OAuthActions } from '../actions/oauth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -23,8 +27,25 @@ export class AuthEffects {
     private actions$: Actions,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private oauth: OAuthService,
     private errorService: ErrorService
   ) {}
+
+  google$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(OAuthActions.signInWithGoogle),
+      take(1),
+      switchMap((action) =>
+        this.oauth.signInWithGoogle(action.payload).pipe(
+          map((res: AuthResponseDto) => AuthApiActions.signInSuccess({ res })),
+          tap(() => this.router.navigateByUrl(action.returnUrl)),
+          catchError((error: ApiErrorResponse) =>
+            of(AuthApiActions.signInError({ error }))
+          )
+        )
+      )
+    )
+  );
 
   logoutSuccess$ = createEffect(() =>
     this.actions$.pipe(
@@ -39,6 +60,7 @@ export class AuthEffects {
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.logout),
+      take(1),
       switchMap((_action) =>
         this.authenticationService.logout().pipe(
           map(() => AuthApiActions.logoutSuccess()),

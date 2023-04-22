@@ -22,10 +22,10 @@ export const authFeature = createFeature({
     })),
     on(
       AuthApiActions.signInSuccess,
-      AuthApiActions.refreshTokenSuccess,
       AuthApiActions.signUpSuccess,
+      AuthApiActions.refreshTokenSuccess,
       (_state, action) => ({
-        user: action.res.user ?? null,
+        user: action.res.user,
         accessToken: action.res.accessToken,
       })
     ),

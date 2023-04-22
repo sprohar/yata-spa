@@ -10,6 +10,7 @@ import { AuthViewComponent } from './auth-view.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { GoogleLoginButtonComponent } from './components/google-login-button/google-login-button.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     AuthViewComponent,
     SignUpComponent,
     LogoComponent,
+    GoogleLoginButtonComponent,
   ],
   imports: [
     CommonModule,
