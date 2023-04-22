@@ -1,5 +1,6 @@
 cypress.env.json
 .env
+src/environment/
 
 # Compiled output
 /dist
