@@ -24,36 +24,36 @@ const routes: Routes = [
       {
         path: 'chrono',
         loadChildren: () =>
-          import('./chrono/chrono.module').then((m) => m.ChronoModule),
+          import('./features/chrono/chrono.module').then((m) => m.ChronoModule),
       },
       {
         path: 'kanban',
         loadChildren: () =>
-          import('./kanban-view/kanban-view.module').then(
+          import('./features/kanban-view/kanban-view.module').then(
             (m) => m.KanbanViewModule
           ),
       },
       {
         path: 'list',
         loadChildren: () =>
-          import('./list-view/list-view.module').then((m) => m.ListViewModule),
+          import('./features/list-view/list-view.module').then((m) => m.ListViewModule),
       },
       {
         path: 'matrix',
         loadChildren: () =>
-          import('./eisenhower-matrix/eisenhower-matrix.module').then(
+          import('./features/eisenhower-matrix/eisenhower-matrix.module').then(
             (m) => m.EisenhowerMatrixModule
           ),
       },
       {
         path: 'tags',
         loadChildren: () =>
-          import('./tags/tags.module').then((m) => m.TagsModule),
+          import('./features/tags/tags.module').then((m) => m.TagsModule),
       },
       {
         path: 'settings',
         loadChildren: () =>
-          import('./features/settings/settings.module').then(
+          import('./settings/settings.module').then(
             (m) => m.SettingsModule
           ),
       },

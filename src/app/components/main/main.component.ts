@@ -2,6 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
+import { CreateTagDialogComponent } from '../../features/tags/components/create-tag-dialog/create-tag-dialog.component';
+import { EditTagDialogComponent } from '../../features/tags/components/edit-tag-dialog/edit-tag-dialog.component';
 import { Project, Tag } from '../../models';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
@@ -13,8 +15,6 @@ import {
   selectProjectsForSidenav,
   selectTags,
 } from '../../store/selectors';
-import { CreateTagDialogComponent } from '../../tags/components/create-tag-dialog/create-tag-dialog.component';
-import { EditTagDialogComponent } from '../../tags/components/edit-tag-dialog/edit-tag-dialog.component';
 import { CreateProjectDialogComponent } from '../create-project-dialog/create-project-dialog.component';
 
 @Component({

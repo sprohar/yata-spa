@@ -6,8 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  MatDialogModule,
   MAT_DIALOG_DEFAULT_OPTIONS,
+  MatDialogModule,
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,8 +18,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {
-  MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarModule,
 } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -51,7 +51,6 @@ import {
   sectionsReducer,
   tasksReducer,
 } from './store/reducers/';
-import { TagsModule } from './tags/tags.module';
 
 @NgModule({
   declarations: [
@@ -97,7 +96,6 @@ import { TagsModule } from './tags/tags.module';
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
-    TagsModule,
     MatMenuModule,
     MatSelectModule,
   ],

@@ -14,8 +14,6 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { AppComponent } from '../../../app.component';
 import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component';
-import { KanbanViewComponent } from '../../../kanban-view/kanban-view.component';
-import { ListViewComponent } from '../../../list-view/list-view.component';
 import { Project } from '../../../models';
 import {
   KanbanViewActions,
@@ -25,6 +23,8 @@ import {
 import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
 
+import { KanbanViewComponent } from '../../../features/kanban-view/kanban-view.component';
+import { ListViewComponent } from '../../../features/list-view/list-view.component';
 import { initialSectionsState } from '../../../store/reducers/sections.reducer';
 import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 import { ViewHeaderComponent } from './view-header.component';
