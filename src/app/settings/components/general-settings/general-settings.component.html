@@ -1,0 +1,25 @@
+<section class="flex-column row-gap-1">
+  <h3>General</h3>
+  <mat-card [formGroup]="form">
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <div class="flex space-between">
+            <p>Set "Today" as default due date</p>
+            <mat-slide-toggle
+              formControlName="todayDefaultDueDate"
+              #toggleDueDate
+              color="primary"
+              (change)="
+                handlePreferenceChange(
+                  keys.DEFAULT_DUE_DATE_TODAY,
+                  toggleDueDate.checked
+                )
+              "
+            ></mat-slide-toggle>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</section>

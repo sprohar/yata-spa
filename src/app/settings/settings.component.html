@@ -1,0 +1,35 @@
+<div class="flex full-height">
+  <div class="nav-list ml-1">
+    <mat-nav-list>
+      <a mat-list-item routerLink="appearance" routerLinkActive="active">
+        <div class="flex align-items-center">
+          <mat-icon class="mr-1">palette</mat-icon>
+          <span>Appearance</span>
+        </div>
+      </a>
+      <a mat-list-item routerLink="general" routerLinkActive="active">
+        <div class="flex align-items-center">
+          <mat-icon class="mr-1">settings</mat-icon>
+          <span>General</span>
+        </div>
+      </a>
+      <mat-divider></mat-divider>
+      <a
+        mat-list-item
+        routerLink="/"
+        (click)="$event.preventDefault(); handleSignOut()"
+      >
+        <div class="flex align-items-center">
+          <mat-icon class="mr-1">logout</mat-icon>
+          <span>Sign out</span>
+        </div>
+      </a>
+    </mat-nav-list>
+  </div>
+
+  <div class="flex-column full-width p-1">
+    <div class="flex-column content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
