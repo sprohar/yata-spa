@@ -40,6 +40,7 @@ export class GoogleLoginButtonComponent implements OnInit {
       size: 'large',
       width: '400px',
       type: 'standard',
+      text: 'continue_with',
     });
   }
 
