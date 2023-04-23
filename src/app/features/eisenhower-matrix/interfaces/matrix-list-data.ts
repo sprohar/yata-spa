@@ -1,4 +1,4 @@
-import { Priority } from '../../models';
+import { Priority } from '../../../models';
 
 export interface MatrixListData {
   projectId: number;

@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Priority, Project, Task } from '../../../models';
-import { CreateTaskDialogComponent } from '../../../shared/components/create-task-dialog/create-task-dialog.component';
-import { EisenhowerMatrixActions } from '../../../store/actions';
+import { Priority, Project, Task } from '../../../../models';
+import { CreateTaskDialogComponent } from '../../../../shared/components/create-task-dialog/create-task-dialog.component';
+import { EisenhowerMatrixActions } from '../../../../store/actions';
 import { MatrixListData } from '../../interfaces/matrix-list-data';
 
 @Component({
