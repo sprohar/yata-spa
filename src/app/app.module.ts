@@ -6,8 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  MAT_DIALOG_DEFAULT_OPTIONS,
   MatDialogModule,
+  MAT_DIALOG_DEFAULT_OPTIONS,
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,8 +18,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -43,12 +43,14 @@ import {
   ProjectsEffects,
   SectionsEffects,
   StorageEffects,
+  TagsEffects,
   TasksEffects,
 } from './store/effects/';
 import {
   authReducer,
   projectsReducer,
   sectionsReducer,
+  tagsReducer,
   tasksReducer,
 } from './store/reducers/';
 
@@ -73,6 +75,7 @@ import {
         projects: projectsReducer,
         sections: sectionsReducer,
         tasks: tasksReducer,
+        tags: tagsReducer,
       },
       {}
     ),
@@ -83,6 +86,7 @@ import {
       SectionsEffects,
       TasksEffects,
       StorageEffects,
+      TagsEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,
