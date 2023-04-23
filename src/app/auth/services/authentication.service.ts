@@ -25,7 +25,7 @@ export class AuthenticationService {
     const url = `${authApiUrl}/${environment.auth.endpoint.logout}`;
     return this.http
       .post(url, null)
-      .pipe(take(1), share(), catchError(this.handleError));
+      .pipe(take(1), catchError(this.handleError));
   }
 
   signIn(dto: AuthDto) {
