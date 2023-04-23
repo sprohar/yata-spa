@@ -1,0 +1,29 @@
+$cyan: #00bcd4;
+
+.content {
+  padding-top: 6px;
+}
+
+.mdc-list-item {
+  border-radius: 6px;
+}
+
+.active {
+  background-color: rgba(0, 184, 212, 0.1);
+}
+
+.active span,
+.active mat-icon {
+  color: $cyan;
+}
+
+@media (prefers-color-scheme: light) {
+  .active {
+    background-color: rgba(0, 184, 212, 0.15);
+  }
+
+  .active span,
+  .active mat-icon {
+    color: inherit;
+  }
+}
