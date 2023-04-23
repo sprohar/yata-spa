@@ -16,7 +16,7 @@ export const authGuard: CanMatchFn = () => {
       }
       router.navigate(['/auth/sign-in'], {
         queryParams: {
-          returnUrl: state.url,
+          returnUrl: state.url ? state.url : '/app',
         },
       });
       return of(false);
