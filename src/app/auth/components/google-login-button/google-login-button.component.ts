@@ -36,7 +36,7 @@ export class GoogleLoginButtonComponent implements OnInit {
 
     // @ts-ignore
     google.accounts.id.renderButton(document.getElementById('googleButton')!, {
-      theme: 'filled_blue',
+      theme: 'filled_black',
       size: 'large',
       width: '400px',
       type: 'standard',
