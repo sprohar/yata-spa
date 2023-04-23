@@ -14,7 +14,7 @@ export class LocalStorageService {
     return localStorage.getItem(key);
   }
 
-  set(key: string, value: string | any): void {
+  set(key: string, value: string | number | Object): void {
     const item = typeof value === 'string' ? value : JSON.stringify(value);
     localStorage.setItem(key, item);
   }
