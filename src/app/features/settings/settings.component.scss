@@ -1,4 +1,4 @@
-$cyan: #00bcd4;
+@use "@angular/material" as mat;
 
 .content {
   padding-top: 6px;
@@ -9,21 +9,20 @@ $cyan: #00bcd4;
 }
 
 .active {
-  background-color: rgba(0, 184, 212, 0.1);
+  background-color: rgba(
+    mat.get-color-from-palette(mat.$cyan-palette, 800),
+    0.1
+  );
 }
 
 .active span,
 .active mat-icon {
-  color: $cyan;
+  color: mat.get-color-from-palette(mat.$cyan-palette, A400);
 }
 
 @media (prefers-color-scheme: light) {
-  .active {
-    background-color: rgba(0, 184, 212, 0.15);
-  }
-
   .active span,
   .active mat-icon {
-    color: inherit;
+    color: mat.get-color-from-palette(mat.$cyan-palette, 900);
   }
 }
