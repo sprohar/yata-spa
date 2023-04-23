@@ -42,7 +42,6 @@ import {
   ChronoEffects,
   ProjectsEffects,
   SectionsEffects,
-  StorageEffects,
   TagsEffects,
   TasksEffects,
 } from './store/effects/';
@@ -85,7 +84,6 @@ import {
       ProjectsEffects,
       SectionsEffects,
       TasksEffects,
-      StorageEffects,
       TagsEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
