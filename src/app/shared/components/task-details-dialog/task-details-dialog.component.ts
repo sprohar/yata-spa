@@ -200,6 +200,15 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
 
   handlePriorityChange(priority: Priority) {
     this.priorityControl.setValue(priority);
+    const task: Task = this.form.value;
+    this.store.dispatch(
+      TaskDetailsActions.updateTask({
+        task: {
+          id: task.id,
+          priority: task.priority,
+        },
+      })
+    );
   }
 
   handleChecked() {
