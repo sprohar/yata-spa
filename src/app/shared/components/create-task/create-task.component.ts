@@ -18,6 +18,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
+import {
+  PreferencesOption,
+  PreferencesService,
+} from '../../../settings/services/preferences.service';
 import { CreateTaskComponentActions } from '../../../store/actions';
 import {
   selectCurrentProjectId,
@@ -58,6 +62,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     private store: Store,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private preferences: PreferencesService,
     private changeDetectionRef: ChangeDetectorRef
   ) {}
 
@@ -101,7 +106,11 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
       projectId: [null, [Validators.required]],
       sectionId: [null],
       parentId: [null],
-      dueDate: [null],
+      dueDate: [
+        this.preferences.get(PreferencesOption.DEFAULT_DUE_DATE_TODAY)
+          ? new Date()
+          : null,
+      ],
     });
 
     this.titleControl.valueChanges

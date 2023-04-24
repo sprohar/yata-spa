@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../../services';
-import { Preferences, PreferencesOption } from '../models';
+import { Preferences } from '../models';
 
 const PREFERENCES_KEY = 'preferences';
+
+export enum PreferencesOption {
+  DEFAULT_DUE_DATE_TODAY = 'defaultDueDateToday',
+}
 
 @Injectable({
   providedIn: 'root',

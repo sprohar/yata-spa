@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { PreferencesOption } from '../../models';
-import { PreferencesService } from '../../services/preferences.service';
+import {
+  PreferencesOption,
+  PreferencesService,
+} from '../../services/preferences.service';
 
 @Component({
   selector: 'yata-general-settings',
@@ -10,7 +12,7 @@ import { PreferencesService } from '../../services/preferences.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GeneralSettingsComponent implements OnInit {
-  readonly keys = PreferencesOption;
+  readonly prefs = PreferencesOption;
   form!: FormGroup;
 
   constructor(
@@ -21,7 +23,7 @@ export class GeneralSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       todayDefaultDueDate: [
-        this.preferences.get(this.keys.DEFAULT_DUE_DATE_TODAY) ?? true,
+        this.preferences.get(this.prefs.DEFAULT_DUE_DATE_TODAY) ?? true,
       ],
     });
   }
