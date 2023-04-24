@@ -5,16 +5,18 @@ export function groupProjectTasksBySection(
   tasks: Task[],
   projectId: number
 ): Map<Section, Task[]> {
-  const unsectioned: Section = {
-    name: 'No section',
-    projectId,
-  };
-
   const map = new Map<Section, Task[]>();
-  map.set(
-    unsectioned,
-    tasks.filter((task) => !task.isCompleted && !task.sectionId)
+  const unsectionedTasks = tasks.filter(
+    (task) => !task.isCompleted && !task.sectionId
   );
+
+  if (unsectionedTasks.length > 0) {
+    const unsectioned: Section = {
+      name: 'No section',
+      projectId,
+    };
+    map.set(unsectioned, unsectionedTasks);
+  }
 
   return sections.reduce((group, section) => {
     group.set(
