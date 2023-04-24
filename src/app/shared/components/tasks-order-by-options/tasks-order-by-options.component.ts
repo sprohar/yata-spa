@@ -1,8 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
+import { LocalStorageService } from '../../../services';
 import { TasksOrderByOptionsActions } from '../../../store/actions/tasks-order-by-options.actions';
-import { selectOrderBy } from '../../../store/reducers/tasks.reducer';
+import {
+  selectOrderBy,
+  TasksOrderByState,
+} from '../../../store/reducers/tasks.reducer';
 import { SortOrder } from '../../../strategies/sort';
 
 @Component({
@@ -14,26 +18,25 @@ import { SortOrder } from '../../../strategies/sort';
 export class TasksOrderByOptionsComponent {
   readonly SORT_ASC = SortOrder.ASC;
   readonly SORT_DESC = SortOrder.DESC;
+  readonly ORDER_BY_DUE_DATE = Task.OrderBy.DUE_DATE;
+  readonly ORDER_BY_PRIORITY = Task.OrderBy.PRIORITY;
   orderBy$ = this.store.select(selectOrderBy);
 
-  constructor(private store: Store) {}
+  constructor(
+    private readonly store: Store,
+    private readonly storage: LocalStorageService
+  ) {}
 
-  orderByDueDate(dir: SortOrder) {
+  handleOrderByChange(attribute: Task.OrderBy, dir: SortOrder) {
+    this.storage.set('orderBy', {
+      attribute,
+      dir,
+    } as TasksOrderByState);
+
     this.store.dispatch(
       TasksOrderByOptionsActions.setOrderBy({
         orderBy: {
           attribute: Task.OrderBy.DUE_DATE,
-          dir,
-        },
-      })
-    );
-  }
-
-  orderByPriority(dir: SortOrder) {
-    this.store.dispatch(
-      TasksOrderByOptionsActions.setOrderBy({
-        orderBy: {
-          attribute: Task.OrderBy.PRIORITY,
           dir,
         },
       })

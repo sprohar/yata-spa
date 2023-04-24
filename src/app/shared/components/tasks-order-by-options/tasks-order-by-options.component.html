@@ -22,10 +22,30 @@
 
 <!-- Submenus -->
 <mat-menu #dueDate="matMenu">
-  <button mat-menu-item (click)="orderByDueDate(SORT_ASC)">ASC</button>
-  <button mat-menu-item (click)="orderByDueDate(SORT_DESC)">DESC</button>
+  <button
+    mat-menu-item
+    (click)="handleOrderByChange(ORDER_BY_DUE_DATE, SORT_ASC)"
+  >
+    ASC
+  </button>
+  <button
+    mat-menu-item
+    (click)="handleOrderByChange(ORDER_BY_DUE_DATE, SORT_DESC)"
+  >
+    DESC
+  </button>
 </mat-menu>
 <mat-menu #priority="matMenu">
-  <button mat-menu-item (click)="orderByPriority(SORT_ASC)">ASC</button>
-  <button mat-menu-item (click)="orderByPriority(SORT_DESC)">DESC</button>
+  <button
+    mat-menu-item
+    (click)="handleOrderByChange(ORDER_BY_PRIORITY, SORT_ASC)"
+  >
+    ASC
+  </button>
+  <button
+    mat-menu-item
+    (click)="handleOrderByChange(ORDER_BY_PRIORITY, SORT_DESC)"
+  >
+    DESC
+  </button>
 </mat-menu>
