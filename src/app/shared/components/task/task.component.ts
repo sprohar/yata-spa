@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Task } from '../../../models';
 import { TaskActions } from '../../../store/actions/task.actions';
 
@@ -34,9 +34,13 @@ export class TaskComponent implements OnDestroy {
     }
 
     this.initForm(this.task);
-    this.form.get('isCompleted')?.valueChanges.subscribe((checked) => {
-      this.handleChecked();
-    });
+
+    this.form
+      .get('isCompleted')
+      ?.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((_checked) => {
+        this.handleChecked();
+      });
   }
 
   initForm(task: Task) {

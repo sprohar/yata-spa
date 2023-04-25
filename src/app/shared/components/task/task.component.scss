@@ -4,19 +4,19 @@
   display: flex;
   align-items: center;
   column-gap: 16px;
-  border-radius: 6px 6px 0 0;
-  border-bottom: thin solid rgba(255, 255, 255, 0.12);
 
   .drag-indicator {
     transform: scale(0.75);
+    visibility: hidden;
+
     &:hover {
       cursor: grab;
     }
   }
-}
 
-@media (prefers-color-scheme: light) {
-  .task {
-    border-color: rgba(0, 0, 0, 0.12);
+  &:hover {
+    .drag-indicator {
+      visibility: visible;
+    }
   }
 }
