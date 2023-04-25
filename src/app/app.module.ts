@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {
@@ -45,14 +46,15 @@ import {
   TagsEffects,
   TasksEffects,
 } from './store/effects/';
+import { SettingsEffects } from './store/effects/settings.effects';
 import {
   authReducer,
   projectsReducer,
   sectionsReducer,
+  settingsReducer,
   tagsReducer,
   tasksReducer,
 } from './store/reducers/';
-import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,7 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
         sections: sectionsReducer,
         tasks: tasksReducer,
         tags: tagsReducer,
+        settings: settingsReducer,
       },
       {}
     ),
@@ -86,6 +89,7 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
       SectionsEffects,
       TasksEffects,
       TagsEffects,
+      SettingsEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,

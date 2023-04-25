@@ -14,12 +14,10 @@ export const settingsFeature = createFeature({
   name: 'settings',
   reducer: createReducer(
     initialSettingsState,
-    on(YataApiActions.updateUserPreferenceSuccess, (state, action) => ({
-      ...state,
+    on(YataApiActions.updateUserPreferenceSuccess, (_state, action) => ({
       preferences: action.user.preferences ?? null,
     })),
-    on(SettingsActions.setUserPreferences, (state, action) => ({
-      ...state,
+    on(SettingsActions.setUserPreferences, (_state, action) => ({
       preferences: action.preferences,
     }))
   ),
