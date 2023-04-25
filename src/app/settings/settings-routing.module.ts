@@ -7,6 +7,11 @@ import { SettingsComponent } from './settings.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'general',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: SettingsComponent,
     children: [
       {
@@ -18,11 +23,6 @@ const routes: Routes = [
         component: GeneralSettingsComponent,
       },
     ],
-  },
-  {
-    path: '',
-    redirectTo: '/app/settings/appearance',
-    pathMatch: 'full',
   },
 ];
 
