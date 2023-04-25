@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 
+export enum StorageKeys {
+  ORDER_BY = 'orderBy',
+  PREFERENCES = 'preferences',
+}
+
 @Injectable({
   providedIn: 'root',
 })
-export class LocalStorageService {
+export class StorageService {
   constructor() {}
 
   clear(): void {
