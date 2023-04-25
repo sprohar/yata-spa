@@ -222,4 +222,16 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
       })
     );
   }
+
+  handleDescriptionChange() {
+    const task: Task = this.form.value;
+    this.store.dispatch(
+      TaskDetailsActions.updateTask({
+        task: {
+          id: task.id,
+          description: task.description,
+        },
+      })
+    );
+  }
 }

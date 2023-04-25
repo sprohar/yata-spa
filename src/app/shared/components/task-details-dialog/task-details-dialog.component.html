@@ -60,6 +60,7 @@
               matInput
               formControlName="description"
               cdkTextareaAutosize
+              (blur)="handleDescriptionChange()"
             ></textarea>
           </mat-form-field>
         </div>
