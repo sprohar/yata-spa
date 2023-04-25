@@ -52,6 +52,7 @@ import {
   tagsReducer,
   tasksReducer,
 } from './store/reducers/';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import {
     httpInterceptorProviders,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: '350px ' } },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
+    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
     {
       provide: APP_INITIALIZER,
       deps: [Store, AuthenticationService, Router],
