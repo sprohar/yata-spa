@@ -1,10 +1,15 @@
 import { createActionGroup, props } from '@ngrx/store';
+import { User } from '../../auth/models/user.model';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { Project, Section, Tag, Task } from '../../models';
 
 export const YataApiActions = createActionGroup({
   source: 'Yata API',
   events: {
+    // Users
+    'Update User Preference Success': props<{ user: User }>(),
+    'Update User Preference Error': props<{ error: ApiErrorResponse }>(),
+
     // Projects
     'Create Project Success': props<{ project: Project }>(),
     'Create Project Error': props<{ error: ApiErrorResponse }>(),
