@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -10,14 +17,23 @@ import { SidenavActions } from '../../../../store/actions';
   templateUrl: './create-tag-dialog.component.html',
   styleUrls: ['./create-tag-dialog.component.scss'],
 })
-export class CreateTagDialogComponent implements OnInit {
+export class CreateTagDialogComponent implements AfterViewInit, OnInit {
   form!: FormGroup;
+
+  @ViewChild('tagInput')
+  tagInput!: ElementRef;
 
   constructor(
     private dialogRef: MatDialogRef<CreateTagDialogComponent>,
     private store: Store,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private readonly changeDetector: ChangeDetectorRef
   ) {}
+
+  ngAfterViewInit(): void {
+    this.tagInput.nativeElement.focus();
+    this.changeDetector.detectChanges();
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
