@@ -18,7 +18,7 @@ import { ApiErrorResponse } from '../../error/api-error-response';
 import { ErrorService } from '../../services/error.service';
 import { OAuthService } from '../../services/oauth.service';
 import { PreferencesService } from '../../settings/services/preferences.service';
-import { AuthActions } from '../actions';
+import { AuthActions, SettingsActions } from '../actions';
 import { AuthApiActions } from '../actions/auth-api.actions';
 import { OAuthActions } from '../actions/oauth.actions';
 
@@ -119,6 +119,19 @@ export class AuthEffects {
     )
   );
 
+  refreshTokenSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthApiActions.refreshTokenSuccess),
+      concatMap((action) =>
+        of(
+          SettingsActions.setUserPreferences({
+            preferences: action.res.user.preferences ?? {},
+          })
+        )
+      )
+    )
+  );
+
   signIn$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signIn),
@@ -139,20 +152,6 @@ export class AuthEffects {
     )
   );
 
-  authSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
-      concatMap((action) => {
-        if (action.res.user.preferences) {
-          this.preferences.set(action.res.user.preferences);
-        }
-
-        this.router.navigateByUrl(action.returnUrl ?? '/app');
-        return of(AuthActions.authFlowComplete());
-      })
-    )
-  );
-
   signUp$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signUp),
@@ -170,6 +169,20 @@ export class AuthEffects {
           )
         )
       )
+    )
+  );
+
+  authSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
+      concatMap((action) => {
+        if (action.res.user.preferences) {
+          this.preferences.set(action.res.user.preferences);
+        }
+
+        this.router.navigateByUrl(action.returnUrl ?? '/app');
+        return of(AuthActions.authFlowComplete());
+      })
     )
   );
 }
