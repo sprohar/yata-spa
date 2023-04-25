@@ -17,6 +17,7 @@ import { AuthenticationService } from '../../auth/services/authentication.servic
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { ErrorService } from '../../services/error.service';
 import { OAuthService } from '../../services/oauth.service';
+import { PreferencesService } from '../../settings/services/preferences.service';
 import { AuthActions } from '../actions';
 import { AuthApiActions } from '../actions/auth-api.actions';
 import { OAuthActions } from '../actions/oauth.actions';
@@ -24,11 +25,12 @@ import { OAuthActions } from '../actions/oauth.actions';
 @Injectable()
 export class AuthEffects {
   constructor(
-    private actions$: Actions,
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private oauth: OAuthService,
-    private errorService: ErrorService
+    private readonly actions$: Actions,
+    private readonly router: Router,
+    private readonly authenticationService: AuthenticationService,
+    private readonly oauth: OAuthService,
+    private readonly preferences: PreferencesService,
+    private readonly errorService: ErrorService
   ) {}
 
   google$ = createEffect(() =>
@@ -77,7 +79,6 @@ export class AuthEffects {
       ofType(AuthApiActions.signInError, AuthApiActions.signUpError),
       tap((action) => {
         const error = action.error;
-        console.log(error);
         if (
           error.statusCode &&
           error.statusCode === HttpStatusCode.Unauthorized
@@ -142,6 +143,10 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
       concatMap((action) => {
+        if (action.res.user.preferences) {
+          this.preferences.set(action.res.user.preferences);
+        }
+
         this.router.navigateByUrl(action.returnUrl ?? '/app');
         return of(AuthActions.authFlowComplete());
       })
