@@ -1,0 +1,34 @@
+<li class="task" [attr.data-test]="'task-' + task.id" [formGroup]="form">
+  <div class="checkbox-container">
+    <ng-container *ngIf="isDraggable">
+      <span class="drag-indicator">
+        <mat-icon>drag_indicator</mat-icon>
+      </span>
+    </ng-container>
+    <mat-checkbox
+      [attr.data-test]="'task-' + task.id + 'checkbox'"
+      formControlName="isCompleted"
+    ></mat-checkbox>
+  </div>
+
+  <div class="task-details flex-column full-width">
+    <input
+      [attr.data-test]="'task-' + task.id + 'input'"
+      type="text"
+      class="input"
+      formControlName="title"
+      (blur)="handleSubmit()"
+    />
+
+    <div *ngIf="task.description" class="task-description">
+      <span> {{ task.description }} </span>
+    </div>
+
+    <div>
+      <button *ngIf="task.dueDate" mat-stroked-button class="task-due-date">
+        {{ task.dueDate | date : "shortDate" }}
+      </button>
+    </div>
+  </div>
+  <ng-content></ng-content>
+</li>

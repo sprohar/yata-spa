@@ -1,0 +1,60 @@
+@use "../../../../scss/colors" as colors;
+
+.task {
+  display: flex;
+  // border-bottom: thin solid rgba(255, 255, 255, 0.08);
+  column-gap: 8px;
+  padding: 8px 0;
+}
+
+.checkbox-container {
+  display: flex;
+  column-gap: 1em;
+  align-items: flex-start;
+
+  .drag-indicator {
+    transform: scale(0.75);
+    visibility: hidden;
+
+    mat-icon {
+      margin-top: 8px;
+    }
+
+    &:hover {
+      cursor: grab;
+    }
+  }
+
+  &:hover {
+    .drag-indicator {
+      visibility: visible;
+    }
+  }
+}
+
+.task-details {
+  margin-top: 4px;
+}
+
+.task-details,
+.task-title {
+  padding: 0;
+  margin: 0;
+}
+
+.task-description {
+  font-size: 12px;
+  opacity: 0.87;
+  margin-bottom: 8px;
+  padding-left: 12px;
+}
+
+.task-due-date {
+  transform: scale(0.75);
+}
+
+// @media (prefers-color-scheme: light) {
+//   .task {
+//     border-color: rgba(0, 0, 0, 0.12);
+//   }
+// }
