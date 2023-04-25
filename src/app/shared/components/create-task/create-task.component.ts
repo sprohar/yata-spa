@@ -20,11 +20,9 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { UserPreference } from '../../../auth/models/user.model';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
-import {
-  PreferencesOption,
-  PreferencesService,
-} from '../../../settings/services/preferences.service';
+import { PreferencesService } from '../../../settings/services/preferences.service';
 import { CreateTaskComponentActions } from '../../../store/actions';
 import {
   selectCurrentProjectId,
@@ -102,6 +100,8 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   initForm() {
+    const userPrefs: UserPreference | null = this.preferences.get();
+
     this.form = this.fb.group({
       title: this.fb.control('', {
         nonNullable: true,
@@ -117,11 +117,7 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
       projectId: [null, [Validators.required]],
       sectionId: [null],
       parentId: [null],
-      dueDate: [
-        this.preferences.get(PreferencesOption.DEFAULT_DUE_DATE_TODAY)
-          ? new Date()
-          : null,
-      ],
+      dueDate: [userPrefs?.defaultDueDateToday ? new Date() : null],
     });
 
     this.titleControl.valueChanges

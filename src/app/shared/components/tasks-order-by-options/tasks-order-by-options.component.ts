@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../models';
-import { LocalStorageService } from '../../../services';
+import { StorageService } from '../../../services';
 import { TasksOrderByOptionsActions } from '../../../store/actions/tasks-order-by-options.actions';
 import {
   selectOrderBy,
@@ -24,7 +24,7 @@ export class TasksOrderByOptionsComponent {
 
   constructor(
     private readonly store: Store,
-    private readonly storage: LocalStorageService
+    private readonly storage: StorageService
   ) {}
 
   handleOrderByChange(attribute: Task.OrderBy, dir: SortOrder) {
