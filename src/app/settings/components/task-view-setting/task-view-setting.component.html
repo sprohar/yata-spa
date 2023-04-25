@@ -1,0 +1,16 @@
+<div class="flex-column">
+  <div class="flex space-between align-items-center">
+    <p>Task view</p>
+    <mat-radio-group [formControl]="taskViewControl" (change)="handleChange()">
+      <mat-radio-button [value]="VIEW_MINIMALIST">
+        Minimalist
+      </mat-radio-button>
+      <mat-radio-button [value]="VIEW_INFORMATIVE">
+        Informative
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div>
+    <!-- TODO: Add preview component -->
+  </div>
+</div>
