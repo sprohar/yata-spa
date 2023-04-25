@@ -11,11 +11,14 @@
     >
       <mat-label>Task</mat-label>
       <input
+        #taskInput
         data-test="titleInput"
         matInput
         type="text"
         formControlName="title"
         placeholder="Press Enter to save"
+        autocomplete="off"
+        (keydown.enter)="$event.preventDefault(); handleSubmit()"
       />
     </mat-form-field>
 
@@ -147,7 +150,6 @@
     <button
       [disabled]="form.invalid"
       data-test="createTaskSubmitButton"
-      type="submit"
       mat-raised-button
       color="primary"
       (click)="handleSubmit()"

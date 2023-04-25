@@ -1,12 +1,15 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -36,7 +39,7 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
   styleUrls: ['./create-task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateTaskComponent implements OnDestroy, OnInit {
+export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
   readonly selectedTags = new Set<Tag>();
   existingTags!: Set<Tag>;
@@ -47,6 +50,9 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
   @Input() project?: Project;
   @Input() section?: Section | null;
   @Input() priority? = Priority.NONE;
+  @ViewChild('taskInput')
+  taskInput!: ElementRef;
+
   form!: FormGroup;
 
   readonly HIGH_PRIORITY = Priority.HIGH;
@@ -63,8 +69,13 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private preferences: PreferencesService,
-    private changeDetectionRef: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef
   ) {}
+
+  ngAfterViewInit(): void {
+    this.taskInput.nativeElement.focus();
+    this.changeDetector.detectChanges();
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -225,7 +236,7 @@ export class CreateTaskComponent implements OnDestroy, OnInit {
       .subscribe((result) => {
         if (typeof result === 'string') return; // Cancelled
         this.dueDateControl.setValue(result);
-        this.changeDetectionRef.detectChanges();
+        this.changeDetector.detectChanges();
       });
   }
 
