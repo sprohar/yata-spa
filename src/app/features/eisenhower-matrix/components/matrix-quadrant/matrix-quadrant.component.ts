@@ -28,7 +28,7 @@ export class MatrixQuadrantComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  trackByTaskid(index: number, task: Task) {
+  trackByTaskId(index: number, task: Task) {
     return task.id ?? index;
   }
 
