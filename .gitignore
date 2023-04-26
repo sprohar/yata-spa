@@ -1,5 +1,6 @@
 cypress.env.json
 .env
+.vscode/
 src/environment/
 
 # Compiled output
