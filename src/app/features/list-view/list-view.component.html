@@ -5,8 +5,8 @@
     *ngIf="groupedTasks$ | async as groupedTasks"
   >
     <div cdkDropListGroup class="flex-column row-gap-1 mb-1">
+        <!-- class="panel mat-elevation-z0" -->
       <mat-expansion-panel
-        class="panel mat-elevation-z0"
         *ngFor="let map of groupedTasks | keyvalue"
         [expanded]="true"
       >

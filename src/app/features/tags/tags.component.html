@@ -2,6 +2,7 @@
   <header *ngIf="currentTag$ | async as tag">
     <h1>#{{ tag.name }}</h1>
   </header>
+
   <main
     *ngIf="tasksGroupedByTags$ | async as map"
     class="flex-column row-gap-1 mt-1"
@@ -18,15 +19,31 @@
           <span>({{ entry.value.length }})</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <ng-container *ngFor="let task of entry.value">
+
+      <ng-container *ngFor="let task of entry.value; trackBy: trackByTaskId">
         <yata-task-list>
-          <yata-task [isDraggable]="false" [task]="task">
-            <yata-task-options [task]="task"></yata-task-options>
-          </yata-task>
+          <ng-container
+            *ngIf="
+              userPreferences?.taskView === TASK_VIEW_MINIMALIST;
+              else informative
+            "
+          >
+            <yata-task [isDraggable]="false" [task]="task">
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task>
+          </ng-container>
+
+          <ng-template #informative>
+            <yata-task-informative [isDraggable]="false" [task]="task">
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task-informative>
+          </ng-template>
+
           <mat-divider></mat-divider>
         </yata-task-list>
       </ng-container>
     </mat-expansion-panel>
   </main>
 </div>
+
 <router-outlet></router-outlet>

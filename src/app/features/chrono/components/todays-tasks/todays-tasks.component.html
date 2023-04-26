@@ -1,5 +1,5 @@
 <h1 class="p1">Today</h1>
-<mat-divider></mat-divider>
+
 <main class="flex-column row-gap-1 mt-1">
   <mat-expansion-panel *ngIf="tasks$ | async as tasks" [expanded]="true">
     <mat-expansion-panel-header>
@@ -9,11 +9,28 @@
         <span>({{ tasks.length }})</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
+
     <yata-task-list>
-      <yata-task *ngFor="let task of tasks" [task]="task" [isDraggable]="false">
-        <yata-task-options [task]="task"></yata-task-options>
-      </yata-task>
+      <ng-container *ngFor="let task of tasks; trackBy: trackByTaskId">
+        <ng-container
+          *ngIf="
+            userPreferences?.taskView === TASK_VIEW_MINIMALIST;
+            else informative
+          "
+        >
+          <yata-task [task]="task" [isDraggable]="false">
+            <yata-task-options [task]="task"></yata-task-options>
+          </yata-task>
+        </ng-container>
+        <ng-template #informative>
+          <yata-task-informative [task]="task" [isDraggable]="false">
+            <yata-task-options [task]="task"></yata-task-options>
+          </yata-task-informative>
+        </ng-template>
+        <mat-divider></mat-divider>
+      </ng-container>
     </yata-task-list>
   </mat-expansion-panel>
 </main>
+
 <router-outlet></router-outlet>

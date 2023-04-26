@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { UserPreference } from '../../auth/models/user.model';
+import { TaskView } from '../../interfaces';
+import { Task } from '../../models';
+import { PreferencesService } from '../../settings/services/preferences.service';
 import {
   selectCurrentTag,
   selectTasksGroupByProject,
@@ -11,8 +15,19 @@ import {
   templateUrl: './tags.component.html',
 })
 export class TagsComponent {
+  readonly userPreferences: UserPreference | null = this.preferences.get();
+  readonly TASK_VIEW_MINIMALIST = TaskView.MINIMALIST;
+  readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
+
   currentTag$ = this.store.select(selectCurrentTag);
   tasksGroupedByTags$ = this.store.select(selectTasksGroupByProject);
 
-  constructor(private store: Store) {}
+  constructor(
+    private readonly preferences: PreferencesService,
+    private readonly store: Store
+  ) {}
+
+  trackByTaskId(_index: number, task: Task) {
+    return task.id;
+  }
 }

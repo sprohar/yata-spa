@@ -21,7 +21,7 @@ export class ListViewComponent {
   readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
 
   completedTasks$ = this.store.select(selectCompletedTasks);
-  groupedTasks$ = this.store.select(selectTasksGroupByProjectSections);
+  groupedTasks$ = this.store.select(selectTasksGroupByProjectSections).pipe();
   userPreferences$ = this.store.select(selectPreferences);
 
   constructor(
