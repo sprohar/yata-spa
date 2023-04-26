@@ -6,6 +6,10 @@
   padding: 0 24px;
 }
 
+.panel {
+  background-color: inherit;
+}
+
 @media only screen and (min-width: 600px) {
   .create-task-container {
     padding: 0 32px;

@@ -6,6 +6,7 @@
   >
     <div cdkDropListGroup class="flex-column row-gap-1 mb-1">
       <mat-expansion-panel
+        class="panel mat-elevation-z0"
         *ngFor="let map of groupedTasks | keyvalue"
         [expanded]="true"
       >
@@ -46,31 +47,23 @@
             "
           >
             <ng-container
-              *ngFor="
-                let task of map.value;
-                trackBy: trackByTaskId;
-                last as isLast
-              "
+              *ngFor="let task of map.value; trackBy: trackByTaskId"
             >
               <yata-task cdkDrag [task]="task" [cdkDragData]="task">
                 <yata-task-options [task]="task"></yata-task-options>
               </yata-task>
-              <mat-divider *ngIf="!isLast"></mat-divider>
+              <mat-divider></mat-divider>
             </ng-container>
           </ng-container>
 
           <ng-template #informativeView>
             <ng-container
-              *ngFor="
-                let task of map.value;
-                trackBy: trackByTaskId;
-                last as isLast
-              "
+              *ngFor="let task of map.value; trackBy: trackByTaskId"
             >
               <yata-task-informative cdkDrag [task]="task" [cdkDragData]="task">
                 <yata-task-options [task]="task"></yata-task-options>
               </yata-task-informative>
-              <mat-divider *ngIf="!isLast"></mat-divider>
+              <mat-divider></mat-divider>
             </ng-container>
           </ng-template>
         </yata-task-list>
