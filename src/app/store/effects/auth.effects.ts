@@ -176,12 +176,12 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
       concatMap((action) => {
-        if (action.res.user.preferences) {
-          this.preferences.set(action.res.user.preferences);
-        }
-
         this.router.navigateByUrl(action.returnUrl ?? '/app');
-        return of(AuthActions.authFlowComplete());
+        return of(
+          SettingsActions.setUserPreferences({
+            preferences: action.res.user.preferences ?? {},
+          })
+        );
       })
     )
   );
