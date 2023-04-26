@@ -25,7 +25,13 @@
     </div>
 
     <div>
-      <button *ngIf="task.dueDate" mat-stroked-button class="task-due-date">
+      <button
+        *ngIf="task.dueDate"
+        [attr.data-test]="'task-' + task.id + 'dueDate'"
+        mat-stroked-button
+        class="task-due-date"
+        (click)="handleViewTask()"
+      >
         {{ task.dueDate | date : "shortDate" }}
       </button>
     </div>
