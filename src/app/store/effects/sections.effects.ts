@@ -15,9 +15,9 @@ import {
 @Injectable()
 export class SectionsEffects {
   constructor(
-    private actions$: Actions,
-    private sectionsService: SectionsService,
-    private snackbar: MatSnackBar
+    private readonly actions$: Actions,
+    private readonly sectionsService: SectionsService,
+    private readonly snackbar: MatSnackBar
   ) {}
 
   create$ = createEffect(() =>

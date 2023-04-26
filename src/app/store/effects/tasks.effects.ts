@@ -100,7 +100,7 @@ export class TasksEffects {
           map((task) => YataApiActions.loadTaskSuccess({ task })),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.loadTaskError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -122,7 +122,7 @@ export class TasksEffects {
           map((task) => YataApiActions.createTaskSuccess({ task })),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.createTaskError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -143,7 +143,7 @@ export class TasksEffects {
           map((subtask) => YataApiActions.createSubtaskSuccess({ subtask })),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.createSubtaskError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -161,7 +161,7 @@ export class TasksEffects {
           map((task) => YataApiActions.createTaskSuccess({ task })),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.createTaskError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -180,7 +180,7 @@ export class TasksEffects {
           tap(() => this.snackbar.open('Removed task')),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.deleteTaskError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -201,7 +201,7 @@ export class TasksEffects {
           tap(() => this.snackbar.open('Removed subtask')),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.deleteSubtaskError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -219,7 +219,7 @@ export class TasksEffects {
           map((res) => YataApiActions.loadTasksSuccess({ tasks: res.data })),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.loadTasksError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -236,7 +236,7 @@ export class TasksEffects {
         this.tasksService.removeTag(action.task, action.tag).pipe(
           map((task) => YataApiActions.updateTaskSuccess({ task })),
           catchError((error: ApiErrorResponse) =>
-            of(YataApiActions.updateTaskError({ error }))
+            of(YataApiActions.serverError({ error }))
           )
         )
       )
@@ -252,7 +252,7 @@ export class TasksEffects {
           tap(() => this.snackbar.open('Updated task')),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.updateTaskError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -281,7 +281,7 @@ export class TasksEffects {
           tap(() => this.snackbar.open('Updated task')),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.updateTaskError({
+              YataApiActions.serverError({
                 error,
               })
             )

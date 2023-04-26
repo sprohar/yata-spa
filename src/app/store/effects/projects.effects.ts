@@ -18,10 +18,10 @@ import { SidenavActions } from '../actions/sidenav.actions';
 @Injectable()
 export class ProjectsEffects {
   constructor(
-    private actions$: Actions,
-    private projectsService: ProjectsService,
-    private snackbar: MatSnackBar,
-    private router: Router
+    private readonly actions$: Actions,
+    private readonly projectsService: ProjectsService,
+    private readonly snackbar: MatSnackBar,
+    private readonly router: Router
   ) {}
 
   create$ = createEffect(() =>
@@ -35,7 +35,7 @@ export class ProjectsEffects {
           }),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.createProjectError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -58,7 +58,7 @@ export class ProjectsEffects {
           tap(() => this.router.navigateByUrl('/')),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.deleteProjectError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -67,24 +67,6 @@ export class ProjectsEffects {
       )
     )
   );
-
-  // getOne$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(SidenavActions.projectSelected),
-  //     switchMap((action) =>
-  //       this.projectsService.get(action.projectId).pipe(
-  //         map((project) => YataApiActions.loadProjectSuccess({ project })),
-  //         catchError((error: ApiErrorResponse) =>
-  //           of(
-  //             YataApiActions.loadProjectError({
-  //               error,
-  //             })
-  //           )
-  //         )
-  //       )
-  //     )
-  //   )
-  // );
 
   getAll$ = createEffect(() =>
     this.actions$.pipe(
@@ -96,7 +78,7 @@ export class ProjectsEffects {
           ),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.loadProjectsError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -117,7 +99,7 @@ export class ProjectsEffects {
           }),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.updateProjectError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -138,7 +120,7 @@ export class ProjectsEffects {
           map((project) => YataApiActions.updateProjectSuccess({ project })),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.updateProjectError({
+              YataApiActions.serverError({
                 error,
               })
             )

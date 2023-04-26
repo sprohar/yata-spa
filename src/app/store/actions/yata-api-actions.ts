@@ -6,6 +6,9 @@ import { Project, Section, Tag, Task } from '../../models';
 export const YataApiActions = createActionGroup({
   source: 'Yata API',
   events: {
+    // Errors
+    'Server Error': props<{ error: ApiErrorResponse }>(),
+
     // Users
     'Update User Preference Success': props<{ user: User }>(),
     'Update User Preference Error': props<{ error: ApiErrorResponse }>(),

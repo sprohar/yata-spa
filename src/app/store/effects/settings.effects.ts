@@ -28,7 +28,7 @@ export class SettingsEffects {
             return YataApiActions.updateUserPreferenceSuccess({ user });
           }),
           catchError((error: ApiErrorResponse) =>
-            of(YataApiActions.updateUserPreferenceError({ error }))
+            of(YataApiActions.serverError({ error }))
           )
         )
       )

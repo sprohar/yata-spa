@@ -2,23 +2,13 @@ import { HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  concatMap,
-  exhaustMap,
-  map,
-  of,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { catchError, concatMap, map, of, switchMap, take, tap } from 'rxjs';
 import { AuthResponseDto } from '../../auth/dto';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { ErrorService } from '../../services/error.service';
 import { OAuthService } from '../../services/oauth.service';
-import { PreferencesService } from '../../settings/services/preferences.service';
-import { AuthActions, SettingsActions } from '../actions';
+import { AuthActions, SettingsActions, YataApiActions } from '../actions';
 import { AuthApiActions } from '../actions/auth-api.actions';
 import { OAuthActions } from '../actions/oauth.actions';
 
@@ -29,7 +19,6 @@ export class AuthEffects {
     private readonly router: Router,
     private readonly authenticationService: AuthenticationService,
     private readonly oauth: OAuthService,
-    private readonly preferences: PreferencesService,
     private readonly errorService: ErrorService
   ) {}
 
@@ -49,14 +38,13 @@ export class AuthEffects {
     )
   );
 
-  logoutSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthApiActions.logoutSuccess),
-      exhaustMap((_action) => {
-        this.router.navigateByUrl('/auth/sign-in');
-        return of(AuthActions.authFlowComplete());
-      })
-    )
+  logoutSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.logoutSuccess),
+        tap(() => this.router.navigateByUrl('/'))
+      ),
+    { dispatch: false }
   );
 
   logout$ = createEffect(() =>
@@ -74,30 +62,29 @@ export class AuthEffects {
     )
   );
 
-  authError$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthApiActions.signInError, AuthApiActions.signUpError),
-      tap((action) => {
-        const error = action.error;
-        if (
-          error.statusCode &&
-          error.statusCode === HttpStatusCode.Unauthorized
-        ) {
-          if (typeof error.message === 'string') {
-            this.errorService.setErrorMessage(
-              error.message ?? 'Invalid credentials'
-            );
-          } else if (Array.isArray(error.message)) {
-            this.errorService.setErrorMessage(
-              error.message.join('\n') ?? 'Invalid credentials'
-            );
+  authError$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.signInError, AuthApiActions.signUpError),
+        tap((action) => {
+          const error = action.error;
+          if (
+            error.statusCode &&
+            error.statusCode === HttpStatusCode.Unauthorized
+          ) {
+            if (typeof error.message === 'string') {
+              this.errorService.setErrorMessage(
+                error.message ?? 'Invalid credentials'
+              );
+            } else if (Array.isArray(error.message)) {
+              this.errorService.setErrorMessage(
+                error.message.join('\n') ?? 'Invalid credentials'
+              );
+            }
           }
-        }
-      }),
-      switchMap((_) => {
-        return of(AuthActions.authFlowComplete());
-      })
-    )
+        })
+      ),
+    { dispatch: false }
   );
 
   refreshToken$ = createEffect(() =>

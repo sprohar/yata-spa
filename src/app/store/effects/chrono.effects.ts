@@ -7,8 +7,8 @@ import { ChronoActions, YataApiActions } from '../actions';
 @Injectable()
 export class ChronoEffects {
   constructor(
-    private actions$: Actions,
-    private chronoService: ChronoService
+    private readonly actions$: Actions,
+    private readonly chronoService: ChronoService
   ) {}
 
   today$ = createEffect(() =>
@@ -17,7 +17,7 @@ export class ChronoEffects {
       switchMap(() =>
         this.chronoService.getTodaysTasks().pipe(
           map((res) => YataApiActions.loadTasksSuccess({ tasks: res.data })),
-          catchError((error) => of(YataApiActions.loadTasksError({ error })))
+          catchError((error) => of(YataApiActions.serverError({ error })))
         )
       )
     )

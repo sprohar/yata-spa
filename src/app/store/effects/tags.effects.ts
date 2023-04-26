@@ -9,9 +9,9 @@ import { SidenavActions, TaskDetailsActions, YataApiActions } from '../actions';
 @Injectable()
 export class TagsEffects {
   constructor(
-    private actions$: Actions,
-    private tagsService: TagsService,
-    private snackbar: MatSnackBar
+    private readonly actions$: Actions,
+    private readonly tagsService: TagsService,
+    private readonly snackbar: MatSnackBar
   ) {}
 
   create$ = createEffect(() =>
@@ -21,7 +21,7 @@ export class TagsEffects {
         this.tagsService.create(action.tag).pipe(
           map((tag) => YataApiActions.createTagSuccess({ tag })),
           catchError((error: ApiErrorResponse) =>
-            of(YataApiActions.createTagError({ error }))
+            of(YataApiActions.serverError({ error }))
           )
         )
       )
@@ -42,7 +42,7 @@ export class TagsEffects {
           catchError((error: ApiErrorResponse) => {
             this.snackbar.open('Error. Please try again.');
             return of(
-              YataApiActions.deleteTagError({
+              YataApiActions.serverError({
                 error,
               })
             );
@@ -62,7 +62,7 @@ export class TagsEffects {
             return YataApiActions.updateTagSuccess({ tag });
           }),
           catchError((error: ApiErrorResponse) =>
-            of(YataApiActions.updateTagError({ error }))
+            of(YataApiActions.serverError({ error }))
           )
         )
       )

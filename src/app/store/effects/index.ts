@@ -1,3 +1,4 @@
+export * from './app.effects';
 export * from './auth.effects';
 export * from './chrono.effects';
 export * from './projects.effects';
