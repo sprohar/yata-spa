@@ -28,7 +28,7 @@ export class SectionsEffects {
           map((section) => YataApiActions.createSectionSuccess({ section })),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.createSectionError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -49,7 +49,7 @@ export class SectionsEffects {
           tap(() => this.snackbar.open(`${action.section.name} was deleted`)),
           catchError((error: ApiErrorResponse) =>
             of(
-              YataApiActions.deleteSectionError({
+              YataApiActions.serverError({
                 error,
               })
             )
@@ -69,15 +69,14 @@ export class SectionsEffects {
             projectId: action.targetProjectId,
           })
           .pipe(
-            map(
-              (section) =>
-                YataApiActions.moveSectionToProjectSuccess({ section }),
-              catchError((error: ApiErrorResponse) =>
-                of(
-                  YataApiActions.moveSectionToProjectError({
-                    error,
-                  })
-                )
+            map((section) =>
+              YataApiActions.moveSectionToProjectSuccess({ section })
+            ),
+            catchError((error: ApiErrorResponse) =>
+              of(
+                YataApiActions.serverError({
+                  error,
+                })
               )
             )
           )
@@ -90,14 +89,12 @@ export class SectionsEffects {
       ofType(EditSectionDialogActions.updateSection),
       concatMap((action) =>
         this.sectionsService.update(action.section).pipe(
-          map(
-            (section) => YataApiActions.updateSectionSuccess({ section }),
-            catchError((error: ApiErrorResponse) =>
-              of(
-                YataApiActions.updateSectionError({
-                  error,
-                })
-              )
+          map((section) => YataApiActions.updateSectionSuccess({ section })),
+          catchError((error: ApiErrorResponse) =>
+            of(
+              YataApiActions.serverError({
+                error,
+              })
             )
           )
         )
