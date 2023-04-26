@@ -41,10 +41,10 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   form!: FormGroup;
 
   constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    private dialog: MatDialog,
-    private changeDetectorRef: ChangeDetectorRef
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog,
+    private readonly changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnDestroy(): void {
@@ -62,7 +62,7 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     );
   }
 
-  initForm(task: Task) {
+  initForm(task: Task): void {
     this.form = this.fb.group({
       id: [task.id],
       title: [
@@ -233,5 +233,9 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
         },
       })
     );
+  }
+
+  handleGetNextTask() {
+    this.store.dispatch(TaskDetailsActions.getNextTask());
   }
 }

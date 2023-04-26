@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Router } from '@angular/router';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import {
   catchError,
   concatMap,
@@ -25,14 +27,40 @@ import {
 } from '../actions';
 import { TaskListActions } from '../actions/task-list.actions';
 import { TaskActions } from '../actions/task.actions';
+import { selectTasksState } from '../reducers/tasks.reducer';
 
 @Injectable()
 export class TasksEffects {
   constructor(
-    private actions$: Actions,
-    private tasksService: TasksService,
-    private snackbar: MatSnackBar
+    private readonly router: Router,
+    private readonly store: Store,
+    private readonly actions$: Actions,
+    private readonly tasksService: TasksService,
+    private readonly snackbar: MatSnackBar
   ) {}
+
+  getNextTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskDetailsActions.getNextTask),
+      concatLatestFrom(() => this.store.select(selectTasksState)),
+      map(([_, state]) => {
+        const currentTaskIndex = state.tasks.findIndex(
+          (t) => t.id === state.currentTaskId
+        );
+        const nextTaskIndex = (currentTaskIndex + 1) % state.tasks.length;
+        const nextTask = state.tasks[nextTaskIndex];
+        const currentUrl = this.router.url;
+        const url =
+          currentUrl.substring(0, currentUrl.lastIndexOf('/')) +
+          `/${nextTask.id}`;
+
+        this.router.navigateByUrl(url);
+        return TaskDetailsActions.setCurrentTaskId({
+          currentTaskId: 1,
+        });
+      })
+    )
+  );
 
   loadTask$ = createEffect(() =>
     this.actions$.pipe(

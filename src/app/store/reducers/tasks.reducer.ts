@@ -40,16 +40,24 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialTasksState,
+    on(YataApiActions.loadProjectSuccess, (state, action) => ({
+      ...state,
+      tasks: state.orderBy
+        ? context.fromOrderBy(state.orderBy).sort(action.project.tasks ?? [])
+        : action.project.tasks ?? [],
+    })),
+    on(YataApiActions.loadTasksSuccess, (state, { tasks }) => ({
+      ...state,
+      tasks: state.orderBy
+        ? context.fromOrderBy(state.orderBy).sort(tasks)
+        : tasks,
+    })),
     on(YataApiActions.loadTaskSuccess, (state, action) => ({
       ...state,
       currentTaskId: action.task.id ?? null,
       tasks: state.tasks.map((task) =>
         task.id === action.task.id ? action.task : task
       ),
-    })),
-    on(YataApiActions.loadTasksSuccess, (state, action) => ({
-      ...state,
-      tasks: action.tasks,
     })),
     on(TasksOrderByOptionsActions.clearOrderBy, (state, _) => ({
       ...state,
@@ -108,12 +116,6 @@ export const tasksFeature = createFeature({
       tasks: context
         .fromOrderBy(state.orderBy)
         .sort(state.tasks.concat(action.task)),
-    })),
-    on(YataApiActions.loadProjectSuccess, (state, action) => ({
-      ...state,
-      tasks: context
-        .fromOrderBy(state.orderBy)
-        .sort(action.project.tasks ?? []),
     })),
     on(YataApiActions.updateTaskSuccess, (state, action) => ({
       ...state,
