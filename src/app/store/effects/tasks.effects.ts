@@ -14,6 +14,7 @@ import {
   tap,
 } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
+import { Task } from '../../models';
 import { TasksService } from '../../services/tasks.service';
 import {
   CreateTaskComponentActions,
@@ -39,24 +40,53 @@ export class TasksEffects {
     private readonly snackbar: MatSnackBar
   ) {}
 
+  getPreviousTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskDetailsActions.getPreviousTask),
+      concatLatestFrom(() => this.store.select(selectTasksState)),
+      map(([_, state]) => {
+        const currentTaskIndex: number = state.tasks.findIndex(
+          (t) => t.id === state.currentTaskId
+        );
+        const prevTaskIndex: number =
+          currentTaskIndex === 0
+            ? state.tasks.length - 1
+            : currentTaskIndex - 1;
+
+        const prevTask: Task = state.tasks[prevTaskIndex];
+        const currentUrl: string = this.router.url;
+        const url: string =
+          currentUrl.substring(0, currentUrl.lastIndexOf('/')) +
+          `/${prevTask.id}`;
+
+        this.router.navigateByUrl(url);
+
+        return TaskDetailsActions.setCurrentTaskId({
+          currentTaskId: prevTaskIndex,
+        });
+      })
+    )
+  );
+
   getNextTask$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TaskDetailsActions.getNextTask),
       concatLatestFrom(() => this.store.select(selectTasksState)),
       map(([_, state]) => {
-        const currentTaskIndex = state.tasks.findIndex(
+        const currentTaskIndex: number = state.tasks.findIndex(
           (t) => t.id === state.currentTaskId
         );
-        const nextTaskIndex = (currentTaskIndex + 1) % state.tasks.length;
-        const nextTask = state.tasks[nextTaskIndex];
-        const currentUrl = this.router.url;
-        const url =
+        const nextTaskIndex: number =
+          (currentTaskIndex + 1) % state.tasks.length;
+        const nextTask: Task = state.tasks[nextTaskIndex];
+        const currentUrl: string = this.router.url;
+        const url: string =
           currentUrl.substring(0, currentUrl.lastIndexOf('/')) +
           `/${nextTask.id}`;
 
         this.router.navigateByUrl(url);
         return TaskDetailsActions.setCurrentTaskId({
-          currentTaskId: 1,
+          currentTaskId: nextTaskIndex,
         });
       })
     )

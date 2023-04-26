@@ -235,6 +235,10 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
     );
   }
 
+  handleGetPreviousTask() {
+    this.store.dispatch(TaskDetailsActions.getPreviousTask());
+  }
+
   handleGetNextTask() {
     this.store.dispatch(TaskDetailsActions.getNextTask());
   }
