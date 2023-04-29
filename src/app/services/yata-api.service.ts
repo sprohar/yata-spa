@@ -1,7 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { environment } from '../../environment/environment';
-import { ApiErrorResponse } from '../error/api-error-response';
+import { environment } from '../../environments/environment';
 
 export abstract class YataApiService {
   protected readonly baseUrl = environment.api.serverUrl;
@@ -18,6 +17,10 @@ export abstract class YataApiService {
       error.error
     );
 
-    return throwError(() => error.error as ApiErrorResponse);
+    if (error.status === HttpStatusCode.Unauthorized) {
+      console.log(error.url);
+    }
+
+    return throwError(() => error);
   }
 }

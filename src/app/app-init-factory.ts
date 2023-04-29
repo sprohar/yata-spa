@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, map, of, shareReplay, take } from 'rxjs';
-import { environment } from '../environment/environment';
+import { environment } from '../environments/environment';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { ApiErrorResponse } from './error';
 import { AuthApiActions } from './store/actions/auth-api.actions';

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { environment } from '../../../../environment/environment';
+import { environment } from '../../../../environments/environment';
 import { OAuthActions } from '../../../store/actions/oauth.actions';
 import { GoogleOAuthResponseDto } from '../../dto';
 
