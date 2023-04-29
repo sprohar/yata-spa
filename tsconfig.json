@@ -22,7 +22,6 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
-    "types": ["google.accounts"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -178,7 +178,6 @@ describe('Tasks Selectors', () => {
   });
 
   it('should group tasks by due date', () => {
-    // TODO: Fix this spec
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
