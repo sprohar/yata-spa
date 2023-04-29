@@ -16,15 +16,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
-  debounceTime,
-  distinctUntilChanged,
   Observable,
   Subject,
+  debounceTime,
+  distinctUntilChanged,
   switchMap,
   takeUntil,
 } from 'rxjs';
 import { Task } from '../../../models';
-import { TasksService } from '../../../services';
+import { TasksService } from '../../../services/http';
 import { selectCurrentProjectId } from '../../../store/selectors';
 
 @Component({

@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, map, of } from 'rxjs';
 import { ApiErrorResponse } from '../../../error';
-import { TagsService } from '../../../services';
+import { TagsService } from '../../../services/http';
 import { SidenavActions, YataApiActions } from '../../../store/actions';
 
 export function taggedTasksGuard(

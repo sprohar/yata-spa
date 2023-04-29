@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of } from 'rxjs';
 import { User } from '../../auth/models/user.model';
 import { ApiErrorResponse } from '../../error';
-import { UsersService } from '../../services';
+import { UsersService } from '../../services/http';
 import { PreferencesService } from '../../settings/services/preferences.service';
 import { SettingsActions, YataApiActions } from '../actions';
 
