@@ -4,16 +4,16 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
-import { ProjectsService } from '../../services/projects.service';
+import { ProjectsService } from '../../services/http';
 import {
   AppActions,
   EditProjectDialogActions,
   KanbanViewActions,
   ListViewActions,
+  SidenavActions,
   ViewHeaderActions,
   YataApiActions,
 } from '../actions/';
-import { SidenavActions } from '../actions/sidenav.actions';
 
 @Injectable()
 export class ProjectsEffects {

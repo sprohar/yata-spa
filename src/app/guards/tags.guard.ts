@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, map, of } from 'rxjs';
 import { ApiErrorResponse } from '../error/api-error-response';
-import { TagsService } from '../services/tags.service';
+import { TagsService } from '../services/http';
 import { YataApiActions } from '../store/actions';
 
 export function tagsGuard(

@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, map, of } from 'rxjs';
-import { ProjectsService } from '../services/projects.service';
+import { ProjectsService } from '../services/http';
 import { YataApiActions } from '../store/actions';
 
 export function projectsGuard(
@@ -14,7 +14,6 @@ export function projectsGuard(
     .getAll()
     .pipe(
       map((res) => {
-        console.log
         store.dispatch(
           YataApiActions.loadProjectsSuccess({
             projects: res.data,

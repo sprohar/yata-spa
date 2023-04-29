@@ -7,10 +7,13 @@ import { AuthResponseDto } from '../../auth/dto';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { ErrorService } from '../../services/error.service';
-import { OAuthService } from '../../services/oauth.service';
-import { AuthActions, SettingsActions, YataApiActions } from '../actions';
-import { AuthApiActions } from '../actions/auth-api.actions';
-import { OAuthActions } from '../actions/oauth.actions';
+import { OAuthService } from '../../services/http';
+import {
+  AuthActions,
+  AuthApiActions,
+  OAuthActions,
+  SettingsActions,
+} from '../actions';
 
 @Injectable()
 export class AuthEffects {

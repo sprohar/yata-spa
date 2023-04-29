@@ -7,10 +7,10 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { catchError, EMPTY, tap } from 'rxjs';
+import { EMPTY, catchError, tap } from 'rxjs';
 import { ApiErrorResponse } from '../error';
 import { Task } from '../models';
-import { TasksService } from '../services/tasks.service';
+import { TasksService } from '../services/http';
 import { YataApiActions } from '../store/actions';
 
 export const taskDetailsResolver: ResolveFn<Task> = (
@@ -27,7 +27,6 @@ export const taskDetailsResolver: ResolveFn<Task> = (
     .pipe(
       tap((task) => store.dispatch(YataApiActions.loadTaskSuccess({ task }))),
       catchError((error: ApiErrorResponse) => {
-        console.error(error);
         store.dispatch(YataApiActions.loadTaskError({ error }));
         router.navigate(['../..'], { relativeTo: thisRoute });
         return EMPTY;

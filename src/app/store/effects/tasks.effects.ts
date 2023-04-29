@@ -15,19 +15,19 @@ import {
 } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { Task } from '../../models';
-import { TasksService } from '../../services/tasks.service';
+import { TasksService } from '../../services/http';
 import {
   CreateTaskComponentActions,
   EisenhowerMatrixActions,
   KanbanViewActions,
   ListViewActions,
+  TaskActions,
   TaskCardActions,
   TaskDetailsActions,
+  TaskListActions,
   TaskOptionsActions,
   YataApiActions,
 } from '../actions';
-import { TaskListActions } from '../actions/task-list.actions';
-import { TaskActions } from '../actions/task.actions';
 import { selectTasksState } from '../reducers/tasks.reducer';
 
 @Injectable()

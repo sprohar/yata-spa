@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import { ApiErrorResponse } from '../../error/api-error-response';
-import { TagsService } from '../../services/tags.service';
+import { TagsService } from '../../services/http';
 import { SidenavActions, TaskDetailsActions, YataApiActions } from '../actions';
 
 @Injectable()

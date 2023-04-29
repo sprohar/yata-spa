@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
-import { ChronoService } from '../../services/chrono.service';
+import { ChronoService } from '../../services/http';
 import { ChronoActions, YataApiActions } from '../actions';
 
 @Injectable()
