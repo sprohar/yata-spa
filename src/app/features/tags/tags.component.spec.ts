@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { provideMockStore } from '@ngrx/store/testing';
-import { TagsState } from '../store/reducers/tags.reducer';
+import { TagsState } from '../../store/reducers/tags.reducer';
 import { TagsComponent } from './tags.component';
 
 const tagsState: TagsState = {

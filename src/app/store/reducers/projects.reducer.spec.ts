@@ -9,7 +9,7 @@ import * as fromProjects from './projects.reducer';
 describe('Projects reducer', () => {
   describe('EisenhowerMatrixActions.onInit', () => {
     it('should set the currentProjectId to null', () => {
-      const { projectsInitialState } = fromProjects;
+      const { initialProjectsState: projectsInitialState } = fromProjects;
       const action = EisenhowerMatrixActions.onInit();
       const state = fromProjects.reducer(projectsInitialState, action);
       expect(state).toEqual({
@@ -21,7 +21,7 @@ describe('Projects reducer', () => {
 
   describe('SidenavActions.selectTag', () => {
     it('should set the currentProjectId to null', () => {
-      const { projectsInitialState } = fromProjects;
+      const { initialProjectsState: projectsInitialState } = fromProjects;
       const action = SidenavActions.selectTag({
         tagId: 1,
       });
@@ -36,7 +36,7 @@ describe('Projects reducer', () => {
 
   describe('SidenavActions.projectSelected', () => {
     it('should set the currentProjectId to null', () => {
-      const { projectsInitialState } = fromProjects;
+      const { initialProjectsState: projectsInitialState } = fromProjects;
       const action = SidenavActions.projectSelected({
         projectId: 1,
       });
@@ -51,7 +51,7 @@ describe('Projects reducer', () => {
 
   describe('YataApiActions.createProjectSuccess', () => {
     it('should set the currentProjectId to null', () => {
-      const { projectsInitialState } = fromProjects;
+      const { initialProjectsState: projectsInitialState } = fromProjects;
       const action = YataApiActions.createProjectSuccess({
         project: {
           id: 1,
@@ -71,7 +71,7 @@ describe('Projects reducer', () => {
 
   describe('YataApiActions.deleteProjectSuccess', () => {
     it('should set the currentProjectId to null', () => {
-      const { projectsInitialState } = fromProjects;
+      const { initialProjectsState: projectsInitialState } = fromProjects;
       const initialProjectsCollection = [...projectsInitialState.projects];
       const project: Project = { id: 1, name: 'Project 1' };
       projectsInitialState.projects.push(project);
@@ -88,7 +88,7 @@ describe('Projects reducer', () => {
 
   describe('YataApiActions.loadProjectsSuccess', () => {
     it('should set the currentProjectId to null', () => {
-      const { projectsInitialState } = fromProjects;
+      const { initialProjectsState: projectsInitialState } = fromProjects;
       const projects: Project[] = [
         { id: 1, name: 'Project 1' },
         { id: 2, name: 'Project 2' },

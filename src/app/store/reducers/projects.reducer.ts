@@ -11,7 +11,7 @@ export interface ProjectsState {
   currentProjectId: number | null;
 }
 
-export const projectsInitialState: ProjectsState = {
+export const initialProjectsState: ProjectsState = {
   projects: [],
   currentProjectId: null,
 };
@@ -19,7 +19,7 @@ export const projectsInitialState: ProjectsState = {
 export const projectsFeature = createFeature({
   name: 'projects',
   reducer: createReducer(
-    projectsInitialState,
+    initialProjectsState,
     on(EisenhowerMatrixActions.onInit, (state, _) => ({
       ...state,
       currentProjectId: null,

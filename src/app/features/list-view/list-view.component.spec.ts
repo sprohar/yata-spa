@@ -1,16 +1,16 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { AppState } from '../store/app.state';
-import { initialAuthState } from '../store/reducers/auth.reducer';
+import { AppState } from '../../store/app.state';
+import { initialAuthState } from '../../store/reducers/auth.reducer';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Section } from '../../models';
 import { ListViewComponent } from './list-view.component';
-import { Section } from '../models';
 
 const section: Section = { id: 1, name: 'Section', projectId: 1 };
 const initialState: AppState = {

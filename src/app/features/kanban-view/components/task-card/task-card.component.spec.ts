@@ -5,10 +5,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Priority, Task } from '../../../models';
-import { TaskCardActions } from '../../../store/actions/task-card.actions';
 
 import { ActivatedRoute, Router } from '@angular/router';
+import { Priority, Task } from '../../../../models';
+import { TaskCardActions } from '../../../../store/actions';
 import { TaskCardComponent } from './task-card.component';
 
 describe('TaskCardComponent', () => {

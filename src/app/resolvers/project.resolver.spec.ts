@@ -8,7 +8,8 @@ import {
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Observable, of } from 'rxjs';
 import { Project } from '../models';
-import { ProjectsService } from '../services';
+import { ProjectsService } from '../services/http';
+import { HttpErrorService } from '../services/http/error/http-error.service';
 import { YataApiActions } from '../store/actions';
 import { projectResolver } from './project.resolver';
 
@@ -23,7 +24,7 @@ describe('ProjectResolver', () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
     route = jasmine.createSpyObj('ActivatedRoute', ['']);
     httpClient = jasmine.createSpyObj('HttpClient', ['get']);
-    service = new ProjectsService(httpClient);
+    service = new ProjectsService(httpClient, new HttpErrorService());
 
     TestBed.configureTestingModule({
       providers: [

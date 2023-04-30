@@ -13,9 +13,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Section, Task } from '../../../models';
-import { KanbanViewActions } from '../../../store/actions';
 
+import { Section, Task } from '../../../../models';
+import { KanbanViewActions } from '../../../../store/actions';
 import { KanbanColumnComponent } from './kanban-column.component';
 
 const task: Task = {

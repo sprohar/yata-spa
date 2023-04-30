@@ -7,12 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Section } from 'src/app/models';
-import { KanbanViewActions } from '../../../store/actions';
-import { AppState } from '../../../store/app.state';
-import { initialAuthState } from '../../../store/reducers/auth.reducer';
-import { initialSectionsState } from '../../../store/reducers/sections.reducer';
-import { initialTasksState } from '../../../store/reducers/tasks.reducer';
 
+import { KanbanViewActions } from '../../../../store/actions';
+import { AppState } from '../../../../store/app.state';
+import { initialAuthState } from '../../../../store/reducers/auth.reducer';
+import { initialSectionsState } from '../../../../store/reducers/sections.reducer';
+import { initialTasksState } from '../../../../store/reducers/tasks.reducer';
 import { CreateKanbanColumnComponent } from './create-kanban-column.component';
 
 const initialState: AppState = {

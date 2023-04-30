@@ -19,7 +19,7 @@ describe('Auth Reducer', () => {
     it('should set the user and access token', () => {
       const { initialAuthState } = fromAuth;
       const user: User = {
-        id: 1,
+        id: '1',
         email: 'testuser@yata.app',
       };
 
@@ -46,7 +46,7 @@ describe('Auth Reducer', () => {
     it('should set the user and access token', () => {
       const { initialAuthState } = fromAuth;
       const user: User = {
-        id: 1,
+        id: '1',
         email: 'testuser@yata.app',
       };
 
@@ -73,7 +73,7 @@ describe('Auth Reducer', () => {
     it('should set the user and access token', () => {
       const { initialAuthState } = fromAuth;
       const user: User = {
-        id: 1,
+        id: '1',
         email: 'testuser@yata.app',
       };
 
