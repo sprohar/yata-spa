@@ -1,76 +1,79 @@
 <ng-container *ngIf="currentProject$ | async as project">
   <header class="view-header">
-    <h1 class="truncate">
-      {{ project.name }}
-    </h1>
+    <div class="pb-1">
+      <h1 class="truncate">
+        {{ project.name }}
+      </h1>
+    </div>
 
-    <span class="spacer"></span>
-    <yata-task-search></yata-task-search>
-    <span class="spacer"></span>
+    <yata-task-search class="spacer"></yata-task-search>
 
-    <button
-      data-test="viewHeaderCreateTaskButton"
-      mat-icon-button
-      title="Create task"
-      (click)="openCreateTaskDialog(project)"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-
-    <!-- Change view -->
-    <ng-container *ngIf="project.view === LIST_VIEW; else kanban">
+    <div class="pb-1">
+      <!-- Create task -->
       <button
-        data-test="switchToKanbanViewButton"
+        data-test="viewHeaderCreateTaskButton"
         mat-icon-button
-        (click)="switchToKanbanView(project)"
-        title="Kanban view"
+        title="Create task"
+        (click)="openCreateTaskDialog(project)"
       >
-        <mat-icon>view_kanban</mat-icon>
-      </button>
-    </ng-container>
-    <ng-template #kanban>
-      <button
-        data-test="switchToListViewButton"
-        mat-icon-button
-        (click)="switchToListView(project)"
-        title="List view"
-      >
-        <mat-icon>view_list</mat-icon>
-      </button>
-    </ng-template>
-
-    <!-- Change view -->
-    <yata-tasks-order-by-options></yata-tasks-order-by-options>
-
-    <!-- More options menu -->
-    <button
-      mat-icon-button
-      [matMenuTriggerFor]="projectOptions"
-      title="Project options"
-    >
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #projectOptions xPosition="before" yPosition="below">
-      <button mat-menu-item (click)="openEditProjectDialog(project)">
-        <mat-icon>edit</mat-icon>
-        <span>Rename Project</span>
-      </button>
-      <button mat-menu-item (click)="openCreateSectionDialog(project)">
         <mat-icon>add</mat-icon>
-        <span>Add Section</span>
       </button>
-      <!-- <button mat-menu-item>
+
+      <!-- Change view -->
+      <ng-container *ngIf="project.view === LIST_VIEW; else kanban">
+        <button
+          data-test="switchToKanbanViewButton"
+          mat-icon-button
+          (click)="switchToKanbanView(project)"
+          title="Kanban view"
+        >
+          <mat-icon>view_kanban</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #kanban>
+        <button
+          data-test="switchToListViewButton"
+          mat-icon-button
+          (click)="switchToListView(project)"
+          title="List view"
+        >
+          <mat-icon>view_list</mat-icon>
+        </button>
+      </ng-template>
+
+      <!-- Change view -->
+      <yata-tasks-order-by-options></yata-tasks-order-by-options>
+
+      <!-- More options menu -->
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="projectOptions"
+        title="Project options"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #projectOptions xPosition="before" yPosition="below">
+        <button mat-menu-item (click)="openEditProjectDialog(project)">
+          <mat-icon>edit</mat-icon>
+          <span>Rename Project</span>
+        </button>
+        <button mat-menu-item (click)="openCreateSectionDialog(project)">
+          <mat-icon>add</mat-icon>
+          <span>Add Section</span>
+        </button>
+        <!-- <button mat-menu-item>
         <mat-icon>history</mat-icon>
         <span>Show History</span>
       </button> -->
-      <mat-divider></mat-divider>
-      <button
-        mat-menu-item
-        (click)="openDeleteProjectConfirmationDialog(project)"
-      >
-        <mat-icon>delete</mat-icon>
-        <span>Delete Project</span>
-      </button>
-    </mat-menu>
+        <mat-divider></mat-divider>
+        <button
+          mat-menu-item
+          (click)="openDeleteProjectConfirmationDialog(project)"
+        >
+          <mat-icon>delete</mat-icon>
+          <span>Delete Project</span>
+        </button>
+      </mat-menu>
+    </div>
   </header>
 </ng-container>

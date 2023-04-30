@@ -1,25 +1,36 @@
-<form [formGroup]="form">
-  <div class="flex align-items-center">
-    <label for="searchTaskQuery" hidden>Search query</label>
+<form [formGroup]="form" class="full-width">
+  <mat-form-field appearance="outline" class="full-width">
     <input
-      #searchInput
+      #input
       matInput
-      formControlName="query"
-      data-test="searchTaskInput"
-      id="searchTaskQuery"
       placeholder="Search (/)"
-      class="input search-input"
+      formControlName="query"
+      autocomplete="off"
       [matAutocomplete]="auto"
-      (blur)="handleBlur()"
     />
+    <button
+      *ngIf="input.value"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      title="Clear"
+      (click)="input.value = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
     <mat-autocomplete
       autoActiveFirstOption
       #auto="matAutocomplete"
       (optionSelected)="handleSelectedOption($event.option.value)"
     >
-      <mat-option *ngFor="let task of resultSet$ | async" [value]="task.id">
+      <mat-option
+        *ngFor="let task of resultSet$ | async; trackBy: trackByTaskId"
+        [attr.data-test]="'task-id=' + task.id"
+        [value]="task.id"
+        tabindex="1"
+      >
         {{ task.title }}
       </mat-option>
     </mat-autocomplete>
-  </div>
+  </mat-form-field>
 </form>

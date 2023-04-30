@@ -28,7 +28,6 @@ export class AppComponent implements OnDestroy, OnInit {
     this.preferences$
       .pipe(takeUntil(this.destroy$), distinctUntilChanged())
       .subscribe((prefs: UserPreference | null) => {
-        console.log('prefs', prefs);
         if (prefs && prefs.isDarkTheme !== undefined) {
           this.classAttribute = prefs.isDarkTheme
             ? ''

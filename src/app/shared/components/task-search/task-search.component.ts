@@ -39,15 +39,15 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
   currentProjectId?: number;
   form!: FormGroup;
 
-  @ViewChild('searchInput')
-  searchInput?: ElementRef;
+  @ViewChild('input')
+  inputElement?: ElementRef;
 
   constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    private tasksService: TasksService,
-    private router: Router,
-    private route: ActivatedRoute
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly tasksService: TasksService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnDestroy(): void {
@@ -56,24 +56,13 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.initForm();
+
     this.store
       .select(selectCurrentProjectId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((value: number | null) => {
         if (value) this.currentProjectId = value;
       });
-  }
-
-  @HostListener('document:keydown./')
-  addKeyboardShortcutListener() {
-    if (this.searchInput) this.searchInput.nativeElement.focus();
-    return false;
-  }
-
-  private initForm() {
-    this.form = this.fb.group({
-      query: ['', [Validators.minLength(1)]],
-    });
 
     this.resultSet$ = this.query.valueChanges.pipe(
       debounceTime(500),
@@ -87,12 +76,31 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
     );
   }
 
-  handleSelectedOption(taskId: number) {
-    this.router.navigate(['tasks', taskId], { relativeTo: this.route });
-    this.query.setValue('', { emitEvent: false, onlySelf: true });
+  trackByTaskId(_index: number, task: Task) {
+    return task.id;
   }
 
-  handleBlur() {
+  @HostListener('document:keydown./')
+  addKeyboardShortcutListener() {
+    if (this.inputElement) this.inputElement.nativeElement.focus();
+    return false;
+  }
+
+  private initForm() {
+    this.form = this.fb.group({
+      query: this.fb.control('', {
+        validators: [Validators.minLength(1)],
+        nonNullable: true,
+      }),
+    });
+  }
+
+  handleSelectedOption(taskId: number) {
+    this.router.navigate(['tasks', taskId], { relativeTo: this.route });
+  }
+
+  handleClearInput() {
+    this.resultSet$ = undefined;
     this.query.setValue('', { emitEvent: false, onlySelf: true });
   }
 
