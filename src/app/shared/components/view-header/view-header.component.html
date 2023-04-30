@@ -3,10 +3,24 @@
     <h1 class="truncate">
       {{ project.name }}
     </h1>
+
     <span class="spacer"></span>
     <yata-task-search></yata-task-search>
+    <span class="spacer"></span>
+
+    <button
+      data-test="viewHeaderCreateTaskButton"
+      mat-icon-button
+      title="Create task"
+      (click)="openCreateTaskDialog(project)"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <!-- Change view -->
     <ng-container *ngIf="project.view === LIST_VIEW; else kanban">
       <button
+        data-test="switchToKanbanViewButton"
         mat-icon-button
         (click)="switchToKanbanView(project)"
         title="Kanban view"
@@ -16,6 +30,7 @@
     </ng-container>
     <ng-template #kanban>
       <button
+        data-test="switchToListViewButton"
         mat-icon-button
         (click)="switchToListView(project)"
         title="List view"
@@ -27,6 +42,7 @@
     <!-- Change view -->
     <yata-tasks-order-by-options></yata-tasks-order-by-options>
 
+    <!-- More options menu -->
     <button
       mat-icon-button
       [matMenuTriggerFor]="projectOptions"

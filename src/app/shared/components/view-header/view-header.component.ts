@@ -1,13 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  OnDestroy,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ConfirmationDialogComponent } from '../../../components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '../../../interfaces/confirmation-dialog-data';
 import { Project } from '../../../models';
@@ -18,6 +13,10 @@ import {
 } from '../../../store/actions';
 import { selectCurrentProject } from '../../../store/selectors/projects.selectors';
 import { CreateSectionDialogComponent } from '../create-section-dialog/create-section-dialog.component';
+import {
+  CreateTaskDialogComponent,
+  CreateTaskDialogData,
+} from '../create-task-dialog/create-task-dialog.component';
 import { EditProjectDialogComponent } from '../edit-project-dialog/edit-project-dialog.component';
 
 @Component({
@@ -27,19 +26,27 @@ import { EditProjectDialogComponent } from '../edit-project-dialog/edit-project-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewHeaderComponent implements OnDestroy {
-  destroy$ = new EventEmitter<void>();
-  currentProject$ = this.store.select(selectCurrentProject);
+  private readonly destroy$ = new Subject<void>();
+  readonly currentProject$ = this.store.select(selectCurrentProject);
   readonly LIST_VIEW = Project.View.LIST;
   readonly KANBAN_VIEW = Project.View.KANBAN;
 
   constructor(
-    private store: Store,
-    private dialog: MatDialog,
-    private router: Router
+    private readonly store: Store,
+    private readonly dialog: MatDialog,
+    private readonly router: Router
   ) {}
 
   ngOnDestroy(): void {
-    this.destroy$.emit();
+    this.destroy$.next();
+  }
+
+  openCreateTaskDialog(project: Project) {
+    this.dialog.open(CreateTaskDialogComponent, {
+      data: {
+        project,
+      } as CreateTaskDialogData,
+    });
   }
 
   switchToKanbanView(project: Project) {
