@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, take } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { AuthResponseDto, GoogleOAuthDto } from '../../auth/dto';
 import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
@@ -17,7 +18,7 @@ export class OAuthService extends YataApiService {
   }
 
   signInWithGoogle(dto: GoogleOAuthDto) {
-    const url = this.serverUrl + '/authentication/google';
+    const url = this.serverUrl + '/' + environment.auth.social.google;
     return this.http
       .post<AuthResponseDto>(url, dto)
       .pipe(take(1), catchError(this.httpErrorService.handleError));

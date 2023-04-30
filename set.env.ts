@@ -1,7 +1,7 @@
 import { isDevMode } from '@angular/core';
 import { writeFile } from 'fs';
 import { promisify } from 'util';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -15,18 +15,18 @@ const envConfigFile = `export const environment = {
     serverUrl: '${process.env['API_SERVER_URL']}',
   },
   auth: {
-    baseUrl: '${process.env['AUTH_SERVER_URL']}',
+    serverUrl: '${process.env['AUTH_SERVER_URL']}',
     endpoints: [
-      'authentication/logout',
-      'authentication/sign-in',
-      'authentication/sign-up',
-      'authentication/refresh-tokens',
+      'auth/logout',
+      'auth/sign-in',
+      'auth/sign-up',
+      'auth/refresh-tokens',
     ],
     endpoint: {
-      logout: 'authentication/logout',
-      signIn: 'authentication/sign-in',
-      signUp: 'authentication/sign-up',
-      refreshToken: 'authentication/refresh-tokens',
+      logout: 'auth/logout',
+      signIn: 'auth/sign-in',
+      signUp: 'auth/sign-up',
+      refreshToken: 'auth/refresh-tokens',
     },
     token: {
       ttl: process.env['TOKEN_TTL'] ? parseInt(${
