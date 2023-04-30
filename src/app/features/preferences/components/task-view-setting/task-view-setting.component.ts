@@ -1,10 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Subject, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../../auth/models/user.model';
 import { TaskView } from '../../../../interfaces';
 import { PreferencesActions } from '../../../../store/actions';
-import { PreferencesService } from '../../services/preferences.service';
+import { selectUserPreferences } from '../../../../store/selectors';
 
 @Component({
   selector: 'yata-task-view-setting',
@@ -12,31 +18,41 @@ import { PreferencesService } from '../../services/preferences.service';
   styleUrls: ['./task-view-setting.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskViewSettingComponent implements OnInit {
+export class TaskViewSettingComponent implements OnDestroy, OnInit {
+  private readonly destroy$ = new Subject<void>();
   readonly VIEW_MINIMALIST = TaskView.MINIMALIST;
   readonly VIEW_INFORMATIVE = TaskView.INFORMATIVE;
-  readonly taskViewControl = new FormControl(this.VIEW_MINIMALIST);
+  readonly preferences$ = this.store.select(selectUserPreferences);
+  readonly control = new FormControl(TaskView.MINIMALIST, {
+    nonNullable: true,
+  });
+  private preferences: UserPreference | null = null;
 
-  constructor(
-    private readonly store: Store,
-    private readonly preferences: PreferencesService
-  ) {}
+  constructor(private readonly store: Store) {}
 
-  ngOnInit(): void {
-    const userPrefs: UserPreference | null = this.preferences.get();
-    if (userPrefs && userPrefs.taskView) {
-      this.taskViewControl.setValue(userPrefs.taskView);
-    }
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 
-  handleChange() {
-    const taskView = this.taskViewControl.value as number;
-    const prefs: UserPreference | null = this.preferences.get();
+  ngOnInit(): void {
+    this.preferences$.pipe(takeUntil(this.destroy$)).subscribe((prefs) => {
+      this.preferences = prefs;
+      if (prefs && prefs.taskView !== undefined) {
+        this.control.setValue(prefs.taskView);
+      }
+    });
 
+    this.control.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((value: TaskView) => this.handleChange(value));
+  }
+
+  handleChange(value: TaskView) {
     this.store.dispatch(
       PreferencesActions.updateUserPreferences({
         preferences: {
-          taskView,
+          ...this.preferences,
+          taskView: value,
         },
       })
     );

@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Subject, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../../auth/models/user.model';
 import { PreferencesActions } from '../../../../store/actions';
-import { PreferencesService } from '../../services/preferences.service';
+import { selectUserPreferences } from '../../../../store/selectors';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'yata-default-due-date-setting',
   template: `
     <div class="flex space-between">
@@ -19,30 +22,34 @@ import { PreferencesService } from '../../services/preferences.service';
     </div>
   `,
 })
-export class DefaultDueDateSetting implements OnInit {
-  readonly control = new FormControl();
+export class DefaultDueDateSetting implements OnDestroy, OnInit {
+  private readonly destroy$ = new Subject<void>();
+  readonly preferences$ = this.store.select(selectUserPreferences);
+  readonly control = new FormControl(true, { nonNullable: true });
+  private preferences: UserPreference | null = null;
 
-  constructor(
-    private readonly preferences: PreferencesService,
-    private readonly store: Store
-  ) {}
+  constructor(private readonly store: Store) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
 
   ngOnInit(): void {
-    const prefs: UserPreference | null = this.preferences.get();
-    this.control.setValue(prefs?.defaultDueDateToday ?? false);
+    this.preferences$.pipe(takeUntil(this.destroy$)).subscribe((prefs) => {
+      this.preferences = prefs;
+      if (prefs && prefs.isDarkTheme !== undefined) {
+        this.control.setValue(prefs.isDarkTheme);
+      }
+    });
   }
 
   handleChange(checked: boolean) {
-    const preferences: UserPreference | null = this.preferences.get();
-    if (preferences) {
-      preferences.defaultDueDateToday = checked;
-    }
-
     this.store.dispatch(
       PreferencesActions.updateUserPreferences({
         preferences: {
+          ...this.preferences,
           defaultDueDateToday: checked,
-        }
+        },
       })
     );
   }

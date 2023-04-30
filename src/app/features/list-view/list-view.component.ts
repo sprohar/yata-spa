@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 import { TaskView } from '../../interfaces';
 import { Section, Task } from '../../models';
 import { CreateTaskDialogComponent } from '../../shared/components/create-task-dialog/create-task-dialog.component';
-import { selectPreferences } from '../../store/reducers/preferences.reducer';
 import {
   selectCompletedTasks,
   selectTasksGroupByProjectSections,
+  selectUserPreferences,
 } from '../../store/selectors';
 
 @Component({
@@ -22,7 +22,7 @@ export class ListViewComponent {
 
   completedTasks$ = this.store.select(selectCompletedTasks);
   groupedTasks$ = this.store.select(selectTasksGroupByProjectSections).pipe();
-  userPreferences$ = this.store.select(selectPreferences);
+  userPreferences$ = this.store.select(selectUserPreferences);
 
   constructor(
     private readonly store: Store,

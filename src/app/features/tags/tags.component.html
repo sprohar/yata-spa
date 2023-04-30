@@ -22,22 +22,24 @@
 
       <ng-container *ngFor="let task of entry.value; trackBy: trackByTaskId">
         <yata-task-list>
-          <ng-container
-            *ngIf="
-              userPreferences?.taskView === TASK_VIEW_MINIMALIST;
-              else informative
-            "
-          >
-            <yata-task [isDraggable]="false" [task]="task">
-              <yata-task-options [task]="task"></yata-task-options>
-            </yata-task>
-          </ng-container>
+          <ng-container *ngIf="preferences$ | async as preferences">
+            <ng-container
+              *ngIf="
+                preferences.taskView === TASK_VIEW_MINIMALIST;
+                else informative
+              "
+            >
+              <yata-task [isDraggable]="false" [task]="task">
+                <yata-task-options [task]="task"></yata-task-options>
+              </yata-task>
+            </ng-container>
 
-          <ng-template #informative>
-            <yata-task-informative [isDraggable]="false" [task]="task">
-              <yata-task-options [task]="task"></yata-task-options>
-            </yata-task-informative>
-          </ng-template>
+            <ng-template #informative>
+              <yata-task-informative [isDraggable]="false" [task]="task">
+                <yata-task-options [task]="task"></yata-task-options>
+              </yata-task-informative>
+            </ng-template>
+          </ng-container>
 
           <mat-divider></mat-divider>
         </yata-task-list>
