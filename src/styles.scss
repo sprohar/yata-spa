@@ -26,7 +26,7 @@ $light-theme: mat.define-light-theme(
 
 @include mat.all-component-themes($dark-theme);
 
-@media (prefers-color-scheme: light) {
+.light-theme {
   @include mat.all-component-colors($light-theme);
 }
 

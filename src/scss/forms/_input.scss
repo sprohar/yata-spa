@@ -12,7 +12,7 @@
   padding: 8px 12px;
   width: 100%;
   background: inherit;
-  color: #000;
+  color: #fff;
   font-family: inherit;
   font-size: inherit;
   border-bottom-left-radius: 0;
@@ -25,7 +25,7 @@ textarea.input {
 
 .input:focus,
 .input:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .input:focus {
@@ -35,14 +35,14 @@ textarea.input {
   border-bottom-right-radius: 0px;
 }
 
-@media (prefers-color-scheme: dark) {
+.light-theme {
   .input {
-    color: #fff !important;
-    border-color: rgba(255, 255, 255, 0.4);
+    color: #000 !important;
+    border-color: rgba(0, 0, 0, 0.4);
   }
 
   .input:focus,
   .input:hover {
-    background-color: rgba(255, 255, 255, 0.04) !important;
+    background-color: rgba(0, 0, 0, 0.04) !important;
   }
 }

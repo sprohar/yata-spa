@@ -18,7 +18,7 @@
   margin: 16px 0;
 }
 
-@media (prefers-color-scheme: light) {
+.light-theme {
   .link {
     color: colors.$mat-cyan-700;
   }

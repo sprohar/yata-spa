@@ -10,7 +10,7 @@
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
+.light-theme {
   .error {
     color: colors.$mat-red-700;
     background-color: rgba(255, 0, 0, 0.1);
