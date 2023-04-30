@@ -1,8 +1,3 @@
-export * from './eisenhower-matrix.selectors';
-export * from './projects.selectors';
-export * from './sections.selectors';
-export * from './tags.selectors';
-export * from './tasks.selectors';
 export {
   selectCurrentProjectId,
   selectProjects,
@@ -11,5 +6,11 @@ export {
   selectCurrentSectionId,
   selectSections,
 } from '../reducers/sections.reducer';
-export { selectTags, selectCurrentTagId } from '../reducers/tags.reducer';
+export { selectCurrentTagId, selectTags } from '../reducers/tags.reducer';
 export { selectCurrentTaskId, selectTasks } from '../reducers/tasks.reducer';
+export * from './eisenhower-matrix.selectors';
+export * from './preferences.selectors';
+export * from './projects.selectors';
+export * from './sections.selectors';
+export * from './tags.selectors';
+export * from './tasks.selectors';

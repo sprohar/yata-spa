@@ -1,5 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { User } from '../../auth/models/user.model';
+import { YataApiActions } from '../actions';
 import { AuthApiActions } from '../actions/auth-api.actions';
 
 export interface AuthState {
@@ -16,6 +17,10 @@ export const authFeature = createFeature({
   name: 'auth',
   reducer: createReducer(
     initialAuthState,
+    on(YataApiActions.updateUserPreferenceSuccess, (state, action) => ({
+      ...state,
+      user: action.user,
+    })),
     on(AuthApiActions.logoutSuccess, (_state, _action) => ({
       accessToken: null,
       user: null,

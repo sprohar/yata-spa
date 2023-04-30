@@ -5,8 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  MAT_DIALOG_DEFAULT_OPTIONS,
   MatDialogModule,
+  MAT_DIALOG_DEFAULT_OPTIONS,
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,8 +18,8 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
@@ -42,17 +42,16 @@ import {
   AppEffects,
   AuthEffects,
   ChronoEffects,
+  PreferencesEffects,
   ProjectsEffects,
   SectionsEffects,
   TagsEffects,
   TasksEffects,
 } from './store/effects/';
-import { PreferencesEffects } from './store/effects/settings.effects';
 import {
   authReducer,
   projectsReducer,
   sectionsReducer,
-  settingsReducer,
   tagsReducer,
   tasksReducer,
 } from './store/reducers/';
@@ -79,7 +78,6 @@ import {
         sections: sectionsReducer,
         tasks: tasksReducer,
         tags: tagsReducer,
-        settings: settingsReducer,
       },
       {}
     ),

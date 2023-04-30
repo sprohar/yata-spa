@@ -6,13 +6,11 @@ import { catchError, concatMap, map, of } from 'rxjs';
 import { User } from '../../auth/models/user.model';
 import { UsersService } from '../../services/http';
 import { PreferencesActions, YataApiActions } from '../actions';
-import { PreferencesService } from '../../features/preferences/services/preferences.service';
 
 @Injectable()
 export class PreferencesEffects {
   constructor(
     private readonly actions$: Actions,
-    private readonly preferences: PreferencesService,
     private readonly usersService: UsersService,
     private readonly snackbar: MatSnackBar
   ) {}
@@ -23,7 +21,6 @@ export class PreferencesEffects {
       concatMap(({ preferences }) =>
         this.usersService.update({ preferences } as Partial<User>).pipe(
           map((user) => {
-            this.preferences.set(user.preferences ?? {});
             this.snackbar.open('Saved!');
             return YataApiActions.updateUserPreferenceSuccess({ user });
           }),
