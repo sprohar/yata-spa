@@ -18,7 +18,9 @@ export class AppEffects {
         ofType(YataApiActions.serverError),
         tap(({ error }) => {
           if (error.status === HttpStatusCode.TooManyRequests) {
-            this.snackbar.open('Too many requests! Wait one minute.');
+            this.snackbar.open('Too many requests! Wait one minute.', 'OK', {
+              duration: undefined,
+            });
           } else if (Array.isArray(error.message)) {
             const message = error.message.join('. ');
             this.snackbar.open(message);
