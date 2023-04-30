@@ -21,13 +21,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../auth/models/user.model';
-import { PreferencesService } from '../../../features/preferences/services/preferences.service';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { CreateTaskComponentActions } from '../../../store/actions';
 import {
   selectCurrentProjectId,
   selectSectionsGroupedByProject,
   selectTags,
+  selectUserPreferences,
 } from '../../../store/selectors';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
@@ -40,7 +40,10 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
 export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
   readonly selectedTags = new Set<Tag>();
+
+  preferences: UserPreference | null = null;
   existingTags!: Set<Tag>;
+  form!: FormGroup;
 
   @Output() canceled = new EventEmitter<void>();
   @Output() created = new EventEmitter<Task>();
@@ -48,17 +51,13 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() project?: Project;
   @Input() section?: Section | null;
   @Input() priority? = Priority.NONE;
-  @ViewChild('taskInput')
-  taskInput!: ElementRef;
-
-  form!: FormGroup;
+  @ViewChild('taskInput') taskInput!: ElementRef;
 
   readonly HIGH_PRIORITY = Priority.HIGH;
   readonly MEDIUM_PRIORITY = Priority.MEDIUM;
   readonly LOW_PRIORITY = Priority.LOW;
   readonly NO_PRIORITY = Priority.NONE;
-
-  group$: Observable<Map<Project, Section[]>> = this.store.select(
+  readonly group$: Observable<Map<Project, Section[]>> = this.store.select(
     selectSectionsGroupedByProject
   );
 
@@ -66,7 +65,6 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
     private store: Store,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private preferences: PreferencesService,
     private changeDetector: ChangeDetectorRef
   ) {}
 
@@ -81,6 +79,11 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.initForm();
+
+    this.store
+      .select(selectUserPreferences)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((prefs) => (this.preferences = prefs));
 
     this.store
       .select(selectTags)
@@ -100,8 +103,6 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   initForm() {
-    const userPrefs: UserPreference | null = this.preferences.get();
-
     this.form = this.fb.group({
       title: this.fb.control('', {
         nonNullable: true,
@@ -117,7 +118,11 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
       projectId: [null, [Validators.required]],
       sectionId: [null],
       parentId: [null],
-      dueDate: [userPrefs?.defaultDueDateToday ? new Date() : null],
+      dueDate: [
+        this.preferences && this.preferences.defaultDueDateToday !== undefined
+          ? this.preferences.defaultDueDateToday
+          : new Date(),
+      ],
     });
 
     this.titleControl.valueChanges

@@ -21,25 +21,20 @@
       </mat-expansion-panel-header>
 
       <ng-container *ngFor="let task of entry.value; trackBy: trackByTaskId">
-        <yata-task-list>
-          <ng-container *ngIf="preferences$ | async as preferences">
-            <ng-container
-              *ngIf="
-                preferences.taskView === TASK_VIEW_MINIMALIST;
-                else informative
-              "
-            >
-              <yata-task [isDraggable]="false" [task]="task">
-                <yata-task-options [task]="task"></yata-task-options>
-              </yata-task>
-            </ng-container>
-
-            <ng-template #informative>
-              <yata-task-informative [isDraggable]="false" [task]="task">
-                <yata-task-options [task]="task"></yata-task-options>
-              </yata-task-informative>
-            </ng-template>
+        <yata-task-list *ngIf="preferences$ | async as preferences">
+          <ng-container
+            *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE; else default"
+          >
+            <yata-task-informative [isDraggable]="false" [task]="task">
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task-informative>
           </ng-container>
+
+          <ng-template #default>
+            <yata-task [isDraggable]="false" [task]="task">
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task>
+          </ng-template>
 
           <mat-divider></mat-divider>
         </yata-task-list>
