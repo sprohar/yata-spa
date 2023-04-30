@@ -5,10 +5,15 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 import { Task } from '../../../models';
 import { TaskActions } from '../../../store/actions';
 
@@ -42,12 +47,15 @@ export class TaskInformativeComponent implements OnInit, OnDestroy {
 
     this.initForm(this.task);
 
-    this.form
-      .get('isCompleted')
-      ?.valueChanges.pipe(takeUntil(this.destroy$))
+    this.isCompletedControl.valueChanges
+      .pipe(takeUntil(this.destroy$), distinctUntilChanged())
       .subscribe((_checked) => {
         this.handleChecked();
       });
+  }
+
+  get isCompletedControl() {
+    return this.form.get('isCompleted') as FormControl;
   }
 
   initForm(task: Task) {
