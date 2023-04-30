@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppearanceComponent } from './components/appearance/appearance.component';
 import { GeneralSettingsComponent } from './components/general-settings/general-settings.component';
-import { SettingsComponent } from './settings.component';
+import { PreferencesComponent } from './preferences.component';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: SettingsComponent,
+    component: PreferencesComponent,
     children: [
       {
         path: 'appearance',

@@ -14,12 +14,12 @@ import { AppearanceComponent } from './components/appearance/appearance.componen
 import { DefaultDueDateSetting } from './components/default-due-date-setting/default-due-date-setting.component';
 import { GeneralSettingsComponent } from './components/general-settings/general-settings.component';
 import { TaskViewSettingComponent } from './components/task-view-setting/task-view-setting.component';
-import { SettingsRoutingModule } from './settings-routing.module';
-import { SettingsComponent } from './settings.component';
+import { SettingsRoutingModule } from './preferences-routing.module';
+import { PreferencesComponent } from './preferences.component';
 
 @NgModule({
   declarations: [
-    SettingsComponent,
+    PreferencesComponent,
     AppearanceComponent,
     GeneralSettingsComponent,
     TaskViewSettingComponent,
@@ -39,4 +39,4 @@ import { SettingsComponent } from './settings.component';
     MatRadioModule,
   ],
 })
-export class SettingsModule {}
+export class PreferencesModule {}

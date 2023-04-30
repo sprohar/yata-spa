@@ -51,10 +51,10 @@ const routes: Routes = [
           import('./features/tags/tags.module').then((m) => m.TagsModule),
       },
       {
-        path: 'settings',
+        path: 'preferences',
         loadChildren: () =>
-          import('./settings/settings.module').then(
-            (m) => m.SettingsModule
+          import('./features/preferences/preferences.module').then(
+            (m) => m.PreferencesModule
           ),
       },
     ],

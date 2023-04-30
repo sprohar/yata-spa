@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { UserPreference } from '../../auth/models/user.model';
-import { StorageKeys, StorageService } from '../../services';
+import { UserPreference } from '../../../auth/models/user.model';
+import { StorageKeys, StorageService } from '../../../services';
 
 @Injectable({
   providedIn: 'root',

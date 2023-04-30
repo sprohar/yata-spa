@@ -9,8 +9,8 @@ export * from './eisenhower-matrix.actions';
 export * from './kanban-view.actions';
 export * from './list-view.actions';
 export * from './oauth.actions';
+export * from './preferences.actions';
 export * from './section-options.actions';
-export * from './settings.actions';
 export * from './sidenav.actions';
 export * from './task-card.actions';
 export * from './task-details.actions';
@@ -21,3 +21,4 @@ export * from './task.actions';
 export * from './tasks-order-by-options.actions';
 export * from './view-header.actions';
 export * from './yata-api-actions';
+

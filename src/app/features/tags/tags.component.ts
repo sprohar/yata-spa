@@ -3,11 +3,11 @@ import { Store } from '@ngrx/store';
 import { UserPreference } from '../../auth/models/user.model';
 import { TaskView } from '../../interfaces';
 import { Task } from '../../models';
-import { PreferencesService } from '../../settings/services/preferences.service';
 import {
   selectCurrentTag,
   selectTasksGroupByProject,
 } from '../../store/selectors';
+import { PreferencesService } from '../preferences/services/preferences.service';
 
 @Component({
   selector: 'yata-tags',

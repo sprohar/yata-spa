@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { UserPreference } from '../../../auth/models/user.model';
-import { SettingsActions } from '../../../store/actions';
+import { UserPreference } from '../../../../auth/models/user.model';
+import { PreferencesActions } from '../../../../store/actions';
 import { PreferencesService } from '../../services/preferences.service';
 
 @Component({
@@ -39,10 +39,10 @@ export class DefaultDueDateSetting implements OnInit {
     }
 
     this.store.dispatch(
-      SettingsActions.updateUserPreferences({
-        preferences: preferences
-          ? preferences
-          : ({ defaultDueDateToday: checked } as UserPreference),
+      PreferencesActions.updateUserPreferences({
+        preferences: {
+          defaultDueDateToday: checked,
+        }
       })
     );
   }

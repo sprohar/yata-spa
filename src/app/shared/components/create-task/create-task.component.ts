@@ -21,8 +21,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../auth/models/user.model';
+import { PreferencesService } from '../../../features/preferences/services/preferences.service';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
-import { PreferencesService } from '../../../settings/services/preferences.service';
 import { CreateTaskComponentActions } from '../../../store/actions';
 import {
   selectCurrentProjectId,

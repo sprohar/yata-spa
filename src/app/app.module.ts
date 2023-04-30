@@ -47,7 +47,7 @@ import {
   TagsEffects,
   TasksEffects,
 } from './store/effects/';
-import { SettingsEffects } from './store/effects/settings.effects';
+import { PreferencesEffects } from './store/effects/settings.effects';
 import {
   authReducer,
   projectsReducer,
@@ -91,7 +91,7 @@ import {
       SectionsEffects,
       TasksEffects,
       TagsEffects,
-      SettingsEffects,
+      PreferencesEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,

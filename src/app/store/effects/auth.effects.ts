@@ -12,7 +12,7 @@ import {
   AuthActions,
   AuthApiActions,
   OAuthActions,
-  SettingsActions,
+  PreferencesActions,
 } from '../actions';
 
 @Injectable()
@@ -114,7 +114,7 @@ export class AuthEffects {
       ofType(AuthApiActions.refreshTokenSuccess),
       concatMap((action) =>
         of(
-          SettingsActions.setUserPreferences({
+          PreferencesActions.setUserPreferences({
             preferences: action.res.user.preferences ?? {},
           })
         )
@@ -168,7 +168,7 @@ export class AuthEffects {
       concatMap((action) => {
         this.router.navigateByUrl(action.returnUrl ?? '/app');
         return of(
-          SettingsActions.setUserPreferences({
+          PreferencesActions.setUserPreferences({
             preferences: action.res.user.preferences ?? {},
           })
         );

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { UserPreference } from '../../../auth/models/user.model';
-import { TaskView } from '../../../interfaces';
-import { SettingsActions } from '../../../store/actions';
+import { UserPreference } from '../../../../auth/models/user.model';
+import { TaskView } from '../../../../interfaces';
+import { PreferencesActions } from '../../../../store/actions';
 import { PreferencesService } from '../../services/preferences.service';
 
 @Component({
@@ -34,9 +34,8 @@ export class TaskViewSettingComponent implements OnInit {
     const prefs: UserPreference | null = this.preferences.get();
 
     this.store.dispatch(
-      SettingsActions.updateUserPreferences({
+      PreferencesActions.updateUserPreferences({
         preferences: {
-          ...prefs,
           taskView,
         },
       })

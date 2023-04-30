@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { TaskView } from '../../interfaces';
 import { Section, Task } from '../../models';
 import { CreateTaskDialogComponent } from '../../shared/components/create-task-dialog/create-task-dialog.component';
-import { selectPreferences } from '../../store/reducers/settings.reducer';
+import { selectPreferences } from '../../store/reducers/preferences.reducer';
 import {
   selectCompletedTasks,
   selectTasksGroupByProjectSections,

@@ -5,11 +5,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of } from 'rxjs';
 import { User } from '../../auth/models/user.model';
 import { UsersService } from '../../services/http';
-import { PreferencesService } from '../../settings/services/preferences.service';
-import { SettingsActions, YataApiActions } from '../actions';
+import { PreferencesActions, YataApiActions } from '../actions';
+import { PreferencesService } from '../../features/preferences/services/preferences.service';
 
 @Injectable()
-export class SettingsEffects {
+export class PreferencesEffects {
   constructor(
     private readonly actions$: Actions,
     private readonly preferences: PreferencesService,
@@ -19,7 +19,7 @@ export class SettingsEffects {
 
   update$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettingsActions.updateUserPreferences),
+      ofType(PreferencesActions.updateUserPreferences),
       concatMap(({ preferences }) =>
         this.usersService.update({ preferences } as Partial<User>).pipe(
           map((user) => {

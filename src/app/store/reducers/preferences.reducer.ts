@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { UserPreference } from '../../auth/models/user.model';
-import { SettingsActions, YataApiActions } from '../actions';
+import { PreferencesActions, YataApiActions } from '../actions';
 
 export interface SettingsState {
   preferences: UserPreference | null;
@@ -17,7 +17,7 @@ export const settingsFeature = createFeature({
     on(YataApiActions.updateUserPreferenceSuccess, (_state, action) => ({
       preferences: action.user.preferences ?? null,
     })),
-    on(SettingsActions.setUserPreferences, (_state, action) => ({
+    on(PreferencesActions.setUserPreferences, (_state, action) => ({
       preferences: action.preferences,
     }))
   ),

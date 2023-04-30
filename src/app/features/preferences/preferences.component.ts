@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AuthActions } from '../store/actions';
+import { AuthActions } from '../../store/actions';
 
 @Component({
-  selector: 'yata-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+  selector: 'yata-preferences',
+  templateUrl: './preferences.component.html',
+  styleUrls: ['./preferences.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsComponent {
+export class PreferencesComponent {
   constructor(private readonly store: Store) {}
 
   handleSignOut() {
