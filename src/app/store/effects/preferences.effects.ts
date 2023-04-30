@@ -17,12 +17,12 @@ export class PreferencesEffects {
 
   update$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PreferencesActions.updateUserPreferences),
+      ofType(PreferencesActions.update),
       concatMap(({ preferences }) =>
         this.usersService.update({ preferences } as Partial<User>).pipe(
           map((user) => {
             this.snackbar.open('Saved!');
-            return YataApiActions.updateUserPreferenceSuccess({ user });
+            return YataApiActions.updateUserSuccess({ user });
           }),
           catchError((error: HttpErrorResponse) =>
             of(YataApiActions.serverError({ error }))

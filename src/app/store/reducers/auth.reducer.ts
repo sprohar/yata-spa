@@ -17,7 +17,7 @@ export const authFeature = createFeature({
   name: 'auth',
   reducer: createReducer(
     initialAuthState,
-    on(YataApiActions.updateUserPreferenceSuccess, (state, action) => ({
+    on(YataApiActions.updateUserSuccess, (state, action) => ({
       ...state,
       user: action.user,
     })),

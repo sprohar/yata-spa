@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../../auth/models/user.model';
 import { TaskView } from '../../../../interfaces';
 import { PreferencesActions } from '../../../../store/actions';
@@ -43,13 +43,13 @@ export class TaskViewSettingComponent implements OnDestroy, OnInit {
     });
 
     this.control.valueChanges
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$), distinctUntilChanged())
       .subscribe((value: TaskView) => this.handleChange(value));
   }
 
   handleChange(value: TaskView) {
     this.store.dispatch(
-      PreferencesActions.updateUserPreferences({
+      PreferencesActions.update({
         preferences: {
           ...this.preferences,
           taskView: value,

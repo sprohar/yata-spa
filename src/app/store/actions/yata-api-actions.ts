@@ -11,8 +11,8 @@ export const YataApiActions = createActionGroup({
     'Server Error': props<{ error: HttpErrorResponse }>(),
 
     // Users
-    'Update User Preference Success': props<{ user: User }>(),
-    'Update User Preference Error': props<{ error: ApiErrorResponse }>(),
+    'Update User Success': props<{ user: User }>(),
+    'Update User Error': props<{ error: ApiErrorResponse }>(),
 
     // Projects
     'Create Project Success': props<{ project: Project }>(),

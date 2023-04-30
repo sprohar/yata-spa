@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../../auth/models/user.model';
 import { PreferencesActions } from '../../../../store/actions';
 import { selectUserPreferences } from '../../../../store/selectors';
@@ -35,17 +35,19 @@ export class DefaultDueDateSetting implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.preferences$.pipe(takeUntil(this.destroy$)).subscribe((prefs) => {
-      this.preferences = prefs;
-      if (prefs && prefs.isDarkTheme !== undefined) {
-        this.control.setValue(prefs.isDarkTheme);
-      }
-    });
+    this.preferences$
+      .pipe(takeUntil(this.destroy$), distinctUntilChanged())
+      .subscribe((prefs) => {
+        this.preferences = prefs;
+        if (prefs && prefs.isDarkTheme !== undefined) {
+          this.control.setValue(prefs.isDarkTheme);
+        }
+      });
   }
 
   handleChange(checked: boolean) {
     this.store.dispatch(
-      PreferencesActions.updateUserPreferences({
+      PreferencesActions.update({
         preferences: {
           ...this.preferences,
           defaultDueDateToday: checked,
