@@ -17,8 +17,8 @@ export class TodaysTasksComponent {
   readonly TASK_VIEW_MINIMALIST = TaskView.MINIMALIST;
   readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
   readonly preferences$ = this.store.select(selectUserPreferences);
-  readonly today = new Date();
   readonly tasks$ = this.store.select(selectTasks);
+  readonly today = new Date();
 
   constructor(private readonly store: Store) {}
 

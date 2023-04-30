@@ -11,16 +11,26 @@
     </mat-expansion-panel-header>
 
     <yata-task-list *ngIf="preferences$ | async as preferences">
-      <ng-container *ngFor="let task of tasks; trackBy: trackByTaskId">
+      <ng-container
+        *ngFor="let task of tasks; trackBy: trackByTaskId; let i; as: index"
+      >
         <ng-container
           *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE; else default"
         >
-          <yata-task-informative [task]="task" [isDraggable]="false">
+          <yata-task-informative
+            [attr.data-test-ti]="i"
+            [task]="task"
+            [isDraggable]="false"
+          >
             <yata-task-options [task]="task"></yata-task-options>
           </yata-task-informative>
         </ng-container>
         <ng-template #default>
-          <yata-task [task]="task" [isDraggable]="false">
+          <yata-task
+            [attr.data-test-t]="i"
+            [task]="task"
+            [isDraggable]="false"
+          >
             <yata-task-options [task]="task"></yata-task-options>
           </yata-task>
         </ng-template>
