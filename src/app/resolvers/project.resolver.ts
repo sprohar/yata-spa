@@ -1,8 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EMPTY, Observable, catchError, tap } from 'rxjs';
-import { ApiErrorResponse } from '../error';
 import { Project } from '../models';
 import { ProjectsService } from '../services/http';
 import { SidenavActions, YataApiActions } from '../store/actions';
@@ -27,8 +27,8 @@ export function projectResolver(
         store.dispatch(SidenavActions.projectSelected({ projectId }));
         store.dispatch(YataApiActions.loadProjectSuccess({ project }));
       }),
-      catchError((error: ApiErrorResponse) => {
-        store.dispatch(YataApiActions.loadProjectError({ error }));
+      catchError((error: HttpErrorResponse) => {
+        store.dispatch(YataApiActions.serverError({ error }));
         router.navigateByUrl('/app');
         return EMPTY;
       })

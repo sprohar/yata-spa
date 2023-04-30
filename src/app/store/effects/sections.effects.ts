@@ -1,8 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
-import { ApiErrorResponse } from '../../error/api-error-response';
 import { SectionsService } from '../../services/http';
 import {
   EditSectionDialogActions,
@@ -26,7 +26,7 @@ export class SectionsEffects {
       concatMap((action) =>
         this.sectionsService.create(action.section).pipe(
           map((section) => YataApiActions.createSectionSuccess({ section })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -47,7 +47,7 @@ export class SectionsEffects {
             YataApiActions.deleteSectionSuccess({ section: action.section })
           ),
           tap(() => this.snackbar.open(`${action.section.name} was deleted`)),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -72,7 +72,7 @@ export class SectionsEffects {
             map((section) =>
               YataApiActions.moveSectionToProjectSuccess({ section })
             ),
-            catchError((error: ApiErrorResponse) =>
+            catchError((error: HttpErrorResponse) =>
               of(
                 YataApiActions.serverError({
                   error,
@@ -90,7 +90,7 @@ export class SectionsEffects {
       concatMap((action) =>
         this.sectionsService.update(action.section).pipe(
           map((section) => YataApiActions.updateSectionSuccess({ section })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,

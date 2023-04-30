@@ -1,8 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
-import { ApiErrorResponse } from '../../error/api-error-response';
 import { TagsService } from '../../services/http';
 import { SidenavActions, TaskDetailsActions, YataApiActions } from '../actions';
 
@@ -20,7 +20,7 @@ export class TagsEffects {
       concatMap((action) =>
         this.tagsService.create(action.tag).pipe(
           map((tag) => YataApiActions.createTagSuccess({ tag })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(YataApiActions.serverError({ error }))
           )
         )
@@ -39,7 +39,7 @@ export class TagsEffects {
               tag: action.tag,
             });
           }),
-          catchError((error: ApiErrorResponse) => {
+          catchError((error: HttpErrorResponse) => {
             this.snackbar.open('Error. Please try again.');
             return of(
               YataApiActions.serverError({
@@ -61,7 +61,7 @@ export class TagsEffects {
             this.snackbar.open(`${tag.name} was updated!`);
             return YataApiActions.updateTagSuccess({ tag });
           }),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(YataApiActions.serverError({ error }))
           )
         )

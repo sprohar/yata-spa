@@ -1,9 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of } from 'rxjs';
 import { User } from '../../auth/models/user.model';
-import { ApiErrorResponse } from '../../error';
 import { UsersService } from '../../services/http';
 import { PreferencesService } from '../../settings/services/preferences.service';
 import { SettingsActions, YataApiActions } from '../actions';
@@ -27,7 +27,7 @@ export class SettingsEffects {
             this.snackbar.open('Saved!');
             return YataApiActions.updateUserPreferenceSuccess({ user });
           }),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(YataApiActions.serverError({ error }))
           )
         )

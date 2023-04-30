@@ -1,9 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
-import { ApiErrorResponse } from '../../error/api-error-response';
 import { ProjectsService } from '../../services/http';
 import {
   AppActions,
@@ -33,7 +33,7 @@ export class ProjectsEffects {
             this.snackbar.open(`${project.name} was created.`);
             return YataApiActions.createProjectSuccess({ project });
           }),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -56,7 +56,7 @@ export class ProjectsEffects {
             })
           ),
           tap(() => this.router.navigateByUrl('/')),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -76,7 +76,7 @@ export class ProjectsEffects {
           map((res) =>
             YataApiActions.loadProjectsSuccess({ projects: res.data })
           ),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -97,7 +97,7 @@ export class ProjectsEffects {
             this.snackbar.open(`${project.name} was updated.`);
             return YataApiActions.updateProjectSuccess({ project });
           }),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -118,7 +118,7 @@ export class ProjectsEffects {
       concatMap((action) =>
         this.projectsService.update(action.project.id!, action.project).pipe(
           map((project) => YataApiActions.updateProjectSuccess({ project })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,

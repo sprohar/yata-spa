@@ -20,7 +20,7 @@ export class AuthEffects {
   constructor(
     private readonly actions$: Actions,
     private readonly router: Router,
-    private readonly authenticationService: AuthenticationService,
+    private readonly auth: AuthenticationService,
     private readonly oauth: OAuthService,
     private readonly errorService: ErrorService
   ) {}
@@ -55,7 +55,7 @@ export class AuthEffects {
       ofType(AuthActions.logout),
       take(1),
       switchMap((_action) =>
-        this.authenticationService.logout().pipe(
+        this.auth.logout().pipe(
           map(() => AuthApiActions.logoutSuccess()),
           catchError((error: ApiErrorResponse) =>
             of(AuthApiActions.logoutError({ error }))
@@ -94,7 +94,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.refreshToken),
       switchMap((action) =>
-        this.authenticationService.refreshToken().pipe(
+        this.auth.refreshToken().pipe(
           map((res) => AuthApiActions.refreshTokenSuccess({ res })),
           tap(() => {
             if (action.returnUrl) {
@@ -126,7 +126,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.signIn),
       switchMap((action) =>
-        this.authenticationService.signIn(action.dto).pipe(
+        this.auth.signIn(action.dto).pipe(
           map((res) =>
             AuthApiActions.signInSuccess({ res, returnUrl: action.returnUrl })
           ),
@@ -146,7 +146,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.signUp),
       concatMap((action) =>
-        this.authenticationService.signUp(action.dto).pipe(
+        this.auth.signUp(action.dto).pipe(
           map((res) =>
             AuthApiActions.signUpSuccess({ res, returnUrl: action.returnUrl })
           ),

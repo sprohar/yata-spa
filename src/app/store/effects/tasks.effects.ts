@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -13,7 +14,6 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { ApiErrorResponse } from '../../error/api-error-response';
 import { Task } from '../../models';
 import { TasksService } from '../../services/http';
 import {
@@ -98,7 +98,7 @@ export class TasksEffects {
       switchMap((action) =>
         this.tasksService.get(action.task.id!).pipe(
           map((task) => YataApiActions.loadTaskSuccess({ task })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -120,7 +120,7 @@ export class TasksEffects {
       concatMap((action) =>
         this.tasksService.create(action.task).pipe(
           map((task) => YataApiActions.createTaskSuccess({ task })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -141,7 +141,7 @@ export class TasksEffects {
       concatMap((action) =>
         this.tasksService.create(action.subtask).pipe(
           map((subtask) => YataApiActions.createSubtaskSuccess({ subtask })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -159,7 +159,7 @@ export class TasksEffects {
       concatMap((action) =>
         this.tasksService.duplicate(action.task).pipe(
           map((task) => YataApiActions.createTaskSuccess({ task })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -178,7 +178,7 @@ export class TasksEffects {
         this.tasksService.delete(action.task).pipe(
           map(() => YataApiActions.deleteTaskSuccess({ task: action.task })),
           tap(() => this.snackbar.open('Removed task')),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -199,7 +199,7 @@ export class TasksEffects {
             YataApiActions.deleteSubtaskSuccess({ subtask: action.subtask })
           ),
           tap(() => this.snackbar.open('Removed subtask')),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -217,7 +217,7 @@ export class TasksEffects {
       exhaustMap((_) =>
         this.tasksService.getAll().pipe(
           map((res) => YataApiActions.loadTasksSuccess({ tasks: res.data })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -235,7 +235,7 @@ export class TasksEffects {
       mergeMap((action) =>
         this.tasksService.removeTag(action.task, action.tag).pipe(
           map((task) => YataApiActions.updateTaskSuccess({ task })),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(YataApiActions.serverError({ error }))
           )
         )
@@ -250,7 +250,7 @@ export class TasksEffects {
         this.tasksService.update(action.task.id!, action.task).pipe(
           map((task) => YataApiActions.updateTaskSuccess({ task })),
           tap(() => this.snackbar.open('Updated task')),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,
@@ -279,7 +279,7 @@ export class TasksEffects {
         this.tasksService.update(action.task.id!, action.task).pipe(
           map((task) => YataApiActions.updateTaskSuccess({ task })),
           tap(() => this.snackbar.open('Updated task')),
-          catchError((error: ApiErrorResponse) =>
+          catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
                 error,

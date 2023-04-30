@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createActionGroup, props } from '@ngrx/store';
 import { User } from '../../auth/models/user.model';
 import { ApiErrorResponse } from '../../error/api-error-response';
@@ -7,7 +8,7 @@ export const YataApiActions = createActionGroup({
   source: 'Yata API',
   events: {
     // Errors
-    'Server Error': props<{ error: ApiErrorResponse }>(),
+    'Server Error': props<{ error: HttpErrorResponse }>(),
 
     // Users
     'Update User Preference Success': props<{ user: User }>(),
