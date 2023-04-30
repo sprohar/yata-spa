@@ -1,11 +1,10 @@
 <yata-view-header></yata-view-header>
-<main *ngIf="userPreferences$ | async as userPreferences">
+<main *ngIf="userPreferences$ | async as preferences">
   <div
     class="sections-wrapper mb-1"
     *ngIf="groupedTasks$ | async as groupedTasks"
   >
     <div cdkDropListGroup class="flex-column row-gap-1 mb-1">
-        <!-- class="panel mat-elevation-z0" -->
       <mat-expansion-panel
         *ngFor="let map of groupedTasks | keyvalue"
         [expanded]="true"
@@ -41,28 +40,25 @@
           (cdkDropListDropped)="taskList.handleMoveTaskToSection($event)"
         >
           <ng-container
-            *ngIf="
-              userPreferences.taskView === TASK_VIEW_MINIMALIST;
-              else informativeView
-            "
+            *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE; else default"
           >
-            <ng-container
-              *ngFor="let task of map.value; trackBy: trackByTaskId"
-            >
-              <yata-task cdkDrag [task]="task" [cdkDragData]="task">
-                <yata-task-options [task]="task"></yata-task-options>
-              </yata-task>
-              <mat-divider></mat-divider>
-            </ng-container>
-          </ng-container>
-
-          <ng-template #informativeView>
             <ng-container
               *ngFor="let task of map.value; trackBy: trackByTaskId"
             >
               <yata-task-informative cdkDrag [task]="task" [cdkDragData]="task">
                 <yata-task-options [task]="task"></yata-task-options>
               </yata-task-informative>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </ng-container>
+
+          <ng-template #default>
+            <ng-container
+              *ngFor="let task of map.value; trackBy: trackByTaskId"
+            >
+              <yata-task cdkDrag [task]="task" [cdkDragData]="task">
+                <yata-task-options [task]="task"></yata-task-options>
+              </yata-task>
               <mat-divider></mat-divider>
             </ng-container>
           </ng-template>

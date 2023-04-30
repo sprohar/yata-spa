@@ -3,7 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { TaskView } from '../../interfaces';
 import { Section, Task } from '../../models';
-import { CreateTaskDialogComponent } from '../../shared/components/create-task-dialog/create-task-dialog.component';
+import {
+  CreateTaskDialogComponent,
+  CreateTaskDialogData,
+} from '../../shared/components/create-task-dialog/create-task-dialog.component';
 import {
   selectCompletedTasks,
   selectTasksGroupByProjectSections,
@@ -19,10 +22,9 @@ import {
 export class ListViewComponent {
   readonly TASK_VIEW_MINIMALIST = TaskView.MINIMALIST;
   readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
-
-  completedTasks$ = this.store.select(selectCompletedTasks);
-  groupedTasks$ = this.store.select(selectTasksGroupByProjectSections).pipe();
-  userPreferences$ = this.store.select(selectUserPreferences);
+  readonly completedTasks$ = this.store.select(selectCompletedTasks);
+  readonly groupedTasks$ = this.store.select(selectTasksGroupByProjectSections);
+  readonly userPreferences$ = this.store.select(selectUserPreferences);
 
   constructor(
     private readonly store: Store,
@@ -33,7 +35,7 @@ export class ListViewComponent {
     this.dialog.open(CreateTaskDialogComponent, {
       data: {
         section,
-      },
+      } as CreateTaskDialogData,
     });
   }
 
