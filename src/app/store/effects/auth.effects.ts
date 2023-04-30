@@ -8,12 +8,7 @@ import { AuthenticationService } from '../../auth/services/authentication.servic
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { ErrorService } from '../../services/error.service';
 import { OAuthService } from '../../services/http';
-import {
-  AuthActions,
-  AuthApiActions,
-  OAuthActions,
-  PreferencesActions,
-} from '../actions';
+import { AuthActions, AuthApiActions, OAuthActions } from '../actions';
 
 @Injectable()
 export class AuthEffects {
@@ -68,6 +63,7 @@ export class AuthEffects {
   authError$ = createEffect(
     () =>
       this.actions$.pipe(
+        // TODO: Handle: refreshTokenError
         ofType(AuthApiActions.signInError, AuthApiActions.signUpError),
         tap((action) => {
           const error = action.error;
@@ -104,19 +100,6 @@ export class AuthEffects {
           catchError((error: ApiErrorResponse) =>
             of(AuthApiActions.refreshTokenError({ error }))
           )
-        )
-      )
-    )
-  );
-
-  refreshTokenSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthApiActions.refreshTokenSuccess),
-      concatMap((action) =>
-        of(
-          PreferencesActions.setUserPreferences({
-            preferences: action.res.user.preferences ?? {},
-          })
         )
       )
     )
@@ -162,17 +145,14 @@ export class AuthEffects {
     )
   );
 
-  authSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
-      concatMap((action) => {
-        this.router.navigateByUrl(action.returnUrl ?? '/app');
-        return of(
-          PreferencesActions.setUserPreferences({
-            preferences: action.res.user.preferences ?? {},
-          })
-        );
-      })
-    )
+  authSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.signInSuccess, AuthApiActions.signUpSuccess),
+        tap((action) => {
+          this.router.navigateByUrl(action.returnUrl ?? '/app');
+        })
+      ),
+    { dispatch: false }
   );
 }
