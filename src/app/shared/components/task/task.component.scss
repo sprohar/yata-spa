@@ -5,6 +5,11 @@
   align-items: center;
   column-gap: 16px;
 
+  .input {
+    font-size: 1.25em;
+    margin-top: 2px;
+  }
+
   .drag-indicator {
     transform: scale(0.75);
     visibility: hidden;

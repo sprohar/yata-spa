@@ -2,7 +2,6 @@
 
 .task {
   display: flex;
-  // border-bottom: thin solid rgba(255, 255, 255, 0.08);
   column-gap: 8px;
   padding: 8px 0;
 }
@@ -40,6 +39,11 @@
 .task-title {
   padding: 0;
   margin: 0;
+
+  .input {
+    font-size: 1.25em;
+    margin-top: 2px;
+  }
 }
 
 .task-description {
@@ -52,9 +56,3 @@
 .task-due-date {
   transform: scale(0.75);
 }
-
-// @media (prefers-color-scheme: light) {
-//   .task {
-//     border-color: rgba(0, 0, 0, 0.12);
-//   }
-// }
