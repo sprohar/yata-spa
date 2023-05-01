@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Priority, Task } from '../../../../models';
 import { TaskCardActions } from '../../../../store/actions';
 import { TaskCardComponent } from './task-card.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('TaskCardComponent', () => {
   let component: TaskCardComponent;
@@ -31,6 +32,7 @@ describe('TaskCardComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [TaskCardComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         MatCardModule,
         MatCheckboxModule,

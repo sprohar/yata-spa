@@ -22,11 +22,11 @@ export class TaskCardComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private store: Store,
-    private fb: FormBuilder,
-    private changeDetector: ChangeDetectorRef
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
