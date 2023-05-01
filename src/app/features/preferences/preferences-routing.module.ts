@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppearanceComponent } from './components/appearance/appearance.component';
+import { AppearanceSettingComponent } from './components/appearance-setting/appearance-setting.component';
 import { GeneralSettingsComponent } from './components/general-settings/general-settings.component';
 import { PreferencesComponent } from './preferences.component';
 
@@ -16,7 +16,7 @@ const routes: Routes = [
     children: [
       {
         path: 'appearance',
-        component: AppearanceComponent,
+        component: AppearanceSettingComponent,
       },
       {
         path: 'general',

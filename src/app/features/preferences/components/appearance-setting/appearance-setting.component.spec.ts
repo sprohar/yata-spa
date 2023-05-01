@@ -14,8 +14,7 @@ import { initialProjectsState } from '../../../../store/reducers/projects.reduce
 import { initialSectionsState } from '../../../../store/reducers/sections.reducer';
 import { initialTasksState } from '../../../../store/reducers/tasks.reducer';
 import { selectUserPreferences } from '../../../../store/selectors';
-
-import { AppearanceComponent } from './appearance.component';
+import { AppearanceSettingComponent } from './appearance-setting.component';
 
 const user: User = {
   id: '1',
@@ -35,19 +34,15 @@ const initialState: AppState = {
   },
 };
 
-describe('AppearanceComponent', () => {
-  let component: AppearanceComponent;
-  let fixture: ComponentFixture<AppearanceComponent>;
-  // let mockSelectUserPreferences: MemoizedSelector<
-  //   AuthState,
-  //   UserPreference | null
-  // >;
+describe('AppearanceSettingComponent', () => {
+  let component: AppearanceSettingComponent;
+  let fixture: ComponentFixture<AppearanceSettingComponent>;
   let store: MockStore;
   let loader: HarnessLoader;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppearanceComponent],
+      declarations: [AppearanceSettingComponent],
       imports: [MatCardModule, MatSlideToggleModule, ReactiveFormsModule],
       providers: [
         provideMockStore({
@@ -56,7 +51,7 @@ describe('AppearanceComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AppearanceComponent);
+    fixture = TestBed.createComponent(AppearanceSettingComponent);
     store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
 

@@ -12,12 +12,12 @@ import { PreferencesActions } from '../../../../store/actions';
 import { selectUserPreferences } from '../../../../store/selectors';
 
 @Component({
-  selector: 'yata-appearance',
-  templateUrl: './appearance.component.html',
-  styleUrls: ['./appearance.component.scss'],
+  selector: 'yata-appearance-setting',
+  templateUrl: './appearance-setting.component.html',
+  styleUrls: ['./appearance-setting.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppearanceComponent implements OnDestroy, OnInit {
+export class AppearanceSettingComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
   readonly preferences$ = this.store.select(selectUserPreferences);
   readonly control = new FormControl(true, {

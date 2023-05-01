@@ -6,13 +6,13 @@ import { provideRouter, Route, Router, RouterLink } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { AuthActions } from '../../store/actions';
-import { AppearanceComponent } from './components/appearance/appearance.component';
+import { AppearanceSettingComponent } from './components/appearance-setting/appearance-setting.component';
 import { GeneralSettingsComponent } from './components/general-settings/general-settings.component';
 
 import { PreferencesComponent } from './preferences.component';
 
 const routes: Route[] = [
-  { path: 'appearance', component: AppearanceComponent },
+  { path: 'appearance', component: AppearanceSettingComponent },
   { path: 'general', component: GeneralSettingsComponent },
   { path: '', component: PreferencesComponent },
 ];
