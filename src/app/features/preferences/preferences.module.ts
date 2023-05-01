@@ -11,7 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AppearanceComponent } from './components/appearance/appearance.component';
-import { DefaultDueDateSetting } from './components/default-due-date-setting/default-due-date-setting.component';
+import { DefaultDueDateSettingComponent } from './components/default-due-date-setting/default-due-date-setting.component';
 import { GeneralSettingsComponent } from './components/general-settings/general-settings.component';
 import { TaskViewSettingComponent } from './components/task-view-setting/task-view-setting.component';
 import { SettingsRoutingModule } from './preferences-routing.module';
@@ -23,7 +23,7 @@ import { PreferencesComponent } from './preferences.component';
     AppearanceComponent,
     GeneralSettingsComponent,
     TaskViewSettingComponent,
-    DefaultDueDateSetting,
+    DefaultDueDateSettingComponent,
   ],
   imports: [
     CommonModule,

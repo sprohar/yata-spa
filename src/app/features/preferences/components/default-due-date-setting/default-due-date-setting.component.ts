@@ -22,7 +22,7 @@ import { selectUserPreferences } from '../../../../store/selectors';
     </div>
   `,
 })
-export class DefaultDueDateSetting implements OnDestroy, OnInit {
+export class DefaultDueDateSettingComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
   readonly preferences$ = this.store.select(selectUserPreferences);
   readonly control = new FormControl(true, { nonNullable: true });
