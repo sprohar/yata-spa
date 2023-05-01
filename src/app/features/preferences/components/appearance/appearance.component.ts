@@ -24,7 +24,7 @@ export class AppearanceComponent implements OnDestroy, OnInit {
     nonNullable: true,
   });
 
-  private preferences: UserPreference | null = null;
+  preferences: UserPreference | null = null;
 
   constructor(private readonly store: Store) {}
 
