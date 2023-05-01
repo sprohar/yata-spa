@@ -24,7 +24,10 @@ export class MatrixQuadrantComponent implements OnInit {
   @Input() priority!: Priority;
   showCompleted = true;
 
-  constructor(private dialog: MatDialog, private store: Store) {}
+  constructor(
+    private readonly dialog: MatDialog,
+    private readonly store: Store
+  ) {}
 
   ngOnInit(): void {}
 
