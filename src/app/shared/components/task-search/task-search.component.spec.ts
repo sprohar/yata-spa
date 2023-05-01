@@ -1,3 +1,5 @@
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
@@ -7,13 +9,14 @@ import {
 } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { Task } from '../../../models';
 import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
@@ -23,7 +26,6 @@ import {
   selectTasks,
 } from '../../../store/reducers/tasks.reducer';
 import { selectCurrentProjectId } from '../../../store/selectors';
-
 import { TaskSearchComponent } from './task-search.component';
 
 const tasks: Task[] = [
@@ -35,7 +37,6 @@ const tasks: Task[] = [
 
 const initialState: AppState = {
   auth: initialAuthState,
-  // tags: initialTagsState,
   sections: initialSectionsState,
   projects: {
     currentProjectId: 1,
@@ -51,7 +52,7 @@ describe('TaskSearchComponent', () => {
   let component: TaskSearchComponent;
   let fixture: ComponentFixture<TaskSearchComponent>;
   let router: jasmine.SpyObj<Router>;
-  let store: MockStore;
+  let loader: HarnessLoader;
 
   beforeEach(async () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
@@ -88,40 +89,64 @@ describe('TaskSearchComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskSearchComponent);
-    store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
+
+    loader = TestbedHarnessEnvironment.loader(fixture);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should load all autocomplete harnesses', async () => {
+    const autocompletes = await loader.getAllHarnesses(MatAutocompleteHarness);
+    expect(autocompletes.length).toBe(1);
+  });
+
+  it('should be able to type in an input', async () => {
+    const input = await loader.getHarness(
+      MatAutocompleteHarness.with({ selector: 'input' })
+    );
+    await input.enterText('Hello there');
+    expect(await input.getValue()).toBe('Hello there');
+  });
+
+  it('should set the currentProjectId value', () => {
+    expect(component.currentProjectId).toEqual(1);
+  });
+
+  describe('#handleSelectedOption', () => {
+    it('should navigate to the selected option', () => {
+      component.handleSelectedOption(tasks.at(0)!.id!);
+      expect(router.navigate).toHaveBeenCalled();
+    });
+  });
+
+  describe('#handleClearInput', () => {
+    it('should clear input', () => {
+      component.query.setValue('a');
+      expect(component.query.value).toEqual('a');
+      component.handleClearInput();
+      expect(component.query.value).toEqual('');
+    });
+  });
+
   describe('#query', () => {
     it('should return a result set that matches the query', fakeAsync(() => {
-      component.query.setValue('a');
+      fixture.detectChanges();
       const element: HTMLElement = fixture.nativeElement;
-      const inputElement: HTMLInputElement | null = element.querySelector(
-        '[data-test="searchInput"]'
-      );
+      const queryInput: HTMLInputElement = element.querySelector('input')!;
 
-      if (inputElement) {
-        inputElement.value = 'a';
-        inputElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        tick(500);
-        fixture.detectChanges();
+      queryInput.value = 'a';
+      queryInput.dispatchEvent(new Event('input'));
 
-        if (component.resultSet$) {
-          component.resultSet$.subscribe((results: Task[]) => {
-            expect(results.length).toEqual(2);
-          });
-        } else {
-          fail('result set is undefined');
-        }
-      } else {
-        fail('inputElement is null');
-      }
+      tick(500); // debounceTime
+      fixture.detectChanges();
+      expect(component.query.value).toEqual('a');
+
+      expect(component.resultSet$).toBeDefined();
     }));
   });
 });

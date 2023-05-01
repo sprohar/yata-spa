@@ -102,11 +102,10 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
   }
 
   handleClearInput() {
-    this.resultSet$ = undefined;
-    this.query.setValue('', { emitEvent: false, onlySelf: true });
+    this.query.setValue('');
   }
 
   get query() {
-    return this.form.get('query') as FormControl;
+    return this.form.get('query') as FormControl<string>;
   }
 }
