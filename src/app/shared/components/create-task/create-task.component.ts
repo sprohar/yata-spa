@@ -62,10 +62,10 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   );
 
   constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    private dialog: MatDialog,
-    private changeDetector: ChangeDetectorRef
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog,
+    private readonly changeDetector: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit(): void {
@@ -118,11 +118,11 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
       projectId: [null, [Validators.required]],
       sectionId: [null],
       parentId: [null],
-      dueDate: [
+      dueDate: this.fb.control(
         this.preferences && this.preferences.defaultDueDateToday !== undefined
           ? this.preferences.defaultDueDateToday
-          : new Date(),
-      ],
+          : new Date(new Date().setHours(0, 0, 0, 0))
+      ),
     });
 
     this.titleControl.valueChanges
@@ -147,7 +147,7 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   get dueDateControl() {
-    return this.form.get('dueDate') as FormControl;
+    return this.form.get('dueDate') as FormControl<Date | null>;
   }
 
   get parentIdControl() {
@@ -246,6 +246,8 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
     if ((this.titleControl.value as string).trim() === '') return;
 
     const task: Task = this.form.value;
+    const dueDate = this.dueDateControl.value as Date;
+    task.dueDate = dueDate.toISOString();
     task.tags = this.intersectOnTagName(this.selectedTags, this.existingTags);
 
     Object.keys(task).forEach((key) => {

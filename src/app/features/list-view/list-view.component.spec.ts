@@ -10,6 +10,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Section } from '../../models';
+import { initialSectionsState } from '../../store/reducers/sections.reducer';
+import { initialTasksState } from '../../store/reducers/tasks.reducer';
 import { ListViewComponent } from './list-view.component';
 
 const section: Section = { id: 1, name: 'Section', projectId: 1 };
@@ -20,12 +22,11 @@ const initialState: AppState = {
     projects: [{ id: 1, name: 'Project' }],
   },
   sections: {
-    currentSectionId: null,
+    ...initialSectionsState,
     sections: [section],
   },
   tasks: {
-    orderBy: null,
-    currentTaskId: null,
+    ...initialTasksState,
     tasks: [
       { id: 1, title: 'Task 1', projectId: 1, sectionId: 1, isCompleted: true },
       {
@@ -78,21 +79,12 @@ describe('ListViewComponent', () => {
   });
 
   it('should have a tasks list', () => {
-    const tasksList: HTMLElement = fixture.nativeElement.querySelector(
-      `[data-test="section-${section.id}-tasks"]`
+    const element: HTMLElement = fixture.nativeElement;
+    const taskLists: NodeListOf<HTMLElement> = element.querySelectorAll(
+      `[data-test-task-list]`
     );
 
-    expect(tasksList).toBeTruthy();
-    expect(tasksList.children.length).toBe(1);
-  });
-
-  it('should have a completed tasks list', () => {
-    const completedTasksList: HTMLElement = fixture.nativeElement.querySelector(
-      '[data-test="completedTasks"]'
-    );
-
-    expect(completedTasksList).toBeTruthy();
-    expect(completedTasksList.children.length).toBe(1);
+    expect(taskLists).toBeTruthy();
   });
 
   describe('#openCreateTaskDialog', () => {

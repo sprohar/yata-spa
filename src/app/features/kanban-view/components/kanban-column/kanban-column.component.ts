@@ -25,7 +25,10 @@ export class KanbanColumnComponent implements OnInit {
   pendingTasks?: Task[];
   isAddingTask = false;
 
-  constructor(private store: Store, private dialog: MatDialog) {}
+  constructor(
+    private readonly store: Store,
+    private readonly dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     if (!this.section) {

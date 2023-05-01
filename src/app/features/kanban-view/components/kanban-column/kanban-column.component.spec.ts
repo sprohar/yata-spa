@@ -24,6 +24,15 @@ const task: Task = {
   title: 'Move me',
 };
 
+const tasks: Task[] = [
+  task,
+  {
+    id: 2,
+    projectId: 1,
+    title: 'task 2',
+  },
+];
+
 const sourceSection: Section = {
   id: 1,
   name: 'To-Do',
@@ -63,6 +72,7 @@ describe('KanbanColumnComponent', () => {
     store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
     component.section = sourceSection;
+    component.tasks = tasks;
     fixture.detectChanges();
   });
 
@@ -71,30 +81,24 @@ describe('KanbanColumnComponent', () => {
   });
 
   describe('#handleTaskCardDrop', () => {
-    let cdkDragDropMock: jasmine.SpyObj<CdkDragDrop<Section, Section, Task>>;
-
     it('should NOT dispatch an action when the source Section equals the target Section', () => {
       spyOn(store, 'dispatch');
 
       const targetSection: Section = { ...sourceSection };
 
-      cdkDragDropMock = jasmine.createSpyObj(
-        'CdkDragDrop',
-        {},
-        {
-          container: {
-            data: targetSection,
-          } as CdkDropList<Section>,
-          previousContainer: {
-            data: sourceSection,
-          } as CdkDropList<Section>,
-          item: {
-            data: task,
-          } as CdkDrag<Task>,
-        }
-      );
+      const event = {
+        container: {
+          data: targetSection,
+        } as CdkDropList<Section>,
+        previousContainer: {
+          data: sourceSection,
+        } as CdkDropList<Section>,
+        item: {
+          data: task,
+        } as CdkDrag<Task>,
+      } as CdkDragDrop<Section, Section, Task>;
 
-      component.handleTaskCardDrop(cdkDragDropMock);
+      component.handleTaskCardDrop(event);
 
       expect(store.dispatch).not.toHaveBeenCalled();
     });
@@ -108,23 +112,19 @@ describe('KanbanColumnComponent', () => {
         projectId: 1,
       };
 
-      cdkDragDropMock = jasmine.createSpyObj(
-        'CdkDragDrop',
-        {},
-        {
-          container: {
-            data: targetSection,
-          } as CdkDropList<Section>,
-          previousContainer: {
-            data: sourceSection,
-          } as CdkDropList<Section>,
-          item: {
-            data: task,
-          } as CdkDrag<Task>,
-        }
-      );
+      const event = {
+        container: {
+          data: targetSection,
+        } as CdkDropList<Section>,
+        previousContainer: {
+          data: sourceSection,
+        } as CdkDropList<Section>,
+        item: {
+          data: task,
+        } as CdkDrag<Task>,
+      } as CdkDragDrop<Section, Section, Task>;
 
-      component.handleTaskCardDrop(cdkDragDropMock);
+      component.handleTaskCardDrop(event);
 
       expect(store.dispatch).toHaveBeenCalledWith(
         KanbanViewActions.moveTaskToSection({

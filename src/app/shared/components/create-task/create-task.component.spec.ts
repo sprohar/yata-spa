@@ -21,9 +21,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CreateTaskComponent } from './create-task.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CreateTaskComponentActions } from '../../../store/actions';
+import { CreateTaskComponent } from './create-task.component';
 
 const initialState: AppState = {
   auth: initialAuthState,
@@ -163,11 +163,15 @@ describe('CreateTaskComponent', () => {
     it('should dispatch a createTask action', () => {
       const task: Task = {
         title: 'Task',
-        projectId: 1,
         priority: Priority.NONE,
+        projectId: 1,
+        dueDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
       };
 
-      component.form.patchValue(task);
+      component.titleControl.setValue('Task');
+      component.priorityControl.setValue(Priority.NONE);
+      component.projectIdControl.setValue(1);
+
       component.handleSubmit();
 
       expect(store.dispatch).toHaveBeenCalledWith(
@@ -178,16 +182,20 @@ describe('CreateTaskComponent', () => {
     it('should dispatch a createSubtask action', () => {
       const subtask: Task = {
         title: 'Subtask',
+        priority: Priority.NONE,
         projectId: 1,
         parentId: 1,
-        priority: Priority.NONE,
+        dueDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
       };
 
-      component.form.patchValue(subtask);
+      component.titleControl.setValue('Subtask');
+      component.priorityControl.setValue(Priority.NONE);
+      component.parentIdControl.setValue(1);
+      component.projectIdControl.setValue(1);
+
       component.handleSubmit();
 
       expect(store.dispatch).toHaveBeenCalled();
-
       expect(store.dispatch).toHaveBeenCalledWith(
         CreateTaskComponentActions.createSubtask({ subtask })
       );

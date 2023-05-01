@@ -1,4 +1,5 @@
 <yata-view-header></yata-view-header>
+
 <main *ngIf="userPreferences$ | async as preferences">
   <div
     class="sections-wrapper mb-1"
@@ -32,42 +33,41 @@
         </mat-expansion-panel-header>
 
         <yata-task-list
-          [attr.data-test]="'section-' + map.key.id + '-tasks'"
+          [attr.data-test-task-list]="map.key.id"
           #taskList
           cdkDropList
           cdkDropListSortingDisabled
           [cdkDropListData]="map.key"
           (cdkDropListDropped)="taskList.handleMoveTaskToSection($event)"
         >
-          <ng-container
-            *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE; else default"
-          >
-            <ng-container
-              *ngFor="let task of map.value; trackBy: trackByTaskId"
+          <ng-container *ngFor="let task of map.value; trackBy: trackByTaskId">
+            <yata-task-informative
+              *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE"
+              cdkDrag
+              [task]="task"
+              [cdkDragData]="task"
             >
-              <yata-task-informative cdkDrag [task]="task" [cdkDragData]="task">
-                <yata-task-options [task]="task"></yata-task-options>
-              </yata-task-informative>
-              <mat-divider></mat-divider>
-            </ng-container>
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task-informative>
+
+            <yata-task
+              *ngIf="preferences.taskView === TASK_VIEW_MINIMALIST"
+              cdkDrag
+              [task]="task"
+              [cdkDragData]="task"
+            >
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task>
+            
+            <mat-divider></mat-divider>
           </ng-container>
 
-          <ng-template #default>
-            <ng-container
-              *ngFor="let task of map.value; trackBy: trackByTaskId"
-            >
-              <yata-task cdkDrag [task]="task" [cdkDragData]="task">
-                <yata-task-options [task]="task"></yata-task-options>
-              </yata-task>
-              <mat-divider></mat-divider>
-            </ng-container>
-          </ng-template>
         </yata-task-list>
       </mat-expansion-panel>
     </div>
 
     <ng-container *ngIf="completedTasks$ | async as completedTasks">
-      <mat-expansion-panel *ngIf="completedTasks.length">
+      <mat-expansion-panel *ngIf="completedTasks.length > 0">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <span>Completed</span>
@@ -75,14 +75,15 @@
             <span>({{ completedTasks.length }})</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
+
+        <!-- Completed task list -->
         <yata-task-list data-test="completedTasks">
-          <yata-task
-            *ngFor="let task of completedTasks"
-            [task]="task"
-            [isDraggable]="false"
-          >
-            <yata-task-options [task]="task"></yata-task-options>
-          </yata-task>
+          <ng-container *ngFor="let task of completedTasks">
+            <yata-task [task]="task" [isDraggable]="false">
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task>
+            <mat-divider></mat-divider>
+          </ng-container>
         </yata-task-list>
       </mat-expansion-panel>
     </ng-container>
