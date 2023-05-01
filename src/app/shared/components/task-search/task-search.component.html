@@ -1,6 +1,7 @@
 <form [formGroup]="form" class="full-width">
   <mat-form-field appearance="outline" class="full-width">
     <input
+      data-test="searchInput"
       #input
       matInput
       placeholder="Search (/)"
@@ -14,7 +15,7 @@
       mat-icon-button
       aria-label="Clear"
       title="Clear"
-      (click)="input.value = ''"
+      (click)="handleClearInput()"
     >
       <mat-icon>close</mat-icon>
     </button>
@@ -27,7 +28,6 @@
         *ngFor="let task of resultSet$ | async; trackBy: trackByTaskId"
         [attr.data-test]="'task-id=' + task.id"
         [value]="task.id"
-        tabindex="1"
       >
         {{ task.title }}
       </mat-option>

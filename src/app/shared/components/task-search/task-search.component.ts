@@ -22,10 +22,10 @@ import {
   distinctUntilChanged,
   switchMap,
   takeUntil,
+  map,
 } from 'rxjs';
 import { Task } from '../../../models';
-import { TasksService } from '../../../services/http';
-import { selectCurrentProjectId } from '../../../store/selectors';
+import { selectCurrentProjectId, selectTasks } from '../../../store/selectors';
 
 @Component({
   selector: 'yata-task-search',
@@ -45,7 +45,6 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
   constructor(
     private readonly store: Store,
     private readonly fb: FormBuilder,
-    private readonly tasksService: TasksService,
     private readonly router: Router,
     private readonly route: ActivatedRoute
   ) {}
@@ -68,10 +67,13 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
       debounceTime(500),
       distinctUntilChanged(),
       switchMap((query: string) =>
-        this.tasksService.search({
-          query,
-          projectId: this.currentProjectId,
-        })
+        this.store
+          .select(selectTasks)
+          .pipe(
+            map((tasks) =>
+              tasks.filter((task) => task.title.toLowerCase().startsWith(query))
+            )
+          )
       )
     );
   }
