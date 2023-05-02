@@ -1,16 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { of } from 'rxjs';
 import { User } from '../../auth/models/user.model';
 import { AccountActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
+import { DeleteAccountConfirmationDialogComponent } from './components/delete-account-confirmation-dialog/delete-account-confirmation-dialog.component';
 
 import { ProfileComponent } from './profile.component';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
+  let dialog: jasmine.SpyObj<MatDialog>;
   let host: HTMLElement;
   let store: MockStore;
   const user: User = {
@@ -20,10 +28,16 @@ describe('ProfileComponent', () => {
   };
 
   beforeEach(async () => {
+    dialog = jasmine.createSpyObj('MatDialog', ['open']);
+
     await TestBed.configureTestingModule({
       declarations: [ProfileComponent],
-      imports: [MatButtonModule, MatIconModule],
+      imports: [MatButtonModule, MatDialogModule, MatIconModule],
       providers: [
+        {
+          provide: MatDialog,
+          useValue: dialog,
+        },
         provideMockStore({
           initialState: {
             auth: {
@@ -75,8 +89,14 @@ describe('ProfileComponent', () => {
   });
 
   describe('#handleDeleteAccount', () => {
-    it("should dispatch an action to delete the user's account", () => {
+    beforeEach(() => {
       spyOn(store, 'dispatch');
+    });
+
+    it("should dispatch an action to delete the user's account", () => {
+      dialog.open.and.returnValue({
+        afterClosed: () => of(true),
+      } as MatDialogRef<DeleteAccountConfirmationDialogComponent>);
 
       const button: HTMLElement = host.querySelector('#deleteButton')!;
       button.click();
@@ -84,6 +104,17 @@ describe('ProfileComponent', () => {
       expect(store.dispatch).toHaveBeenCalledWith(
         AccountActions.deleteAccount()
       );
+    });
+
+    it("should NOT dispatch an action to delete the user's account", () => {
+      dialog.open.and.returnValue({
+        afterClosed: () => of(''),
+      } as MatDialogRef<DeleteAccountConfirmationDialogComponent>);
+
+      const button: HTMLElement = host.querySelector('#deleteButton')!;
+      button.click();
+
+      expect(store.dispatch).not.toHaveBeenCalled();
     });
   });
 });
