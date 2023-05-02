@@ -21,9 +21,10 @@ export class AppEffects {
             this.snackbar.open('Too many requests! Wait one minute.', 'OK', {
               duration: undefined,
             });
-          } else if (Array.isArray(error.message)) {
-            const message = error.message.join('. ');
-            this.snackbar.open(message);
+          } else {
+            this.snackbar.open(error.statusText, 'OK', {
+              duration: undefined,
+            });
           }
         })
       ),
