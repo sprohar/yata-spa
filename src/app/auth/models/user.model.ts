@@ -7,14 +7,20 @@ export interface UserPreference {
 }
 
 export interface User {
-  id: string;
-  email: string;
-  name?: string;
-  givenName?: string;
-  familyName?: string;
+  id?: string | null;
+  email: string | null;
+  emailVerified?: boolean | null;
+  name?: string | null;
   preferences?: UserPreference | null;
-  createdAt?: string;
-  updatedAt?: string;
+  phoneNumber?: string | null;
+  phoneVerified?: boolean | null;
+  picture?: string | null;
+  username?: string | null;
+  nickname?: string | null;
+  familyName?: string | null;
+  givenName?: string | null;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
 }
 
 export namespace User {

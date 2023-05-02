@@ -1,1 +1,67 @@
-<p>profile works!</p>
+<main
+  class="full-height flex-column flex-centered row-gap-1"
+  *ngIf="user$ | async as user"
+>
+  <div class="flex-column row-gap-1">
+    <div class="flex column-gap-1 mb-1">
+      <div class="avatar">
+        <ng-container *ngIf="user.picture; else avatar">
+          <img
+            id="userPicture"
+            [src]="user.picture"
+            alt="User pic"
+            height="48"
+          />
+        </ng-container>
+        <ng-template #avatar>
+          <a
+            title="Peter Southwood, CC0, via Wikimedia Commons"
+            href="https://commons.wikimedia.org/wiki/File:Missing_avatar.svg"
+          >
+            <img
+              id="avatar"
+              width="64"
+              alt="Avatar"
+              src="assets/images/avatar-64px.png"
+            />
+          </a>
+        </ng-template>
+      </div>
+
+      <div class="flex-column user-info">
+        <div class="flex align-items-center username-container">
+          <p data-test="username" id="username" class="username">
+            {{ user.username ?? "Anon" }}
+          </p>
+          <button
+            id="editUsernameButton"
+            data-test="editUsernameButton"
+            mat-icon-button
+            title="Edit username"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <p data-test="email" id="email" class="email">
+          {{ user.email }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex-column row-gap-1 mt-1">
+      <h2>Delete Account</h2>
+      <div class="flex-column row-gap-1">
+        <p>Deleting your account will result in complete data loss.</p>
+        <button
+          id="deleteButton"
+          data-test="deleteButton"
+          mat-raised-button
+          color="warn"
+          (click)="handleDeleteAccount()"
+        >
+          Delete account
+        </button>
+      </div>
+    </div>
+  </div>
+</main>

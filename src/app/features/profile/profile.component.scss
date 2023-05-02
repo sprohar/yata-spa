@@ -1,0 +1,41 @@
+.avatar {
+  max-height: 64px;
+  img {
+    border-radius: 50%;
+  }
+}
+
+.user-info {
+  margin-top: -4px;
+}
+
+.username-container {
+  column-gap: 0.5em;
+
+  button {
+    transform: scale(0.9);
+  }
+
+  mat-icon {
+    opacity: 0.87;
+  }
+
+  button {
+    visibility: hidden;
+  }
+
+  &:hover {
+    button {
+      visibility: visible;
+    }
+  }
+}
+
+.username {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.email {
+  color: gray;
+}
