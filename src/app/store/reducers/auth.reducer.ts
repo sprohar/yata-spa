@@ -21,10 +21,14 @@ export const authFeature = createFeature({
       ...state,
       user: action.user,
     })),
-    on(AuthApiActions.logoutSuccess, (_state, _action) => ({
-      accessToken: null,
-      user: null,
-    })),
+    on(
+      AuthApiActions.logoutSuccess,
+      YataApiActions.deleteUser,
+      (_state, _action) => ({
+        accessToken: null,
+        user: null,
+      })
+    ),
     on(
       AuthApiActions.signInSuccess,
       AuthApiActions.signUpSuccess,

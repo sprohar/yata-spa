@@ -39,6 +39,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { MainComponent } from './components/main/main.component';
 import { httpInterceptorProviders } from './http-interceptors';
 import {
+  AccountEffects,
   AppEffects,
   AuthEffects,
   ChronoEffects,
@@ -82,6 +83,7 @@ import {
       {}
     ),
     EffectsModule.forRoot([
+      AccountEffects,
       AppEffects,
       AuthEffects,
       ChronoEffects,

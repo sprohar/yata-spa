@@ -16,6 +16,13 @@ export class UsersService extends YataApiService {
     super();
   }
 
+  delete() {
+    const url = `${this.serverUrl}/accounts/me`;
+    return this.http
+      .delete(url)
+      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  }
+
   update(user: Partial<User>) {
     const url = `${this.serverUrl}/users/me`;
     return this.http
