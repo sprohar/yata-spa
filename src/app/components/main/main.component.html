@@ -9,13 +9,24 @@
   >
     <div class="relative full-height">
       <div class="sidenav-lists">
+        <mat-nav-list>
+          <a mat-list-item data-test="profileLink" routerLink="profile">
+            <div class="flex align-items-center">
+              <mat-icon>account_circle</mat-icon>
+              <span>Profile</span>
+            </div>
+          </a>
+        </mat-nav-list>
+
+        <mat-divider></mat-divider>
+
         <!-- Inbox -->
         <mat-nav-list *ngIf="inbox$ | async as inbox">
           <a
             mat-list-item
             data-test="inbox"
             [routerLink]="[
-              inbox.view === LIST_VIEW ? '/app/list' : '/app/kanban',
+              inbox.view === LIST_VIEW ? 'list' : 'kanban',
               inbox.id
             ]"
           >
@@ -30,7 +41,7 @@
 
         <!-- Chrono -->
         <mat-nav-list>
-          <a mat-list-item routerLink="/app/chrono/today">
+          <a mat-list-item routerLink="chrono/today">
             <div class="flex align-items-center">
               <mat-icon>today</mat-icon>
               <span>Today</span>
@@ -42,7 +53,7 @@
 
         <!-- Eisenhower Matrix -->
         <mat-nav-list>
-          <a mat-list-item routerLink="/app/matrix">
+          <a mat-list-item routerLink="matrix">
             <div class="flex align-items-center">
               <mat-icon>grid_view</mat-icon>
               <span>Eisenhower Matrix</span>
@@ -76,7 +87,7 @@
                     [attr.data-test]="'sidenavProject-' + project.id"
                     class="sidenav-link flex align-items-center"
                     [routerLink]="[
-                      project.view === LIST_VIEW ? '/app/list' : '/app/kanban',
+                      project.view === LIST_VIEW ? 'list' : 'kanban',
                       project.id
                     ]"
                   >
@@ -153,7 +164,7 @@
                   <a
                     [attr.data-test]="'sidenavTag-' + tag.id"
                     class="sidenav-link flex align-items-center"
-                    [routerLink]="['/app/tags', tag.id]"
+                    [routerLink]="['tags', tag.id]"
                   >
                     <mat-icon [style.color]="tag.colorHexCode">label</mat-icon>
                     <span>{{ tag.name }}</span>
@@ -196,7 +207,7 @@
       </div>
 
       <mat-nav-list *ngIf="user$ | async as user" class="bottom-bar">
-        <a mat-list-item routerLink="/app/preferences">
+        <a mat-list-item routerLink="preferences">
           <div class="flex align-items-center">
             <mat-icon>settings</mat-icon>
             <span>Preferences</span>
