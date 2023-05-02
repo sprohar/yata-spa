@@ -18,7 +18,7 @@
           *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE; else default"
         >
           <yata-task-informative
-            [attr.data-test-ti]="i"
+            [attr.data-test-task-informative]="i"
             [task]="task"
             [isDraggable]="false"
           >
@@ -27,7 +27,7 @@
         </ng-container>
         <ng-template #default>
           <yata-task
-            [attr.data-test-t]="i"
+            [attr.data-test-task]="i"
             [task]="task"
             [isDraggable]="false"
           >

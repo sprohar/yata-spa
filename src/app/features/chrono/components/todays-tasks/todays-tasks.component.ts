@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { TaskView } from '../../../../interfaces';
 import { Task } from '../../../../models';
 import {
-  selectTasks,
+  selectTodaysTasks,
   selectUserPreferences,
 } from '../../../../store/selectors';
 
@@ -17,7 +17,7 @@ export class TodaysTasksComponent {
   readonly TASK_VIEW_MINIMALIST = TaskView.MINIMALIST;
   readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
   readonly preferences$ = this.store.select(selectUserPreferences);
-  readonly tasks$ = this.store.select(selectTasks);
+  readonly tasks$ = this.store.select(selectTodaysTasks);
   readonly today = new Date();
 
   constructor(private readonly store: Store) {}

@@ -34,6 +34,17 @@ const initialState: AppState = {
         projectId: 1,
         dueDate: new Date().toISOString(),
       },
+      {
+        id: 2,
+        title: 'Task 2',
+        projectId: 1,
+        dueDate: new Date().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Task 3',
+        projectId: 1,
+      },
     ],
   },
 };
@@ -65,12 +76,34 @@ describe('TodaysTasksComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should render tasks using the user's preffered taskview", () => {
+  it('should render tasks using the MINIMALIST view', () => {
+    store.overrideSelector(selectUserPreferences, {
+      taskView: TaskView.MINIMALIST,
+    });
+
+    store.refreshState();
+    fixture.detectChanges();
+
     const element: HTMLElement = fixture.nativeElement;
     const nodes: NodeListOf<HTMLElement> =
-      element.querySelectorAll('[data-test-t]');
-    if (nodes.length === 0) fail();
-    expect(nodes.length).toEqual(initialState.tasks.tasks.length);
+      element.querySelectorAll('[data-test-task]');
+
+    expect(nodes.length).toEqual(2);
   });
 
+  it('should render tasks using the INFORMATIVE view', () => {
+    store.overrideSelector(selectUserPreferences, {
+      taskView: TaskView.INFORMATIVE,
+    });
+
+    store.refreshState();
+    fixture.detectChanges();
+
+    const element: HTMLElement = fixture.nativeElement;
+    const nodes: NodeListOf<HTMLElement> = element.querySelectorAll(
+      '[data-test-task-informative]'
+    );
+
+    expect(nodes.length).toEqual(2);
+  });
 });
