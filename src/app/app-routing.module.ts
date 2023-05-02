@@ -36,7 +36,9 @@ const routes: Routes = [
       {
         path: 'list',
         loadChildren: () =>
-          import('./features/list-view/list-view.module').then((m) => m.ListViewModule),
+          import('./features/list-view/list-view.module').then(
+            (m) => m.ListViewModule
+          ),
       },
       {
         path: 'matrix',
@@ -55,6 +57,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./features/preferences/preferences.module').then(
             (m) => m.PreferencesModule
+          ),
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./features/profile/profile.module').then(
+            (m) => m.ProfileModule
           ),
       },
     ],
