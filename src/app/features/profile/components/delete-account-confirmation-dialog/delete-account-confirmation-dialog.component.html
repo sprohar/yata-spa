@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Delete Account</h2>
 <div mat-dialog-content class="p-1">
   <div class="flex-column row-gap-1">
-    <div class="flex">
+    <div class="flex-column">
       <p>Confirm by typing in the sentence.</p>
       <p>
         <strong>{{ message }}</strong>
@@ -9,15 +9,17 @@
     </div>
     <mat-form-field appearance="outline">
       <input
-        data-test="confirmationInput"
+        #input
         matInput
         type="text"
+        data-test="confirmationInput"
+        [placeholder]="message"
         [formControl]="control"
       />
     </mat-form-field>
   </div>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions align="end">
   <button
     id="cancelButton"
     data-test="cancelButton"
@@ -27,11 +29,11 @@
     Cancel
   </button>
   <button
-    [disabled]="control.invalid"
+    mat-raised-button
+    color="warn"
     id="deleteButton"
     data-test="deleteButton"
-    mat-raised-button
-    color="warning"
+    [disabled]="control.invalid"
     (click)="handleConfirm()"
   >
     Delete

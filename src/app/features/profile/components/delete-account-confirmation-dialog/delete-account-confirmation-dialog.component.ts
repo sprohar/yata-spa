@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -24,16 +31,26 @@ function equals(value: string): ValidatorFn {
   styleUrls: ['./delete-account-confirmation-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DeleteAccountConfirmationDialogComponent {
+export class DeleteAccountConfirmationDialogComponent implements AfterViewInit {
   readonly message = 'Delete my account';
   readonly control = new FormControl<string>('', {
     validators: [Validators.required, equals(this.message)],
     nonNullable: true,
   });
 
+  @ViewChild('input') input?: ElementRef;
+
   constructor(
+    private readonly changeDetector: ChangeDetectorRef,
     public dialogRef: MatDialogRef<DeleteAccountConfirmationDialogComponent>
   ) {}
+
+  ngAfterViewInit(): void {
+    if (this.input) {
+      this.input.nativeElement.focus();
+      this.changeDetector.detectChanges();
+    }
+  }
 
   handleConfirm() {
     if (this.control.invalid) return;
