@@ -102,6 +102,10 @@ describe('AppearanceSettingComponent', () => {
     });
 
     it('should dispatch an action', () => {
+      store.overrideSelector(selectUserPreferences, { isDarkTheme: false });
+      store.refreshState();
+      fixture.detectChanges();
+
       const isDarkTheme = true;
       component.handleChange(isDarkTheme);
 
