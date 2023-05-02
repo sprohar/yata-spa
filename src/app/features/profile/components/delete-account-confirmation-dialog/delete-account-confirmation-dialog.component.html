@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Delete Account</h2>
+<div mat-dialog-content class="p-1">
+  <div class="flex-column row-gap-1">
+    <div class="flex">
+      <p>Confirm by typing in the sentence.</p>
+      <p>
+        <strong>{{ message }}</strong>
+      </p>
+    </div>
+    <mat-form-field appearance="outline">
+      <input
+        data-test="confirmationInput"
+        matInput
+        type="text"
+        [formControl]="control"
+      />
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button
+    id="cancelButton"
+    data-test="cancelButton"
+    mat-stroked-button
+    mat-dialog-close=""
+  >
+    Cancel
+  </button>
+  <button
+    [disabled]="control.invalid"
+    id="deleteButton"
+    data-test="deleteButton"
+    mat-raised-button
+    color="warning"
+    (click)="handleConfirm()"
+  >
+    Delete
+  </button>
+</div>
