@@ -3,4 +3,8 @@ export interface ChronoQueryParams {
   take?: number;
   startDate?: string;
   endDate?: string;
+  lt?: Date;
+  lte?: Date;
+  gt?: Date;
+  gte?: Date;
 }

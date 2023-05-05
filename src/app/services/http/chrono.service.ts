@@ -37,7 +37,7 @@ export class ChronoService extends YataApiService {
   getTasks(queryParams: ChronoQueryParams) {
     const url = `${this.serverUrl}/tasks`;
     const params = new HttpParams({
-      fromObject: { ...queryParams },
+      fromObject: queryParams as { [param: string]: any },
     });
 
     return this.http

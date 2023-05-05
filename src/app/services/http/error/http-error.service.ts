@@ -8,14 +8,10 @@ import { throwError } from 'rxjs';
 export class HttpErrorService {
   handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      console.error('client-side or network error occurred:', error.error);
+      // TODO: Log
+      // console.error('client-side or network error occurred:', error.error);
       return throwError(() => error);
     }
-
-    console.error(
-      `Backend returned code ${error.status}, body was: `,
-      error.error
-    );
 
     return throwError(() => error);
   }
