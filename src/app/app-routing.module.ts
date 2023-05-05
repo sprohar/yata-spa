@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './auth/guards/authentication.guard';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { InboxComponent } from './components/inbox/inbox.component';
 import { MainComponent } from './components/main/main.component';
-import { projectsGuard, tagsGuard } from './guards/';
+import { inboxResolver, projectsResolver } from './resolvers';
+import { tagsResolver } from './resolvers/tags.resolver';
 
 const routes: Routes = [
   {
@@ -15,11 +16,22 @@ const routes: Routes = [
     path: 'app',
     component: MainComponent,
     canMatch: [authGuard],
-    canActivate: [projectsGuard, tagsGuard],
+    resolve: {
+      projects: projectsResolver,
+      tags: tagsResolver,
+    },
     children: [
       {
         path: '',
-        component: LandingPageComponent,
+        redirectTo: 'inbox',
+        pathMatch: 'full',
+      },
+      {
+        path: 'inbox',
+        component: InboxComponent,
+        resolve: {
+          inbox: inboxResolver,
+        },
       },
       {
         path: 'chrono',

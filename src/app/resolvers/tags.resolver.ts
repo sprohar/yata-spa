@@ -1,15 +1,11 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, map, of } from 'rxjs';
 import { ApiErrorResponse } from '../error/api-error-response';
 import { TagsService } from '../services/http';
 import { YataApiActions } from '../store/actions';
 
-export function tagsGuard(
-  _route: ActivatedRouteSnapshot,
-  _state: RouterStateSnapshot
-) {
+export function tagsResolver() {
   const store = inject(Store);
   return inject(TagsService)
     .getAll()
