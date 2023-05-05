@@ -56,6 +56,7 @@ import {
   tagsReducer,
   tasksReducer,
 } from './store/reducers/';
+import { InboxComponent } from './components/inbox/inbox.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {
     ConfirmationDialogComponent,
     LandingPageComponent,
     MainComponent,
+    InboxComponent,
   ],
   imports: [
     BrowserModule,

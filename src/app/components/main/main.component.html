@@ -22,14 +22,7 @@
 
         <!-- Inbox -->
         <mat-nav-list *ngIf="inbox$ | async as inbox">
-          <a
-            mat-list-item
-            data-test="inbox"
-            [routerLink]="[
-              inbox.view === LIST_VIEW ? 'list' : 'kanban',
-              inbox.id
-            ]"
-          >
+          <a mat-list-item data-test="inbox" routerLink="inbox">
             <div class="flex align-items-center">
               <mat-icon>inbox</mat-icon>
               <span>Inbox</span>

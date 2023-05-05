@@ -93,8 +93,16 @@ mat-nav-list {
   }
 }
 
-@media (prefers-color-scheme: light) {
+.light-theme {
   .bottom-bar a {
     border-color: rgba(0, 0, 0, 0.12);
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .sidenav-list {
+    li {
+      padding-left: 32px;
+    }
   }
 }
