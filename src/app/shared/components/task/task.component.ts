@@ -19,7 +19,7 @@ import { TaskActions } from '../../../store/actions/task.actions';
 export class TaskComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
   @Input() task!: Task;
-  @Input() isDraggable = true;
+  @Input() isDraggable = false;
   form!: FormGroup;
 
   constructor(private store: Store, private fb: FormBuilder) {}

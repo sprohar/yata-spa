@@ -26,7 +26,7 @@ import { TaskActions } from '../../../store/actions';
 export class TaskInformativeComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   @Input() task!: Task;
-  @Input() isDraggable = true;
+  @Input() isDraggable = false;
   form!: FormGroup;
 
   constructor(
