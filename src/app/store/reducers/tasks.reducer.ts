@@ -40,6 +40,14 @@ export const tasksFeature = createFeature({
   name: 'tasks',
   reducer: createReducer(
     initialTasksState,
+    on(YataApiActions.loadOverdueTasksSuccess, (state, action) => ({
+      ...state,
+      tasks: state.orderBy
+        ? context
+            .fromOrderBy(state.orderBy)
+            .sort(state.tasks.concat(action.tasks))
+        : state.tasks.concat(action.tasks),
+    })),
     on(YataApiActions.loadProjectSuccess, (state, action) => ({
       ...state,
       tasks: state.orderBy

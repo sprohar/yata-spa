@@ -26,6 +26,7 @@ export const YataApiActions = createActionGroup({
     'Load Project Error': props<{ error: ApiErrorResponse }>(),
     'Update Project Success': props<{ project: Project }>(),
     'Update Project Error': props<{ error: ApiErrorResponse }>(),
+
     // Sections
     'Create Section Success': props<{ section: Section }>(),
     'Create Section Error': props<{ error: ApiErrorResponse }>(),
@@ -37,11 +38,13 @@ export const YataApiActions = createActionGroup({
     'Update Section Error': props<{ error: ApiErrorResponse }>(),
     'Move Section To Project Success': props<{ section: Section }>(),
     'Move Section To Project Error': props<{ error: ApiErrorResponse }>(),
+
     // Tasks
     'Create Task Success': props<{ task: Task }>(),
     'Create Task Error': props<{ error: ApiErrorResponse }>(),
     'Delete Task Success': props<{ task: Task }>(),
     'Delete Task Error': props<{ error: ApiErrorResponse }>(),
+    'Load Overdue Tasks Success': props<{ tasks: Task[] }>(),
     'Load Task Success': props<{ task: Task }>(),
     'Load Task Error': props<{ error: ApiErrorResponse }>(),
     'Load Tasks Success': props<{ tasks: Task[] }>(),
@@ -54,6 +57,7 @@ export const YataApiActions = createActionGroup({
     'Mark Task As Complete Error': props<{ error: ApiErrorResponse }>(),
     'Mark Task As Incomplete Success': props<{ task: Task }>(),
     'Mark Task As Incomplete Error': props<{ error: ApiErrorResponse }>(),
+
     // Subtasks
     'Create Subtask Success': props<{ subtask: Task }>(),
     'Create Subtask Error': props<{ error: ApiErrorResponse }>(),
@@ -63,6 +67,7 @@ export const YataApiActions = createActionGroup({
     'Load Subtask Error': props<{ error: ApiErrorResponse }>(),
     'Update Subtask Success': props<{ subtask: Task }>(),
     'Update Subtask Error': props<{ error: ApiErrorResponse }>(),
+
     // Tags
     'Create Tag Success': props<{ tag: Tag }>(),
     'Create Tag Error': props<{ error: ApiErrorResponse }>(),

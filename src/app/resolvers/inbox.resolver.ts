@@ -49,6 +49,9 @@ export function inboxResolver() {
     .pipe(
       take(1),
       map((res: PaginatedList<Task>) => res.data),
+      tap((tasks) =>
+        store.dispatch(YataApiActions.loadOverdueTasksSuccess({ tasks }))
+      ),
       catchError((error: HttpErrorResponse) => {
         store.dispatch(YataApiActions.serverError({ error }));
         return httpErrorService.handleError(error);

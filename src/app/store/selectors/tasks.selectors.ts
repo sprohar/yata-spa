@@ -16,6 +16,16 @@ import {
   selectOrderBy,
   selectTasks,
 } from '../reducers/tasks.reducer';
+import { selectInbox } from './projects.selectors';
+
+export const selectInboxTasks = createSelector(
+  selectTasks,
+  selectInbox,
+  (tasks: Task[], inbox: Project | undefined) =>
+    inbox === undefined
+      ? []
+      : tasks.filter((task) => task.projectId === inbox.id)
+);
 
 export const selectCurrentTask = createSelector(
   selectCurrentTaskId,
