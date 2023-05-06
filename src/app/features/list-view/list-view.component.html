@@ -2,89 +2,100 @@
 
 <main *ngIf="userPreferences$ | async as preferences">
   <div class="mb-1" *ngIf="groupedTasks$ | async as groupedTasks">
-    <div cdkDropListGroup class="flex-column row-gap-1 mb-1">
-      <mat-expansion-panel
-        *ngFor="let map of groupedTasks | keyvalue"
-        [expanded]="true"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <h3>
-              {{ map.key.name }}
-            </h3>
-            &nbsp;
-            <span class="text-grey">({{ map.value.length }})</span>
-          </mat-panel-title>
-          <mat-action-row>
-            <button
-              mat-icon-button
-              class="transform-scale-75"
-              (click)="$event.stopPropagation(); openCreateTaskDialog(map.key)"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-            <yata-section-options
-              [section]="map.key"
-              [direction]="'horizontal'"
-              class="transform-scale-75 mr-1"
-            ></yata-section-options>
-          </mat-action-row>
-        </mat-expansion-panel-header>
-
-        <yata-task-list
-          [attr.data-test-task-list]="map.key.id"
-          #taskList
-          cdkDropList
-          cdkDropListSortingDisabled
-          [cdkDropListData]="map.key"
-          (cdkDropListDropped)="taskList.handleMoveTaskToSection($event)"
-        >
-          <ng-container *ngFor="let task of map.value; trackBy: trackByTaskId">
-            <yata-task-informative
-              *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE"
-              cdkDrag
-              [task]="task"
-              [cdkDragData]="task"
-            >
-              <yata-task-options [task]="task"></yata-task-options>
-            </yata-task-informative>
-
-            <yata-task
-              *ngIf="preferences.taskView === TASK_VIEW_MINIMALIST"
-              cdkDrag
-              [task]="task"
-              [cdkDragData]="task"
-            >
-              <yata-task-options [task]="task"></yata-task-options>
-            </yata-task>
-
-            <mat-divider></mat-divider>
-          </ng-container>
-        </yata-task-list>
-      </mat-expansion-panel>
-    </div>
-
-    <ng-container *ngIf="completedTasks$ | async as completedTasks">
-      <mat-expansion-panel *ngIf="completedTasks.length > 0">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <span>Completed</span>
-            &nbsp;
-            <span>({{ completedTasks.length }})</span>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <!-- Completed task list -->
-        <yata-task-list data-test="completedTasks">
-          <ng-container *ngFor="let task of completedTasks">
-            <yata-task [task]="task" [isDraggable]="false">
-              <yata-task-options [task]="task"></yata-task-options>
-            </yata-task>
-            <mat-divider></mat-divider>
-          </ng-container>
-        </yata-task-list>
-      </mat-expansion-panel>
+    <ng-container *ngIf="groupedTasks.size === 0; else renderTasks">
+      <p>Your list is empty.</p>
     </ng-container>
+    <ng-template #renderTasks>
+      <div cdkDropListGroup class="flex-column row-gap-1 mb-1">
+        <mat-expansion-panel
+          *ngFor="let map of groupedTasks | keyvalue"
+          [expanded]="true"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3>
+                {{ map.key.name }}
+              </h3>
+              &nbsp;
+              <span class="text-grey">({{ map.value.length }})</span>
+            </mat-panel-title>
+            <mat-action-row>
+              <button
+                mat-icon-button
+                class="transform-scale-75"
+                (click)="
+                  $event.stopPropagation(); openCreateTaskDialog(map.key)
+                "
+              >
+                <mat-icon>add</mat-icon>
+              </button>
+              <yata-section-options
+                [section]="map.key"
+                [direction]="'horizontal'"
+                class="transform-scale-75 mr-1"
+              ></yata-section-options>
+            </mat-action-row>
+          </mat-expansion-panel-header>
+
+          <yata-task-list
+            [attr.data-test-task-list]="map.key.id"
+            #taskList
+            cdkDropList
+            cdkDropListSortingDisabled
+            [cdkDropListData]="map.key"
+            (cdkDropListDropped)="taskList.handleMoveTaskToSection($event)"
+          >
+            <ng-container
+              *ngFor="let task of map.value; trackBy: trackByTaskId"
+            >
+              <yata-task-informative
+                *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE"
+                cdkDrag
+                [task]="task"
+                [cdkDragData]="task"
+                [isDraggable]="true"
+              >
+                <yata-task-options [task]="task"></yata-task-options>
+              </yata-task-informative>
+
+              <yata-task
+                *ngIf="preferences.taskView === TASK_VIEW_MINIMALIST"
+                cdkDrag
+                [task]="task"
+                [cdkDragData]="task"
+                [isDraggable]="true"
+              >
+                <yata-task-options [task]="task"></yata-task-options>
+              </yata-task>
+
+              <mat-divider></mat-divider>
+            </ng-container>
+          </yata-task-list>
+        </mat-expansion-panel>
+      </div>
+
+      <ng-container *ngIf="completedTasks$ | async as completedTasks">
+        <mat-expansion-panel *ngIf="completedTasks.length > 0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span>Completed</span>
+              &nbsp;
+              <span>({{ completedTasks.length }})</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <!-- Completed task list -->
+          <yata-task-list data-test="completedTasks">
+            <ng-container *ngFor="let task of completedTasks">
+              <yata-task [task]="task">
+                <yata-task-options [task]="task"></yata-task-options>
+              </yata-task>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </yata-task-list>
+        </mat-expansion-panel>
+      </ng-container>
+    </ng-template>
   </div>
 </main>
 <router-outlet></router-outlet>
