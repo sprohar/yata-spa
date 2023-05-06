@@ -3,8 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './auth/guards/authentication.guard';
 import { InboxComponent } from './components/inbox/inbox.component';
 import { MainComponent } from './components/main/main.component';
-import { inboxResolver, projectsResolver } from './resolvers';
+import {
+  inboxResolver,
+  projectsResolver,
+  taskDetailsResolver,
+} from './resolvers';
 import { tagsResolver } from './resolvers/tags.resolver';
+import { TaskDetailsDialogEntryComponent } from './shared/components/task-details-dialog-entry/task-details-dialog-entry.component';
 
 const routes: Routes = [
   {
@@ -32,6 +37,15 @@ const routes: Routes = [
         resolve: {
           inbox: inboxResolver,
         },
+        children: [
+          {
+            path: 'tasks/:taskId',
+            component: TaskDetailsDialogEntryComponent,
+            resolve: {
+              task: taskDetailsResolver,
+            },
+          },
+        ],
       },
       {
         path: 'chrono',
