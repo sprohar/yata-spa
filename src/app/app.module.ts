@@ -9,6 +9,7 @@ import {
   MAT_DIALOG_DEFAULT_OPTIONS,
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -35,9 +36,11 @@ import { AuthModule } from './auth/auth.module';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
+import { InboxComponent } from './components/inbox/inbox.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
 import { httpInterceptorProviders } from './http-interceptors';
+import { SharedModule } from './shared/shared.module';
 import {
   AccountEffects,
   AppEffects,
@@ -56,7 +59,6 @@ import {
   tagsReducer,
   tasksReducer,
 } from './store/reducers/';
-import { InboxComponent } from './components/inbox/inbox.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,7 @@ import { InboxComponent } from './components/inbox/inbox.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
     AuthModule,
@@ -98,6 +101,7 @@ import { InboxComponent } from './components/inbox/inbox.component';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,
     MatToolbarModule,
+    MatExpansionModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
