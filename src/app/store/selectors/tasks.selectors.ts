@@ -60,30 +60,13 @@ export const selectTodaysTasks = createSelector(selectTasks, (tasks) =>
   })
 );
 
-export const selectOverdueTasks = createSelector(
-  selectTasks,
-  selectProjects,
-  (tasks: Task[], projects: Project[]) =>
-    tasks.reduce((tasks, task) => {
-      if (!task.dueDate) return tasks;
-
-      const today = new Date();
-      const dueDate = new Date(task.dueDate);
-
-      if (dueDate > today) return tasks;
-
-      const project = projects.find((p) => p.id === task.projectId);
-      if (project === undefined) return tasks;
-
-      const newTask = {
-        ...task,
-        project,
-      } as Task;
-
-      tasks.push(newTask);
-
-      return tasks;
-    }, [] as Task[])
+export const selectOverdueTasks = createSelector(selectTasks, (tasks: Task[]) =>
+  tasks.filter((task) => {
+    if (!task.dueDate) return false;
+    const today = new Date();
+    const dueDate = new Date(task.dueDate);
+    return dueDate < today;
+  })
 );
 
 export const selectUpcomingTasks = createSelector(selectTasks, (tasks) =>
