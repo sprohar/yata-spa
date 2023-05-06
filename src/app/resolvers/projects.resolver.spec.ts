@@ -1,16 +1,80 @@
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Route, Router } from '@angular/router';
+import {
+  RouterTestingHarness,
+  RouterTestingModule,
+} from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
+import { of } from 'rxjs';
+import { PaginatedList } from '../interfaces';
+import { Project } from '../models';
+import { ProjectsService } from '../services/http';
+import { projectsResolver } from './projects.resolver';
 
-import { ProjectsResolver } from './projects.resolver';
+@Component({ selector: 'home' })
+class HomeStubComponent {}
+
+@Component({ selector: 'inbox' })
+class InboxStubComponent {}
+
+const routes: Route[] = [
+  {
+    path: '',
+    component: HomeStubComponent,
+  },
+  {
+    path: 'inbox',
+    component: InboxStubComponent,
+    resolve: {
+      projects: projectsResolver,
+    },
+  },
+];
 
 describe('ProjectsResolver', () => {
-  let resolver: ProjectsResolver;
+  let harness: RouterTestingHarness;
+  let projectsServiceSpy: jasmine.SpyObj<ProjectsService>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    resolver = TestBed.inject(ProjectsResolver);
+  beforeEach(async () => {
+    projectsServiceSpy = jasmine.createSpyObj('ProjectsService', ['getAll']);
+
+    await TestBed.configureTestingModule({
+      declarations: [HomeStubComponent, InboxStubComponent],
+      imports: [RouterTestingModule.withRoutes(routes)],
+      providers: [
+        provideMockStore({}),
+        {
+          provide: ProjectsService,
+          useValue: projectsServiceSpy,
+        },
+      ],
+    }).compileComponents();
+
+    harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/', HomeStubComponent);
   });
 
-  it('should be created', () => {
-    expect(resolver).toBeTruthy();
+  it('should navigate to the HomeStubComponent', () => {
+    expect(TestBed.inject(Router).url).toEqual('/');
+  });
+
+  it('should navigate to "/inbox"', async () => {
+    const projects: Project[] = [
+      { id: 1, name: 'Inbox' },
+      { id: 2, name: 'Project 1' },
+    ];
+
+    const stubResponse: PaginatedList<Project> = {
+      pageIndex: 0,
+      pageSize: 10,
+      count: projects.length,
+      data: projects,
+    };
+
+    projectsServiceSpy.getAll.and.returnValue(of(stubResponse));
+
+    await harness.navigateByUrl('/inbox');
+    expect(TestBed.inject(Router).url).toEqual('/inbox');
   });
 });

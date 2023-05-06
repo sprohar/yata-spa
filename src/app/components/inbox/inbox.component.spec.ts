@@ -13,7 +13,7 @@ import { MemoizedSelector } from '@ngrx/store';
 import { TasksState } from '../../store/reducers/tasks.reducer';
 import { ActivatedRoute } from '@angular/router';
 
-const projects: Project[] = [{ id: 1, name: 'Project' }];
+// const projects: Project[] = [{ id: 1, name: 'Project' }];
 const sections: Section[] = [
   { id: 1, name: 'Section 1', projectId: 1 },
   { id: 2, name: 'Section 2', projectId: 1 },

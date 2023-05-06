@@ -1,16 +1,21 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { catchError, map, of } from 'rxjs';
-import { ApiErrorResponse } from '../error/api-error-response';
+import { catchError, EMPTY, map } from 'rxjs';
+import { PaginatedList } from '../interfaces';
+import { Tag } from '../models';
 import { TagsService } from '../services/http';
 import { YataApiActions } from '../store/actions';
 
 export function tagsResolver() {
+  const router = inject(Router);
   const store = inject(Store);
+
   return inject(TagsService)
     .getAll()
     .pipe(
-      map((res) => {
+      map((res: PaginatedList<Tag>) => {
         store.dispatch(
           YataApiActions.loadTagsSuccess({
             tags: res.data,
@@ -18,13 +23,14 @@ export function tagsResolver() {
         );
         return true;
       }),
-      catchError((error: ApiErrorResponse) => {
+      catchError((error: HttpErrorResponse) => {
         store.dispatch(
-          YataApiActions.loadTagsError({
+          YataApiActions.serverError({
             error,
           })
         );
-        return of(false);
+        router.navigateByUrl('/app');
+        return EMPTY;
       })
     );
 }

@@ -15,7 +15,7 @@ import { inboxResolver } from './inbox.resolver';
 @Component({ selector: 'home' })
 class HomeStubComponent {}
 
-@Component({ selector: 'home' })
+@Component({ selector: 'inbox' })
 class InboxStubComponent {}
 
 const routes: Route[] = [
