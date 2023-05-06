@@ -8,6 +8,7 @@
     <ng-template #renderTasks>
     <mat-expansion-panel
       *ngFor="let map of group | keyvalue"
+      [attr.data-test-section]="map.key.id"
       [expanded]="true"
     >
       <mat-expansion-panel-header>
