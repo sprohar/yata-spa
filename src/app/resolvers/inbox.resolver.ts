@@ -2,11 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { catchError, EMPTY, forkJoin, map, switchMap, take, tap } from 'rxjs';
-import { PaginatedList } from '../interfaces';
-import { Project, Task } from '../models';
-import { ProjectsService, TasksService } from '../services/http';
-import { HttpErrorService } from '../services/http/error/http-error.service';
+import { catchError, EMPTY, switchMap, take, tap } from 'rxjs';
+import { Project } from '../models';
+import { ProjectsService } from '../services/http';
 import { SidenavActions, YataApiActions } from '../store/actions';
 import { selectInbox } from '../store/selectors';
 
@@ -14,10 +12,8 @@ export function inboxResolver() {
   const router = inject(Router);
   const store = inject(Store);
   const projectsService = inject(ProjectsService);
-  const tasksService = inject(TasksService);
-  const httpErrorService = inject(HttpErrorService);
 
-  const inbox$ = store.select(selectInbox).pipe(
+  return store.select(selectInbox).pipe(
     take(1),
     switchMap((inbox: Project | undefined) => {
       if (inbox === undefined) {
@@ -41,25 +37,4 @@ export function inboxResolver() {
       );
     })
   );
-
-  const overdueTasks$ = tasksService
-    .getAll({
-      lt: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
-    })
-    .pipe(
-      take(1),
-      map((res: PaginatedList<Task>) => res.data),
-      tap((tasks) =>
-        store.dispatch(YataApiActions.loadOverdueTasksSuccess({ tasks }))
-      ),
-      catchError((error: HttpErrorResponse) => {
-        store.dispatch(YataApiActions.serverError({ error }));
-        return httpErrorService.handleError(error);
-      })
-    );
-
-  return forkJoin({
-    inbox: inbox$,
-    overdueTasks: overdueTasks$,
-  });
 }
