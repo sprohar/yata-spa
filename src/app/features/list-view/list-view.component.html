@@ -1,10 +1,7 @@
 <yata-view-header></yata-view-header>
 
 <main *ngIf="userPreferences$ | async as preferences">
-  <div
-    class="sections-wrapper mb-1"
-    *ngIf="groupedTasks$ | async as groupedTasks"
-  >
+  <div class="mb-1" *ngIf="groupedTasks$ | async as groupedTasks">
     <div cdkDropListGroup class="flex-column row-gap-1 mb-1">
       <mat-expansion-panel
         *ngFor="let map of groupedTasks | keyvalue"
@@ -12,7 +9,9 @@
       >
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span>{{ map.key.name }}</span>
+            <h3>
+              {{ map.key.name }}
+            </h3>
             &nbsp;
             <span class="text-grey">({{ map.value.length }})</span>
           </mat-panel-title>
@@ -58,10 +57,9 @@
             >
               <yata-task-options [task]="task"></yata-task-options>
             </yata-task>
-            
+
             <mat-divider></mat-divider>
           </ng-container>
-
         </yata-task-list>
       </mat-expansion-panel>
     </div>

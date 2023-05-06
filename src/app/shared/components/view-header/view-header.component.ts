@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -30,6 +30,8 @@ export class ViewHeaderComponent implements OnDestroy {
   readonly currentProject$ = this.store.select(selectCurrentProject);
   readonly LIST_VIEW = Project.View.LIST;
   readonly KANBAN_VIEW = Project.View.KANBAN;
+
+  @Input() title?: string;
 
   constructor(
     private readonly store: Store,
