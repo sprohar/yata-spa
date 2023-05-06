@@ -1,3 +1,5 @@
+import { Project } from './project.model';
+import { Section } from './section.model';
 import { Tag } from './tag.model';
 
 export interface Task {
@@ -27,8 +29,10 @@ export interface Task {
   subtasks?: Task[];
   tags?: Tag[];
   projectId: number;
+  project?: Project;
   userId?: string;
   sectionId?: number | null;
+  section?: Section;
 }
 
 export enum Priority {
