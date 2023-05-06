@@ -1,9 +1,9 @@
-<div class="p1" *ngIf="currentTag$ | async as tag">
+<ng-container *ngIf="currentTag$ | async as tag">
   <yata-view-header [title]="'# ' + tag.name"></yata-view-header>
 
   <main
     *ngIf="tasksGroupedByTags$ | async as map"
-    class="flex-column row-gap-1 mt-1"
+    class="flex-column row-gap-1"
   >
     <mat-expansion-panel
       [attr.data-test]="'project-' + entry.key.name + '-panel'"
@@ -39,6 +39,6 @@
       </ng-container>
     </mat-expansion-panel>
   </main>
-</div>
+</ng-container>
 
 <router-outlet></router-outlet>
