@@ -1,9 +1,9 @@
 import { createSelector } from '@ngrx/store';
 import { Priority, Project, Section, Tag, Task } from '../../models';
 import {
+  groupProjectTasksBySection,
   groupTasksByDueDate,
   groupTasksByPriority,
-  groupProjectTasksBySection,
 } from '../../strategies/group-by';
 import {
   selectCurrentProjectId,
@@ -16,16 +16,6 @@ import {
   selectOrderBy,
   selectTasks,
 } from '../reducers/tasks.reducer';
-import { selectInbox } from './projects.selectors';
-
-export const selectInboxTasks = createSelector(
-  selectTasks,
-  selectInbox,
-  (tasks: Task[], inbox: Project | undefined) =>
-    inbox === undefined
-      ? []
-      : tasks.filter((task) => task.projectId === inbox.id)
-);
 
 export const selectCurrentTask = createSelector(
   selectCurrentTaskId,
@@ -70,13 +60,30 @@ export const selectTodaysTasks = createSelector(selectTasks, (tasks) =>
   })
 );
 
-export const selectOverdueTasks = createSelector(selectTasks, (tasks) =>
-  tasks.filter((task) => {
-    if (!task.dueDate) return false;
-    const today = new Date();
-    const dueDate = new Date(task.dueDate);
-    return dueDate < today;
-  })
+export const selectOverdueTasks = createSelector(
+  selectTasks,
+  selectProjects,
+  (tasks: Task[], projects: Project[]) =>
+    tasks.reduce((tasks, task) => {
+      if (!task.dueDate) return tasks;
+
+      const today = new Date();
+      const dueDate = new Date(task.dueDate);
+
+      if (dueDate > today) return tasks;
+
+      const project = projects.find((p) => p.id === task.projectId);
+      if (project === undefined) return tasks;
+
+      const newTask = {
+        ...task,
+        project,
+      } as Task;
+
+      tasks.push(newTask);
+
+      return tasks;
+    }, [] as Task[])
 );
 
 export const selectUpcomingTasks = createSelector(selectTasks, (tasks) =>
