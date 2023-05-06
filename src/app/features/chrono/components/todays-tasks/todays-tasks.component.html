@@ -4,7 +4,7 @@
   <mat-expansion-panel *ngIf="tasks$ | async as tasks" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <span>{{ today | date : "fullDate" }}</span>
+        <h3>{{ today | date : "fullDate" }}</h3>
         &nbsp;
         <span>({{ tasks.length }})</span>
       </mat-panel-title>
