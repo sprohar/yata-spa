@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { TaskView } from '../../interfaces';
 import { Task } from '../../models';
-import { selectTasks } from '../../store/selectors';
+import {
+  selectTasksGroupByProjectSections,
+  selectUserPreferences,
+} from '../../store/selectors';
 
 @Component({
   selector: 'yata-inbox',
@@ -11,20 +13,13 @@ import { selectTasks } from '../../store/selectors';
   styleUrls: ['./inbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InboxComponent implements OnInit {
-  tasks$ = this.store.select(selectTasks);
-  overdueTasks$ = this.route.data.pipe(
-    map((data) => data['inbox'].overdueTasks)
-  );
+export class InboxComponent {
+  readonly TASK_VIEW_MINIMALIST = TaskView.MINIMALIST;
+  readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
+  readonly userPreferences$ = this.store.select(selectUserPreferences);
+  readonly group$ = this.store.select(selectTasksGroupByProjectSections);
 
-  constructor(
-    private readonly store: Store,
-    private readonly route: ActivatedRoute
-  ) {}
-
-  ngOnInit(): void {
-    console.log('Inbox');
-  }
+  constructor(private readonly store: Store) {}
 
   trackByTaskId(_index: number, task: Task) {
     return task.id;

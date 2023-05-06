@@ -1,6 +1,6 @@
-<h1 class="p1">Today</h1>
+<yata-view-header [title]="'Today'"></yata-view-header>
 
-<main class="flex-column row-gap-1 mt-1">
+<main class="flex-column row-gap-1">
   <mat-expansion-panel *ngIf="tasks$ | async as tasks" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
