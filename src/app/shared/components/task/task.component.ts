@@ -7,8 +7,10 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
+import { TaskView } from '../../../interfaces';
 import { Task } from '../../../models';
 import { TaskActions } from '../../../store/actions/task.actions';
+import { selectUserPreferences } from '../../../store/selectors';
 
 @Component({
   selector: 'yata-task',
@@ -18,6 +20,8 @@ import { TaskActions } from '../../../store/actions/task.actions';
 })
 export class TaskComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
+  readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
+  readonly prefs$ = this.store.select(selectUserPreferences);
   @Input() task!: Task;
   @Input() isDraggable = false;
   form!: FormGroup;

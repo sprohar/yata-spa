@@ -1,6 +1,6 @@
 <yata-view-header></yata-view-header>
 
-<main *ngIf="userPreferences$ | async as preferences">
+<main>
   <div class="mb-1" *ngIf="groupedTasks$ | async as groupedTasks">
     <ng-container *ngIf="groupedTasks.size === 0; else renderTasks">
       <p>Your list is empty.</p>
@@ -48,18 +48,7 @@
             <ng-container
               *ngFor="let task of map.value; trackBy: trackByTaskId"
             >
-              <yata-task-informative
-                *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE"
-                cdkDrag
-                [task]="task"
-                [cdkDragData]="task"
-                [isDraggable]="true"
-              >
-                <yata-task-options [task]="task"></yata-task-options>
-              </yata-task-informative>
-
               <yata-task
-                *ngIf="preferences.taskView === TASK_VIEW_MINIMALIST"
                 cdkDrag
                 [task]="task"
                 [cdkDragData]="task"

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { TaskView } from '../../interfaces';
 import { Section, Task } from '../../models';
 import {
   CreateTaskDialogComponent,
@@ -10,7 +9,6 @@ import {
 import {
   selectCompletedTasks,
   selectTasksGroupByProjectSections,
-  selectUserPreferences,
 } from '../../store/selectors';
 
 @Component({
@@ -20,11 +18,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListViewComponent {
-  readonly TASK_VIEW_MINIMALIST = TaskView.MINIMALIST;
-  readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
   readonly completedTasks$ = this.store.select(selectCompletedTasks);
   readonly groupedTasks$ = this.store.select(selectTasksGroupByProjectSections);
-  readonly userPreferences$ = this.store.select(selectUserPreferences);
 
   constructor(
     private readonly store: Store,

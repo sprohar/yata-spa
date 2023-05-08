@@ -10,20 +10,11 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <yata-task-list *ngIf="preferences$ | async as preferences">
+    <yata-task-list>
       <ng-container
         *ngFor="let task of tasks; index as i; trackBy: trackByTaskId"
       >
-        <yata-task-informative
-          *ngIf="preferences.taskView === TASK_VIEW_INFORMATIVE"
-          [attr.data-test-task-informative]="i"
-          [task]="task"
-          [isDraggable]="false"
-        >
-          <yata-task-options [task]="task"></yata-task-options>
-        </yata-task-informative>
         <yata-task
-          *ngIf="preferences.taskView === TASK_VIEW_MINIMALIST"
           [attr.data-test-task]="i"
           [task]="task"
           [isDraggable]="false"

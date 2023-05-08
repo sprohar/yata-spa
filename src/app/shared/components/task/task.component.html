@@ -1,19 +1,54 @@
-<li class="task" [attr.data-test]="'task-' + task.id" [formGroup]="form">
-  <ng-container *ngIf="isDraggable">
-    <span class="drag-indicator">
-      <mat-icon>drag_indicator</mat-icon>
-    </span>
-  </ng-container>
-  <mat-checkbox
-    [attr.data-test]="'task-' + task.id + 'checkbox'"
-    formControlName="isCompleted"
-  ></mat-checkbox>
-  <input
-    [attr.data-test]="'task-' + task.id + 'input'"
-    type="text"
-    class="input"
-    formControlName="title"
-    (blur)="handleSubmit()"
-  />
-  <ng-content></ng-content>
+<li
+  class="flex task"
+  [attr.data-test]="'task-' + task.id"
+  [formGroup]="form"
+  *ngIf="prefs$ | async as prefs"
+>
+  <!-- Make three columns  -->
+
+  <!-- Checkbox -->
+  <div class="flex-column">
+    <div class="flex align-items-center">
+      <ng-container *ngIf="isDraggable">
+        <span class="drag-indicator">
+          <mat-icon>drag_indicator</mat-icon>
+        </span>
+      </ng-container>
+      <mat-checkbox
+        [attr.data-test]="'task-' + task.id + 'checkbox'"
+        formControlName="isCompleted"
+      ></mat-checkbox>
+    </div>
+  </div>
+
+  <!-- Input & details -->
+  <div class="flex-column spacer">
+    <input
+      [attr.data-test]="'task-' + task.id + 'input'"
+      type="text"
+      class="input"
+      formControlName="title"
+      (blur)="handleSubmit()"
+    />
+    <ng-container *ngIf="prefs.taskView === TASK_VIEW_INFORMATIVE">
+      <p class="task-description">
+        {{ task.description }}
+      </p>
+      <div class="flex info-buttons-container">
+        <button
+          *ngIf="task.dueDate"
+          [attr.data-test]="'task-' + task.id + 'dueDate'"
+          mat-stroked-button
+          class="task-due-date"
+        >
+          {{ task.dueDate | date : "shortDate" }}
+        </button>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Injected content -->
+  <div class="flex-column">
+    <ng-content></ng-content>
+  </div>
 </li>

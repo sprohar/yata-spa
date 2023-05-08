@@ -6,38 +6,27 @@
       <p>Your inbox is empty.</p>
     </ng-container>
     <ng-template #renderTasks>
-    <mat-expansion-panel
-      *ngFor="let map of group | keyvalue"
-      [attr.data-test-section]="map.key.id"
-      [expanded]="true"
-    >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <h3>{{ map.key.name }}</h3>
-          &nbsp;
-          <span class="text-grey">({{ map.value.length }})</span>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <yata-task-list>
-        <ng-container *ngFor="let task of map.value; trackBy: trackByTaskId">
-          <yata-task
-            *ngIf="prefs.taskView === TASK_VIEW_MINIMALIST"
-            [task]="task"
-          >
-            <yata-task-options [task]="task"></yata-task-options>
-          </yata-task>
-
-          <yata-task-informative
-            *ngIf="prefs.taskView === TASK_VIEW_INFORMATIVE"
-            [task]="task"
-          >
-            <yata-task-options [task]="task"></yata-task-options>
-          </yata-task-informative>
-
-          <mat-divider></mat-divider>
-        </ng-container>
-      </yata-task-list>
-    </mat-expansion-panel>
+      <mat-expansion-panel
+        *ngFor="let map of group | keyvalue"
+        [attr.data-test-section]="map.key.id"
+        [expanded]="true"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>{{ map.key.name }}</h3>
+            &nbsp;
+            <span class="text-grey">({{ map.value.length }})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <yata-task-list>
+          <ng-container *ngFor="let task of map.value; trackBy: trackByTaskId">
+            <yata-task [task]="task">
+              <yata-task-options [task]="task"></yata-task-options>
+            </yata-task>
+            <mat-divider></mat-divider>
+          </ng-container>
+        </yata-task-list>
+      </mat-expansion-panel>
     </ng-template>
   </div>
 </main>
