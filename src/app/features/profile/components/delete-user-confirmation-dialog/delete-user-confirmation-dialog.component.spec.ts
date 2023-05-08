@@ -7,20 +7,20 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
-import { DeleteAccountConfirmationDialogComponent } from './delete-account-confirmation-dialog.component';
+import { DeleteUserConfirmationDialogComponent } from './delete-user-confirmation-dialog.component';
 
-describe('DeleteAccountConfirmationDialogComponent', () => {
-  let component: DeleteAccountConfirmationDialogComponent;
-  let fixture: ComponentFixture<DeleteAccountConfirmationDialogComponent>;
+describe('DeleteUserConfirmationDialogComponent', () => {
+  let component: DeleteUserConfirmationDialogComponent;
+  let fixture: ComponentFixture<DeleteUserConfirmationDialogComponent>;
   let dialogRef: jasmine.SpyObj<
-    MatDialogRef<DeleteAccountConfirmationDialogComponent>
+    MatDialogRef<DeleteUserConfirmationDialogComponent>
   >;
 
   beforeEach(async () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['afterClosed', 'close']);
 
     await TestBed.configureTestingModule({
-      declarations: [DeleteAccountConfirmationDialogComponent],
+      declarations: [DeleteUserConfirmationDialogComponent],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
@@ -37,7 +37,7 @@ describe('DeleteAccountConfirmationDialogComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DeleteAccountConfirmationDialogComponent);
+    fixture = TestBed.createComponent(DeleteUserConfirmationDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

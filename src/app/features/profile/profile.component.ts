@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { AccountActions } from '../../store/actions';
+import { UserActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
-import { DeleteAccountConfirmationDialogComponent } from './components/delete-account-confirmation-dialog/delete-account-confirmation-dialog.component';
+import { DeleteUserConfirmationDialogComponent } from './components/delete-user-confirmation-dialog/delete-user-confirmation-dialog.component';
 
 @Component({
   selector: 'yata-profile',
@@ -26,13 +26,13 @@ export class ProfileComponent implements OnDestroy {
   }
 
   handleDeleteAccount() {
-    const ref = this.dialog.open(DeleteAccountConfirmationDialogComponent);
+    const ref = this.dialog.open(DeleteUserConfirmationDialogComponent);
     ref
       .afterClosed()
       .pipe(takeUntil(this.destroy$))
       .subscribe((isConfirmed) => {
         if (isConfirmed) {
-          this.store.dispatch(AccountActions.deleteAccount());
+          this.store.dispatch(UserActions.deleteUser());
         }
       });
   }

@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { User } from '../../auth/models/user.model';
-import { AccountActions } from '../../store/actions';
+import { UserActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
 import { DeleteAccountConfirmationDialogComponent } from './components/delete-account-confirmation-dialog/delete-account-confirmation-dialog.component';
 
@@ -102,7 +102,7 @@ describe('ProfileComponent', () => {
       button.click();
 
       expect(store.dispatch).toHaveBeenCalledWith(
-        AccountActions.deleteAccount()
+        UserActions.deleteAccount()
       );
     });
 

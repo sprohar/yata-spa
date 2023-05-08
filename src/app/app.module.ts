@@ -42,7 +42,6 @@ import { MainComponent } from './components/main/main.component';
 import { httpInterceptorProviders } from './http-interceptors';
 import { SharedModule } from './shared/shared.module';
 import {
-  AccountEffects,
   AppEffects,
   AuthEffects,
   ChronoEffects,
@@ -51,6 +50,7 @@ import {
   SectionsEffects,
   TagsEffects,
   TasksEffects,
+  UsersEffects,
 } from './store/effects/';
 import {
   authReducer,
@@ -88,7 +88,6 @@ import {
       {}
     ),
     EffectsModule.forRoot([
-      AccountEffects,
       AppEffects,
       AuthEffects,
       ChronoEffects,
@@ -97,6 +96,7 @@ import {
       TasksEffects,
       TagsEffects,
       PreferencesEffects,
+      UsersEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutModule,

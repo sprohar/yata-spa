@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { UsersService } from '../../services/http';
-import { AccountActions, YataApiActions } from '../actions';
+import { UserActions, YataApiActions } from '../actions';
 
 @Injectable()
-export class AccountEffects {
+export class UsersEffects {
   constructor(
     private readonly router: Router,
     private readonly actions$: Actions,
@@ -16,7 +16,7 @@ export class AccountEffects {
 
   delete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AccountActions.deleteAccount),
+      ofType(UserActions.deleteUser),
       switchMap(() =>
         this.usersService.delete().pipe(
           map(() => YataApiActions.deleteUser()),

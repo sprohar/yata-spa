@@ -1,4 +1,3 @@
-export * from './account.actions';
 export * from './app.actions';
 export * from './auth-api.actions';
 export * from './auth.actions';
@@ -20,5 +19,6 @@ export * from './task-options.actions';
 export * from './task-resolver.actions';
 export * from './task.actions';
 export * from './tasks-order-by-options.actions';
+export * from './user.actions';
 export * from './view-header.actions';
 export * from './yata-api-actions';

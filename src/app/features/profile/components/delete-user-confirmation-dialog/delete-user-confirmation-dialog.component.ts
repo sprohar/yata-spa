@@ -26,12 +26,12 @@ function equals(value: string): ValidatorFn {
 }
 
 @Component({
-  selector: 'yata-delete-account-confirmation-dialog',
-  templateUrl: './delete-account-confirmation-dialog.component.html',
-  styleUrls: ['./delete-account-confirmation-dialog.component.scss'],
+  selector: 'yata-delete-user-confirmation-dialog',
+  templateUrl: './delete-user-confirmation-dialog.component.html',
+  styleUrls: ['./delete-user-confirmation-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DeleteAccountConfirmationDialogComponent implements AfterViewInit {
+export class DeleteUserConfirmationDialogComponent implements AfterViewInit {
   readonly message = 'Delete my account';
   readonly control = new FormControl<string>('', {
     validators: [Validators.required, equals(this.message)],
@@ -42,7 +42,7 @@ export class DeleteAccountConfirmationDialogComponent implements AfterViewInit {
 
   constructor(
     private readonly changeDetector: ChangeDetectorRef,
-    public dialogRef: MatDialogRef<DeleteAccountConfirmationDialogComponent>
+    public dialogRef: MatDialogRef<DeleteUserConfirmationDialogComponent>
   ) {}
 
   ngAfterViewInit(): void {
