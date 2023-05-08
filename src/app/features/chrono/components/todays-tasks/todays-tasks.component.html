@@ -25,6 +25,34 @@
       </ng-container>
     </yata-task-list>
   </mat-expansion-panel>
+
+  <mat-expansion-panel
+    *ngIf="completedTasks$ | async as tasks"
+    [expanded]="false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h3>Completed</h3>
+        &nbsp;
+        <span>({{ tasks.length }})</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <yata-task-list>
+      <ng-container
+        *ngFor="let task of tasks; index as i; trackBy: trackByTaskId"
+      >
+        <yata-task
+          [attr.data-test-task]="i"
+          [task]="task"
+          [isDraggable]="false"
+        >
+          <yata-task-options [task]="task"></yata-task-options>
+        </yata-task>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </yata-task-list>
+  </mat-expansion-panel>
 </main>
 
 <router-outlet></router-outlet>

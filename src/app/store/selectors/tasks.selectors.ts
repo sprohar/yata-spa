@@ -31,6 +31,10 @@ export const selectCompletedTasks = createSelector(selectTasks, (tasks) =>
   tasks.filter((task) => task.isCompleted)
 );
 
+export const selectIncompleteTasks = createSelector(selectTasks, (tasks) =>
+  tasks.filter((task) => !task.isCompleted)
+);
+
 export const selectHighPriorityTasks = createSelector(selectTasks, (tasks) =>
   tasks.filter((t) => t.priority === Priority.HIGH)
 );
@@ -53,6 +57,7 @@ export const selectTodaysTasks = createSelector(selectTasks, (tasks) =>
     const today = new Date();
     const dueDate = new Date(task.dueDate);
     return (
+      !task.isCompleted &&
       dueDate.getDate() === today.getDate() &&
       dueDate.getMonth() === today.getMonth() &&
       dueDate.getFullYear() === today.getFullYear()

@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Task } from '../../../../models';
-import { selectTodaysTasks } from '../../../../store/selectors';
+import {
+  selectCompletedTasks,
+  selectIncompleteTasks,
+} from '../../../../store/selectors';
 
 @Component({
   selector: 'yata-todays-tasks',
@@ -10,7 +13,8 @@ import { selectTodaysTasks } from '../../../../store/selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodaysTasksComponent {
-  readonly tasks$ = this.store.select(selectTodaysTasks);
+  readonly completedTasks$ = this.store.select(selectCompletedTasks);
+  readonly tasks$ = this.store.select(selectIncompleteTasks);
   readonly today = new Date();
 
   constructor(private readonly store: Store) {}
