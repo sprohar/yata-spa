@@ -43,7 +43,7 @@
       type="submit"
       mat-raised-button
       color="primary"
-      (click)="handleSave()"
+      (click)="$event.preventDefault(); handleSave()"
       [disabled]="form.invalid"
     >
       Save

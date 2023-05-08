@@ -5,12 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Project } from '../../models';
@@ -32,9 +27,9 @@ export class CreateProjectDialogComponent implements OnInit {
   inputElement?: ElementRef;
 
   constructor(
-    private store: Store,
-    private dialogRef: MatDialogRef<CreateProjectDialogComponent>,
-    private fb: FormBuilder
+    private readonly store: Store,
+    private readonly dialogRef: MatDialogRef<CreateProjectDialogComponent>,
+    private readonly fb: FormBuilder
   ) {}
 
   ngOnInit(): void {

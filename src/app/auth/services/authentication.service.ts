@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, share, take, tap, throwError } from 'rxjs';
+import { catchError, take, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { AuthActions } from '../../store/actions';
@@ -36,7 +36,6 @@ export class AuthenticationService {
     return this.http.post<AuthResponseDto>(url, dto).pipe(
       tap(() => this.startRefreshTokenTimer()),
       take(1),
-      share(),
       catchError(this.handleError)
     );
   }
@@ -46,7 +45,6 @@ export class AuthenticationService {
     return this.http.post<AuthResponseDto>(url, dto).pipe(
       tap(() => this.startRefreshTokenTimer()),
       take(1),
-      share(),
       catchError(this.handleError)
     );
   }
@@ -56,7 +54,6 @@ export class AuthenticationService {
     return this.http.post<AuthResponseDto>(url, null).pipe(
       tap(() => this.startRefreshTokenTimer(returnUrl)),
       take(1),
-      share(),
       catchError(this.handleError)
     );
   }
