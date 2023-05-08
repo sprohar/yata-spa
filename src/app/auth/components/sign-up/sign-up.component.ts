@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -10,6 +10,7 @@ import { User } from '../../models/user.model';
   selector: 'yata-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent implements OnInit {
   form!: FormGroup;
