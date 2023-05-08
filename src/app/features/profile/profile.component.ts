@@ -15,6 +15,7 @@ import { DeleteUserConfirmationDialogComponent } from './components/delete-user-
 export class ProfileComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
   readonly user$ = this.store.select(selectUser);
+  hideUsernameInput = true;
 
   constructor(
     private readonly dialog: MatDialog,

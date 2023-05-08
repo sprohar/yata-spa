@@ -11,7 +11,7 @@ import { of } from 'rxjs';
 import { User } from '../../auth/models/user.model';
 import { UserActions } from '../../store/actions';
 import { selectUser } from '../../store/reducers/auth.reducer';
-import { DeleteAccountConfirmationDialogComponent } from './components/delete-account-confirmation-dialog/delete-account-confirmation-dialog.component';
+import { DeleteUserConfirmationDialogComponent } from './components/delete-user-confirmation-dialog/delete-user-confirmation-dialog.component';
 
 import { ProfileComponent } from './profile.component';
 
@@ -96,20 +96,18 @@ describe('ProfileComponent', () => {
     it("should dispatch an action to delete the user's account", () => {
       dialog.open.and.returnValue({
         afterClosed: () => of(true),
-      } as MatDialogRef<DeleteAccountConfirmationDialogComponent>);
+      } as MatDialogRef<DeleteUserConfirmationDialogComponent>);
 
       const button: HTMLElement = host.querySelector('#deleteButton')!;
       button.click();
 
-      expect(store.dispatch).toHaveBeenCalledWith(
-        UserActions.deleteAccount()
-      );
+      expect(store.dispatch).toHaveBeenCalledWith(UserActions.deleteUser());
     });
 
     it("should NOT dispatch an action to delete the user's account", () => {
       dialog.open.and.returnValue({
         afterClosed: () => of(''),
-      } as MatDialogRef<DeleteAccountConfirmationDialogComponent>);
+      } as MatDialogRef<DeleteUserConfirmationDialogComponent>);
 
       const button: HTMLElement = host.querySelector('#deleteButton')!;
       button.click();

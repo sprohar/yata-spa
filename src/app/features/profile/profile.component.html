@@ -32,18 +32,27 @@
 
           <div class="flex-column user-info">
             <div class="flex align-items-center username-container">
-              <p data-test="username" id="username" class="username">
-                {{ user.username ?? "Anon" }}
-              </p>
-              <button
-                id="editUsernameButton"
-                data-test="editUsernameButton"
-                mat-icon-button
-                title="Edit username"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
+              <ng-container *ngIf="hideUsernameInput; else editUsername">
+                <p data-test="username" id="username" class="username">
+                  {{ user.username ?? "Anon" }}
+                </p>
+                <button
+                  id="editUsernameButton"
+                  data-test="editUsernameButton"
+                  mat-icon-button
+                  title="Edit username"
+                  (click)="hideUsernameInput = false"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </ng-container>
+              <ng-template #editUsername>
+                <yata-edit-username-input
+                  (close)="hideUsernameInput = true"
+                ></yata-edit-username-input>
+              </ng-template>
             </div>
+            <br />
             <p data-test="email" id="email" class="email">
               {{ user.email }}
             </p>

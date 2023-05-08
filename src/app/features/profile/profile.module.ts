@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DeleteUserConfirmationDialogComponent } from './components/delete-user-confirmation-dialog/delete-user-confirmation-dialog.component';
-import { EditUsernameComponent } from './components/edit-username/edit-username.component';
+import { EditUsernameInputComponent } from './components/edit-username-input/edit-username-input.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 
@@ -17,7 +17,7 @@ import { ProfileComponent } from './profile.component';
   declarations: [
     DeleteUserConfirmationDialogComponent,
     ProfileComponent,
-    EditUsernameComponent,
+    EditUsernameInputComponent,
   ],
   imports: [
     CommonModule,
