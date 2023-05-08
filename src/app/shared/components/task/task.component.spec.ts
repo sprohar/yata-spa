@@ -5,10 +5,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Task } from '../../../models';
+import { TaskActions } from '../../../store/actions';
 import { TaskComponent } from './task.component';
 
 describe('TaskComponent', () => {
-  const task: Task = { id: 1, title: 'Task 1', projectId: 1 };
+  const task: Task = {
+    id: 1,
+    title: 'Task 1',
+    projectId: 1,
+    isCompleted: false,
+  };
+
   let component: TaskComponent;
   let fixture: ComponentFixture<TaskComponent>;
   let store: MockStore;
@@ -33,21 +40,21 @@ describe('TaskComponent', () => {
   });
 
   describe('#handleChecked', () => {
-    it('should dispatch an action to update the isCompleted property', () => {
-      spyOn(store, 'dispatch');
-      component.handleChecked();
-      expect(store.dispatch).toHaveBeenCalled();
-    });
-
-    it('should dispatch an action to update the isCompleted property', () => {
+    it('should dispatch an action to update the isCompleted property', async () => {
       spyOn(store, 'dispatch');
 
-      // trigger the change event on the FormControl
-      component.form.patchValue({
-        isCompleted: true,
-      });
+      const initialValue = component.isCompletedControl.value as boolean;
+      component.isCompletedControl.setValue(!initialValue);
+      fixture.detectChanges();
 
-      expect(store.dispatch).toHaveBeenCalled();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        TaskActions.updateTask({
+          task: {
+            id: task.id!,
+            isCompleted: !initialValue,
+          },
+        })
+      );
     });
   });
 

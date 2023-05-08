@@ -4,7 +4,12 @@ import {
   Input,
   OnDestroy,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { TaskView } from '../../../interfaces';
@@ -39,18 +44,23 @@ export class TaskComponent implements OnDestroy {
 
     this.initForm(this.task);
 
-    this.form
-      .get('isCompleted')
-      ?.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe((_checked) => {
-        this.handleChecked();
-      });
+    this.isCompletedControl.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.handleChecked());
+  }
+
+  get idControl() {
+    return this.form.get('id') as FormControl;
+  }
+
+  get isCompletedControl() {
+    return this.form.get('isCompleted') as FormControl<boolean>;
   }
 
   initForm(task: Task) {
     this.form = this.fb.group({
       id: [task.id],
-      isCompleted: [task.isCompleted],
+      isCompleted: [task.isCompleted ?? false],
       title: [
         task.title,
         [Validators.required, Validators.maxLength(Task.Title.MaxLength)],
@@ -59,12 +69,11 @@ export class TaskComponent implements OnDestroy {
   }
 
   handleChecked() {
-    const task = this.form.value;
     this.store.dispatch(
       TaskActions.updateTask({
         task: {
-          id: task.id,
-          isCompleted: task.isCompleted,
+          id: this.idControl.value,
+          isCompleted: this.isCompletedControl.value,
         },
       })
     );

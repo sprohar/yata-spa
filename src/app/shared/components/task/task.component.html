@@ -15,8 +15,9 @@
         </span>
       </ng-container>
       <mat-checkbox
-        [attr.data-test]="'task-' + task.id + 'checkbox'"
         formControlName="isCompleted"
+        [attr.data-test-checkbox]="'task-' + task.id + 'checkbox'"
+        [aria-label]="'task-' + task.id + '-isCompleted'"
       ></mat-checkbox>
     </div>
   </div>
