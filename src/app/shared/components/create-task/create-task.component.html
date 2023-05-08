@@ -44,7 +44,7 @@
 
     <div class="flex column-gap-1">
       <!-- Projects -->
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="spacer">
         <mat-label>Project</mat-label>
         <mat-select formControlName="projectId">
           <mat-option
@@ -57,7 +57,11 @@
       </mat-form-field>
 
       <!-- Sections -->
-      <mat-form-field appearance="outline" *ngIf="projectIdControl.value">
+      <mat-form-field
+        appearance="outline"
+        class="spacer"
+        *ngIf="projectIdControl.value"
+      >
         <mat-label>Section</mat-label>
         <mat-select formControlName="sectionId">
           <mat-option
@@ -73,68 +77,88 @@
     </div>
   </div>
 
-  <div class="flex column-gap-1 align-items-center">
-    <button
-      mat-stroked-button
-      [matMenuTriggerFor]="priorityOptions"
-      title="Priority"
-    >
-      <mat-icon [ngClass]="getPriorityCssClass()">flag</mat-icon>
-      <ng-container *ngIf="priorityControl.value; else noPriority">
-        {{ priorityControl.value | taskPriority }}
-      </ng-container>
-      <ng-template #noPriority>Priority</ng-template>
-    </button>
-    <mat-menu #priorityOptions="matMenu">
-      <button mat-menu-item (click)="handlePriorityChange(HIGH_PRIORITY)">
-        <mat-icon class="high-priority">flag</mat-icon>
-        High
-      </button>
-      <button mat-menu-item (click)="handlePriorityChange(MEDIUM_PRIORITY)">
-        <mat-icon class="medium-priority">flag</mat-icon>
-        Medium
-      </button>
-      <button mat-menu-item (click)="handlePriorityChange(LOW_PRIORITY)">
-        <mat-icon class="low-priority">flag</mat-icon>
-        Low
-      </button>
-      <button mat-menu-item (click)="handlePriorityChange(NO_PRIORITY)">
-        <mat-icon>flag</mat-icon>
-        None
-      </button>
-    </mat-menu>
-
-    <!-- Due date picker -->
-    <ng-container *ngIf="dueDateControl.value; else datePicker">
-      <div class="flex align-items-center">
-        <button
-          data-test="dueDatePickerButton"
-          mat-stroked-button
-          title="Change due date"
-          (click)="openDateTimePicker()"
-        >
-          {{ dueDateControl.value | date : "mediumDate" }}
-        </button>
-        <button
-          mat-icon-button
-          title="Remove due date"
-          (click)="removeDueDate()"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
+  <div class="flex-column column-gap-1 align-items-center">
+    <div class="flex full-width">
+      <div class="spacer">
+        <p>Priority</p>
       </div>
-    </ng-container>
-    <ng-template #datePicker>
-      <button
-        data-test="dueDatePickerButton"
-        mat-stroked-button
-        title="Due date"
-        (click)="openDateTimePicker()"
-      >
-        <mat-icon>event</mat-icon>
-        Due date
-      </button>
-    </ng-template>
+      <div class="spacer" style="padding-left: 24px">
+        <p>Due Date</p>
+      </div>
+    </div>
+
+    <div class="flex full-width">
+      <div class="flex align-items-center spacer">
+        <!-- Priority -->
+        <button
+          mat-stroked-button
+          [matMenuTriggerFor]="priorityOptions"
+          title="Priority"
+          aria-label="Priority"
+        >
+          <mat-icon [ngClass]="getPriorityCssClass()">flag</mat-icon>
+          <ng-container *ngIf="priorityControl.value; else noPriority">
+            {{ priorityControl.value | taskPriority }}
+          </ng-container>
+          <ng-template #noPriority>Priority</ng-template>
+        </button>
+        <mat-menu #priorityOptions="matMenu">
+          <button mat-menu-item (click)="handlePriorityChange(HIGH_PRIORITY)">
+            <mat-icon class="high-priority">flag</mat-icon>
+            High
+          </button>
+          <button mat-menu-item (click)="handlePriorityChange(MEDIUM_PRIORITY)">
+            <mat-icon class="medium-priority">flag</mat-icon>
+            Medium
+          </button>
+          <button mat-menu-item (click)="handlePriorityChange(LOW_PRIORITY)">
+            <mat-icon class="low-priority">flag</mat-icon>
+            Low
+          </button>
+          <button mat-menu-item (click)="handlePriorityChange(NO_PRIORITY)">
+            <mat-icon>flag</mat-icon>
+            None
+          </button>
+        </mat-menu>
+      </div>
+
+      <div class="spacer" style="padding-left: 24px">
+        <!-- Due date picker -->
+        <ng-container *ngIf="dueDateControl.value; else datePicker">
+          <div class="flex align-items-center">
+            <button
+              data-test="dueDatePickerButton"
+              mat-stroked-button
+              title="Change due date"
+              aria-label="Due date"
+              (click)="openDateTimePicker()"
+            >
+              {{ dueDateControl.value | date : "mediumDate" }}
+            </button>
+            <button
+              mat-icon-button
+              title="Remove due date"
+              class="scale-90"
+              (click)="removeDueDate()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+        <ng-template #datePicker>
+          <button
+            data-test="dueDatePickerButton"
+            mat-stroked-button
+            aria-label="Due date picker"
+            title="Due date"
+            (click)="openDateTimePicker()"
+          >
+            <mat-icon>event</mat-icon>
+            Due date
+          </button>
+        </ng-template>
+      </div>
+    </div>
   </div>
 
   <mat-divider></mat-divider>
