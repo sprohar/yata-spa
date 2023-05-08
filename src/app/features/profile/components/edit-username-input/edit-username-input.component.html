@@ -1,0 +1,19 @@
+<div class="flex">
+  <input
+    #input
+    id="username"
+    type="text"
+    class="input"
+    aria-label="Username"
+    [formControl]="control"
+    (keydown.enter)="handleSubmit()"
+  />
+  <button
+    mat-icon-button
+    title="Cancel"
+    aria-label="Cancel"
+    (click)="handleCancel()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
