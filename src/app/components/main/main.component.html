@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" *ngIf="user$ | async as user">
   <mat-sidenav
     #drawer
     class="sidenav relative"
@@ -13,7 +13,7 @@
           <a mat-list-item data-test="profileLink" routerLink="profile">
             <div class="flex align-items-center">
               <mat-icon>account_circle</mat-icon>
-              <span>Profile</span>
+              <span>{{ user.username ?? "Profile" }}</span>
             </div>
           </a>
         </mat-nav-list>
@@ -199,7 +199,7 @@
         <mat-divider></mat-divider>
       </div>
 
-      <mat-nav-list *ngIf="user$ | async as user" class="bottom-bar">
+      <mat-nav-list class="bottom-bar">
         <a mat-list-item routerLink="preferences">
           <div class="flex align-items-center">
             <mat-icon>settings</mat-icon>
