@@ -1,54 +1,53 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, take } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import * as db from '../../__mock';
 import { PaginatedList } from '../../interfaces/paginated-list.interface';
 import { Project } from '../../models/project.model';
 import { YataApiService } from './yata-api.service';
-import { HttpErrorService } from './error/http-error.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectsService extends YataApiService {
-  constructor(
-    private readonly http: HttpClient,
-    private readonly httpErrorService: HttpErrorService
-  ) {
+  constructor() {
     super();
   }
 
-  create(project: Project) {
-    const url = `${this.serverUrl}/projects`;
-    return this.http
-      .post<Project>(url, project)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  create(project: Project): Observable<Project> {
+    return of({ ...project });
   }
 
-  delete(projectId: number) {
-    const url = `${this.serverUrl}/projects/${projectId}`;
-    return this.http
-      .delete(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  delete(projectId: number): Observable<Project> {
+    const idx = db.mockProjects.findIndex((p) => p.id === projectId);
+    const projects = db.mockProjects.splice(idx, 1);
+    return of(projects[0]);
   }
 
   get(projectId: number) {
-    const url = `${this.serverUrl}/projects/${projectId}`;
-    return this.http
-      .get<Project>(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    const project = db.mockProjects.find((p) => p.id === projectId)!;
+    return of({
+      ...project,
+      tasks: db.mockTasks.filter((t) => t.projectId === projectId),
+      sections: db.mockSections.filter((s) => s.projectId === projectId),
+    });
   }
 
   getAll() {
-    const url = `${this.serverUrl}/projects`;
-    return this.http
-      .get<PaginatedList<Project>>(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    return of({
+      pageIndex: 0,
+      pageSize: 30,
+      count: db.mockProjects.length,
+      data: Array.from(db.mockProjects),
+    } as PaginatedList<Project>);
   }
 
-  update(id: number, project: Partial<Project>) {
-    const url = `${this.serverUrl}/projects/${id}`;
-    return this.http
-      .patch<Project>(url, project)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  update(projectId: number, project: Partial<Project>) {
+    const idx = db.mockProjects.findIndex((p) => p.id === projectId);
+    db.mockProjects[idx] = {
+      ...db.mockProjects[idx],
+      ...project,
+    };
+
+    return of(db.mockProjects[idx]);
   }
 }

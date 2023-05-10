@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, take } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { mockUser } from '../../__mock';
 import { User } from '../../auth/models/user.model';
 import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
@@ -17,16 +18,10 @@ export class UsersService extends YataApiService {
   }
 
   delete() {
-    const url = `${this.serverUrl}/accounts/me`;
-    return this.http
-      .delete(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    return of();
   }
 
-  update(user: Partial<User>) {
-    const url = `${this.serverUrl}/users/me`;
-    return this.http
-      .patch<User>(url, user)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  update(user: Partial<User>): Observable<User> {
+    return of(Object.assign(mockUser, user));
   }
 }

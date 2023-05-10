@@ -1,9 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, take } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { mockTasks } from '../../__mock';
 import { PaginatedList, TasksQueryParams } from '../../interfaces';
 import { Tag, Task } from '../../models';
-import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
 
 type SearchArgs = { query: string; projectId?: number };
@@ -12,75 +11,119 @@ type SearchArgs = { query: string; projectId?: number };
   providedIn: 'root',
 })
 export class TasksService extends YataApiService {
-  constructor(
-    private readonly http: HttpClient,
-    private readonly httpErrorService: HttpErrorService
-  ) {
+  constructor() {
     super();
   }
 
-  search(args: SearchArgs) {
-    const url = `${this.serverUrl}/tasks/search`;
-    const httpParams = new HttpParams().set('query', args.query);
-    return this.http
-      .get<Task[]>(url, {
-        params: args.projectId
-          ? httpParams.set('projectId', args.projectId)
-          : httpParams,
-      })
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  search(args: SearchArgs): Observable<Task[]> {
+    // filter the tasks by query
+    const { query, projectId } = args;
+    const filteredTasks = mockTasks.filter((task) => {
+      if (projectId) {
+        return (
+          task.projectId === projectId &&
+          task.title.toLowerCase().includes(query.toLowerCase())
+        );
+      }
+      return task.title.toLowerCase().includes(query.toLowerCase());
+    });
+
+    return of(filteredTasks);
   }
 
-  create(task: Task) {
-    const url = `${this.serverUrl}/tasks`;
-    return this.http
-      .post<Task>(url, task)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  create(task: Task): Observable<Task> {
+    mockTasks.push(task);
+    return of(task);
   }
 
-  duplicate(task: Task) {
-    const url = `${this.serverUrl}/tasks/${task.id}/duplicate`;
-    return this.http
-      .post<Task>(url, task)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  duplicate(task: Task): Observable<Task> {
+    // duplicate the task
+    const newTask = { ...task, id: Math.floor(Math.random() * 1000) };
+    mockTasks.push(newTask);
+    return of(newTask);
   }
 
   getAll(queryParams?: TasksQueryParams) {
-    const url = `${this.serverUrl}/tasks`;
-    return this.http
-      .get<PaginatedList<Task>>(url, {
-        params: new HttpParams({
-          fromObject: queryParams as { [param: string]: any },
-        }),
-      })
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    // filter tasks by queryParams
+    if (queryParams) {
+      const { priority, lte, gte } = queryParams;
+      const filteredTaskSet = new Set<Task>();
+
+      if (priority) {
+        mockTasks
+          .filter((task) => task.priority === priority)
+          .forEach((t) => {
+            filteredTaskSet.add(t);
+          });
+      }
+
+      if (lte && gte) {
+        mockTasks
+          .filter((task) =>
+            !task.dueDate
+              ? false
+              : new Date(task.dueDate) <= new Date(lte) &&
+                new Date(task.dueDate) >= new Date(gte)
+          )
+          .forEach((t) => {
+            filteredTaskSet.add(t);
+          });
+      } else if (lte && !gte) {
+        mockTasks
+          .filter((task) =>
+            !task.dueDate ? false : new Date(task.dueDate) <= new Date(lte)
+          )
+          .forEach((t) => {
+            filteredTaskSet.add(t);
+          });
+      } else if (gte && !lte) {
+        mockTasks
+          .filter((task) =>
+            !task.dueDate ? false : new Date(task.dueDate) >= new Date(gte)
+          )
+          .forEach((t) => {
+            filteredTaskSet.add(t);
+          });
+      }
+
+      return of({
+        pageIndex: 0,
+        pageSize: 30,
+        count: filteredTaskSet.size,
+        data: Array.from(filteredTaskSet),
+      } as PaginatedList<Task>);
+    }
+
+    return of({
+      pageIndex: 0,
+      pageSize: 30,
+      count: mockTasks.length,
+      data: Array.from(mockTasks),
+    } as PaginatedList<Task>);
   }
 
-  delete(task: Task) {
-    const url = `${this.serverUrl}/tasks/${task.id}`;
-    return this.http
-      .delete(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  delete(task: Task): Observable<Task> {
+    const idx = mockTasks.findIndex((t) => t.id === task.id);
+    mockTasks.splice(idx, 1);
+    return of(task);
   }
 
-  removeTag(task: Task, tag: Tag) {
-    const url = `${this.serverUrl}/tasks/${task.id}/tags/${tag.id}`;
-    return this.http
-      .delete<Task>(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  removeTag(task: Task, tag: Tag): Observable<Task> {
+    // find the task with the tag
+    const idx = mockTasks.findIndex((t) => t.id === task.id);
+    const taskWithTags = mockTasks[idx];
+    const tagIdx = taskWithTags!.tags!.findIndex((t) => t.id === tag.id);
+    taskWithTags!.tags!.splice(tagIdx, 1);
+    return of(taskWithTags);
   }
 
-  get(taskId: number) {
-    const url = `${this.serverUrl}/tasks/${taskId}`;
-    return this.http
-      .get<Task>(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  get(taskId: number): Observable<Task> {
+    return of(mockTasks.find((task) => task.id === taskId)!);
   }
 
-  update(id: number, task: Task | Partial<Task>) {
-    const url = `${this.serverUrl}/tasks/${id}`;
-    return this.http
-      .patch<Task>(url, task)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  update(id: number, task: Task | Partial<Task>): Observable<Task> {
+    const idx = mockTasks.findIndex((t) => t.id === id);
+    mockTasks[idx] = { ...mockTasks[idx], ...task };
+    return of(mockTasks[idx]);
   }
 }

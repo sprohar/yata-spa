@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, take } from 'rxjs';
+import { of } from 'rxjs';
+import { mockTasks } from '../../__mock';
 import { PaginatedList } from '../../interfaces/paginated-list.interface';
 import { Task } from '../../models';
-import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
 
 type QueryParams = {
@@ -15,22 +14,16 @@ type QueryParams = {
   providedIn: 'root',
 })
 export class EisenhowerService extends YataApiService {
-  constructor(
-    private readonly http: HttpClient,
-    private readonly httpErrorService: HttpErrorService
-  ) {
+  constructor() {
     super();
   }
 
   getAllTasks(query?: QueryParams) {
-    const url = `${this.serverUrl}/tasks`;
-    return this.http
-      .get<PaginatedList<Task>>(url, {
-        params: query,
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        }),
-      })
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    return of({
+      pageIndex: 0,
+      pageSize: 30,
+      count: mockTasks.length,
+      data: Array.from(mockTasks),
+    } as PaginatedList<Task>);
   }
 }

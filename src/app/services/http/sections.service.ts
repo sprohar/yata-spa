@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, take } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { mockSections } from '../../__mock';
 import { Section } from '../../models/section.model';
 import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
@@ -16,46 +17,33 @@ export class SectionsService extends YataApiService {
     super();
   }
 
-  create(section: Section) {
-    return this.http
-      .post<Section>(
-        `${this.serverUrl}/projects/${section.projectId}/sections`,
-        section
-      )
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  create(section: Section): Observable<Section> {
+    mockSections.push(section);
+    return of(section);
   }
 
-  delete(section: Section) {
-    const { projectId, id: sectionId } = section;
-    return this.http
-      .delete<void>(
-        `${this.serverUrl}/projects/${projectId}/sections/${sectionId}`
-      )
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  delete(section: Section): Observable<Section> {
+    const idx = mockSections.findIndex((s) => s.id === section.id);
+    mockSections.splice(idx, 1);
+    return of(section);
   }
 
-  get(projectId: number, sectionId: number) {
-    return this.http
-      .get<Section>(
-        `${this.serverUrl}/projects/${projectId}/sections/${sectionId}`
-      )
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  get(projectId: number, sectionId: number): Observable<Section> {
+    const section = mockSections.find(
+      (s) => s.id === sectionId && s.projectId === projectId
+    );
+
+    return of(section!);
   }
 
-  getAll(projectId: number) {
-    return this.http
-      .get<Section>(`${this.serverUrl}/projects/${projectId}`)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  getAll(projectId: number): Observable<Section> {
+    return of(mockSections.find((s) => s.projectId === projectId)!);
   }
 
-  update(section: Partial<Section>) {
-    return this.http
-      .patch<Section>(
-        `${this.serverUrl}/projects/${
-          section.projectId
-        }/sections/${section.id!}`,
-        section
-      )
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+  update(section: Partial<Section>): Observable<Section> {
+    // update the section
+    const idx = mockSections.findIndex((s) => s.id === section.id);
+    mockSections[idx] = { ...mockSections[idx], ...section };
+    return of(mockSections[idx]);
   }
 }

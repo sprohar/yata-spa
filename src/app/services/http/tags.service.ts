@@ -1,54 +1,59 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, take } from 'rxjs';
+import { of } from 'rxjs';
+import * as db from '../../__mock';
 import { PaginatedList } from '../../interfaces/paginated-list.interface';
 import { Tag, Task } from '../../models';
 import { YataApiService } from './yata-api.service';
-import { HttpErrorService } from './error/http-error.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TagsService extends YataApiService {
-  constructor(
-    private readonly http: HttpClient,
-    private readonly httpErrorService: HttpErrorService
-  ) {
+  constructor() {
     super();
   }
 
   create(tag: Tag) {
-    const url = `${this.serverUrl}/tags`;
-    return this.http
-      .post<Tag>(url, tag)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    db.mockTags.push(tag);
+    return of({ ...tag });
   }
 
   delete(tag: Tag) {
-    const url = `${this.serverUrl}/tags/${tag.id}`;
-    return this.http
-      .delete<Tag>(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    const idx = db.mockTags.findIndex((t) => t.id === tag.id);
+    const tags = db.mockTags.splice(idx, 1);
+    return of(tags[0]);
   }
 
   getAll() {
-    const url = `${this.serverUrl}/tags`;
-    return this.http
-      .get<PaginatedList<Tag>>(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    return of({
+      pageIndex: 0,
+      pageSize: 30,
+      count: db.mockTags.length,
+      data: Array.from(db.mockTags),
+    } as PaginatedList<Tag>);
   }
 
   getTasks(tagId: number) {
-    const url = `${this.serverUrl}/tags/${tagId}/tasks`;
-    return this.http
-      .get<PaginatedList<Task>>(url)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    return of({
+      pageIndex: 0,
+      pageSize: 30,
+      count: db.mockTasks.length,
+      data: db.mockTasks.filter(
+        (task) =>
+          task.tags &&
+          task.tags.length &&
+          task.tags.filter((t) => t.id === tagId).length
+      ),
+    } as PaginatedList<Task>);
   }
 
   update(tag: Tag) {
-    const url = `${this.serverUrl}/tags/${tag.id}`;
-    return this.http
-      .patch<Tag>(url, tag)
-      .pipe(take(1), catchError(this.httpErrorService.handleError));
+    const idx = db.mockTags.findIndex((t) => t.id === tag.id);
+    db.mockTags[idx] = {
+      ...db.mockTags[idx],
+      ...tag,
+    };
+
+    return of(db.mockTags[idx]);
   }
 }

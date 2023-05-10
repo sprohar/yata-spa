@@ -115,7 +115,7 @@ import {
     MatSelectModule,
   ],
   providers: [
-    httpInterceptorProviders,
+    // httpInterceptorProviders,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: '350px ' } },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },

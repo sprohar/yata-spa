@@ -1,12 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, take, tap, throwError } from 'rxjs';
+import { Observable, catchError, of, take, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiErrorResponse } from '../../error/api-error-response';
 import { AuthActions } from '../../store/actions';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { AuthDto } from '../dto/auth.dto';
+import { mockAuthResponse } from '../../__mock';
 
 const authApiUrl = environment.auth.serverUrl;
 
@@ -49,13 +50,8 @@ export class AuthenticationService {
     );
   }
 
-  refreshToken(returnUrl?: string) {
-    const url = `${authApiUrl}/${environment.auth.endpoint.refreshToken}`;
-    return this.http.post<AuthResponseDto>(url, null).pipe(
-      tap(() => this.startRefreshTokenTimer(returnUrl)),
-      take(1),
-      catchError(this.handleError)
-    );
+  refreshToken(returnUrl?: string): Observable<AuthResponseDto> {
+    return of(mockAuthResponse);
   }
 
   startRefreshTokenTimer(returnUrl?: string) {
