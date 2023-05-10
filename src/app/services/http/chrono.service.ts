@@ -26,8 +26,8 @@ export class ChronoService extends YataApiService {
 
     const url = `${this.serverUrl}/tasks`;
     const params = new HttpParams()
-      .set('startDate', startDate.toISOString())
-      .set('endDate', endDate.toISOString());
+      .set('gte', startDate.toISOString())
+      .set('lte', endDate.toISOString());
 
     return this.http
       .get<PaginatedList<Task>>(url, { params })
