@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of, switchMap, tap } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, tap } from 'rxjs';
 import { UsersService } from '../../services/http';
 import { UserActions, YataApiActions } from '../actions';
 
@@ -19,7 +19,7 @@ export class UsersEffects {
   delete$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.deleteUser),
-      switchMap(() =>
+      mergeMap(() =>
         this.usersService.delete().pipe(
           map(() => YataApiActions.deleteUser()),
           catchError((error: HttpErrorResponse) =>
