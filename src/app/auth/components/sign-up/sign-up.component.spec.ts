@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { AuthActions } from '../../../store/actions';
 import { User } from '../../models/user.model';
 
 import { SignUpComponent } from './sign-up.component';
@@ -56,7 +57,7 @@ describe('SignUpComponent', () => {
   describe('#handleSignUp', () => {
     beforeEach(() => {
       spyOn(store, 'dispatch');
-    })
+    });
 
     it('should NOT dispatch an action when given invalid "email" input', () => {
       component.form.patchValue({
@@ -89,7 +90,12 @@ describe('SignUpComponent', () => {
       component.form.markAsDirty();
       component.handleSignUp();
 
-      expect(store.dispatch).toHaveBeenCalled();
+      expect(store.dispatch).toHaveBeenCalledOnceWith(
+        AuthActions.signUp({
+          dto: component.form.value,
+          returnUrl: component.returnUrl,
+        })
+      );
     });
   });
 });

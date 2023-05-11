@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { AuthActions } from '../../../store/actions';
 import { User } from '../../models/user.model';
 
 import { SignInComponent } from './sign-in.component';
@@ -88,7 +89,13 @@ describe('SignInComponent', () => {
 
       component.handleSignIn();
 
-      expect(store.dispatch).toHaveBeenCalled();
+      // expect(store.dispatch).toHaveBeenCalled();
+      expect(store.dispatch).toHaveBeenCalledOnceWith(
+        AuthActions.signIn({
+          dto: component.form.value,
+          returnUrl: component.returnUrl,
+        })
+      );
     });
   });
 });
