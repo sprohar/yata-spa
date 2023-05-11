@@ -9,7 +9,7 @@
       <div cdkDropListGroup class="flex-column row-gap-1 mb-1">
         <mat-expansion-panel
           *ngFor="let map of groupedTasks | keyvalue"
-          [expanded]="true"
+          [expanded]="map.value.length > 0"
         >
           <mat-expansion-panel-header>
             <mat-panel-title>
