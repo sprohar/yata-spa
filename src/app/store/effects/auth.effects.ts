@@ -2,7 +2,16 @@ import { HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of, switchMap, take, tap } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  exhaustMap,
+  map,
+  of,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { AuthResponseDto } from '../../auth/dto';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../error/api-error-response';
@@ -108,7 +117,7 @@ export class AuthEffects {
   signIn$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signIn),
-      switchMap((action) =>
+      exhaustMap((action) =>
         this.auth.signIn(action.dto).pipe(
           map((res) =>
             AuthApiActions.signInSuccess({ res, returnUrl: action.returnUrl })
@@ -128,7 +137,7 @@ export class AuthEffects {
   signUp$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signUp),
-      concatMap((action) =>
+      exhaustMap((action) =>
         this.auth.signUp(action.dto).pipe(
           map((res) =>
             AuthApiActions.signUpSuccess({ res, returnUrl: action.returnUrl })
