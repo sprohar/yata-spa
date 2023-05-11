@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import * as db from '../../__mock';
 import { PaginatedList } from '../../interfaces/paginated-list.interface';
 import { Project } from '../../models/project.model';
@@ -29,7 +29,7 @@ export class ProjectsService extends YataApiService {
       ...project,
       tasks: db.mockTasks.filter((t) => t.projectId === projectId),
       sections: db.mockSections.filter((s) => s.projectId === projectId),
-    });
+    }).pipe(tap((project) => console.log(project)));
   }
 
   getAll() {
