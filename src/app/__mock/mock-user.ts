@@ -4,7 +4,7 @@ import { TaskView } from '../interfaces';
 export const mockUser: User = {
   id: '1',
   email: 'testuser@example.com',
-  username: 'anon',
+  username: 'Test User',
   preferences: {
     defaultDueDateToday: true,
     isDarkTheme: true,

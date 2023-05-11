@@ -14,8 +14,13 @@ export class TagsService extends YataApiService {
   }
 
   create(tag: Tag) {
-    db.mockTags.push(tag);
-    return of({ ...tag });
+    const lastId = Math.max(...db.mockTags.map((tag) => tag.id!));
+    const newTag: Tag = {
+      ...tag,
+      id: lastId + 1,
+    };
+    db.mockTags.push(newTag);
+    return of(newTag);
   }
 
   delete(tag: Tag) {

@@ -32,8 +32,14 @@ export class TasksService extends YataApiService {
   }
 
   create(task: Task): Observable<Task> {
-    mockTasks.push(task);
-    return of(task);
+    const lastId = Math.max(...mockTasks.map((task) => task.id!));
+    const newTask: Task = {
+      ...task,
+      id: lastId + 1,
+    };
+
+    mockTasks.push(newTask);
+    return of(newTask);
   }
 
   duplicate(task: Task): Observable<Task> {

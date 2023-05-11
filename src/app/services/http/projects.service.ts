@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
-import * as db from '../../__mock';
+import { Observable, of } from 'rxjs';
 import { PaginatedList } from '../../interfaces/paginated-list.interface';
 import { Project } from '../../models/project.model';
+import * as db from '../../__mock';
 import { YataApiService } from './yata-api.service';
 
 @Injectable({
@@ -14,7 +14,13 @@ export class ProjectsService extends YataApiService {
   }
 
   create(project: Project): Observable<Project> {
-    return of({ ...project });
+    const lastId = Math.max(...db.mockProjects.map((p) => p.id!));
+    const newProject: Project = {
+      ...project,
+      id: lastId + 1,
+    };
+    db.mockProjects.push(newProject);
+    return of(newProject);
   }
 
   delete(projectId: number): Observable<Project> {
@@ -29,7 +35,7 @@ export class ProjectsService extends YataApiService {
       ...project,
       tasks: db.mockTasks.filter((t) => t.projectId === projectId),
       sections: db.mockSections.filter((s) => s.projectId === projectId),
-    }).pipe(tap((project) => console.log(project)));
+    });
   }
 
   getAll() {

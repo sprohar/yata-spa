@@ -1,25 +1,27 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { mockSections } from '../../__mock';
 import { Section } from '../../models/section.model';
-import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SectionsService extends YataApiService {
-  constructor(
-    private readonly http: HttpClient,
-    private readonly httpErrorService: HttpErrorService
-  ) {
+  constructor() {
     super();
   }
 
   create(section: Section): Observable<Section> {
-    mockSections.push(section);
-    return of(section);
+    const lastId: number = Math.max(
+      ...mockSections.map((section) => section.id!)
+    );
+    const newSection: Section = {
+      ...section,
+      id: lastId + 1,
+    };
+    mockSections.push(newSection);
+    return of(newSection);
   }
 
   delete(section: Section): Observable<Section> {
