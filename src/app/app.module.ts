@@ -5,8 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  MatDialogModule,
   MAT_DIALOG_DEFAULT_OPTIONS,
+  MatDialogModule,
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -19,8 +19,8 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {
-  MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarModule,
 } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
@@ -39,7 +39,6 @@ import { CreateProjectDialogComponent } from './components/create-project-dialog
 import { InboxComponent } from './components/inbox/inbox.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
-import { httpInterceptorProviders } from './http-interceptors';
 import { SharedModule } from './shared/shared.module';
 import {
   AppEffects,
