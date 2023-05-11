@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthViewComponent } from './auth-view.component';
-import { GoogleLoginButtonComponent } from './components/google-login-button/google-login-button.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -19,7 +18,6 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     AuthViewComponent,
     SignUpComponent,
     LogoComponent,
-    GoogleLoginButtonComponent,
   ],
   imports: [
     CommonModule,
