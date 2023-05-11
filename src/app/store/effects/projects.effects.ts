@@ -27,7 +27,7 @@ export class ProjectsEffects {
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SidenavActions.createProject),
-      concatMap((action) =>
+      switchMap((action) =>
         this.projectsService.create(action.project).pipe(
           map((project) => {
             this.snackbar.open(`${project.name} was created.`);
