@@ -76,7 +76,7 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
       dueDate: [task.dueDate ? new Date(task.dueDate) : null],
       tags: this.fb.array([]),
       description: [
-        task.content,
+        task.description,
         [Validators.maxLength(Task.Description.MaxLength)],
       ],
     });
