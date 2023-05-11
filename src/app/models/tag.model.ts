@@ -2,7 +2,7 @@ export interface Tag {
   id?: number;
   name: string;
   colorHexCode?: string;
-  userId?: number;
+  userId?: string;
 }
 
 export namespace Tag {
