@@ -2,16 +2,7 @@ import { HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  concatMap,
-  exhaustMap,
-  map,
-  of,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { catchError, exhaustMap, map, of, switchMap, take, tap } from 'rxjs';
 import { AuthResponseDto } from '../../auth/dto';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { ApiErrorResponse } from '../../error/api-error-response';
@@ -33,7 +24,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(OAuthActions.signInWithGoogle),
       take(1),
-      switchMap((action) =>
+      exhaustMap((action) =>
         this.oauth.signInWithGoogle(action.payload).pipe(
           map((res: AuthResponseDto) => AuthApiActions.signInSuccess({ res })),
           tap(() => this.router.navigateByUrl(action.returnUrl)),
@@ -98,7 +89,7 @@ export class AuthEffects {
   refreshToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.refreshToken),
-      switchMap((action) =>
+      exhaustMap((action) =>
         this.auth.refreshToken().pipe(
           map((res) => AuthApiActions.refreshTokenSuccess({ res })),
           tap(() => {
