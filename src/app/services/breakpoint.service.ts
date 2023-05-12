@@ -17,5 +17,5 @@ export class BreakpointService {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private readonly breakpointObserver: BreakpointObserver) {}
 }
