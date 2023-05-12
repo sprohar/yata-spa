@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './auth/guards/authentication.guard';
 import { InboxComponent } from './components/inbox/inbox.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   {
     path: 'app',
     component: MainComponent,
+    canMatch: [authGuard],
     resolve: {
       projects: projectsResolver,
       tags: tagsResolver,

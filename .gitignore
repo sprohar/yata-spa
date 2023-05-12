@@ -3,6 +3,8 @@ cypress.env.json
 .vscode/
 src/environments/environment.prod.ts
 *.rdb
+.firebase/
+.angular/
 
 # Compiled output
 /dist
