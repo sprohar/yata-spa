@@ -6,40 +6,31 @@
       </h1>
     </div>
 
-    <yata-task-search class="spacer"></yata-task-search>
+    <yata-task-search class="is-not-handset spacer"></yata-task-search>
+    <span class="is-handset spacer"></span>
 
-    <div class="pb-1">
+    <div class="flex pb-1">
       <!-- Create task -->
       <button
         data-test="viewHeaderCreateTaskButton"
         mat-icon-button
         title="Create task"
+        class="is-not-handset"
         (click)="openCreateTaskDialog(project)"
       >
         <mat-icon>add</mat-icon>
       </button>
 
-      <!-- Change view -->
-      <ng-container *ngIf="project.view === LIST_VIEW; else kanban">
-        <button
-          data-test="switchToKanbanViewButton"
-          mat-icon-button
-          (click)="switchToKanbanView(project)"
-          title="Kanban view"
-        >
-          <mat-icon>view_kanban</mat-icon>
-        </button>
-      </ng-container>
-      <ng-template #kanban>
-        <button
-          data-test="switchToListViewButton"
-          mat-icon-button
-          (click)="switchToListView(project)"
-          title="List view"
-        >
-          <mat-icon>view_list</mat-icon>
-        </button>
-      </ng-template>
+      <button
+        data-test="switchToKanbanViewButton"
+        mat-icon-button
+        title="Kanban view"
+        (click)="handleSwitchView(project)"
+      >
+        <mat-icon>
+          {{ project.view === LIST_VIEW ? "view_kanban" : "view_list" }}
+        </mat-icon>
+      </button>
 
       <!-- Change view -->
       <yata-tasks-order-by-options></yata-tasks-order-by-options>
@@ -61,11 +52,9 @@
           <mat-icon>add</mat-icon>
           <span>Add Section</span>
         </button>
-        <!-- <button mat-menu-item>
-        <mat-icon>history</mat-icon>
-        <span>Show History</span>
-      </button> -->
+        
         <mat-divider></mat-divider>
+        
         <button
           mat-menu-item
           (click)="openDeleteProjectConfirmationDialog(project)"

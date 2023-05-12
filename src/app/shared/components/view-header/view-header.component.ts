@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -49,6 +54,14 @@ export class ViewHeaderComponent implements OnDestroy {
         project,
       } as CreateTaskDialogData,
     });
+  }
+
+  handleSwitchView(project: Project) {
+    if (project.view === Project.View.LIST) {
+      this.switchToKanbanView(project);
+    } else {
+      this.switchToListView(project);
+    }
   }
 
   switchToKanbanView(project: Project) {
