@@ -4,3 +4,24 @@
     height: 56px;
   }
 }
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.vert {
+  display: none;
+}
+
+// media query for min-width: 600px
+@media only screen and (min-width: 600px ){
+  .task-details {
+    flex-direction: row;
+    column-gap: 1em;
+  }
+  
+  .vert {
+    display: block;
+  }
+}

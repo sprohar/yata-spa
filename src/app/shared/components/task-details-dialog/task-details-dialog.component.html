@@ -45,7 +45,7 @@
     <mat-divider></mat-divider>
 
     <!-- Main content -->
-    <div class="flex column-gap-1">
+    <div class="task-details">
       <div class="flex-column row-gap-1 p-1 full-width">
         <h5 aria-labelledby="title">Task</h5>
         <div class="flex-column align-items-center full-width">
@@ -115,109 +115,109 @@
         </div>
       </div>
 
-      <mat-divider [vertical]="true"></mat-divider>
+      <mat-divider class="vert" [vertical]="true"></mat-divider>
 
-      <div class="p-1">
-        <div class="flex flex-column row-gap-1">
-          <h5 aria-labelledby="projectId">Project</h5>
-          <mat-form-field appearance="outline">
-            <mat-select
-              *ngIf="projects$ | async as projects"
-              data-test="projectsSelect"
-              id="projectId"
-              data-test="projectIdSelect"
-              formControlName="projectId"
+      <div class="flex flex-column row-gap-1 p-1">
+        <h5 aria-labelledby="projectId">Project</h5>
+        <mat-form-field appearance="outline">
+          <mat-select
+            *ngIf="projects$ | async as projects"
+            data-test="projectsSelect"
+            id="projectId"
+            data-test="projectIdSelect"
+            formControlName="projectId"
+          >
+            <mat-option
+              *ngFor="let project of projects; trackBy: trackByProjectId"
+              [attr.data-test]="'project-' + project.id"
+              [value]="project.id"
             >
-              <mat-option
-                *ngFor="let project of projects; trackBy: trackByProjectId"
-                [attr.data-test]="'project-' + project.id"
-                [value]="project.id"
-              >
-                {{ project.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+              {{ project.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          <h5>Due date</h5>
-          <div class="due-date-container">
-            <ng-container *ngIf="dueDateControl.value; else dueDateIsNull">
-              <div class="flex align-items-center">
-                <button
-                  data-test="setDueDateButton"
-                  mat-stroked-button
-                  (click)="openDateTimePickerDialog()"
-                  title="Due date"
-                  class="full-width"
-                >
-                  <ng-container
-                    *ngIf="isAllDayControl.value; else renderTimePortion"
-                  >
-                    {{ dueDateControl.value | date : "mediumDate" }}
-                  </ng-container>
-                  <ng-template #renderTimePortion>
-                    {{ dueDateControl.value | date : "MMM d, y, hh:mm a" }}
-                  </ng-template>
-                </button>
-                <button
-                  data-test="removeDueDateButton"
-                  mat-icon-button
-                  title="Remove due date"
-                  (click)="handleRemoveDueDate()"
-                >
-                  <mat-icon>close</mat-icon>
-                </button>
-              </div>
-            </ng-container>
-            <ng-template #dueDateIsNull>
+        <h5>Due date</h5>
+        <div class="due-date-container">
+          <ng-container *ngIf="dueDateControl.value; else dueDateIsNull">
+            <div class="flex align-items-center">
               <button
                 data-test="setDueDateButton"
-                class="full-width"
                 mat-stroked-button
                 (click)="openDateTimePickerDialog()"
-                title="Set a due date"
+                title="Due date"
+                class="full-width"
               >
-                <mat-icon>event</mat-icon>
-                <span>Due date</span>
+                <ng-container
+                  *ngIf="isAllDayControl.value; else renderTimePortion"
+                >
+                  {{ dueDateControl.value | date : "mediumDate" }}
+                </ng-container>
+                <ng-template #renderTimePortion>
+                  {{ dueDateControl.value | date : "MMM d, y, hh:mm a" }}
+                </ng-template>
               </button>
-            </ng-template>
-          </div>
-
-          <h5>Priority</h5>
-          <div class="flex align-items-center">
-            <yata-task-priority-picker
-              (selectionChange)="handlePriorityChange($event)"
-              [value]="priorityControl.value"
-            ></yata-task-priority-picker>
-            {{ priorityControl.value | taskPriority }}
-          </div>
-
-          <mat-divider></mat-divider>
-
-          <div class="flex space-between align-items-center">
-            <h5>Tags</h5>
-            <button
-              data-test="addTagButton"
-              mat-icon-button
-              title="Add tag"
-              (click)="openTagsSelectListDialog(task)"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
-          <mat-chip-listbox>
-            <mat-chip-option *ngFor="let tag of task.tags" color="primary">
-              {{ tag.name }}
               <button
-                [attr.data-test]="'tag-' + tag.id"
-                matChipRemove
-                [ariaLabel]="'Remove ' + tag.name"
-                (click)="handleRemoveTag(task, tag)"
+                data-test="removeDueDateButton"
+                mat-icon-button
+                title="Remove due date"
+                (click)="handleRemoveDueDate()"
               >
-                <mat-icon>cancel</mat-icon>
+                <mat-icon>close</mat-icon>
               </button>
-            </mat-chip-option>
-          </mat-chip-listbox>
+            </div>
+          </ng-container>
+          <ng-template #dueDateIsNull>
+            <button
+              data-test="setDueDateButton"
+              class="full-width"
+              mat-stroked-button
+              (click)="openDateTimePickerDialog()"
+              title="Set a due date"
+            >
+              <mat-icon>event</mat-icon>
+              <span>Due date</span>
+            </button>
+          </ng-template>
         </div>
+
+        <mat-divider></mat-divider>
+
+        <h5>Priority</h5>
+        <div class="flex align-items-center">
+          <yata-task-priority-picker
+            (selectionChange)="handlePriorityChange($event)"
+            [value]="priorityControl.value"
+          ></yata-task-priority-picker>
+          {{ priorityControl.value | taskPriority }}
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="flex space-between align-items-center">
+          <h5>Tags</h5>
+          <button
+            data-test="addTagButton"
+            mat-icon-button
+            title="Add tag"
+            (click)="openTagsSelectListDialog(task)"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <mat-chip-listbox>
+          <mat-chip-option *ngFor="let tag of task.tags" color="primary">
+            {{ tag.name }}
+            <button
+              [attr.data-test]="'tag-' + tag.id"
+              matChipRemove
+              [ariaLabel]="'Remove ' + tag.name"
+              (click)="handleRemoveTag(task, tag)"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-option>
+        </mat-chip-listbox>
       </div>
     </div>
   </mat-dialog-content>
