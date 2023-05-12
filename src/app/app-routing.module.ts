@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { authGuard } from './auth/guards/authentication.guard';
 import { InboxComponent } from './components/inbox/inbox.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
 import {
   inboxResolver,
@@ -14,13 +14,11 @@ import { TaskDetailsDialogEntryComponent } from './shared/components/task-detail
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app',
-    pathMatch: 'full',
+    component: LandingPageComponent,
   },
   {
     path: 'app',
     component: MainComponent,
-    // canMatch: [authGuard],
     resolve: {
       projects: projectsResolver,
       tags: tagsResolver,
@@ -94,10 +92,18 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: '**',
+    redirectTo: '/app/inbox',
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      enableTracing: false,
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
