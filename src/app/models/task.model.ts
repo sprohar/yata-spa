@@ -5,7 +5,7 @@ import { Tag } from './tag.model';
 export interface Task {
   id?: number;
   title: string;
-  description?: string;
+  description?: string | null;
   content?: string;
   priority?: Priority;
   isCompleted?: boolean;

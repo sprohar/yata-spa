@@ -1,7 +1,7 @@
 cypress.env.json
 .env
 .vscode/
-src/environments/
+src/environments/environment.prod.ts
 *.rdb
 
 # Compiled output
@@ -44,3 +44,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

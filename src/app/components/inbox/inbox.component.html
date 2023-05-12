@@ -1,34 +1,32 @@
 <yata-view-header></yata-view-header>
 
-<main *ngIf="userPreferences$ | async as prefs" class="flex-column row-gap-1">
-  <div class="mb-1" *ngIf="group$ | async as group">
-    <ng-container *ngIf="group.size === 0; else renderTasks">
-      <p>Your inbox is empty.</p>
-    </ng-container>
-    <ng-template #renderTasks>
-      <mat-expansion-panel
-        *ngFor="let map of group | keyvalue"
-        [attr.data-test-section]="map.key.id"
-        [expanded]="true"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <h3>{{ map.key.name }}</h3>
-            &nbsp;
-            <span class="text-grey">({{ map.value.length }})</span>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <yata-task-list>
-          <ng-container *ngFor="let task of map.value; trackBy: trackByTaskId">
-            <yata-task [task]="task">
-              <yata-task-options [task]="task"></yata-task-options>
-            </yata-task>
-            <mat-divider></mat-divider>
-          </ng-container>
-        </yata-task-list>
-      </mat-expansion-panel>
-    </ng-template>
-  </div>
+<main *ngIf="group$ | async as group" class="flex-column row-gap-1 mb-1">
+  <ng-container *ngIf="group.size === 0; else renderTasks">
+    <p>Your inbox is empty.</p>
+  </ng-container>
+  <ng-template #renderTasks>
+    <mat-expansion-panel
+      *ngFor="let map of group | keyvalue"
+      [attr.data-test-section]="map.key.id"
+      [expanded]="map.value.length > 0"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h3>{{ map.key.name }}</h3>
+          &nbsp;
+          <span class="text-grey">({{ map.value.length }})</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <yata-task-list>
+        <ng-container *ngFor="let task of map.value; trackBy: trackByTaskId">
+          <yata-task [task]="task">
+            <yata-task-options [task]="task"></yata-task-options>
+          </yata-task>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </yata-task-list>
+    </mat-expansion-panel>
+  </ng-template>
 </main>
 
 <!-- This is here so the user can open the TaskDetailsDialogComponent from TaskOptionsComponent -->

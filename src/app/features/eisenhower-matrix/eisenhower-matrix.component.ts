@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Priority, Task } from '../../models';
 import {
   selectCompletedHighPriorityTasks,
@@ -46,5 +46,5 @@ export class EisenhowerMatrixComponent {
     selectCompletedHighPriorityTasks
   );
 
-  constructor(private store: Store) {}
+  constructor(private readonly store: Store) {}
 }

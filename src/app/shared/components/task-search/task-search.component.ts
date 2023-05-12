@@ -7,24 +7,20 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   Observable,
   Subject,
   debounceTime,
   distinctUntilChanged,
+  map,
   switchMap,
   takeUntil,
-  map,
 } from 'rxjs';
 import { Task } from '../../../models';
+import { BreakpointService } from '../../../services';
 import { selectCurrentProjectId, selectTasks } from '../../../store/selectors';
 
 @Component({
@@ -35,18 +31,22 @@ import { selectCurrentProjectId, selectTasks } from '../../../store/selectors';
 })
 export class TaskSearchComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
+  readonly isHandset$ = this.breakpointService.isHandset$;
+  readonly control = new FormControl<string>('', {
+    validators: [Validators.minLength(1)],
+    nonNullable: true,
+  });
+
   resultSet$?: Observable<Task[]>;
   currentProjectId?: number;
-  form!: FormGroup;
 
   @ViewChild('input')
   inputElement?: ElementRef;
 
   constructor(
+    private readonly breakpointService: BreakpointService,
     private readonly store: Store,
-    private readonly fb: FormBuilder,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly router: Router
   ) {}
 
   ngOnDestroy(): void {
@@ -54,8 +54,6 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm();
-
     this.store
       .select(selectCurrentProjectId)
       .pipe(takeUntil(this.destroy$))
@@ -63,7 +61,7 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
         if (value) this.currentProjectId = value;
       });
 
-    this.resultSet$ = this.query.valueChanges.pipe(
+    this.resultSet$ = this.control.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
       switchMap((query: string) =>
@@ -88,24 +86,14 @@ export class TaskSearchComponent implements OnDestroy, OnInit {
     return false;
   }
 
-  private initForm() {
-    this.form = this.fb.group({
-      query: this.fb.control('', {
-        validators: [Validators.minLength(1)],
-        nonNullable: true,
-      }),
-    });
-  }
-
   handleSelectedOption(taskId: number) {
-    this.router.navigate(['tasks', taskId], { relativeTo: this.route });
+    this.control.setValue('', {
+      emitEvent: false,
+    });
+    this.router.navigateByUrl(`${this.router.url}/tasks/${taskId}`);
   }
 
   handleClearInput() {
-    this.query.setValue('');
-  }
-
-  get query() {
-    return this.form.get('query') as FormControl<string>;
+    this.control.reset();
   }
 }

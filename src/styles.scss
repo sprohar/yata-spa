@@ -30,6 +30,24 @@ $light-theme: mat.define-light-theme(
   @include mat.all-component-colors($light-theme);
 }
 
+.is-not-handset {
+  display: none !important;
+}
+
+.is-handset {
+  display: flex !important;
+}
+
+@media only screen and (min-width: 600px) {
+  .is-not-handset {
+    display: flex !important;
+  }
+
+  .is-handset {
+    display: none !important;
+  }
+}
+
 h1,
 h2,
 h3,

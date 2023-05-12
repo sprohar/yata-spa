@@ -24,27 +24,24 @@ import { CreateProjectDialogComponent } from '../create-project-dialog/create-pr
 })
 export class MainComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  projects$ = this.store.select(selectProjectsForSidenav);
-  inbox$ = this.store.select(selectInbox);
-  tags$ = this.store.select(selectTags);
-  isHandset$ = this.breakpointService.isHandset$;
-  user$ = this.store.select(selectUser);
-
+  readonly projects$ = this.store.select(selectProjectsForSidenav);
+  readonly inbox$ = this.store.select(selectInbox);
+  readonly tags$ = this.store.select(selectTags);
+  readonly isHandset$ = this.breakpointService.isHandset$;
+  readonly user$ = this.store.select(selectUser);
   readonly KANBAN_VIEW = Project.View.KANBAN;
   readonly LIST_VIEW = Project.View.LIST;
 
   constructor(
-    private breakpointService: BreakpointService,
-    private store: Store,
-    private dialog: MatDialog,
-    private confirmationDialog: ConfirmationDialogService
+    private readonly breakpointService: BreakpointService,
+    private readonly store: Store,
+    private readonly dialog: MatDialog,
+    private readonly confirmationDialog: ConfirmationDialogService
   ) {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
   }
-
-  ngOnInit(): void {}
 
   trackByProjectId(_index: number, project: Project) {
     return project.id;

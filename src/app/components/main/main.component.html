@@ -209,8 +209,8 @@
       </mat-nav-list>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content class="relative p-1">
-    <mat-toolbar color="primary" [class.hide]="(isHandset$ | async) === false">
+  <mat-sidenav-content class="relative">
+    <mat-toolbar [class.hide]="(isHandset$ | async) === false">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -220,7 +220,12 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
+      <ng-container *ngIf="isHandset$ | async">
+        <yata-task-search class="full-width search-bar"></yata-task-search>
+      </ng-container>
     </mat-toolbar>
-    <router-outlet></router-outlet>
+    <div class="p-1 full-height">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

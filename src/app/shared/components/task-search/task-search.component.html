@@ -1,36 +1,34 @@
-<form [formGroup]="form" class="full-width">
-  <mat-form-field appearance="outline" class="full-width">
-    <input
-      data-test="searchInput"
-      #input
-      matInput
-      placeholder="Search (/)"
-      formControlName="query"
-      autocomplete="off"
-      [matAutocomplete]="auto"
-    />
-    <button
-      *ngIf="input.value"
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      title="Clear"
-      (click)="handleClearInput()"
+<mat-form-field appearance="outline" class="full-width">
+  <input
+    data-test="searchInput"
+    #input
+    matInput
+    placeholder="Search (/)"
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    autocomplete="off"
+  />
+  <button
+    *ngIf="input.value"
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    title="Clear"
+    (click)="handleClearInput()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-autocomplete
+    autoActiveFirstOption
+    #auto="matAutocomplete"
+    (optionSelected)="handleSelectedOption($event.option.value)"
+  >
+    <mat-option
+      *ngFor="let task of resultSet$ | async; trackBy: trackByTaskId"
+      [attr.data-test]="'task-id=' + task.id"
+      [value]="task.id"
     >
-      <mat-icon>close</mat-icon>
-    </button>
-    <mat-autocomplete
-      autoActiveFirstOption
-      #auto="matAutocomplete"
-      (optionSelected)="handleSelectedOption($event.option.value)"
-    >
-      <mat-option
-        *ngFor="let task of resultSet$ | async; trackBy: trackByTaskId"
-        [attr.data-test]="'task-id=' + task.id"
-        [value]="task.id"
-      >
-        {{ task.title }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+      {{ task.title }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

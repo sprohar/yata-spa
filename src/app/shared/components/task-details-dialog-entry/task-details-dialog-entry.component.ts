@@ -12,16 +12,15 @@ import { TaskDetailsDialogComponent } from '../task-details-dialog/task-details-
 @Component({
   selector: 'yata-task-details-dialog-entry',
   template: ``,
-  styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskDetailsDialogEntryComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
 
   constructor(
-    private dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute
+    private readonly dialog: MatDialog,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {

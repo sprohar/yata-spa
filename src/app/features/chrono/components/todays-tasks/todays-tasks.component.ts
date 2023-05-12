@@ -9,7 +9,6 @@ import {
 @Component({
   selector: 'yata-todays-tasks',
   templateUrl: './todays-tasks.component.html',
-  styleUrls: ['./todays-tasks.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodaysTasksComponent {

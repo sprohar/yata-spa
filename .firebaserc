@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "yata-d70d3"
+  },
+  "targets": {
+    "yata-d70d3": {
+      "hosting": {
+        "yata-spa": [
+          "yata-d70d3"
+        ]
+      }
+    }
+  }
+}

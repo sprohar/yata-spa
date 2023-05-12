@@ -16,7 +16,7 @@
           type="text"
           formControlName="name"
           placeholder="Press Enter to save"
-          (keyup.enter)="handleSave()"
+          (keyup.enter)="$event.preventDefault(); handleSave()"
         />
         <mat-hint>{{ input.value.length }} / {{ nameMaxLength }}</mat-hint>
       </mat-form-field>

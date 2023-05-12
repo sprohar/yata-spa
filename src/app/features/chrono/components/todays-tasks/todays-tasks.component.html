@@ -1,7 +1,10 @@
 <yata-view-header [title]="'Today'"></yata-view-header>
 
 <main class="flex-column row-gap-1">
-  <mat-expansion-panel *ngIf="tasks$ | async as tasks" [expanded]="true">
+  <mat-expansion-panel
+    *ngIf="tasks$ | async as tasks"
+    [expanded]="tasks.length > 0"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>
         <h3>{{ today | date : "fullDate" }}</h3>

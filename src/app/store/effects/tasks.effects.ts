@@ -4,16 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import {
-  catchError,
-  concatMap,
-  exhaustMap,
-  map,
-  mergeMap,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { Task } from '../../models';
 import { TasksService } from '../../services/http';
 import {
@@ -199,24 +190,6 @@ export class TasksEffects {
             YataApiActions.deleteSubtaskSuccess({ subtask: action.subtask })
           ),
           tap(() => this.snackbar.open('Removed subtask')),
-          catchError((error: HttpErrorResponse) =>
-            of(
-              YataApiActions.serverError({
-                error,
-              })
-            )
-          )
-        )
-      )
-    )
-  );
-
-  getAll$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(EisenhowerMatrixActions.onInit),
-      exhaustMap((_) =>
-        this.tasksService.getAll().pipe(
-          map((res) => YataApiActions.loadTasksSuccess({ tasks: res.data })),
           catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
