@@ -34,7 +34,6 @@ const routes: Route[] = [
 
 describe('InboxResolver', () => {
   let harness: RouterTestingHarness;
-  // let mockSelectInbox: MemoizedSelector<ProjectsState, Project | undefined>;
   let projectsServiceSpy: jasmine.SpyObj<ProjectsService>;
   let store: MockStore;
 

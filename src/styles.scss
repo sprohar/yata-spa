@@ -35,12 +35,12 @@ $light-theme: mat.define-light-theme(
 }
 
 .is-handset {
-  display: block !important;
+  display: flex !important;
 }
 
 @media only screen and (min-width: 600px) {
   .is-not-handset {
-    display: block !important;
+    display: flex !important;
   }
 
   .is-handset {

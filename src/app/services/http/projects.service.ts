@@ -4,12 +4,17 @@ import { PaginatedList } from '../../interfaces/paginated-list.interface';
 import { Project } from '../../models/project.model';
 import * as db from '../../__mock';
 import { YataApiService } from './yata-api.service';
+import { HttpClient } from '@angular/common/http';
+import { HttpErrorService } from './error/http-error.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectsService extends YataApiService {
-  constructor() {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly httpErrorService: HttpErrorService,
+  ) {
     super();
   }
 
@@ -29,13 +34,13 @@ export class ProjectsService extends YataApiService {
     return of(projects[0]);
   }
 
-  get(projectId: number) {
+  get(projectId: number): Observable<Project> {
     const project = db.mockProjects.find((p) => p.id === projectId)!;
     return of({
       ...project,
       tasks: db.mockTasks.filter((t) => t.projectId === projectId),
       sections: db.mockSections.filter((s) => s.projectId === projectId),
-    });
+    } as Project);
   }
 
   getAll() {

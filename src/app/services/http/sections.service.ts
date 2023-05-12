@@ -1,14 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { mockSections } from '../../__mock';
 import { Section } from '../../models/section.model';
+import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SectionsService extends YataApiService {
-  constructor() {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly httpErrorService: HttpErrorService,
+  ) {
     super();
   }
 

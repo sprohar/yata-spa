@@ -4,6 +4,8 @@ import { mockTasks } from '../../__mock';
 import { PaginatedList, TasksQueryParams } from '../../interfaces';
 import { Tag, Task } from '../../models';
 import { YataApiService } from './yata-api.service';
+import { HttpClient } from '@angular/common/http';
+import { HttpErrorService } from './error/http-error.service';
 
 type SearchArgs = { query: string; projectId?: number };
 
@@ -11,7 +13,10 @@ type SearchArgs = { query: string; projectId?: number };
   providedIn: 'root',
 })
 export class TasksService extends YataApiService {
-  constructor() {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly httpErrorService: HttpErrorService,
+  ) {
     super();
   }
 

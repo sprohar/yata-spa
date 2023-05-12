@@ -1,15 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import * as db from '../../__mock';
 import { PaginatedList } from '../../interfaces/paginated-list.interface';
 import { Tag, Task } from '../../models';
+import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TagsService extends YataApiService {
-  constructor() {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly httpErrorService: HttpErrorService
+  ) {
     super();
   }
 

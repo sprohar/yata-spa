@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { mockTasks } from '../../__mock';
 import { PaginatedList } from '../../interfaces/paginated-list.interface';
 import { Task } from '../../models';
+import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
 
 type QueryParams = {
@@ -14,7 +16,10 @@ type QueryParams = {
   providedIn: 'root',
 })
 export class EisenhowerService extends YataApiService {
-  constructor() {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly httpErrorService: HttpErrorService
+  ) {
     super();
   }
 
