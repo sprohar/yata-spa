@@ -55,7 +55,12 @@ export class ProjectsEffects {
               project: action.project,
             })
           ),
-          tap(() => this.router.navigateByUrl('/')),
+          tap(() => {
+            if (action.type === ViewHeaderActions.deleteProject.type) {
+              this.router.navigateByUrl('/app/inbox');
+            }
+            this.snackbar.open(`${action.project.name} was deleted.`);
+          }),
           catchError((error: HttpErrorResponse) =>
             of(
               YataApiActions.serverError({
