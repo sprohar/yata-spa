@@ -15,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Task } from '../../../models';
 import { AppState } from '../../../store/app.state';
@@ -55,7 +55,9 @@ describe('TaskSearchComponent', () => {
   let loader: HarnessLoader;
 
   beforeEach(async () => {
-    router = jasmine.createSpyObj('Router', ['navigate']);
+    router = jasmine.createSpyObj('Router', ['navigate'], {
+      url: '/app/inbox',
+    });
 
     await TestBed.configureTestingModule({
       declarations: [TaskSearchComponent],
@@ -77,10 +79,6 @@ describe('TaskSearchComponent', () => {
             { selector: selectTasks, value: tasks },
           ],
         }),
-        {
-          provide: ActivatedRoute,
-          useValue: {},
-        },
         {
           provide: Router,
           useValue: router,
@@ -126,10 +124,10 @@ describe('TaskSearchComponent', () => {
 
   describe('#handleClearInput', () => {
     it('should clear input', () => {
-      component.query.setValue('a');
-      expect(component.query.value).toEqual('a');
+      component.control.setValue('a');
+      expect(component.control.value).toEqual('a');
       component.handleClearInput();
-      expect(component.query.value).toEqual('');
+      expect(component.control.value).toEqual('');
     });
   });
 
@@ -144,7 +142,7 @@ describe('TaskSearchComponent', () => {
 
       tick(500); // debounceTime
       fixture.detectChanges();
-      expect(component.query.value).toEqual('a');
+      expect(component.control.value).toEqual('a');
 
       expect(component.resultSet$).toBeDefined();
     }));
