@@ -1,10 +1,36 @@
 header {
   min-height: 80px;
+
+  h1 {
+    text-align: center;
+  }
 }
 
 .matrix-container {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto;
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+
+  .quadrant {
+    min-height: 100vh;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  header {
+    h1 {
+      text-align: left;
+    }
+  }
+
+  .matrix-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    gap: 16px;
+
+    .quadrant {
+      min-height: inherit;
+    }
+  }
 }

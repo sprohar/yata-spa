@@ -1,10 +1,5 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Priority, Project, Task } from '../../../../models';
@@ -18,7 +13,7 @@ import { MatrixListData } from '../../interfaces/matrix-list-data';
   styleUrls: ['./matrix-quadrant.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MatrixQuadrantComponent implements OnInit {
+export class MatrixQuadrantComponent {
   @Input() groupedTasks!: Map<Project, Task[]>;
   @Input() completedTasks!: Task[];
   @Input() priority!: Priority;
@@ -28,8 +23,6 @@ export class MatrixQuadrantComponent implements OnInit {
     private readonly dialog: MatDialog,
     private readonly store: Store
   ) {}
-
-  ngOnInit(): void {}
 
   trackByTaskId(index: number, task: Task) {
     return task.id ?? index;
