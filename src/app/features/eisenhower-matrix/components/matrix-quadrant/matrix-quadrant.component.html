@@ -27,11 +27,14 @@
   <div class="full-height p-1 relative">
     <div class="quadrant-content">
       <ng-container *ngFor="let entry of groupedTasks | keyvalue">
-        <yata-section
-          *ngIf="entry.value.length"
-          [name]="entry.key.name"
-          [itemsCount]="entry.value.length"
-        >
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3>{{ entry.key.name }}</h3>
+              &nbsp;
+              <span class="text-grey">({{ entry.value.length }})</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
           <yata-task-list
             cdkDropList
             cdkDropListSortingDisabled
@@ -42,23 +45,30 @@
               *ngFor="let task of entry.value; trackBy: trackByTaskId"
             >
               <yata-task cdkDrag [cdkDragData]="task" [task]="task">
-                <span class="task-info">{{ task.dueDate | date }}</span>
                 <yata-task-options [task]="task"></yata-task-options>
               </yata-task>
-              <mat-divider></mat-divider>
             </ng-container>
           </yata-task-list>
-        </yata-section>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
       </ng-container>
 
-      <ng-container *ngIf="showCompleted && completedTasks.length">
-        <yata-section [name]="'Completed'" [itemsCount]="completedTasks.length">
+      <ng-container *ngIf="showCompleted && completedTasks.length > 0">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3>Completed</h3>
+              &nbsp;
+              <span class="text-grey">({{ completedTasks.length }})</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
           <yata-task-list>
             <yata-task *ngFor="let task of completedTasks" [task]="task">
               <yata-task-options [task]="task"></yata-task-options>
             </yata-task>
           </yata-task-list>
-        </yata-section>
+        </mat-expansion-panel>
       </ng-container>
     </div>
   </div>

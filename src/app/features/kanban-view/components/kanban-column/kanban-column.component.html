@@ -1,4 +1,4 @@
-<article *ngIf="section" class="column">
+<article *ngIf="section" class="mat-elevation-z2 column">
   <div class="column-header">
     <div class="section-name-container">
       <h5 class="section-name">
@@ -43,13 +43,21 @@
     </ul>
   </div>
 
-  <div class="completed-tasks" *ngIf="completedTasks && completedTasks.length">
-    <yata-section [name]="'Completed'" [itemsCount]="completedTasks.length">
-      <ul class="task-list">
-        <li *ngFor="let task of completedTasks; trackBy: trackByTaskId">
-          <yata-task-card [task]="task"></yata-task-card>
-        </li>
-      </ul>
-    </yata-section>
-  </div>
+  <mat-expansion-panel
+    class="completed-tasks"
+    *ngIf="completedTasks && completedTasks.length"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4>Completed</h4>
+        &nbsp;
+        <span class="text-grey">({{ completedTasks.length }})</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ul class="task-list">
+      <li *ngFor="let task of completedTasks; trackBy: trackByTaskId">
+        <yata-task-card [task]="task"></yata-task-card>
+      </li>
+    </ul>
+  </mat-expansion-panel>
 </article>

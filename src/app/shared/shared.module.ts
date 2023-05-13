@@ -27,7 +27,6 @@ import { EditProjectDialogComponent } from './components/edit-project-dialog/edi
 import { EditSectionDialogComponent } from './components/edit-section-dialog/edit-section-dialog.component';
 import { SectionOptionsComponent } from './components/section-options/section-options.component';
 import { SectionPickerComponent } from './components/section-picker/section-picker.component';
-import { SectionComponent } from './components/section/section.component';
 import { SubtaskDetailsDailogComponent } from './components/subtask-details-dailog/subtask-details-dailog.component';
 import { TagsSelectListDialogComponent } from './components/tags-select-list-dialog/tags-select-list-dialog.component';
 import { TaskDetailsDialogEntryComponent } from './components/task-details-dialog-entry/task-details-dialog-entry.component';
@@ -56,7 +55,6 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     SectionPickerComponent,
     TaskOptionsComponent,
     EditProjectDialogComponent,
-    SectionComponent,
     TaskComponent,
     TaskListComponent,
     CreateCustomRecurrenceDialogComponent,
@@ -98,7 +96,6 @@ import { TaskPriorityPipe } from './pipes/task-priority.pipe';
     TaskOptionsComponent,
     SectionOptionsComponent,
     DateTimePickerDialogComponent,
-    SectionComponent,
     TaskComponent,
     TaskListComponent,
     TaskDetailsDialogEntryComponent,

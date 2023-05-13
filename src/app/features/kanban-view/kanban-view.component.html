@@ -1,6 +1,6 @@
 <ng-container *ngIf="currentProject$ | async as project">
-  <div class="kanban-wrapper" [class.top-0]="!(breakpoint.isHandset$ | async)">
-    <div class="full-height relative">
+  <div class="kanban-wrapper">
+    <div class="full-height relative p-1">
       <yata-view-header></yata-view-header>
       <main>
         <div class="kanban-view">
