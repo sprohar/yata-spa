@@ -9,11 +9,13 @@
             cdkDropListGroup
             *ngIf="columns$ | async as map"
           >
-            <yata-kanban-column
-              *ngFor="let entry of map | keyvalue"
-              [section]="entry.key"
-              [tasks]="entry.value"
-            ></yata-kanban-column>
+            <ng-container *ngFor="let entry of map | keyvalue">
+              <yata-kanban-column
+                *ngIf="entry.key.id"
+                [section]="entry.key"
+                [tasks]="entry.value"
+              ></yata-kanban-column>
+            </ng-container>
 
             <!-- Create column -->
             <div class="column-last-child">
@@ -28,7 +30,13 @@
                 ></yata-create-kanban-column>
               </ng-container>
               <ng-template #hideAddKanbanColumnComponent>
-                <button mat-stroked-button (click)="handleAddColumn()">
+                <button
+                  id="addColumnBtn"
+                  data-test="addColumnButton"
+                  mat-raised-button
+                  color="primary"
+                  (click)="handleAddColumn()"
+                >
                   <mat-icon>add</mat-icon>
                   <span>Add column</span>
                 </button>

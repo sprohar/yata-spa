@@ -10,8 +10,8 @@ import { selectKanbanColumns } from '../../store/selectors/tasks.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanViewComponent {
-  currentProject$ = this.store.select(selectCurrentProject);
-  columns$ = this.store.select(selectKanbanColumns);
+  readonly currentProject$ = this.store.select(selectCurrentProject);
+  readonly columns$ = this.store.select(selectKanbanColumns);
   showAddKanbanColumnComponent = false;
 
   constructor(private readonly store: Store) {}

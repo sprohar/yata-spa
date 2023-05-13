@@ -1,4 +1,4 @@
-<article *ngIf="section" class="mat-elevation-z2 column">
+<article *ngIf="section" class="column">
   <div class="column-header">
     <div class="section-name-container">
       <h5 class="section-name">
@@ -31,21 +31,20 @@
       [cdkDropListData]="section"
       (cdkDropListDropped)="handleTaskCardDrop($event)"
     >
-      <ng-container *ngFor="let task of pendingTasks; trackBy: trackByTaskId">
-        <li>
-          <yata-task-card
-            [task]="task"
-            cdkDrag
-            [cdkDragData]="task"
-          ></yata-task-card>
-        </li>
-      </ng-container>
+      <li *ngFor="let task of pendingTasks; trackBy: trackByTaskId">
+        <yata-task-card
+          [task]="task"
+          cdkDrag
+          [cdkDragData]="task"
+        ></yata-task-card>
+      </li>
     </ul>
   </div>
 
+  <!-- Completed tasks -->
   <mat-expansion-panel
-    class="completed-tasks"
     *ngIf="completedTasks && completedTasks.length"
+    class="completed-tasks"
   >
     <mat-expansion-panel-header>
       <mat-panel-title>
