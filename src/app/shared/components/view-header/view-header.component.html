@@ -1,5 +1,5 @@
 <ng-container *ngIf="currentProject$ | async as project; else noProject">
-  <header class="view-header">
+  <header class="flex align-items-center view-header">
     <div class="pb-1">
       <h1 class="truncate">
         {{ project.name }}
