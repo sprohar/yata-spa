@@ -3,6 +3,8 @@ import {
   Component,
   EventEmitter,
   HostListener,
+  OnDestroy,
+  OnInit,
   Output,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +13,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { CreateTagDialogComponent } from '../../features/tags/components/create-tag-dialog/create-tag-dialog.component';
 import { EditTagDialogComponent } from '../../features/tags/components/edit-tag-dialog/edit-tag-dialog.component';
 import { Project, Tag } from '../../models';
-import { ConfirmationDialogService } from '../../services';
+import { BreakpointService, ConfirmationDialogService } from '../../services';
 import { EditProjectDialogComponent } from '../../shared/components/edit-project-dialog/edit-project-dialog.component';
 import { SidenavActions } from '../../store/actions';
 import {
@@ -28,7 +30,7 @@ import { CreateProjectDialogComponent } from '../create-project-dialog/create-pr
   styleUrls: ['./sidenav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
   readonly projects$ = this.store.select(selectProjectsForSidenav);
   readonly inbox$ = this.store.select(selectInbox);
@@ -36,17 +38,25 @@ export class SidenavComponent {
   readonly user$ = this.store.select(selectUser);
   readonly KANBAN_VIEW = Project.View.KANBAN;
   readonly LIST_VIEW = Project.View.LIST;
+  private isHandset = true;
 
   @Output() readonly closeSidenav = new EventEmitter<void>();
 
   constructor(
     private readonly store: Store,
     private readonly dialog: MatDialog,
-    private readonly confirmationDialog: ConfirmationDialogService
+    private readonly confirmationDialog: ConfirmationDialogService,
+    private readonly breakpointService: BreakpointService
   ) {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
+  }
+
+  ngOnInit(): void {
+    this.breakpointService.isHandset$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isHandset) => (this.isHandset = isHandset));
   }
 
   trackByProjectId(_index: number, project: Project) {
@@ -59,7 +69,9 @@ export class SidenavComponent {
 
   @HostListener('click', ['$event'])
   onClick(_event: MouseEvent): void {
-    this.closeSidenav.emit();
+    if (this.isHandset) {
+      this.closeSidenav.emit();
+    }
   }
 
   // =================== Projects ============================
