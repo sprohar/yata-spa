@@ -1,213 +1,13 @@
-<mat-sidenav-container class="sidenav-container" *ngIf="user$ | async as user">
+<mat-sidenav-container class="full-height">
   <mat-sidenav
     #drawer
-    class="sidenav relative"
+    class="sidenav"
     fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <div class="relative full-height">
-      <div class="sidenav-lists">
-        <mat-nav-list>
-          <a mat-list-item data-test="profileLink" routerLink="profile">
-            <div class="flex align-items-center">
-              <mat-icon>account_circle</mat-icon>
-              <span>{{ user.username ?? "Profile" }}</span>
-            </div>
-          </a>
-        </mat-nav-list>
-
-        <mat-divider></mat-divider>
-
-        <!-- Inbox -->
-        <mat-nav-list *ngIf="inbox$ | async as inbox">
-          <a mat-list-item data-test="inbox" routerLink="inbox">
-            <div class="flex align-items-center">
-              <mat-icon>inbox</mat-icon>
-              <span>Inbox</span>
-            </div>
-          </a>
-        </mat-nav-list>
-
-        <mat-divider></mat-divider>
-
-        <!-- Chrono -->
-        <mat-nav-list>
-          <a mat-list-item routerLink="chrono/today">
-            <div class="flex align-items-center">
-              <mat-icon>today</mat-icon>
-              <span>Today</span>
-            </div>
-          </a>
-        </mat-nav-list>
-
-        <mat-divider></mat-divider>
-
-        <!-- Eisenhower Matrix -->
-        <mat-nav-list>
-          <a mat-list-item routerLink="matrix">
-            <div class="flex align-items-center">
-              <mat-icon>grid_view</mat-icon>
-              <span>Eisenhower Matrix</span>
-            </div>
-          </a>
-        </mat-nav-list>
-
-        <mat-divider></mat-divider>
-
-        <!-- Projects list -->
-        <section>
-          <details open class="collapsible-list">
-            <summary class="clickable">
-              <span> Projects </span>
-              <button
-                data-test="sidenavCreateProjectButton"
-                mat-icon-button
-                (click)="openCreateProjectDialog()"
-                title="Create project"
-              >
-                <mat-icon>add</mat-icon>
-              </button>
-            </summary>
-            <ul class="sidenav-list" data-test="sidenavProjectsList">
-              <ng-container *ngIf="projects$ | async as projects">
-                <li
-                  class="clickable"
-                  *ngFor="let project of projects; trackBy: trackByProjectId"
-                >
-                  <a
-                    [attr.data-test]="'sidenavProject-' + project.id"
-                    class="sidenav-link flex align-items-center"
-                    [routerLink]="[
-                      project.view === LIST_VIEW ? 'list' : 'kanban',
-                      project.id
-                    ]"
-                  >
-                    <mat-icon>
-                      {{
-                        project.view === LIST_VIEW ? "view_list" : "view_kanban"
-                      }}
-                    </mat-icon>
-                    <span>{{ project.name }}</span>
-                  </a>
-                  <button
-                    [attr.data-test]="
-                      'sidenavProjectOptionsButton-' + project.id
-                    "
-                    class="action-button"
-                    mat-icon-button
-                    [matMenuTriggerFor]="projectOptions"
-                  >
-                    <mat-icon>more_horiz</mat-icon>
-                  </button>
-                  <mat-menu
-                    #projectOptions="matMenu"
-                    data-test="projectOptions"
-                  >
-                    <button
-                      [attr.data-test]="
-                        'sidenavEditProjectDialogButton-' + project.id
-                      "
-                      mat-menu-item
-                      (click)="openEditProjectDialog(project)"
-                    >
-                      <mat-icon>edit</mat-icon>
-                      Edit
-                    </button>
-                    <button
-                      [attr.data-test]="
-                        'sidenavDeleteProjectDialogButton-' + project.id
-                      "
-                      mat-menu-item
-                      (click)="openDeleteProjectDialog(project)"
-                    >
-                      <mat-icon>delete</mat-icon>
-                      Delete
-                    </button>
-                  </mat-menu>
-                </li>
-              </ng-container>
-            </ul>
-          </details>
-        </section>
-
-        <mat-divider></mat-divider>
-
-        <!-- Tags list -->
-        <section>
-          <details open class="collapsible-list">
-            <summary class="clickable">
-              <span>Tags</span>
-              <button
-                data-test="sidenavCreateTagButton"
-                mat-icon-button
-                title="Create tag"
-                (click)="openCreateTagDialog()"
-              >
-                <mat-icon>add</mat-icon>
-              </button>
-            </summary>
-            <ul data-test="sidenavTagsList" class="sidenav-list">
-              <ng-container *ngIf="tags$ | async as tags">
-                <li
-                  class="clickable"
-                  *ngFor="let tag of tags; trackBy: trackByTagId"
-                >
-                  <a
-                    [attr.data-test]="'sidenavTag-' + tag.id"
-                    class="sidenav-link flex align-items-center"
-                    [routerLink]="['tags', tag.id]"
-                  >
-                    <mat-icon [style.color]="tag.colorHexCode">label</mat-icon>
-                    <span>{{ tag.name }}</span>
-                  </a>
-                  <button
-                    [attr.data-test]="'sidenavTagOptionsButton-' + tag.id"
-                    class="action-button"
-                    mat-icon-button
-                    [matMenuTriggerFor]="tagOptions"
-                  >
-                    <mat-icon>more_horiz</mat-icon>
-                  </button>
-                  <mat-menu #tagOptions="matMenu">
-                    <button
-                      [attr.data-test]="'sidenavEditTagDialogButton-' + tag.id"
-                      mat-menu-item
-                      (click)="openEditTagDialog(tag)"
-                    >
-                      <mat-icon>edit</mat-icon>
-                      Edit
-                    </button>
-                    <button
-                      [attr.data-test]="
-                        'sidenavDeleteTagDialogButton-' + tag.id
-                      "
-                      mat-menu-item
-                      (click)="openDeleteTagConfirmationDialog(tag)"
-                    >
-                      <mat-icon>delete</mat-icon>
-                      Delete
-                    </button>
-                  </mat-menu>
-                </li>
-              </ng-container>
-            </ul>
-          </details>
-        </section>
-
-        <mat-divider></mat-divider>
-      </div>
-
-      <mat-nav-list class="bottom-bar">
-        <a mat-list-item routerLink="preferences">
-          <div class="flex align-items-center">
-            <mat-icon>settings</mat-icon>
-            <span>Preferences</span>
-          </div>
-        </a>
-      </mat-nav-list>
-    </div>
+    <yata-sidenav></yata-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="relative">
     <mat-toolbar [class.hide]="(isHandset$ | async) === false">
@@ -224,8 +24,18 @@
         <yata-task-search class="full-width search-bar"></yata-task-search>
       </ng-container>
     </mat-toolbar>
-    <div class="p-1 full-height">
+    <div class="relative p-1">
       <router-outlet></router-outlet>
     </div>
+
+    <button
+      *ngIf="isHandset$ | async"
+      mat-mini-fab
+      color="primary"
+      aria-label="Create task"
+      style="position: fixed; right: 16px; bottom: 16px"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
   </mat-sidenav-content>
 </mat-sidenav-container>
