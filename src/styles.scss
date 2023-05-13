@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 @use "./scss/foundation/clickable";
 @use "./scss/forms/input";
+@use "./scss/util";
 @use "./scss/colors" as colors;
 @include mat.core();
 
@@ -112,78 +113,6 @@ body {
 
 .hide {
   display: none !important;
-}
-
-.p1 {
-  padding: 16px;
-}
-
-.p-0 {
-  padding: 0;
-}
-
-.p-1 {
-  padding: 1em;
-}
-
-.pl-1 {
-  padding-left: 1em;
-}
-
-.pr-1 {
-  padding-right: 1em;
-}
-
-.pb-1 {
-  padding-bottom: 1em;
-}
-
-.pt-1 {
-  padding-top: 1em;
-}
-
-.px-1 {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
-.py-1 {
-  padding-top: 16px;
-  padding-bottom: 16px;
-}
-
-.m-0 {
-  margin: 0;
-}
-
-.m-1 {
-  margin: 1em;
-}
-
-.ml-1 {
-  margin-left: 1em;
-}
-
-.mr-1 {
-  margin-right: 1em;
-}
-
-.mb-1 {
-  margin-bottom: 1em;
-}
-
-.mt-1 {
-  margin-top: 1em;
-}
-
-.mx-1 {
-  margin-left: 16px;
-  margin-right: 16px;
-}
-
-.my-1 {
-  margin-top: 16px;
-  margin-bottom: 16px;
 }
 
 .invisible {
