@@ -1,10 +1,9 @@
 .task-list {
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
-  padding: 0 8px;
+  row-gap: 32px;
+  padding: 0 0 0 16px;
   min-height: 48px;
-  
 }
 
 @media only screen and (min-width: 600px) {
