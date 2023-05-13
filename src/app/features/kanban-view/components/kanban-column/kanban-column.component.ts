@@ -7,9 +7,11 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
 import { Section, Task } from '../../../../models';
 import { CreateTaskDialogComponent } from '../../../../shared/components/create-task-dialog/create-task-dialog.component';
 import { KanbanViewActions } from '../../../../store/actions';
+import { selectCompletedTasks } from '../../../../store/selectors';
 
 @Component({
   selector: 'yata-kanban-column',
@@ -21,9 +23,13 @@ export class KanbanColumnComponent implements OnInit {
   @Input() section!: Section;
   @Input() tasks!: Task[];
 
-  completedTasks?: Task[];
-  pendingTasks?: Task[];
   isAddingTask = false;
+
+  readonly completedTasks$ = this.store
+    .select(selectCompletedTasks)
+    .pipe(
+      map((tasks) => tasks.filter((task) => task.sectionId === this.section.id))
+    );
 
   constructor(
     private readonly store: Store,
@@ -34,9 +40,6 @@ export class KanbanColumnComponent implements OnInit {
     if (!this.section) {
       throw new Error('"section" is undefined.');
     }
-
-    this.completedTasks = this.tasks.filter((task) => task.isCompleted);
-    this.pendingTasks = this.tasks.filter((task) => !task.isCompleted);
   }
 
   trackByTaskId(_index: number, task: Task) {
