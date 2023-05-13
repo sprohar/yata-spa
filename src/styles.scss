@@ -2,6 +2,7 @@
 @use "./scss/foundation/clickable";
 @use "./scss/forms/input";
 @use "./scss/util";
+@use "./scss/flex";
 @use "./scss/colors" as colors;
 @include mat.core();
 
@@ -119,10 +120,6 @@ body {
   visibility: hidden;
 }
 
-.spacer {
-  flex: 1;
-}
-
 .full-height {
   height: 100%;
 }
@@ -155,45 +152,6 @@ body {
   flex-direction: column;
   row-gap: 1em;
   padding: 8px 0;
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-centered {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-row {
-  flex-direction: row;
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.align-items-center {
-  align-items: center;
-}
-
-.justify-end {
-  justify-content: flex-end;
-}
-
-.space-between {
-  justify-content: space-between;
-}
-
-.column-gap-1 {
-  column-gap: 1em;
-}
-
-.row-gap-1 {
-  row-gap: 1em;
 }
 
 .icon {
