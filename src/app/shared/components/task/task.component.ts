@@ -10,6 +10,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { TaskView } from '../../../interfaces';
@@ -31,7 +32,12 @@ export class TaskComponent implements OnDestroy {
   @Input() isDraggable = false;
   form!: FormGroup;
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
+  ) {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -77,6 +83,12 @@ export class TaskComponent implements OnDestroy {
         },
       })
     );
+  }
+
+  handleViewTask(task: Task) {
+    this.router.navigate(['tasks', task.id], {
+      relativeTo: this.route,
+    });
   }
 
   handleSubmit() {

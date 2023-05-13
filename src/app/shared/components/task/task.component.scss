@@ -29,8 +29,15 @@
   opacity: 0.87;
   padding-left: 12px;
   padding-bottom: 4px;
+  max-width: 150px;
 }
 
 .info-buttons-container {
   padding-left: 10px;
+}
+
+@media only screen and (min-width: 600px) {
+  .task-description {
+    max-width: 100%;
+  }
 }
