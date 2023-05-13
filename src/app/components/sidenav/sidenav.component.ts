@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostListener,
+  Output,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -31,6 +37,8 @@ export class SidenavComponent {
   readonly KANBAN_VIEW = Project.View.KANBAN;
   readonly LIST_VIEW = Project.View.LIST;
 
+  @Output() readonly closeSidenav = new EventEmitter<void>();
+
   constructor(
     private readonly store: Store,
     private readonly dialog: MatDialog,
@@ -47,6 +55,11 @@ export class SidenavComponent {
 
   trackByTagId(_index: number, tag: Tag) {
     return tag.id;
+  }
+
+  @HostListener('click', ['$event'])
+  onClick(_event: MouseEvent): void {
+    this.closeSidenav.emit();
   }
 
   // =================== Projects ============================

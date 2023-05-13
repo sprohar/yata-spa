@@ -7,7 +7,7 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <yata-sidenav></yata-sidenav>
+    <yata-sidenav (closeSidenav)="drawer.close()"></yata-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="relative">
     <mat-toolbar [class.hide]="(isHandset$ | async) === false">
