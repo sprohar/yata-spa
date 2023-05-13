@@ -58,6 +58,7 @@ import {
   tagsReducer,
   tasksReducer,
 } from './store/reducers/';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {
     LandingPageComponent,
     MainComponent,
     InboxComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
