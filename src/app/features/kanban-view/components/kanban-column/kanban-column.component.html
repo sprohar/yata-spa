@@ -1,18 +1,16 @@
-<article *ngIf="section" class="column">
-  <div class="column-header">
-    <div class="section-name-container">
-      <h5 class="section-name">
-        {{ section.name }}
-      </h5>
-      <p
-        class="badge-task-count"
-        *ngIf="completedTasks && completedTasks.length"
-      >
-        ({{ tasks.length }})
-      </p>
+<article *ngIf="completedTasks$ | async as completedTasks" class="column">
+  <div class="flex align-items-center space-between mb-1">
+    <div class="flex align-items-center column-gap-1 text-overflow">
+      <h3>{{ section.name }}</h3>
+      <p class="badge-task-count">({{ tasks.length }})</p>
     </div>
     <div class="flex">
-      <button mat-icon-button title="Add task" (click)="openCreateTaskDialog()">
+      <button
+        mat-icon-button
+        title="Add task"
+        [attr.aria-label]="'Add task to ' + section.name"
+        (click)="openCreateTaskDialog()"
+      >
         <mat-icon>add</mat-icon>
       </button>
       <yata-section-options
@@ -22,16 +20,16 @@
     </div>
   </div>
 
-  <div class="tasks-container">
+  <div class="flex-column">
     <ul
       #taskList
-      class="task-list"
+      class="flex-column row-gap-1 p-0 m-0"
       cdkDropList
       cdkDropListSortingDisabled
       [cdkDropListData]="section"
       (cdkDropListDropped)="handleTaskCardDrop($event)"
     >
-      <li *ngFor="let task of pendingTasks; trackBy: trackByTaskId">
+      <li *ngFor="let task of tasks; trackBy: trackByTaskId">
         <yata-task-card
           [task]="task"
           cdkDrag
@@ -44,7 +42,7 @@
   <!-- Completed tasks -->
   <mat-expansion-panel
     *ngIf="completedTasks && completedTasks.length"
-    class="completed-tasks"
+    class="mt-1"
   >
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -53,7 +51,7 @@
         <span class="text-grey">({{ completedTasks.length }})</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <ul class="task-list">
+    <ul class="flex-column row-gap-1 p-0 m-0">
       <li *ngFor="let task of completedTasks; trackBy: trackByTaskId">
         <yata-task-card [task]="task"></yata-task-card>
       </li>

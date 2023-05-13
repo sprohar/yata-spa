@@ -5,63 +5,15 @@
   min-width: 350px;
   max-height: 95%;
   overflow: auto;
-
-  .column-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-
-    .section-name-container {
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      column-gap: 16px;
-    }
-
-    .section-name {
-      font-size: 24px;
-      margin-right: 8px;
-    }
-  }
-
-  .tasks-container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .completed-tasks {
-    display: flex;
-    flex-direction: column;
-    margin-top: 16px;
-
-    details {
-      summary {
-        padding: 8px 4px;
-        border-radius: 6px;
-
-        &:hover {
-          cursor: pointer;
-          background-color: rgba(255, 255, 255, 0.04);
-        }
-      }
-    }
-
-    .task-list {
-      margin-top: 8px;
-    }
-  }
 }
 
-.task-list {
+.mat-expansion-panel {
+  background-color: inherit !important;
+  box-shadow: none !important;
+}
+
+ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  row-gap: 24px;
-  height: 100vh;
 }
 
 .light-theme {
