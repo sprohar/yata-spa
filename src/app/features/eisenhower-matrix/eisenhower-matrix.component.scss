@@ -10,6 +10,7 @@ header {
   display: flex;
   flex-direction: column;
   row-gap: 1em;
+  height: 100vh;
 
   .quadrant {
     min-height: 100vh;

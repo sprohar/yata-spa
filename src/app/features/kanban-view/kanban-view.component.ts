@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BreakpointService } from '../../services/breakpoint.service';
 import { selectCurrentProject } from '../../store/selectors/projects.selectors';
 import { selectKanbanColumns } from '../../store/selectors/tasks.selectors';
 
@@ -11,11 +10,11 @@ import { selectKanbanColumns } from '../../store/selectors/tasks.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanViewComponent {
-  currentProject$ = this.store.select(selectCurrentProject);
-  columns$ = this.store.select(selectKanbanColumns);
+  readonly currentProject$ = this.store.select(selectCurrentProject);
+  readonly columns$ = this.store.select(selectKanbanColumns);
   showAddKanbanColumnComponent = false;
 
-  constructor(public breakpoint: BreakpointService, private store: Store) {}
+  constructor(private readonly store: Store) {}
 
   handleAddColumn() {
     this.showAddKanbanColumnComponent = true;

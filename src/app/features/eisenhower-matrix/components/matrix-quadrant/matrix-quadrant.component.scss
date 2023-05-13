@@ -1,9 +1,11 @@
 @use "../../../../../scss/colors" as colors;
 
-.task-info {
-  font-size: 12px;
-  opacity: 0.87;
-  min-width: 70px;
+.mat-expansion-panel {
+  background-color: inherit !important;
+}
+
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+  box-shadow: none;
 }
 
 .quadrant {

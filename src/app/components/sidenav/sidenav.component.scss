@@ -1,0 +1,90 @@
+.bottom-bar {
+  height: 48px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+
+  a {
+    border-top: thin solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+.sidenav-lists {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 48px;
+  overflow-y: auto;
+}
+
+details.collapsible-list {
+  cursor: pointer;
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 16px;
+
+    .marker {
+      transform: scale(0.5);
+    }
+
+    button {
+      transform: scale(0.75);
+    }
+  }
+}
+
+.sidenav-list {
+  padding: 0;
+  margin: 4px 0;
+  min-height: 48px;
+
+  li {
+    height: 48px;
+    padding-left: 24px;
+    display: flex;
+    align-items: center;
+
+    .sidenav-link {
+      color: inherit;
+      height: inherit;
+      width: 100%;
+      text-decoration: none;
+    }
+
+    button.action-button {
+      visibility: hidden;
+    }
+  }
+
+  li:hover {
+    button.action-button {
+      visibility: visible;
+    }
+  }
+}
+
+.sidenav-link,
+mat-nav-list {
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.light-theme {
+  .bottom-bar a {
+    border-color: rgba(0, 0, 0, 0.12);
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .sidenav-list {
+    li {
+      padding-left: 32px;
+    }
+  }
+}

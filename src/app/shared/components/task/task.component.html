@@ -23,7 +23,7 @@
   </div>
 
   <!-- Input & details -->
-  <div class="flex-column spacer">
+  <div class="flex-column spacer is-not-handset">
     <input
       [attr.data-test]="'task-' + task.id + 'input'"
       type="text"
@@ -32,7 +32,26 @@
       (blur)="handleSubmit()"
     />
     <ng-container *ngIf="prefs.taskView === TASK_VIEW_INFORMATIVE">
-      <p class="task-description">
+      <p class="task-description text-overflow">
+        {{ task.description }}
+      </p>
+      <div class="flex info-buttons-container">
+        <button
+          *ngIf="task.dueDate"
+          [attr.data-test]="'task-' + task.id + 'dueDate'"
+          mat-stroked-button
+          class="task-due-date"
+        >
+          {{ task.dueDate | date : "shortDate" }}
+        </button>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="flex-column spacer is-handset" (click)="handleViewTask(task)">
+    <div>{{ task.title }}</div>
+    <ng-container *ngIf="prefs.taskView === TASK_VIEW_INFORMATIVE">
+      <p class="task-description text-overflow">
         {{ task.description }}
       </p>
       <div class="flex info-buttons-container">
