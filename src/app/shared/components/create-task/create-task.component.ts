@@ -38,7 +38,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../auth/models/user.model';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { CreateTaskComponentActions } from '../../../store/actions';
@@ -98,9 +98,7 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   readonly MEDIUM_PRIORITY = Priority.MEDIUM;
   readonly LOW_PRIORITY = Priority.LOW;
   readonly NO_PRIORITY = Priority.NONE;
-  readonly group$: Observable<Map<Project, Section[]>> = this.store.select(
-    selectSectionsGroupedByProject
-  );
+  readonly group$ = this.store.select(selectSectionsGroupedByProject);
 
   constructor(
     private readonly store: Store,
@@ -195,6 +193,10 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
     return this.form.get('parentId') as FormControl;
   }
 
+  trackBySectionId(_index: number, section: Section) {
+    return section.id;
+  }
+
   getProjectSections(projectId: number, group: Map<Project, Section[]>) {
     for (const [project, sections] of group) {
       if (project.id === projectId) return sections;
@@ -241,11 +243,11 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
    */
   intersectOnTagName(selectedTags: Set<Tag>, existingTags: Set<Tag>) {
     const map = new Map<string, Tag>();
-    for (let tag of selectedTags) {
+    for (const tag of selectedTags) {
       map.set(tag.name, tag);
     }
 
-    for (let tag of existingTags) {
+    for (const tag of existingTags) {
       const entry = map.get(tag.name);
       if (entry) {
         map.set(tag.name, tag);

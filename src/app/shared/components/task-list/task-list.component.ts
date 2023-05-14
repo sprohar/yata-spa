@@ -12,7 +12,7 @@ import { TaskListActions } from '../../../store/actions/task-list.actions';
   standalone: true,
 })
 export class TaskListComponent {
-  constructor(private store: Store) {}
+  constructor(private readonly store: Store) {}
 
   handleMoveTaskToSection(event: CdkDragDrop<Section, Section, Task>) {
     const source = event.previousContainer.data;

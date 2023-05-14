@@ -6,7 +6,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
@@ -18,8 +17,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { SuggestedDates } from '../../interfaces/suggested-dates';
 import { TimeTokens } from '../../interfaces/time-tokens';
 import { TimeInputComponent } from '../time-input/time-input.component';
-
-// TODO: Refactor this
 
 @Component({
   selector: 'yata-date-time-picker-dialog',
@@ -46,7 +43,7 @@ export class DateTimePickerDialogComponent implements OnInit {
 
   constructor(
     public readonly dialogRef: MatDialogRef<DateTimePickerDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Date | null,
+    @Inject(MAT_DIALOG_DATA) public data: Date | null
   ) {}
 
   ngOnInit(): void {

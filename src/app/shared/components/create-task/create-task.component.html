@@ -4,10 +4,7 @@
   *ngIf="group$ | async as group"
 >
   <div class="flex-column">
-    <mat-form-field
-      appearance="outline"
-      [hideRequiredMarker]="true"
-    >
+    <mat-form-field appearance="outline" [hideRequiredMarker]="true">
       <mat-label>Task</mat-label>
       <input
         #taskInput
@@ -65,7 +62,8 @@
         <mat-select formControlName="sectionId">
           <mat-option
             *ngFor="
-              let section of getProjectSections(projectIdControl.value, group)
+              let section of getProjectSections(projectIdControl.value, group);
+              trackBy: trackBySectionId
             "
             [value]="section.id"
           >
