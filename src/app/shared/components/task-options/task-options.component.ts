@@ -15,7 +15,6 @@ import { Section, Task } from '../../../models';
 import { ConfirmationDialogService } from '../../../services';
 import { TaskOptionsActions } from '../../../store/actions/task-options.actions';
 import { selectMoveToSectionsOptions } from '../../../store/selectors';
-import { SubtaskDetailsDailogComponent } from '../subtask-details-dailog/subtask-details-dailog.component';
 
 @Component({
   selector: 'yata-task-options',
@@ -74,13 +73,6 @@ export class TaskOptionsComponent implements OnDestroy {
   }
 
   handleViewTaskDetails() {
-    if (this.task.parentId) {
-      this.dialog.open(SubtaskDetailsDailogComponent, {
-        data: this.task,
-      });
-      return;
-    }
-
     const url = this.router.url;
     if (url.split('/').includes('matrix')) {
       this.router.navigate(['p', this.task.projectId, 'tasks', this.task.id!], {

@@ -108,7 +108,9 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.taskInput.nativeElement.focus();
+    if (this.taskInput) {
+      this.taskInput.nativeElement.focus();
+    }
     this.changeDetector.detectChanges();
   }
 

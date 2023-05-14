@@ -1,13 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialog,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,13 +38,7 @@ describe('TaskOptionsComponent', () => {
 
     await TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        MatDialogModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatIconModule,
-        TaskOptionsComponent,
-      ],
+      imports: [MatDialogModule, TaskOptionsComponent],
       providers: [
         provideMockStore(),
         {
@@ -128,12 +119,6 @@ describe('TaskOptionsComponent', () => {
   });
 
   describe('#handleViewTaskDetails', () => {
-    // beforeEach(() => {
-    //   if (component.task) {
-    //     component.task.parentId = undefined;
-    //   }
-    // });
-
     describe('Eisenhower Matrix', () => {
       it('should navigate to the TaskDetailsDialog', () => {
         // @ts-ignore
@@ -166,12 +151,6 @@ describe('TaskOptionsComponent', () => {
         ['tasks', component.task.id],
         { relativeTo: route }
       );
-    });
-
-    it('should navigate to the SubtaskDetailsDialog when ', () => {
-      component.task.parentId = 11;
-      component.handleViewTaskDetails();
-      expect(dialog.open).toHaveBeenCalled();
     });
   });
 });

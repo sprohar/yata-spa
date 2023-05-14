@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Task } from '../../../models';
 import { TaskActions } from '../../../store/actions';
@@ -19,7 +20,10 @@ describe('TaskComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskComponent],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore(),
+        { provide: ActivatedRoute, useValue: {} },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskComponent);

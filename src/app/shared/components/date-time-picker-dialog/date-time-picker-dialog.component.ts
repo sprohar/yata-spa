@@ -36,7 +36,7 @@ import { TimeInputComponent } from '../time-input/time-input.component';
   ],
 })
 export class DateTimePickerDialogComponent implements OnInit {
-  date: Date | null = new Date(new Date().setHours(0, 0, 0, 0));
+  date: Date | null = null;
   showTimeInput = false;
   suggestedDates!: SuggestedDates;
   recurrenceText?: string;

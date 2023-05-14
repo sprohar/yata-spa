@@ -121,9 +121,12 @@ export const tasksFeature = createFeature({
     }),
     on(YataApiActions.createTaskSuccess, (state, action) => ({
       ...state,
-      tasks: context
-        .fromOrderBy(state.orderBy)
-        .sort(state.tasks.concat(action.task)),
+      tasks:
+        state.tasks.length === 0
+          ? [action.task]
+          : context
+              .fromOrderBy(state.orderBy)
+              .sort(state.tasks.concat(action.task)),
     })),
     on(YataApiActions.updateTaskSuccess, (state, action) => ({
       ...state,

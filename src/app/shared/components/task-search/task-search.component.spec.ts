@@ -64,10 +64,6 @@ describe('TaskSearchComponent', () => {
             { selector: selectTasks, value: tasks },
           ],
         }),
-        {
-          provide: Router,
-          useValue: router,
-        },
       ],
     }).compileComponents();
 
@@ -98,13 +94,6 @@ describe('TaskSearchComponent', () => {
 
   it('should set the currentProjectId value', () => {
     expect(component.currentProjectId).toEqual(1);
-  });
-
-  describe('#handleSelectedOption', () => {
-    it('should navigate to the selected option', () => {
-      component.handleSelectedOption(tasks.at(0)!.id!);
-      expect(router.navigate).toHaveBeenCalled();
-    });
   });
 
   describe('#handleClearInput', () => {

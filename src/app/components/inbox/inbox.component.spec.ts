@@ -12,7 +12,6 @@ import { TasksState } from '../../store/reducers/tasks.reducer';
 import { selectTasksGroupByProjectSections } from '../../store/selectors';
 import { InboxComponent } from './inbox.component';
 
-// const projects: Project[] = [{ id: 1, name: 'Project' }];
 const sections: Section[] = [
   { id: 1, name: 'Section 1', projectId: 1 },
   { id: 2, name: 'Section 2', projectId: 1 },

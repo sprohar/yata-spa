@@ -1,6 +1,11 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -9,6 +14,7 @@ import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
+import { MatNativeDateModule } from '@angular/material/core';
 import { Priority, Tag, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
 import { TaskDetailsDialogComponent } from './task-details-dialog.component';
@@ -52,14 +58,27 @@ describe('TaskDetailsDialogComponent', () => {
 
     await TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [NoopAnimationsModule, TaskDetailsDialogComponent],
+      imports: [
+        NoopAnimationsModule,
+        TaskDetailsDialogComponent,
+        MatNativeDateModule,
+        MatDialogModule,
+      ],
       providers: [
         provideMockStore({ initialState }),
-        { provide: MatDialog, useValue: matDialog },
         { provide: ActivatedRoute, useValue: route },
         { provide: Router, useValue: router },
       ],
     }).compileComponents();
+
+    TestBed.overrideComponent(TaskDetailsDialogComponent, {
+      add: {
+        providers: [
+          { provide: MAT_DIALOG_DATA, useValue: {} },
+          { provide: MatDialog, useValue: matDialog },
+        ],
+      },
+    });
 
     fixture = TestBed.createComponent(TaskDetailsDialogComponent);
     store = TestBed.inject(MockStore);

@@ -12,6 +12,7 @@ import {
   CreateTaskDialogComponent,
   CreateTaskDialogData,
 } from './create-task-dialog.component';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('CreateTaskDialogComponent', () => {
   let component: CreateTaskDialogComponent;
@@ -41,6 +42,7 @@ describe('CreateTaskDialogComponent', () => {
         CreateTaskDialogComponent,
       ],
       providers: [
+        provideMockStore(),
         {
           provide: MatDialogRef,
           useValue: dialogRef,
