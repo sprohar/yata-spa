@@ -1,3 +1,4 @@
+import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,8 +9,12 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -23,11 +28,22 @@ import { selectUserPreferences } from '../../../store/selectors';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    AsyncPipe,
+    DatePipe,
+  ],
 })
 export class TaskComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
   readonly TASK_VIEW_INFORMATIVE = TaskView.INFORMATIVE;
   readonly prefs$ = this.store.select(selectUserPreferences);
+
   @Input() task!: Task;
   @Input() isDraggable = false;
   form!: FormGroup;

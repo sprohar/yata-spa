@@ -10,10 +10,9 @@ describe('GeneralSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GeneralSettingsComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatCardModule],
-    }).compileComponents();
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MatCardModule, GeneralSettingsComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(GeneralSettingsComponent);
     component = fixture.componentInstance;

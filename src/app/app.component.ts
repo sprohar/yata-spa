@@ -5,8 +5,9 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 import { UserPreference } from './auth/models/user.model';
 import { selectUserPreferences } from './store/selectors';
 
@@ -14,6 +15,8 @@ import { selectUserPreferences } from './store/selectors';
   selector: 'app-root',
   template: ` <router-outlet></router-outlet> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [RouterOutlet],
 })
 export class AppComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();

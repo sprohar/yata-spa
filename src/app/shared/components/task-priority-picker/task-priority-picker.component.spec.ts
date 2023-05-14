@@ -1,7 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Priority } from '../../../models';
 
@@ -13,13 +10,7 @@ describe('TaskPriorityPickerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TaskPriorityPickerComponent],
-      imports: [
-        MatIconModule,
-        MatMenuModule,
-        MatButtonModule,
-        NoopAnimationsModule,
-      ],
+      imports: [NoopAnimationsModule, TaskPriorityPickerComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskPriorityPickerComponent);

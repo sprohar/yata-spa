@@ -50,23 +50,23 @@ describe('ListViewComponent', () => {
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [ListViewComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
         MatExpansionModule,
         DragDropModule,
         MatButtonModule,
         MatDialogModule,
         NoopAnimationsModule,
-      ],
-      providers: [
+        ListViewComponent
+    ],
+    providers: [
         provideMockStore({ initialState }),
         {
-          provide: MatDialog,
-          useValue: dialog,
+            provide: MatDialog,
+            useValue: dialog,
         },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ListViewComponent);
     store = TestBed.inject(MockStore);

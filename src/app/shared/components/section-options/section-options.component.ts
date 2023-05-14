@@ -1,3 +1,4 @@
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,7 +6,10 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { Project, Section } from '../../../models';
@@ -19,22 +23,29 @@ type MenuOptionsDirection = 'vertical' | 'horizontal';
 @Component({
   selector: 'yata-section-options',
   templateUrl: './section-options.component.html',
-  styleUrls: ['./section-options.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    NgFor,
+    AsyncPipe,
+  ],
 })
 export class SectionOptionsComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
+  readonly projects$ = this.store.select(selectProjects);
 
   @Input() direction: MenuOptionsDirection = 'vertical';
   @Input() section?: Section;
   @Input() project?: Project;
 
-  projects$ = this.store.select(selectProjects);
-
   constructor(
-    private store: Store,
-    private dialog: MatDialog,
-    private confirmationDialog: ConfirmationDialogService
+    private readonly store: Store,
+    private readonly dialog: MatDialog,
+    private readonly confirmationDialog: ConfirmationDialogService
   ) {}
 
   ngOnDestroy(): void {

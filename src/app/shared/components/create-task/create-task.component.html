@@ -1,11 +1,10 @@
 <form
-  class="flex flex-column row-gap-1"
+  class="flex-column row-gap-1 p-1"
   [formGroup]="form"
   *ngIf="group$ | async as group"
 >
-  <div class="flex flex-column">
+  <div class="flex-column">
     <mat-form-field
-      class="form-field"
       appearance="outline"
       [hideRequiredMarker]="true"
     >
@@ -23,7 +22,7 @@
     </mat-form-field>
 
     <!-- Tags -->
-    <mat-chip-listbox aria-label="Tags" class="tags">
+    <mat-chip-listbox aria-label="Tags" class="chips-list mb-1">
       <mat-chip *ngFor="let tag of selectedTags" [attr.data-test]="tag.name">
         {{ tag.name }}
         <button matChipRemove (click)="removeTag(tag)">

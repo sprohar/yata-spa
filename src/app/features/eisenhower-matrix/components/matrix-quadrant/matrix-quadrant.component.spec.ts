@@ -34,24 +34,24 @@ describe('MatrixQuadrantComponent', () => {
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [MatrixQuadrantComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
         MatDialogModule,
         NoopAnimationsModule,
         MatCardModule,
         MatButtonModule,
         MatIconModule,
         MatMenuModule,
-      ],
-      providers: [
+        MatrixQuadrantComponent
+    ],
+    providers: [
         provideMockStore(),
         {
-          provide: MatDialog,
-          useValue: dialog,
+            provide: MatDialog,
+            useValue: dialog,
         },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(MatrixQuadrantComponent);
     store = TestBed.inject(MockStore);

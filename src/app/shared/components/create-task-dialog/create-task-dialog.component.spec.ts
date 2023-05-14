@@ -34,9 +34,12 @@ describe('CreateTaskDialogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [CreateTaskDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatDialogModule, NoopAnimationsModule],
+      imports: [
+        MatDialogModule,
+        NoopAnimationsModule,
+        CreateTaskDialogComponent,
+      ],
       providers: [
         {
           provide: MatDialogRef,

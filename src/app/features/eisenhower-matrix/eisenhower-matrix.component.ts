@@ -1,7 +1,11 @@
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Priority, Task } from '../../models';
+import { TaskSearchComponent } from '../../shared/components/task-search/task-search.component';
 import {
   selectCompletedHighPriorityTasks,
   selectCompletedLowPriorityTasks,
@@ -13,11 +17,21 @@ import {
   selectNoPriorityTasksGroupByProject,
   selectTasksGroupByPriority,
 } from '../../store/selectors';
+import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-quadrant.component';
 
 @Component({
   selector: 'yata-eisenhower-matrix',
   templateUrl: './eisenhower-matrix.component.html',
   styleUrls: ['./eisenhower-matrix.component.scss'],
+  standalone: true,
+  imports: [
+    TaskSearchComponent,
+    NgIf,
+    CdkDropListGroup,
+    MatrixQuadrantComponent,
+    RouterOutlet,
+    AsyncPipe,
+  ],
 })
 export class EisenhowerMatrixComponent {
   readonly HIGH_PRIORITY = Priority.HIGH;

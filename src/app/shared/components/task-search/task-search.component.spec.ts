@@ -7,13 +7,7 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -60,17 +54,8 @@ describe('TaskSearchComponent', () => {
     });
 
     await TestBed.configureTestingModule({
-      declarations: [TaskSearchComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        MatAutocompleteModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        NoopAnimationsModule,
-      ],
+      imports: [NoopAnimationsModule, TaskSearchComponent],
       providers: [
         provideMockStore({
           initialState,

@@ -1,3 +1,4 @@
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,7 +8,13 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { CreateTagDialogComponent } from '../../features/tags/components/create-tag-dialog/create-tag-dialog.component';
@@ -29,6 +36,18 @@ import { CreateProjectDialogComponent } from '../create-project-dialog/create-pr
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    MatListModule,
+    RouterLink,
+    MatIconModule,
+    MatDividerModule,
+    MatButtonModule,
+    NgFor,
+    MatMenuModule,
+    AsyncPipe,
+  ],
 })
 export class SidenavComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();

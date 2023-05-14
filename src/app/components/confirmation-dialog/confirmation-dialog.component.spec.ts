@@ -24,20 +24,19 @@ describe('ConfirmationDialogComponent', () => {
     mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [ConfirmationDialogComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [NoopAnimationsModule, MatDialogModule, MatButtonModule],
-      providers: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NoopAnimationsModule, MatDialogModule, MatButtonModule, ConfirmationDialogComponent],
+    providers: [
         {
-          provide: MAT_DIALOG_DATA,
-          useValue: dialogData,
+            provide: MAT_DIALOG_DATA,
+            useValue: dialogData,
         },
         {
-          provide: MatDialogRef,
-          useValue: mockDialogRef,
+            provide: MatDialogRef,
+            useValue: mockDialogRef,
         },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ConfirmationDialogComponent);
     component = fixture.componentInstance;

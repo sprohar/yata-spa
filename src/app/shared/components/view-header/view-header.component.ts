@@ -1,10 +1,15 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   Input,
   OnDestroy,
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -23,12 +28,25 @@ import {
   CreateTaskDialogData,
 } from '../create-task-dialog/create-task-dialog.component';
 import { EditProjectDialogComponent } from '../edit-project-dialog/edit-project-dialog.component';
+import { TaskSearchComponent } from '../task-search/task-search.component';
+import { TasksOrderByOptionsComponent } from '../tasks-order-by-options/tasks-order-by-options.component';
 
 @Component({
   selector: 'yata-view-header',
   templateUrl: './view-header.component.html',
   styleUrls: ['./view-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    TaskSearchComponent,
+    MatButtonModule,
+    MatIconModule,
+    TasksOrderByOptionsComponent,
+    MatMenuModule,
+    MatDividerModule,
+    AsyncPipe,
+  ],
 })
 export class ViewHeaderComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();

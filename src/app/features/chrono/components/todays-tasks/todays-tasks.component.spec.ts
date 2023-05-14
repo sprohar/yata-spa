@@ -56,15 +56,14 @@ describe('TodaysTasksComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TodaysTasksComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatDividerModule],
-      providers: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MatDividerModule, TodaysTasksComponent],
+    providers: [
         provideMockStore({
-          initialState,
+            initialState,
         }),
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(TodaysTasksComponent);
     store = TestBed.inject(MockStore);

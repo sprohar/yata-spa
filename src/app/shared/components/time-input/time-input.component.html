@@ -1,4 +1,4 @@
-<div class="time-picker-container full-width" [formGroup]="form">
+<div class="flex-column row-gap-1 p-1 full-width" [formGroup]="form">
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Time</mat-label>
     <input
@@ -13,7 +13,7 @@
     <mat-error>{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
 
-  <div class="buttons">
+  <div class="flex space-between">
     <button mat-button (click)="handleCancel()">Cancel</button>
     <button
       [disabled]="form.invalid || form.pristine"

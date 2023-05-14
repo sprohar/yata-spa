@@ -1,3 +1,12 @@
+import { TextFieldModule } from '@angular/cdk/text-field';
+import {
+  AsyncPipe,
+  DatePipe,
+  KeyValuePipe,
+  NgClass,
+  NgFor,
+  NgIf,
+} from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -15,9 +24,19 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../auth/models/user.model';
@@ -29,6 +48,7 @@ import {
   selectTags,
   selectUserPreferences,
 } from '../../../store/selectors';
+import { TaskPriorityPipe } from '../../pipes/task-priority.pipe';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 @Component({
@@ -36,6 +56,27 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatChipsModule,
+    NgFor,
+    MatIconModule,
+    TextFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatButtonModule,
+    MatMenuModule,
+    NgClass,
+    MatDividerModule,
+    AsyncPipe,
+    DatePipe,
+    KeyValuePipe,
+    TaskPriorityPipe,
+  ],
 })
 export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();

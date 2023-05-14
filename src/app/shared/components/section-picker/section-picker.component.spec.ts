@@ -34,12 +34,12 @@ describe('SectionPickerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SectionPickerComponent],
       imports: [
         MatButtonModule,
         MatMenuModule,
         MatIconModule,
         NoopAnimationsModule,
+        SectionPickerComponent,
       ],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();

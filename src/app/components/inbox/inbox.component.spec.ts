@@ -36,29 +36,28 @@ describe('InboxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InboxComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [NoopAnimationsModule, SharedModule, MatExpansionModule],
-      providers: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NoopAnimationsModule, SharedModule, MatExpansionModule, InboxComponent],
+    providers: [
         provideMockStore({
-          initialState: {
-            auth: {
-              user: {
-                id: '1',
-                email: 'test@example.com',
-                preferences: {
-                  taskView: TaskView.MINIMALIST,
+            initialState: {
+                auth: {
+                    user: {
+                        id: '1',
+                        email: 'test@example.com',
+                        preferences: {
+                            taskView: TaskView.MINIMALIST,
+                        },
+                    },
                 },
-              },
             },
-          },
         }),
         {
-          provide: ActivatedRoute,
-          useValue: {},
+            provide: ActivatedRoute,
+            useValue: {},
         },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(InboxComponent);
     store = TestBed.inject(MockStore);

@@ -31,27 +31,27 @@ describe('TaskCardComponent', () => {
     route = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
 
     await TestBed.configureTestingModule({
-      declarations: [TaskCardComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
         MatCardModule,
         MatCheckboxModule,
         MatIconModule,
         MatRippleModule,
         ReactiveFormsModule,
-      ],
-      providers: [
+        TaskCardComponent
+    ],
+    providers: [
         provideMockStore(),
         {
-          provide: Router,
-          useValue: router,
+            provide: Router,
+            useValue: router,
         },
         {
-          provide: ActivatedRoute,
-          useValue: route,
+            provide: ActivatedRoute,
+            useValue: route,
         },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(TaskCardComponent);
     store = TestBed.inject(MockStore);

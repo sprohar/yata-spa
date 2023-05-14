@@ -1,6 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { Project } from '../../../models';
 import { EditProjectDialogActions } from '../../../store/actions';
@@ -9,15 +21,23 @@ import { EditProjectDialogActions } from '../../../store/actions';
   selector: 'yata-edit-project-dialog',
   templateUrl: './edit-project-dialog.component.html',
   styleUrls: ['./edit-project-dialog.component.scss'],
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
 })
 export class EditProjectDialogComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Project,
-    private dialogRef: MatDialogRef<EditProjectDialogComponent>,
-    private store: Store,
-    private fb: FormBuilder
+    private readonly dialogRef: MatDialogRef<EditProjectDialogComponent>,
+    private readonly store: Store,
+    private readonly fb: FormBuilder
   ) {}
 
   ngOnInit(): void {

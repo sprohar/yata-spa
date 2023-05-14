@@ -49,24 +49,24 @@ describe('KanbanColumnComponent', () => {
     dialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [KanbanColumnComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
         NoopAnimationsModule,
         DragDropModule,
         MatMenuModule,
         MatIconModule,
         MatButtonModule,
         MatCardModule,
-      ],
-      providers: [
+        KanbanColumnComponent
+    ],
+    providers: [
         provideMockStore(),
         {
-          provide: MatDialog,
-          useValue: dialog,
+            provide: MatDialog,
+            useValue: dialog,
         },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(KanbanColumnComponent);
     store = TestBed.inject(MockStore);

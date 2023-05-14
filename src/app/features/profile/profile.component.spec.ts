@@ -31,8 +31,12 @@ describe('ProfileComponent', () => {
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [ProfileComponent],
-      imports: [MatButtonModule, MatDialogModule, MatIconModule],
+      imports: [
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule,
+        ProfileComponent,
+      ],
       providers: [
         {
           provide: MatDialog,

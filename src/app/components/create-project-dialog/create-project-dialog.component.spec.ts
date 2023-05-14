@@ -28,9 +28,8 @@ describe('CreateProjectDialogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [CreateProjectDialogComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
         MatSelectModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
@@ -39,19 +38,20 @@ describe('CreateProjectDialogComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-      ],
-      providers: [
+        CreateProjectDialogComponent
+    ],
+    providers: [
         provideMockStore(),
         {
-          provide: MAT_DIALOG_DATA,
-          useValue: {},
+            provide: MAT_DIALOG_DATA,
+            useValue: {},
         },
         {
-          provide: MatDialogRef,
-          useValue: dialogRef,
+            provide: MatDialogRef,
+            useValue: dialogRef,
         },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(CreateProjectDialogComponent);
     store = TestBed.inject(MockStore);

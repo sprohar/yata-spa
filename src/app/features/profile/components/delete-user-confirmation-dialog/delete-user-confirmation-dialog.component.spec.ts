@@ -20,7 +20,6 @@ describe('DeleteUserConfirmationDialogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['afterClosed', 'close']);
 
     await TestBed.configureTestingModule({
-      declarations: [DeleteUserConfirmationDialogComponent],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
@@ -28,6 +27,7 @@ describe('DeleteUserConfirmationDialogComponent', () => {
         MatDialogModule,
         MatInputModule,
         MatFormFieldModule,
+        DeleteUserConfirmationDialogComponent,
       ],
       providers: [
         {

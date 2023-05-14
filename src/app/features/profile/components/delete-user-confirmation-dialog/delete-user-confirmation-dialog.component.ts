@@ -9,11 +9,15 @@ import {
 import {
   AbstractControl,
   FormControl,
+  ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 function equals(value: string): ValidatorFn {
   return function (control: AbstractControl): ValidationErrors | null {
@@ -28,8 +32,15 @@ function equals(value: string): ValidatorFn {
 @Component({
   selector: 'yata-delete-user-confirmation-dialog',
   templateUrl: './delete-user-confirmation-dialog.component.html',
-  styleUrls: ['./delete-user-confirmation-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+  ],
 })
 export class DeleteUserConfirmationDialogComponent implements AfterViewInit {
   readonly message = 'Delete my account';

@@ -1,28 +1,52 @@
+import { DatePipe, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   Inject,
   OnInit,
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { SuggestedDates } from '../../interfaces/suggested-dates';
 import { TimeTokens } from '../../interfaces/time-tokens';
+import { TimeInputComponent } from '../time-input/time-input.component';
+
+// TODO: Refactor this
 
 @Component({
   selector: 'yata-date-time-picker-dialog',
   templateUrl: './date-time-picker-dialog.component.html',
   styleUrls: ['./date-time-picker-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    NgIf,
+    MatDividerModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDatepickerModule,
+    TimeInputComponent,
+    DatePipe,
+  ],
 })
 export class DateTimePickerDialogComponent implements OnInit {
-  date: Date | null = null;
+  date: Date | null = new Date(new Date().setHours(0, 0, 0, 0));
   showTimeInput = false;
   suggestedDates!: SuggestedDates;
   recurrenceText?: string;
 
   constructor(
+    public readonly dialogRef: MatDialogRef<DateTimePickerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Date | null,
-    public dialogRef: MatDialogRef<DateTimePickerDialogComponent>
   ) {}
 
   ngOnInit(): void {
@@ -110,9 +134,7 @@ export class DateTimePickerDialogComponent implements OnInit {
     if (!this.date) {
       this.date = new Date();
     }
-    this.date.setHours(timeTokens.hours);
-    this.date.setMinutes(timeTokens.minutes);
-    this.date.setSeconds(0);
+    this.date.setHours(timeTokens.hours, timeTokens.minutes, 0, 0);
     this.closeTimePicker();
   }
 
@@ -125,6 +147,7 @@ export class DateTimePickerDialogComponent implements OnInit {
       this.date.setHours(23, 59, 59, 999);
     } else {
       this.date.setSeconds(0);
+      this.date.setMilliseconds(0);
     }
 
     this.dialogRef.close(this.date);

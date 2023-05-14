@@ -48,7 +48,6 @@ describe('CreateTaskComponent', () => {
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [CreateTaskComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         NoopAnimationsModule,
@@ -61,6 +60,7 @@ describe('CreateTaskComponent', () => {
         MatButtonModule,
         MatIconModule,
         MatSelectModule,
+        CreateTaskComponent,
       ],
       providers: [
         provideMockStore({ initialState }),

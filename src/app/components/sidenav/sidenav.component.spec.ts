@@ -29,8 +29,7 @@ describe('SidenavComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      declarations: [SidenavComponent],
-      imports: [
+    imports: [
         MatSidenavModule,
         LayoutModule,
         MatListModule,
@@ -40,13 +39,14 @@ describe('SidenavComponent', () => {
         MatMenuModule,
         MatDialogModule,
         NoopAnimationsModule,
-      ],
-      providers: [
+        SidenavComponent
+    ],
+    providers: [
         provideMockStore(),
         { provide: MatDialog, useValue: dialog },
         { provide: ConfirmationDialogService, useValue: confirmationDialog },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(SidenavComponent);
     store = TestBed.inject(MockStore);

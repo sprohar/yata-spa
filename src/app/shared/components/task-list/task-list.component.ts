@@ -9,6 +9,7 @@ import { TaskListActions } from '../../../store/actions/task-list.actions';
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class TaskListComponent {
   constructor(private store: Store) {}

@@ -1,11 +1,20 @@
+import { NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 
 enum Frequency {
   DAILY = 'DAILY',
@@ -24,6 +33,19 @@ interface FrequencySelectOption {
   templateUrl: './create-custom-recurrence-dialog.component.html',
   styleUrls: ['./create-custom-recurrence-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    NgFor,
+    MatOptionModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatButtonModule,
+  ],
 })
 export class CreateCustomRecurrenceDialogComponent implements OnInit {
   readonly frequencySelectOptions: FrequencySelectOption[] = [

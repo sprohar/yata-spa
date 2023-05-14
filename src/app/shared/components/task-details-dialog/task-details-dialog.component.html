@@ -94,24 +94,14 @@
             </yata-task-list>
           </ng-container>
 
-          <ng-container *ngIf="isAddingSubtask; else notAddingSubtask">
-            <yata-create-task
-              data-test="createTaskComponent"
-              [parent]="task"
-              (canceled)="isAddingSubtask = false"
-              (created)="isAddingSubtask = false"
-            ></yata-create-task>
-          </ng-container>
-          <ng-template #notAddingSubtask>
-            <button
-              data-test="addSubtaskButton"
-              mat-stroked-button
-              (click)="isAddingSubtask = true"
-            >
-              <mat-icon>checklist</mat-icon>
-              <span>Add Subtask</span>
-            </button>
-          </ng-template>
+          <button
+            data-test="addSubtaskButton"
+            mat-stroked-button
+            (click)="handleCreateSubtask(task)"
+          >
+            <mat-icon>checklist</mat-icon>
+            <span>Add Subtask</span>
+          </button>
         </div>
       </div>
 

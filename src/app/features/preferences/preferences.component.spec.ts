@@ -11,8 +11,7 @@ describe('PreferencesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PreferencesComponent],
-      imports: [MatListModule, MatIconModule, RouterLink],
+      imports: [MatListModule, MatIconModule, RouterLink, PreferencesComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PreferencesComponent);

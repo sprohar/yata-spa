@@ -40,9 +40,14 @@ describe('TaskOptionsComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      declarations: [TaskOptionsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatDialogModule, MatMenuModule, MatButtonModule, MatIconModule],
+      imports: [
+        MatDialogModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatIconModule,
+        TaskOptionsComponent,
+      ],
       providers: [
         provideMockStore(),
         {

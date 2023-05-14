@@ -1,3 +1,5 @@
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,25 +11,58 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatOptionModule } from '@angular/material/core';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
+  MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
 import { selectProjects, selectSections } from '../../../store/selectors';
+import { TaskPriorityPipe } from '../../pipes/task-priority.pipe';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
+import { TaskPriorityPickerComponent } from '../task-priority-picker/task-priority-picker.component';
 
 @Component({
   selector: 'yata-subtask-details-dailog',
   templateUrl: './subtask-details-dailog.component.html',
-  styleUrls: ['./subtask-details-dailog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    TextFieldModule,
+    MatSelectModule,
+    NgFor,
+    MatOptionModule,
+    TaskPriorityPickerComponent,
+    MatChipsModule,
+    AsyncPipe,
+    DatePipe,
+    TaskPriorityPipe,
+  ],
 })
 export class SubtaskDetailsDailogComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
@@ -35,18 +70,18 @@ export class SubtaskDetailsDailogComponent implements OnDestroy, OnInit {
   readonly PRIORITY_HIGH = Priority.HIGH;
   readonly PRIORITY_MEDIUM = Priority.MEDIUM;
   readonly PRIORITY_LOW = Priority.LOW;
+  readonly projects$ = this.store.select(selectProjects);
+  readonly sections$ = this.store.select(selectSections);
 
-  projects$ = this.store.select(selectProjects);
-  sections$ = this.store.select(selectSections);
   form!: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: Task,
-    private dialogRef: MatDialogRef<SubtaskDetailsDailogComponent>,
-    private store: Store,
-    private dialog: MatDialog,
-    private fb: FormBuilder
+    private readonly dialogRef: MatDialogRef<SubtaskDetailsDailogComponent>,
+    private readonly store: Store,
+    private readonly dialog: MatDialog,
+    private readonly fb: FormBuilder
   ) {}
 
   ngOnInit(): void {

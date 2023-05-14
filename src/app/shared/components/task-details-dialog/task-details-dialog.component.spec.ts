@@ -1,18 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  MatDialog,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -23,7 +11,6 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
 
 import { Priority, Tag, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
-import { SharedModule } from '../../shared.module';
 import { TaskDetailsDialogComponent } from './task-details-dialog.component';
 
 const task: Task = {
@@ -64,21 +51,8 @@ describe('TaskDetailsDialogComponent', () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      declarations: [TaskDetailsDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ReactiveFormsModule,
-        NoopAnimationsModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDividerModule,
-        MatCheckboxModule,
-        SharedModule,
-      ],
+      imports: [NoopAnimationsModule, TaskDetailsDialogComponent],
       providers: [
         provideMockStore({ initialState }),
         { provide: MatDialog, useValue: matDialog },

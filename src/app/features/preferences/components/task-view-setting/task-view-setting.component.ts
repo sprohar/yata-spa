@@ -4,9 +4,10 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../../auth/models/user.model';
 import { TaskView } from '../../../../interfaces';
 import { PreferencesActions } from '../../../../store/actions';
@@ -15,8 +16,9 @@ import { selectUserPreferences } from '../../../../store/selectors';
 @Component({
   selector: 'yata-task-view-setting',
   templateUrl: './task-view-setting.component.html',
-  styleUrls: ['./task-view-setting.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatRadioModule, ReactiveFormsModule],
 })
 export class TaskViewSettingComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();

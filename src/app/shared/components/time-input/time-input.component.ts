@@ -1,10 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { TimeTokens } from '../../interfaces/time-tokens';
 import { TimeStringParser } from '../../util/time-string-parser';
 import { TimeStringValidator } from '../../validators/time-string.validator';
@@ -12,20 +23,29 @@ import { TimeStringValidator } from '../../validators/time-string.validator';
 @Component({
   selector: 'yata-time-input',
   templateUrl: './time-input.component.html',
-  styleUrls: ['./time-input.component.scss'],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
 })
 export class TimeInputComponent implements OnInit {
-  @Input() date?: Date | null;
-  @Output() time = new EventEmitter<TimeTokens>();
-  @Output() close = new EventEmitter<void>();
-  form!: FormGroup;
-  isZuluTime = true;
   readonly datetimeFormatter = new Intl.DateTimeFormat(navigator.language, {
     hour: 'numeric',
     minute: 'numeric',
   });
 
-  constructor(private fb: FormBuilder) {}
+  @Input() date?: Date | null;
+  @Output() time = new EventEmitter<TimeTokens>();
+  @Output() close = new EventEmitter<void>();
+
+  form!: FormGroup;
+  isZuluTime = true;
+
+  constructor(private readonly fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.isZuluTime =

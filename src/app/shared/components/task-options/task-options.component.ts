@@ -4,7 +4,10 @@ import {
   Input,
   OnDestroy,
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
@@ -18,18 +21,21 @@ import { SubtaskDetailsDailogComponent } from '../subtask-details-dailog/subtask
   selector: 'yata-task-options',
   templateUrl: './task-options.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatButtonModule, MatMenuModule, MatIconModule],
 })
 export class TaskOptionsComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
+  readonly sections$ = this.store.select(selectMoveToSectionsOptions);
+
   @Input() task!: Task;
-  sections$ = this.store.select(selectMoveToSectionsOptions);
 
   constructor(
-    private store: Store,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private confirmationDialog: ConfirmationDialogService
+    private readonly store: Store,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly dialog: MatDialog,
+    private readonly confirmationDialog: ConfirmationDialogService
   ) {}
 
   ngOnDestroy(): void {

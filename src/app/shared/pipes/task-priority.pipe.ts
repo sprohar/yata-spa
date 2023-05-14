@@ -3,6 +3,7 @@ import { Priority } from '../../models';
 
 @Pipe({
   name: 'taskPriority',
+  standalone: true,
 })
 export class TaskPriorityPipe implements PipeTransform {
   transform(value: Priority, ..._args: unknown[]): unknown {

@@ -1,14 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
@@ -52,17 +48,11 @@ describe('ViewHeaderComponent', () => {
 
     await TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [
+      imports: [
         ViewHeaderComponent,
-        AppComponent,
         ListViewComponent,
         KanbanViewComponent,
-      ],
-      imports: [
-        MatButtonModule,
-        MatMenuModule,
-        MatIconModule,
-        MatDividerModule,
+        AppComponent,
       ],
       providers: [
         provideMockStore({ initialState }),

@@ -32,9 +32,8 @@ describe('KanbanViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [KanbanViewComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatButtonModule, MatIconModule],
+      imports: [MatButtonModule, MatIconModule, KanbanViewComponent],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
 

@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { Store } from '@ngrx/store';
 import { Section } from '../../../models';
 import { selectSections } from '../../../store/selectors';
@@ -6,19 +15,28 @@ import { selectSections } from '../../../store/selectors';
 @Component({
   selector: 'yata-section-picker',
   templateUrl: './section-picker.component.html',
-  styleUrls: ['./section-picker.component.scss']
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    NgIf,
+    NgFor,
+    AsyncPipe,
+  ],
 })
 export class SectionPickerComponent {
   @Output() selected = new EventEmitter<Section>();
-  sections$ = this.store.select(selectSections);
+  readonly sections$ = this.store.select(selectSections);
 
-  constructor(private store: Store) {}
+  constructor(private readonly store: Store) {}
 
-  trackBySectionId(index: number, section: Section) {
+  trackBySectionId(_index: number, section: Section) {
     return section.id;
   }
 
-  handleSelected(section: Section){
+  handleSelected(section: Section) {
     this.selected.emit(section);
   }
 }

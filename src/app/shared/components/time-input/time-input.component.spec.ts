@@ -1,8 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TimeInputComponent } from './time-input.component';
@@ -13,14 +9,7 @@ describe('TimeInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TimeInputComponent],
-      imports: [
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        NoopAnimationsModule,
-      ],
+      imports: [NoopAnimationsModule, TimeInputComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TimeInputComponent);
@@ -47,13 +36,13 @@ describe('TimeInputComponent', () => {
       component.timeControl.setValue('19 PM');
       component.handleAddTime();
       expect(component.time.emit).not.toHaveBeenCalled();
-    })
-    
+    });
+
     it('should emit the "change" event', () => {
       spyOn(component.time, 'emit');
       component.timeControl.setValue('9 PM');
       component.handleAddTime();
       expect(component.time.emit).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 });

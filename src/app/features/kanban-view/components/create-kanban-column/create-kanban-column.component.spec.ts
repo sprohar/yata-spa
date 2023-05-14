@@ -32,17 +32,17 @@ describe('CreateKanbanColumnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateKanbanColumnComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
         NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
         ReactiveFormsModule,
-      ],
-      providers: [provideMockStore({ initialState })],
-    }).compileComponents();
+        CreateKanbanColumnComponent
+    ],
+    providers: [provideMockStore({ initialState })]
+}).compileComponents();
 
     fixture = TestBed.createComponent(CreateKanbanColumnComponent);
     store = TestBed.inject(MockStore);

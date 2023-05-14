@@ -1,16 +1,39 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ErrorService } from '../../../services/error.service';
 import { AuthActions } from '../../../store/actions';
 import { User } from '../../models/user.model';
+import { LogoComponent } from '../logo/logo.component';
 
 @Component({
   selector: 'yata-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    LogoComponent,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    NgIf,
+    RouterLink,
+    AsyncPipe,
+  ],
 })
 export class SignUpComponent implements OnInit {
   form!: FormGroup;
@@ -19,9 +42,9 @@ export class SignUpComponent implements OnInit {
   readonly passwordMinLength = User.Password.MinLength;
 
   constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly route: ActivatedRoute,
     public readonly errorService: ErrorService
   ) {}
 

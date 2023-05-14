@@ -1,18 +1,13 @@
 @use "../../../../scss/forms/container";
 @use "../../../../scss/forms/error";
 
-.card {
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-}
 
 .form-container {
   max-width: 432px;
 }
 
 @media only screen and (min-width: 600px) {
-  .card {
+  #container {
     flex-direction: row;
   }
 }

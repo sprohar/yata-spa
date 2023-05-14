@@ -18,29 +18,29 @@ describe('SignInComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SignInComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
         ReactiveFormsModule,
         NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-      ],
-      providers: [
+        SignInComponent
+    ],
+    providers: [
         provideMockStore(),
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              queryParamMap: {
-                get: (_returnUrl: string) => '/',
-              },
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    queryParamMap: {
+                        get: (_returnUrl: string) => '/',
+                    },
+                },
             },
-          },
         },
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(SignInComponent);
     store = TestBed.inject(MockStore);

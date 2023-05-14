@@ -1,17 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
-  MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
@@ -20,7 +14,6 @@ import { TaskDetailsActions } from '../../../store/actions';
 import { ProjectsState } from '../../../store/reducers/projects.reducer';
 import { SectionsState } from '../../../store/reducers/sections.reducer';
 import { TasksState } from '../../../store/reducers/tasks.reducer';
-import { SharedModule } from '../../shared.module';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 import { SubtaskDetailsDailogComponent } from './subtask-details-dailog.component';
 
@@ -70,18 +63,8 @@ describe('SubtaskDetailsDailogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [SubtaskDetailsDailogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ReactiveFormsModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCheckboxModule,
-        SharedModule,
-        NoopAnimationsModule,
-      ],
+      imports: [NoopAnimationsModule, SubtaskDetailsDailogComponent],
       providers: [
         provideMockStore({
           initialState: initialState,

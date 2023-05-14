@@ -5,17 +5,23 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Priority, Task } from '../../../../models';
 import { TaskCardActions } from '../../../../store/actions';
+import { TaskOptionsComponent } from '../../../../shared/components/task-options/task-options.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { NgIf, NgClass, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'yata-task-card',
-  templateUrl: './task-card.component.html',
-  styleUrls: ['./task-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'yata-task-card',
+    templateUrl: './task-card.component.html',
+    styleUrls: ['./task-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgIf, ReactiveFormsModule, MatCardModule, NgClass, MatCheckboxModule, TaskOptionsComponent, DatePipe]
 })
 export class TaskCardComponent implements OnInit {
   @Input() task!: Task;
