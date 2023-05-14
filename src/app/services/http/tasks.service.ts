@@ -21,7 +21,6 @@ export class TasksService extends YataApiService {
   }
 
   search(args: SearchArgs): Observable<Task[]> {
-    // filter the tasks by query
     const { query, projectId } = args;
     const filteredTasks = mockTasks.filter((task) => {
       if (projectId) {
@@ -48,7 +47,6 @@ export class TasksService extends YataApiService {
   }
 
   duplicate(task: Task): Observable<Task> {
-    // duplicate the task
     const newTask = { ...task, id: Math.floor(Math.random() * 1000) };
     mockTasks.push(newTask);
     return of(newTask);
@@ -120,7 +118,6 @@ export class TasksService extends YataApiService {
   }
 
   removeTag(task: Task, tag: Tag): Observable<Task> {
-    // find the task with the tag
     const idx = mockTasks.findIndex((t) => t.id === task.id);
     const taskWithTags = mockTasks[idx];
     const tagIdx = taskWithTags!.tags!.findIndex((t) => t.id === tag.id);

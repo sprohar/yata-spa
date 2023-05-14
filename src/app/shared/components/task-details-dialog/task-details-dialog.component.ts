@@ -5,7 +5,6 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 import {
   FormArray,
@@ -26,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
@@ -76,7 +75,7 @@ import { TaskComponent } from '../task/task.component';
     TaskPriorityPipe,
   ],
 })
-export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
+export class TaskDetailsDialogComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
   readonly PRIORITY_NONE = Priority.NONE;
   readonly PRIORITY_HIGH = Priority.HIGH;
@@ -85,8 +84,14 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   readonly projects$ = this.store.select(selectProjects);
   readonly sections$ = this.store.select(selectSections);
   readonly tags$ = this.store.select(selectTags);
+  readonly currentTask$ = this.store.select(selectCurrentTask).pipe(
+    tap((task) => {
+      if (task) {
+        this.initForm(task);
+      }
+    })
+  );
 
-  currentTask$?: Observable<Task | undefined>;
   form!: FormGroup;
 
   constructor(
@@ -99,16 +104,6 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.store.dispatch(TaskDetailsActions.clearCurrentTaskId());
     this.destroy$.next();
-  }
-
-  ngOnInit(): void {
-    this.currentTask$ = this.store.select(selectCurrentTask).pipe(
-      tap((task) => {
-        if (task) {
-          this.initForm(task);
-        }
-      })
-    );
   }
 
   initForm(task: Task): void {

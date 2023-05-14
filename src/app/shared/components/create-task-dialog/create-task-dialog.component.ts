@@ -11,7 +11,7 @@ export interface CreateTaskDialogData {
   section?: Section;
   project?: Project;
   priority?: Priority;
-  task?: Task;
+  parent?: Task;
 }
 
 @Component({
