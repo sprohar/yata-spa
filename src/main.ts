@@ -5,28 +5,17 @@ import {
 } from '@angular/common/http';
 import { APP_INITIALIZER, importProvidersFrom, isDevMode } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import {
-  MAT_DIALOG_DEFAULT_OPTIONS,
   MatDialogModule,
+  MAT_DIALOG_DEFAULT_OPTIONS,
 } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import {
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
@@ -86,19 +75,8 @@ bootstrapApplication(AppComponent, {
       ]),
       StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
       LayoutModule,
-      MatToolbarModule,
-      MatExpansionModule,
-      MatButtonModule,
-      MatSidenavModule,
-      MatIconModule,
-      MatListModule,
-      MatDividerModule,
-      MatDialogModule,
       MatSnackBarModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatMenuModule,
-      MatSelectModule,
+      MatDialogModule,
       MatNativeDateModule
     ),
     // httpInterceptorProviders,

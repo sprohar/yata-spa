@@ -6,7 +6,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -39,13 +39,14 @@ import { TasksOrderByOptionsComponent } from '../tasks-order-by-options/tasks-or
   standalone: true,
   imports: [
     NgIf,
-    TaskSearchComponent,
-    MatButtonModule,
-    MatIconModule,
-    TasksOrderByOptionsComponent,
-    MatMenuModule,
-    MatDividerModule,
     AsyncPipe,
+    TaskSearchComponent,
+    TasksOrderByOptionsComponent,
+    MatButtonModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatIconModule,
+    MatMenuModule,
   ],
 })
 export class ViewHeaderComponent implements OnDestroy {
