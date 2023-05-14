@@ -33,7 +33,7 @@
           <div class="flex-column user-info">
             <div class="flex align-items-center username-container">
               <ng-container *ngIf="hideUsernameInput; else editUsername">
-                <p data-test="username" id="username" class="username">
+                <p id="username" class="username">
                   {{ user.username ?? "Anon" }}
                 </p>
                 <button
@@ -53,7 +53,7 @@
               </ng-template>
             </div>
             <br />
-            <p data-test="email" id="email" class="email">
+            <p id="email" class="email">
               {{ user.email }}
             </p>
           </div>

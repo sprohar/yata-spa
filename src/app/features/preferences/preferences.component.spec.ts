@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { PreferencesComponent } from './preferences.component';
 
@@ -11,7 +10,14 @@ describe('PreferencesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatListModule, MatIconModule, RouterLink, PreferencesComponent],
+      imports: [RouterLink, PreferencesComponent],
+      providers: [
+        provideMockStore(),
+        {
+          provide: ActivatedRoute,
+          useValue: {},
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PreferencesComponent);

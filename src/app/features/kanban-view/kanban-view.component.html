@@ -14,6 +14,7 @@
                 *ngIf="entry.key.id"
                 [section]="entry.key"
                 [tasks]="entry.value"
+                [attr.data-column]="entry.key.id"
               ></yata-kanban-column>
             </ng-container>
 

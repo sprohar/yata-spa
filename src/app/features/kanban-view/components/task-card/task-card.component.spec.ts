@@ -6,11 +6,12 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
+import { CUSTOM_ELEMENTS_SCHEMA, importProvidersFrom } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Priority, Task } from '../../../../models';
 import { TaskCardActions } from '../../../../store/actions';
 import { TaskCardComponent } from './task-card.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('TaskCardComponent', () => {
   let component: TaskCardComponent;
@@ -31,27 +32,21 @@ describe('TaskCardComponent', () => {
     route = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
 
     await TestBed.configureTestingModule({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-        MatCardModule,
-        MatCheckboxModule,
-        MatIconModule,
-        MatRippleModule,
-        ReactiveFormsModule,
-        TaskCardComponent
-    ],
-    providers: [
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [TaskCardComponent],
+      providers: [
+        importProvidersFrom(MatDialogModule),
         provideMockStore(),
         {
-            provide: Router,
-            useValue: router,
+          provide: Router,
+          useValue: router,
         },
         {
-            provide: ActivatedRoute,
-            useValue: route,
+          provide: ActivatedRoute,
+          useValue: route,
         },
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TaskCardComponent);
     store = TestBed.inject(MockStore);

@@ -1,8 +1,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { AppState } from '../../store/app.state';
 import { initialAuthState } from '../../store/reducers/auth.reducer';
@@ -28,23 +28,33 @@ const initialState: AppState = {
 describe('KanbanViewComponent', () => {
   let component: KanbanViewComponent;
   let fixture: ComponentFixture<KanbanViewComponent>;
-  let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatButtonModule, MatIconModule, KanbanViewComponent],
-      providers: [provideMockStore({ initialState })],
+      imports: [NoopAnimationsModule, KanbanViewComponent],
+      providers: [
+        provideMockStore({ initialState }),
+        {
+          provide: ActivatedRoute,
+          useValue: {},
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(KanbanViewComponent);
-    store = TestBed.inject(MockStore);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render the columns', () => {
+    const host: Element = fixture.nativeElement!;
+    const columns: NodeListOf<Element> = host.querySelectorAll('[data-column]');
+    expect(columns.length).toEqual(initialState.sections.sections.length);
   });
 
   describe('#handleAddKanbanColumnComponentClosed', () => {
