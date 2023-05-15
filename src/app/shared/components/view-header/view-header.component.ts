@@ -28,13 +28,13 @@ import {
   CreateTaskDialogData,
 } from '../create-task-dialog/create-task-dialog.component';
 import { EditProjectDialogComponent } from '../edit-project-dialog/edit-project-dialog.component';
+import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
 import { TaskSearchComponent } from '../task-search/task-search.component';
 import { TasksOrderByOptionsComponent } from '../tasks-order-by-options/tasks-order-by-options.component';
 
 @Component({
   selector: 'yata-view-header',
   templateUrl: './view-header.component.html',
-  styleUrls: ['./view-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -67,8 +67,14 @@ export class ViewHeaderComponent implements OnDestroy {
     this.destroy$.next();
   }
 
+  openSearchDialog() {
+    this.dialog.open(SearchDialogComponent);
+  }
+
   openCreateTaskDialog(project: Project) {
     this.dialog.open(CreateTaskDialogComponent, {
+      width: '100%',
+      height: '100%',
       data: {
         project,
       } as CreateTaskDialogData,
