@@ -17,13 +17,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, map, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { Priority, Task } from '../../../models';
 import { TasksService } from '../../../services/http';
 import { selectCurrentProjectId, selectTasks } from '../../../store/selectors';
@@ -87,6 +88,9 @@ export class SearchDialogComponent implements OnDestroy, OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly store: Store,
+    private readonly dialogRef: MatDialogRef<SearchDialogComponent>,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly tasksService: TasksService
   ) {}
 
@@ -95,6 +99,8 @@ export class SearchDialogComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+    console.log('route', this.route);
+
     this.store
       .select(selectCurrentProjectId)
       .pipe(takeUntil(this.destroy$))
@@ -105,21 +111,24 @@ export class SearchDialogComponent implements OnDestroy, OnInit {
     return task.id!;
   }
 
+  handleSelectedOption(taskId: number) {
+    this.router
+      .navigateByUrl(`${this.router.url}/tasks/${taskId}`)
+      .then(() => this.dialogRef.close());
+  }
+
   handleInput(query: string) {
     if (this.scope.value === SearchScope.Project) {
       this.results$ = this.tasks$.pipe(
-        map((tasks) => this.filterTasks(query, tasks)),
-        tap((tasks) => console.log('tasks', tasks))
+        map((tasks) => this.filterTasks(query, tasks))
       );
     } else {
-      this.results$ = this.tasksService
-        .search({
-          query,
-          priority: this.priority.value,
-          start: this.start.value,
-          end: this.end.value,
-        })
-        .pipe(tap((tasks) => console.log('tasks', tasks)));
+      this.results$ = this.tasksService.search({
+        query,
+        priority: this.priority.value,
+        start: this.start.value,
+        end: this.end.value,
+      });
     }
   }
 

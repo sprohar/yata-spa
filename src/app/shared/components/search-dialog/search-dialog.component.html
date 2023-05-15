@@ -22,7 +22,10 @@
           (input)="handleInput(input.value)"
         />
       </mat-form-field>
-      <mat-autocomplete #auto="matAutocomplete">
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="handleSelectedOption($event.option.value)"
+      >
         <ng-container *ngIf="!query.pristine; else pristine">
           <ng-container *ngIf="results$ | async as results">
             <mat-option *ngIf="results.length === 0; else render">
