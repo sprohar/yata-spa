@@ -1,4 +1,4 @@
-<div class="flex full-height">
+<div class="flex full-height" [class.flex-column]="isHandset$ | async">
   <yata-preferences-nav-list class="ml-1"></yata-preferences-nav-list>
 
   <div class="flex-column full-width p-1">

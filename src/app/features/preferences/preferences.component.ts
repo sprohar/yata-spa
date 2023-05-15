@@ -1,5 +1,7 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { BreakpointService } from '../../services';
 import { PreferencesNavListComponent } from './components/preferences-nav-list/preferences-nav-list.component';
 
 @Component({
@@ -8,6 +10,10 @@ import { PreferencesNavListComponent } from './components/preferences-nav-list/p
   styleUrls: ['./preferences.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [PreferencesNavListComponent, RouterOutlet],
+  imports: [AsyncPipe, PreferencesNavListComponent, RouterOutlet],
 })
-export class PreferencesComponent {}
+export class PreferencesComponent {
+  readonly isHandset$ = this.breakpointService.isHandset$;
+
+  constructor(private readonly breakpointService: BreakpointService) {}
+}
