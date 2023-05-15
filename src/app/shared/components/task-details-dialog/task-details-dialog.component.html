@@ -28,9 +28,6 @@
         >
           <mat-icon>expand_more</mat-icon>
         </button>
-        <!-- <button mat-icon-button title="Task options"> -->
-        <!--   <mat-icon>more_horiz</mat-icon> -->
-        <!-- </button> -->
         <button
           data-test="closeDialogButton"
           mat-icon-button
@@ -147,14 +144,6 @@
                   {{ dueDateControl.value | date : "MMM d, y, hh:mm a" }}
                 </ng-template>
               </button>
-              <button
-                data-test="removeDueDateButton"
-                mat-icon-button
-                title="Remove due date"
-                (click)="handleRemoveDueDate()"
-              >
-                <mat-icon>close</mat-icon>
-              </button>
             </div>
           </ng-container>
           <ng-template #dueDateIsNull>
@@ -166,7 +155,7 @@
               title="Set a due date"
             >
               <mat-icon>event</mat-icon>
-              <span>Due date</span>
+              <span>Set date</span>
             </button>
           </ng-template>
         </div>

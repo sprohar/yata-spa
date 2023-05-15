@@ -1,10 +1,10 @@
-import { CUSTOM_ELEMENTS_SCHEMA, importProvidersFrom } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogModule,
   MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -149,21 +149,6 @@ describe('TaskDetailsDialogComponent', () => {
 
       expect(matDialog.open).toHaveBeenCalled();
       expect(store.dispatch).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('#handleRemoveDueDate', () => {
-    it('should set the dueDate field to null & dispatch updateTask action', () => {
-      spyOn(store, 'dispatch');
-
-      component.handleRemoveDueDate();
-
-      expect(component.form.value.dueDate).toBeNull();
-      expect(store.dispatch).toHaveBeenCalledWith(
-        TaskDetailsActions.updateTask({
-          task: { id: task.id, dueDate: null },
-        })
-      );
     });
   });
 

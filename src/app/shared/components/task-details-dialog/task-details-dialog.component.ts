@@ -209,21 +209,6 @@ export class TaskDetailsDialogComponent implements OnDestroy {
     return this.form.get('isAllDay') as FormControl<boolean>;
   }
 
-  handleRemoveDueDate() {
-    this.form.patchValue({
-      dueDate: null,
-    });
-
-    this.store.dispatch(
-      TaskDetailsActions.updateTask({
-        task: {
-          id: this.form.value.id,
-          dueDate: null,
-        },
-      })
-    );
-  }
-
   handleRemoveTag(task: Task, tag: Tag) {
     this.store.dispatch(
       TaskDetailsActions.removeTagFromTask({
