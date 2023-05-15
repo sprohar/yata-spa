@@ -267,7 +267,6 @@ describe('Tasks Reducer', () => {
         tasks: [],
       };
 
-      // TODO: Fix this test
       const task: Task = { id: 1, title: 'Task 1', projectId: 1 };
       const action = YataApiActions.createTaskSuccess({ task });
       const state = fromTasks.reducer(initialState, action);
