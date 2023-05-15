@@ -6,16 +6,16 @@ import { Priority } from '../../models';
   standalone: true,
 })
 export class TaskPriorityPipe implements PipeTransform {
-  transform(value: Priority, ..._args: unknown[]): unknown {
+  transform(value: Priority | undefined, ..._args: unknown[]): unknown {
     switch (value) {
       case Priority.NONE:
-        return 'None';
+        return 'No priority';
       case Priority.HIGH:
-        return 'High';
+        return 'High priority';
       case Priority.MEDIUM:
-        return 'Medium';
+        return 'Medium priority';
       case Priority.LOW:
-        return 'Low';
+        return 'Low priority';
       default:
         return '';
     }
