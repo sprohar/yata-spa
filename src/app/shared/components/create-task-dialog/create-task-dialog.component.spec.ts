@@ -7,18 +7,19 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideMockStore } from '@ngrx/store/testing';
 import { Priority } from '../../../models';
 import {
   CreateTaskDialogComponent,
   CreateTaskDialogData,
 } from './create-task-dialog.component';
-import { provideMockStore } from '@ngrx/store/testing';
 
 describe('CreateTaskDialogComponent', () => {
   let component: CreateTaskDialogComponent;
   let fixture: ComponentFixture<CreateTaskDialogComponent>;
   let dialogRef: MatDialogRef<CreateTaskDialogComponent>;
   let data: CreateTaskDialogData = {
+    parent: null,
     section: {
       id: 1,
       name: 'Section 1',
