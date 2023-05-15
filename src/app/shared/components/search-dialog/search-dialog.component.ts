@@ -22,7 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { Priority, Task } from '../../../models';
@@ -30,7 +30,7 @@ import { TasksService } from '../../../services/http';
 import { selectCurrentProjectId, selectTasks } from '../../../store/selectors';
 import { TaskPriorityPipe } from '../../pipes/task-priority.pipe';
 
-enum SearchScope {
+export enum SearchScope {
   /**
    * Limit the search to the current project.
    */
@@ -90,7 +90,6 @@ export class SearchDialogComponent implements OnDestroy, OnInit {
     private readonly store: Store,
     private readonly dialogRef: MatDialogRef<SearchDialogComponent>,
     private readonly router: Router,
-    private readonly route: ActivatedRoute,
     private readonly tasksService: TasksService
   ) {}
 
@@ -99,8 +98,6 @@ export class SearchDialogComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    console.log('route', this.route);
-
     this.store
       .select(selectCurrentProjectId)
       .pipe(takeUntil(this.destroy$))
