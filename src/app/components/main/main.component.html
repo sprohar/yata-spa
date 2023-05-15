@@ -27,14 +27,8 @@
       <router-outlet></router-outlet>
     </div>
 
-    <button
+    <yata-create-task-fab-button
       *ngIf="isHandset$ | async"
-      mat-fab
-      color="primary"
-      aria-label="Create task"
-      style="position: fixed; right: 16px; bottom: 16px"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
+    ></yata-create-task-fab-button>
   </mat-sidenav-content>
 </mat-sidenav-container>
