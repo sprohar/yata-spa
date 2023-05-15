@@ -6,7 +6,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { BreakpointService } from '../../services/breakpoint.service';
-import { TaskSearchComponent } from '../../shared/components/task-search/task-search.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 
 @Component({
@@ -22,7 +21,6 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
     NgIf,
     MatButtonModule,
     MatIconModule,
-    TaskSearchComponent,
     RouterOutlet,
     AsyncPipe,
   ],

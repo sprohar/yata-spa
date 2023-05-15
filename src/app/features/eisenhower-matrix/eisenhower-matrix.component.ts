@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Priority, Task } from '../../models';
-import { TaskSearchComponent } from '../../shared/components/task-search/task-search.component';
 import {
   selectCompletedHighPriorityTasks,
   selectCompletedLowPriorityTasks,
@@ -25,7 +24,6 @@ import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-qua
   styleUrls: ['./eisenhower-matrix.component.scss'],
   standalone: true,
   imports: [
-    TaskSearchComponent,
     NgIf,
     CdkDropListGroup,
     MatrixQuadrantComponent,

@@ -29,7 +29,6 @@ import {
 } from '../create-task-dialog/create-task-dialog.component';
 import { EditProjectDialogComponent } from '../edit-project-dialog/edit-project-dialog.component';
 import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
-import { TaskSearchComponent } from '../task-search/task-search.component';
 import { TasksOrderByOptionsComponent } from '../tasks-order-by-options/tasks-order-by-options.component';
 
 @Component({
@@ -40,7 +39,6 @@ import { TasksOrderByOptionsComponent } from '../tasks-order-by-options/tasks-or
   imports: [
     NgIf,
     AsyncPipe,
-    TaskSearchComponent,
     TasksOrderByOptionsComponent,
     MatButtonModule,
     MatDialogModule,

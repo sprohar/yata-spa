@@ -20,9 +20,8 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <ng-container *ngIf="isHandset$ | async">
-        <yata-task-search class="full-width search-bar"></yata-task-search>
-      </ng-container>
+      <!-- <ng-container *ngIf="isHandset$ | async">
+      </ng-container> -->
     </mat-toolbar>
     <div class="relative p-1">
       <router-outlet></router-outlet>
