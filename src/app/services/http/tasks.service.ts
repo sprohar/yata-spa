@@ -1,13 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { mockTasks } from '../../__mock';
 import { PaginatedList, TasksQueryParams } from '../../interfaces';
-import { Tag, Task } from '../../models';
-import { YataApiService } from './yata-api.service';
-import { HttpClient } from '@angular/common/http';
+import { Priority, Tag, Task } from '../../models';
 import { HttpErrorService } from './error/http-error.service';
+import { YataApiService } from './yata-api.service';
 
-type SearchArgs = { query: string; projectId?: number };
+interface TaskQueryParams {
+  query: string;
+  projectId?: number;
+  priority?: Priority;
+  start?: Date | null;
+  end?: Date | null;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -15,21 +21,37 @@ type SearchArgs = { query: string; projectId?: number };
 export class TasksService extends YataApiService {
   constructor(
     private readonly http: HttpClient,
-    private readonly httpErrorService: HttpErrorService,
+    private readonly httpErrorService: HttpErrorService
   ) {
     super();
   }
 
-  search(args: SearchArgs): Observable<Task[]> {
-    const { query, projectId } = args;
+  search(params: TaskQueryParams): Observable<Task[]> {
+    const { query, projectId, priority, start, end } = params;
+
     const filteredTasks = mockTasks.filter((task) => {
-      if (projectId) {
-        return (
-          task.projectId === projectId &&
-          task.title.toLowerCase().includes(query.toLowerCase())
-        );
+      if (query && !task.title.toLowerCase().includes(query.toLowerCase())) {
+        return false;
       }
-      return task.title.toLowerCase().includes(query.toLowerCase());
+      if (projectId && task.projectId !== projectId) {
+        return false;
+      }
+      if (priority && task.priority !== priority) {
+        return false;
+      }
+      if (start && end && task.dueDate) {
+        const dueDate = new Date(task.dueDate);
+        if (dueDate < start || dueDate > end) {
+          return false;
+        }
+      }
+      if (start && task.dueDate && new Date(task.dueDate) < start) {
+        return false;
+      }
+      if (end && task.dueDate && new Date(task.dueDate) > end) {
+        return false;
+      }
+      return true;
     });
 
     return of(filteredTasks);
