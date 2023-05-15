@@ -8,10 +8,10 @@ import { Priority, Project, Section, Task } from '../../../models';
 import { CreateTaskComponent } from '../create-task/create-task.component';
 
 export interface CreateTaskDialogData {
-  section?: Section;
-  project?: Project;
-  priority?: Priority;
-  parent?: Task;
+  section: Section | null;
+  project: Project | null;
+  priority: Priority | null;
+  parent: Task | null;
 }
 
 @Component({

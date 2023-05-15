@@ -106,7 +106,7 @@ export class DateTimePickerDialogComponent implements OnInit {
 
   clearDueDate() {
     this.date = null;
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
   clearTime() {

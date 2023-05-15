@@ -132,26 +132,18 @@
             >
               {{ dueDateControl.value | date : "mediumDate" }}
             </button>
-            <button
-              mat-icon-button
-              title="Remove due date"
-              class="scale-90"
-              (click)="removeDueDate()"
-            >
-              <mat-icon>close</mat-icon>
-            </button>
           </div>
         </ng-container>
         <ng-template #datePicker>
           <button
             data-test="dueDatePickerButton"
             mat-stroked-button
-            aria-label="Due date picker"
+            aria-label="Open due date picker"
             title="Due date"
             (click)="openDateTimePicker()"
           >
             <mat-icon>event</mat-icon>
-            Due date
+            Set date
           </button>
         </ng-template>
       </div>

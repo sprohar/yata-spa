@@ -38,7 +38,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, debounceTime, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../auth/models/user.model';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { CreateTaskComponentActions } from '../../../store/actions';
@@ -88,10 +88,10 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   @Output() canceled = new EventEmitter<void>();
   @Output() created = new EventEmitter<Task>();
-  @Input() parent?: Task;
-  @Input() project?: Project;
-  @Input() section?: Section | null;
-  @Input() priority? = Priority.NONE;
+  @Input() parent: Task | null = null;
+  @Input() project: Project | null = null;
+  @Input() section: Section | null = null;
+  @Input() priority: Priority | null = Priority.NONE;
   @ViewChild('taskInput') taskInput!: ElementRef;
 
   readonly HIGH_PRIORITY = Priority.HIGH;
@@ -119,8 +119,6 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm();
-
     this.store
       .select(selectUserPreferences)
       .pipe(takeUntil(this.destroy$))
@@ -130,6 +128,8 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
       .select(selectTags)
       .pipe(takeUntil(this.destroy$))
       .subscribe((tags) => (this.existingTags = new Set<Tag>(tags)));
+
+    this.initForm();
 
     this.store
       .select(selectCurrentProjectId)
@@ -145,29 +145,32 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   initForm() {
     this.form = this.fb.group({
-      title: this.fb.control('', {
+      title: this.fb.control<string>('', {
         nonNullable: true,
         validators: [
           Validators.required,
           Validators.maxLength(Task.Title.MaxLength),
         ],
       }),
-      priority: this.fb.control(this.priority, {
+      priority: this.fb.control<Priority>(this.priority ?? Priority.NONE, {
         nonNullable: true,
       }),
       description: [null, [Validators.maxLength(Task.Description.MaxLength)]],
       projectId: [null, [Validators.required]],
       sectionId: [null],
       parentId: [null],
-      dueDate: this.fb.control(
-        this.preferences && this.preferences.defaultDueDateToday !== undefined
-          ? this.preferences.defaultDueDateToday
-          : new Date(new Date().setHours(0, 0, 0, 0))
-      ),
+      dueDate: this.fb.control<Date | null>(null),
     });
 
+    if (this.preferences?.defaultDueDateToday) {
+      const today = new Date(new Date().setHours(0, 0, 0, 0));
+      this.dueDateControl.patchValue(
+        this.preferences.defaultDueDateToday ? today : null
+      );
+    }
+
     this.titleControl.valueChanges
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$), debounceTime(200))
       .subscribe(this.handleParseInputForTags.bind(this));
   }
 
@@ -180,11 +183,11 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   get titleControl() {
-    return this.form.get('title') as FormControl;
+    return this.form.get('title') as FormControl<string>;
   }
 
   get priorityControl() {
-    return this.form.get('priority') as FormControl;
+    return this.form.get('priority') as FormControl<Priority>;
   }
 
   get dueDateControl() {
@@ -263,10 +266,6 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
     this.canceled.emit();
   }
 
-  removeDueDate() {
-    this.dueDateControl.setValue(null);
-  }
-
   removeTag(tag: Tag) {
     this.selectedTags.delete(tag);
   }
@@ -288,11 +287,14 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   handleSubmit() {
     if (this.form.invalid) return;
-    if ((this.titleControl.value as string).trim() === '') return;
+    if (this.titleControl.value.trim() === '') return;
 
     const task: Task = this.form.value;
-    const dueDate = this.dueDateControl.value as Date;
-    task.dueDate = dueDate.toISOString();
+    const dueDate = this.dueDateControl.value;
+
+    if (dueDate === null) delete task.dueDate;
+    else task.dueDate = dueDate.toISOString();
+
     task.tags = this.intersectOnTagName(this.selectedTags, this.existingTags);
 
     Object.keys(task).forEach((key) => {
