@@ -6,10 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
-import { UserPreference } from './auth/models/user.model';
-import { selectUserPreferences } from './store/selectors';
+import { Subject, takeUntil } from 'rxjs';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -20,22 +18,16 @@ import { selectUserPreferences } from './store/selectors';
 })
 export class AppComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
-  private readonly lightThemeCssClass = 'light-theme';
-  private readonly preferences$ = this.store.select(selectUserPreferences);
 
   @HostBinding('class') classAttribute = '';
 
-  constructor(private readonly store: Store) {}
+  constructor(private readonly theme: ThemeService) {}
 
   ngOnInit(): void {
-    this.preferences$
-      .pipe(takeUntil(this.destroy$), distinctUntilChanged())
-      .subscribe((prefs: UserPreference | null) => {
-        if (prefs && prefs.isDarkTheme !== undefined) {
-          this.classAttribute = prefs.isDarkTheme
-            ? ''
-            : this.lightThemeCssClass;
-        }
+    this.theme.isDarkTheme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isDarkTheme: boolean) => {
+        this.classAttribute = isDarkTheme ? '' : 'light-theme';
       });
   }
 
