@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AuthRoutingModule } from './auth-routing.module';
+import { AuthRoutingModule } from './auth-routes';
 import { AuthViewComponent } from './auth-view.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';

@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { InboxComponent } from './components/inbox/inbox.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MainComponent } from './components/main/main.component';
@@ -11,7 +10,7 @@ import {
 import { tagsResolver } from './resolvers/tags.resolver';
 import { TaskDetailsDialogEntryComponent } from './shared/components/task-details-dialog-entry/task-details-dialog-entry.component';
 
-const routes: Routes = [
+export const appRoutes: Routes = [
   {
     path: '',
     component: LandingPageComponent,
@@ -98,12 +97,12 @@ const routes: Routes = [
   },
 ];
 
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      enableTracing: false,
-    }),
-  ],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}
+// @NgModule({
+//   imports: [
+//     RouterModule.forRoot(routes, {
+//       enableTracing: false,
+//     }),
+//   ],
+//   exports: [RouterModule],
+// })
+// export class AppRoutingModule {}
