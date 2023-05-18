@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  HostListener,
   OnDestroy,
   OnInit,
   Output,
@@ -22,6 +21,7 @@ import { EditTagDialogComponent } from '../../features/tags/components/edit-tag-
 import { Project, Tag } from '../../models';
 import { BreakpointService, ConfirmationDialogService } from '../../services';
 import { EditProjectDialogComponent } from '../../shared/components/edit-project-dialog/edit-project-dialog.component';
+import { SidenavItem } from '../../shared/directives/sidenav-item.directive';
 import { SidenavActions } from '../../store/actions';
 import {
   selectInbox,
@@ -47,6 +47,7 @@ import { CreateProjectDialogComponent } from '../create-project-dialog/create-pr
     NgFor,
     MatMenuModule,
     AsyncPipe,
+    SidenavItem,
   ],
 })
 export class SidenavComponent implements OnDestroy, OnInit {
@@ -86,8 +87,7 @@ export class SidenavComponent implements OnDestroy, OnInit {
     return tag.id;
   }
 
-  @HostListener('click', ['$event'])
-  onClick(_event: MouseEvent): void {
+  handleCloseSidenav() {
     if (this.isHandset) {
       this.closeSidenav.emit();
     }

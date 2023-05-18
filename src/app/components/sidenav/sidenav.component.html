@@ -1,7 +1,13 @@
 <div class="relative full-height" *ngIf="user$ | async as user">
   <div class="sidenav-lists">
     <mat-nav-list>
-      <a mat-list-item data-test="profileLink" routerLink="profile">
+      <a
+        mat-list-item
+        data-test="profileLink"
+        routerLink="profile"
+        sidenavItem
+        (close)="handleCloseSidenav()"
+      >
         <div class="flex align-items-center">
           <mat-icon>account_circle</mat-icon>
           <span>{{ user.username ?? "Profile" }}</span>
@@ -13,7 +19,13 @@
 
     <!-- Inbox -->
     <mat-nav-list *ngIf="inbox$ | async as inbox">
-      <a mat-list-item data-test="inbox" routerLink="inbox">
+      <a
+        mat-list-item
+        data-test="inbox"
+        routerLink="inbox"
+        sidenavItem
+        (close)="handleCloseSidenav()"
+      >
         <div class="flex align-items-center">
           <mat-icon>inbox</mat-icon>
           <span>Inbox</span>
@@ -25,7 +37,12 @@
 
     <!-- Chrono -->
     <mat-nav-list>
-      <a mat-list-item routerLink="chrono/today">
+      <a
+        mat-list-item
+        routerLink="chrono/today"
+        sidenavItem
+        (close)="handleCloseSidenav()"
+      >
         <div class="flex align-items-center">
           <mat-icon>today</mat-icon>
           <span>Today</span>
@@ -37,7 +54,12 @@
 
     <!-- Eisenhower Matrix -->
     <mat-nav-list>
-      <a mat-list-item routerLink="matrix">
+      <a
+        mat-list-item
+        routerLink="matrix"
+        sidenavItem
+        (close)="handleCloseSidenav()"
+      >
         <div class="flex align-items-center">
           <mat-icon>grid_view</mat-icon>
           <span>Eisenhower Matrix</span>
@@ -64,8 +86,10 @@
         <ul class="sidenav-list" data-test="sidenavProjectsList">
           <ng-container *ngIf="projects$ | async as projects">
             <li
-              class="clickable"
               *ngFor="let project of projects; trackBy: trackByProjectId"
+              class="clickable"
+              sidenavItem
+              (close)="handleCloseSidenav()"
             >
               <a
                 [attr.data-test]="'sidenavProject-' + project.id"
@@ -135,8 +159,10 @@
         <ul data-test="sidenavTagsList" class="sidenav-list">
           <ng-container *ngIf="tags$ | async as tags">
             <li
-              class="clickable"
               *ngFor="let tag of tags; trackBy: trackByTagId"
+              class="clickable"
+              sidenavItem
+              (close)="handleCloseSidenav()"
             >
               <a
                 [attr.data-test]="'sidenavTag-' + tag.id"
@@ -182,7 +208,12 @@
   </div>
 
   <mat-nav-list class="bottom-bar">
-    <a mat-list-item routerLink="preferences">
+    <a
+      mat-list-item
+      routerLink="preferences"
+      sidenavItem
+      (close)="handleCloseSidenav()"
+    >
       <div class="flex align-items-center">
         <mat-icon>settings</mat-icon>
         <span>Preferences</span>
