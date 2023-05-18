@@ -47,47 +47,47 @@ export const appRoutes: Routes = [
       {
         path: 'chrono',
         loadChildren: () =>
-          import('./features/chrono/chrono.module').then((m) => m.ChronoModule),
+          import('./features/chrono/chrono-routes').then((m) => m.chronoRoutes),
       },
       {
         path: 'kanban',
         loadChildren: () =>
-          import('./features/kanban-view/kanban-view.module').then(
-            (m) => m.KanbanViewModule
+          import('./features/kanban-view/kanban-view-routes').then(
+            (m) => m.kanbanViewRoutes
           ),
       },
       {
         path: 'list',
         loadChildren: () =>
-          import('./features/list-view/list-view.module').then(
-            (m) => m.ListViewModule
+          import('./features/list-view/list-view-routes').then(
+            (m) => m.listViewRoutes
           ),
       },
       {
         path: 'matrix',
         loadChildren: () =>
-          import('./features/eisenhower-matrix/eisenhower-matrix.module').then(
-            (m) => m.EisenhowerMatrixModule
+          import('./features/eisenhower-matrix/eisenhower-matrix-routes').then(
+            (m) => m.matrixRoutes
           ),
-      },
-      {
-        path: 'tags',
-        loadChildren: () =>
-          import('./features/tags/tags.module').then((m) => m.TagsModule),
       },
       {
         path: 'preferences',
         loadChildren: () =>
-          import('./features/preferences/preferences.module').then(
-            (m) => m.PreferencesModule
+          import('./features/preferences/preferences-routes').then(
+            (m) => m.preferencesRoutes
           ),
       },
       {
         path: 'profile',
         loadChildren: () =>
-          import('./features/profile/profile.module').then(
-            (m) => m.ProfileModule
+          import('./features/profile/profile-routes').then(
+            (m) => m.profileRoutes
           ),
+      },
+      {
+        path: 'tags',
+        loadChildren: () =>
+          import('./features/tags/tags-routes').then((m) => m.tagsRoutes),
       },
     ],
   },
@@ -96,13 +96,3 @@ export const appRoutes: Routes = [
     redirectTo: '/app/inbox',
   },
 ];
-
-// @NgModule({
-//   imports: [
-//     RouterModule.forRoot(routes, {
-//       enableTracing: false,
-//     }),
-//   ],
-//   exports: [RouterModule],
-// })
-// export class AppRoutingModule {}

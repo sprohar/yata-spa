@@ -1,14 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { projectResolver } from '../../resolvers';
 import { taskDetailsResolver } from '../../resolvers/task-details.resolver';
 import { TaskDetailsDialogEntryComponent } from '../../shared/components/task-details-dialog-entry/task-details-dialog-entry.component';
-import { ListViewComponent } from './list-view.component';
+import { KanbanViewComponent } from './kanban-view.component';
 
-const routes: Routes = [
+export const kanbanViewRoutes: Routes = [
   {
     path: ':projectId',
-    component: ListViewComponent,
+    component: KanbanViewComponent,
     resolve: {
       project: projectResolver,
     },
@@ -23,9 +22,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class ListViewRoutingModule {}
