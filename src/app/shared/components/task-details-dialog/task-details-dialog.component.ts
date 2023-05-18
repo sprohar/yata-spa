@@ -263,6 +263,18 @@ export class TaskDetailsDialogComponent implements OnDestroy {
     );
   }
 
+  handleTitleChange() {
+    const task: Task = this.form.value;
+    this.store.dispatch(
+      TaskDetailsActions.updateTask({
+        task: {
+          id: task.id,
+          title: task.title,
+        },
+      })
+    );
+  }
+
   handleGetPreviousTask() {
     this.store.dispatch(TaskDetailsActions.getPreviousTask());
   }
