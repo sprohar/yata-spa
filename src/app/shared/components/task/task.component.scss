@@ -9,17 +9,10 @@
 
   .drag-indicator {
     transform: scale(0.75);
-    visibility: hidden;
     margin-top: 4px;
 
     &:hover {
       cursor: grab;
-    }
-  }
-
-  &:hover {
-    .drag-indicator {
-      visibility: visible;
     }
   }
 }
