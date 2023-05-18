@@ -1,10 +1,14 @@
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Priority, Task } from '../../models';
+import { SearchDialogComponent } from '../../shared/components/search-dialog/search-dialog.component';
 import {
   selectCompletedHighPriorityTasks,
   selectCompletedLowPriorityTasks,
@@ -29,6 +33,8 @@ import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-qua
     MatrixQuadrantComponent,
     RouterOutlet,
     AsyncPipe,
+    MatButtonModule,
+    MatIconModule,
   ],
 })
 export class EisenhowerMatrixComponent {
@@ -58,5 +64,12 @@ export class EisenhowerMatrixComponent {
     selectCompletedHighPriorityTasks
   );
 
-  constructor(private readonly store: Store) {}
+  constructor(
+    private readonly store: Store,
+    private readonly dialog: MatDialog
+  ) {}
+
+  openSearchDialog() {
+    this.dialog.open(SearchDialogComponent);
+  }
 }
