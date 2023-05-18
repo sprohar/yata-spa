@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { CreateTaskFabButtonComponent } from '../create-task-fab-button/create-task-fab-button.component';
+import { NavbarComponent } from '../navbar/navbar.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 
 @Component({
@@ -17,6 +18,7 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
   standalone: true,
   imports: [
     MatSidenavModule,
+    NavbarComponent,
     CreateTaskFabButtonComponent,
     SidenavComponent,
     MatToolbarModule,
