@@ -2,11 +2,17 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, take } from 'rxjs';
 import { PaginatedList, TasksQueryParams } from '../../interfaces';
-import { Tag, Task } from '../../models';
+import { Priority, Tag, Task } from '../../models';
 import { HttpErrorService } from './error/http-error.service';
 import { YataApiService } from './yata-api.service';
 
-type SearchArgs = { query: string; projectId?: number };
+interface TaskQueryParams {
+  query: string;
+  projectId?: number;
+  priority?: Priority;
+  start?: Date | null;
+  end?: Date | null;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -19,14 +25,14 @@ export class TasksService extends YataApiService {
     super();
   }
 
-  search(args: SearchArgs) {
+  search(params: TaskQueryParams) {
     const url = `${this.serverUrl}/tasks/search`;
-    const httpParams = new HttpParams().set('query', args.query);
+
     return this.http
       .get<Task[]>(url, {
-        params: args.projectId
-          ? httpParams.set('projectId', args.projectId)
-          : httpParams,
+        params: new HttpParams({
+          fromObject: params as { [param: string]: any },
+        }),
       })
       .pipe(take(1), catchError(this.httpErrorService.handleError));
   }

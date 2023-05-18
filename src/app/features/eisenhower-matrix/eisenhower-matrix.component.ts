@@ -1,7 +1,14 @@
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Priority, Task } from '../../models';
+import { SearchDialogComponent } from '../../shared/components/search-dialog/search-dialog.component';
 import {
   selectCompletedHighPriorityTasks,
   selectCompletedLowPriorityTasks,
@@ -13,11 +20,22 @@ import {
   selectNoPriorityTasksGroupByProject,
   selectTasksGroupByPriority,
 } from '../../store/selectors';
+import { MatrixQuadrantComponent } from './components/matrix-quadrant/matrix-quadrant.component';
 
 @Component({
   selector: 'yata-eisenhower-matrix',
   templateUrl: './eisenhower-matrix.component.html',
   styleUrls: ['./eisenhower-matrix.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    CdkDropListGroup,
+    MatrixQuadrantComponent,
+    RouterOutlet,
+    AsyncPipe,
+    MatButtonModule,
+    MatIconModule,
+  ],
 })
 export class EisenhowerMatrixComponent {
   readonly HIGH_PRIORITY = Priority.HIGH;
@@ -46,5 +64,12 @@ export class EisenhowerMatrixComponent {
     selectCompletedHighPriorityTasks
   );
 
-  constructor(private readonly store: Store) {}
+  constructor(
+    private readonly store: Store,
+    private readonly dialog: MatDialog
+  ) {}
+
+  openSearchDialog() {
+    this.dialog.open(SearchDialogComponent);
+  }
 }

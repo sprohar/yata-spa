@@ -36,6 +36,7 @@ export interface Task {
 }
 
 export enum Priority {
+  ALL = -1,
   NONE = 0,
   LOW = 10,
   MEDIUM = 100,

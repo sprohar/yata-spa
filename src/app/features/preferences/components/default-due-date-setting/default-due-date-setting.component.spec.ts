@@ -34,18 +34,18 @@ describe('DefaultDueDateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DefaultDueDateSettingComponent],
-      imports: [
+    imports: [
         MatSlideToggleModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
-      ],
-      providers: [
+        DefaultDueDateSettingComponent
+    ],
+    providers: [
         provideMockStore({
-          initialState,
+            initialState,
         }),
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(DefaultDueDateSettingComponent);
     component = fixture.componentInstance;

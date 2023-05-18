@@ -1,11 +1,20 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { Section } from '../../../models';
 import { EditSectionDialogActions } from '../../../store/actions';
@@ -14,14 +23,23 @@ import { EditSectionDialogActions } from '../../../store/actions';
   selector: 'yata-edit-section-dialog',
   templateUrl: './edit-section-dialog.component.html',
   styleUrls: ['./edit-section-dialog.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
 })
 export class EditSectionDialogComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<EditSectionDialogComponent>,
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly dialogRef: MatDialogRef<EditSectionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Section
   ) {}
 

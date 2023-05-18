@@ -29,7 +29,6 @@ describe('EditTagDialogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [EditTagDialogComponent],
       imports: [
         ReactiveFormsModule,
         MatFormFieldModule,
@@ -37,6 +36,7 @@ describe('EditTagDialogComponent', () => {
         MatButtonModule,
         MatDialogModule,
         NoopAnimationsModule,
+        EditTagDialogComponent,
       ],
       providers: [
         provideMockStore(),

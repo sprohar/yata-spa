@@ -1,0 +1,26 @@
+<mat-toolbar [class.hide]="(isHandset$ | async) === false">
+  <button
+    id="hamburger"
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="handleToggleSidenav()"
+    *ngIf="isHandset$ | async"
+  >
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+
+  <span class="spacer"></span>
+
+  <button
+    id="toggleThemeButton"
+    mat-icon-button
+    aria-label="Toggle theme"
+    title="Toggle theme"
+    (click)="handleToggleTheme()"
+  >
+    <mat-icon>
+      {{ (isDarkTheme$ | async) ? "light_mode" : "dark_mode" }}
+    </mat-icon>
+  </button>
+</mat-toolbar>

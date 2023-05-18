@@ -13,6 +13,7 @@ import { TaskDetailsDialogComponent } from '../task-details-dialog/task-details-
   selector: 'yata-task-details-dialog-entry',
   template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class TaskDetailsDialogEntryComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();

@@ -1,11 +1,25 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { NgIf } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { Tag } from '../../../../models';
 import { SidenavActions } from '../../../../store/actions';
@@ -13,15 +27,24 @@ import { SidenavActions } from '../../../../store/actions';
 @Component({
   selector: 'yata-edit-tag-dialog',
   templateUrl: './edit-tag-dialog.component.html',
-  styleUrls: ['./edit-tag-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgIf,
+    MatButtonModule,
+  ],
 })
 export class EditTagDialogComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<EditTagDialogComponent>,
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly dialogRef: MatDialogRef<EditTagDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: Tag
   ) {}
 

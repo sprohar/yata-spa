@@ -19,8 +19,10 @@ const routes: Route[] = [
 ];
 
 @Component({
-  selector: 'router-outlet',
-  template: '',
+    selector: 'router-outlet',
+    template: '',
+    standalone: true,
+    imports: [MatListModule, MatIconModule, MatDividerModule]
 })
 class RouterOutletStubComponent {}
 
@@ -32,10 +34,9 @@ describe('PreferencesNavListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PreferencesNavListComponent, RouterOutletStubComponent],
-      imports: [MatListModule, MatIconModule, MatDividerModule],
-      providers: [provideMockStore(), provideRouter(routes)],
-    }).compileComponents();
+    imports: [MatListModule, MatIconModule, MatDividerModule, PreferencesNavListComponent, RouterOutletStubComponent],
+    providers: [provideMockStore(), provideRouter(routes)]
+}).compileComponents();
 
     harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/', PreferencesNavListComponent);

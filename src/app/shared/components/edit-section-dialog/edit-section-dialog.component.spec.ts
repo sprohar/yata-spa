@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
+  MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -28,7 +28,6 @@ describe('EditSectionDialogComponent', () => {
     });
 
     await TestBed.configureTestingModule({
-      declarations: [EditSectionDialogComponent],
       imports: [
         MatDialogModule,
         MatFormFieldModule,
@@ -36,6 +35,7 @@ describe('EditSectionDialogComponent', () => {
         MatButtonModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
+        EditSectionDialogComponent,
       ],
       providers: [
         provideMockStore(),

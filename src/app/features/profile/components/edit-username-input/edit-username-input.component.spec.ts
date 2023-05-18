@@ -15,8 +15,12 @@ describe('EditUsernameInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditUsernameInputComponent],
-      imports: [MatButtonModule, MatIconModule, ReactiveFormsModule],
+      imports: [
+        MatButtonModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        EditUsernameInputComponent,
+      ],
       providers: [provideMockStore()],
     }).compileComponents();
 

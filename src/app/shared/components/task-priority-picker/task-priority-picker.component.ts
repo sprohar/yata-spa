@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,6 +6,9 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { Priority } from '../../../models';
 
 @Component({
@@ -12,9 +16,11 @@ import { Priority } from '../../../models';
   templateUrl: './task-priority-picker.component.html',
   styleUrls: ['./task-priority-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatButtonModule, MatMenuModule, MatIconModule, NgClass],
 })
 export class TaskPriorityPickerComponent {
-  @Output() selectionChange = new EventEmitter<Priority>();
+  @Output() readonly selectionChange = new EventEmitter<Priority>();
   @Input() value?: Priority;
   @Input() disabled: boolean = false;
 

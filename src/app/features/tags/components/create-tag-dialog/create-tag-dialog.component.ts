@@ -1,13 +1,22 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { Tag } from '../../../../models';
 import { SidenavActions } from '../../../../store/actions';
@@ -15,7 +24,15 @@ import { SidenavActions } from '../../../../store/actions';
 @Component({
   selector: 'yata-create-tag-dialog',
   templateUrl: './create-tag-dialog.component.html',
-  styleUrls: ['./create-tag-dialog.component.scss'],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
 })
 export class CreateTagDialogComponent implements AfterViewInit, OnInit {
   form!: FormGroup;

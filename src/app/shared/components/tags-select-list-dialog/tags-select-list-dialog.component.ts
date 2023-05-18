@@ -1,3 +1,4 @@
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,9 +10,18 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { Store } from '@ngrx/store';
 import { Tag, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
@@ -20,19 +30,29 @@ import { selectAvailableTagsForCurrentTask } from '../../../store/selectors';
 @Component({
   selector: 'yata-tags-select-list-dialog',
   templateUrl: './tags-select-list-dialog.component.html',
-  styleUrls: ['./tags-select-list-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgIf,
+    MatListModule,
+    NgFor,
+    MatButtonModule,
+    AsyncPipe,
+  ],
 })
 export class TagsSelectListDialogComponent implements OnInit {
+  readonly tags$ = this.store.select(selectAvailableTagsForCurrentTask);
   form!: FormGroup;
-  tags$ = this.store.select(selectAvailableTagsForCurrentTask);
 
   constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<TagsSelectListDialogComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public data: Task
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly dialogRef: MatDialogRef<TagsSelectListDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Task
   ) {}
 
   ngOnInit(): void {

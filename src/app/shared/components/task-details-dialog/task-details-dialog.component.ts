@@ -1,14 +1,31 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
 import { selectProjects } from '../../../store/reducers/projects.reducer';
@@ -17,27 +34,64 @@ import {
   selectSections,
   selectTags,
 } from '../../../store/selectors';
+import { TaskPriorityPipe } from '../../pipes/task-priority.pipe';
+import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
+import { CreateTaskComponent } from '../create-task/create-task.component';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 import { TagsSelectListDialogComponent } from '../tags-select-list-dialog/tags-select-list-dialog.component';
+import { TaskListComponent } from '../task-list/task-list.component';
+import { TaskOptionsComponent } from '../task-options/task-options.component';
+import { TaskPriorityPickerComponent } from '../task-priority-picker/task-priority-picker.component';
+import { TaskComponent } from '../task/task.component';
 
 @Component({
   selector: 'yata-task-details-dialog',
   templateUrl: './task-details-dialog.component.html',
   styleUrls: ['./task-details-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
+    TextFieldModule,
+    TaskListComponent,
+    NgFor,
+    TaskComponent,
+    TaskOptionsComponent,
+    CreateTaskComponent,
+    TaskPriorityPickerComponent,
+    AsyncPipe,
+    DatePipe,
+    TaskPriorityPipe,
+  ],
 })
-export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
+export class TaskDetailsDialogComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
   readonly PRIORITY_NONE = Priority.NONE;
   readonly PRIORITY_HIGH = Priority.HIGH;
   readonly PRIORITY_MEDIUM = Priority.MEDIUM;
   readonly PRIORITY_LOW = Priority.LOW;
+  readonly projects$ = this.store.select(selectProjects);
+  readonly sections$ = this.store.select(selectSections);
+  readonly tags$ = this.store.select(selectTags);
+  readonly currentTask$ = this.store.select(selectCurrentTask).pipe(
+    tap((task) => {
+      if (task) {
+        this.initForm(task);
+      }
+    })
+  );
 
-  currentTask$?: Observable<Task | undefined>;
-  projects$ = this.store.select(selectProjects);
-  sections$ = this.store.select(selectSections);
-  tags$ = this.store.select(selectTags);
-
-  isAddingSubtask = false;
   form!: FormGroup;
 
   constructor(
@@ -50,16 +104,6 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.store.dispatch(TaskDetailsActions.clearCurrentTaskId());
     this.destroy$.next();
-  }
-
-  ngOnInit(): void {
-    this.currentTask$ = this.store.select(selectCurrentTask).pipe(
-      tap((task) => {
-        if (task) {
-          this.initForm(task);
-        }
-      })
-    );
   }
 
   initForm(task: Task): void {
@@ -111,9 +155,8 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   }
 
   openDateTimePickerDialog() {
-    const dueDate: Date | null = this.dueDateControl.value;
     const ref = this.dialog.open(DateTimePickerDialogComponent, {
-      data: dueDate,
+      data: this.dueDateControl.value,
     });
 
     ref
@@ -151,34 +194,19 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
   }
 
   get priorityControl() {
-    return this.form.get('priority') as FormControl;
+    return this.form.get('priority') as FormControl<Priority>;
   }
 
   get isCompletedControl() {
-    return this.form.get('isCompleted') as FormControl;
+    return this.form.get('isCompleted') as FormControl<boolean>;
   }
 
   get dueDateControl() {
-    return this.form.get('dueDate') as FormControl;
+    return this.form.get('dueDate') as FormControl<Date | null>;
   }
 
   get isAllDayControl() {
-    return this.form.get('isAllDay') as FormControl;
-  }
-
-  handleRemoveDueDate() {
-    this.form.patchValue({
-      dueDate: null,
-    });
-
-    this.store.dispatch(
-      TaskDetailsActions.updateTask({
-        task: {
-          id: this.form.value.id,
-          dueDate: null,
-        },
-      })
-    );
+    return this.form.get('isAllDay') as FormControl<boolean>;
   }
 
   handleRemoveTag(task: Task, tag: Tag) {
@@ -241,5 +269,13 @@ export class TaskDetailsDialogComponent implements OnDestroy, OnInit {
 
   handleGetNextTask() {
     this.store.dispatch(TaskDetailsActions.getNextTask());
+  }
+
+  handleCreateSubtask(parent: Task) {
+    this.dialog.open(CreateTaskDialogComponent, {
+      data: {
+        parent,
+      },
+    });
   }
 }

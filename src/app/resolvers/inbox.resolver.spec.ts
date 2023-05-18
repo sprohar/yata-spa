@@ -12,10 +12,16 @@ import { ProjectsService } from '../services/http';
 import { selectInbox } from '../store/selectors';
 import { inboxResolver } from './inbox.resolver';
 
-@Component({ selector: 'home' })
+@Component({
+  selector: 'home',
+  standalone: true,
+})
 class HomeStubComponent {}
 
-@Component({ selector: 'inbox' })
+@Component({
+  selector: 'inbox',
+  standalone: true,
+})
 class InboxStubComponent {}
 
 const routes: Route[] = [
@@ -41,8 +47,11 @@ describe('InboxResolver', () => {
     projectsServiceSpy = jasmine.createSpyObj('ProjectsService', ['get']);
 
     await TestBed.configureTestingModule({
-      declarations: [HomeStubComponent, InboxStubComponent],
-      imports: [RouterTestingModule.withRoutes(routes)],
+      imports: [
+        RouterTestingModule.withRoutes(routes),
+        HomeStubComponent,
+        InboxStubComponent,
+      ],
       providers: [
         provideMockStore({
           initialState: {

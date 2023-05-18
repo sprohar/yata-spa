@@ -33,19 +33,18 @@ describe('TaskViewSettingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TaskViewSettingComponent],
-      imports: [MatRadioModule, ReactiveFormsModule],
-      providers: [
+    imports: [MatRadioModule, ReactiveFormsModule, TaskViewSettingComponent],
+    providers: [
         provideMockStore({
-          selectors: [
-            {
-              selector: selectUserPreferences,
-              value: user.preferences,
-            },
-          ],
+            selectors: [
+                {
+                    selector: selectUserPreferences,
+                    value: user.preferences,
+                },
+            ],
         }),
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(TaskViewSettingComponent);
     store = TestBed.inject(MockStore);

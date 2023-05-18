@@ -1,9 +1,19 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { KeyValuePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { Store } from '@ngrx/store';
 import { Priority, Project, Task } from '../../../../models';
 import { CreateTaskDialogComponent } from '../../../../shared/components/create-task-dialog/create-task-dialog.component';
+import { TaskListComponent } from '../../../../shared/components/task-list/task-list.component';
+import { TaskOptionsComponent } from '../../../../shared/components/task-options/task-options.component';
+import { TaskComponent } from '../../../../shared/components/task/task.component';
 import { EisenhowerMatrixActions } from '../../../../store/actions';
 import { MatrixListData } from '../../interfaces/matrix-list-data';
 
@@ -12,6 +22,24 @@ import { MatrixListData } from '../../interfaces/matrix-list-data';
   templateUrl: './matrix-quadrant.component.html',
   styleUrls: ['./matrix-quadrant.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatCardModule,
+    NgClass,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    NgFor,
+    MatExpansionModule,
+    TaskListComponent,
+    CdkDropList,
+    TaskComponent,
+    CdkDrag,
+    TaskOptionsComponent,
+    MatDividerModule,
+    NgIf,
+    KeyValuePipe,
+  ],
 })
 export class MatrixQuadrantComponent {
   @Input() groupedTasks!: Map<Project, Task[]>;

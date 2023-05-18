@@ -3,17 +3,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
+import { MemoizedSelector } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { TaskView } from '../../interfaces';
-import { Project, Section, Task } from '../../models';
-import { SharedModule } from '../../shared/shared.module';
+import { Section, Task } from '../../models';
+import { TasksState } from '../../store/reducers/tasks.reducer';
 import { selectTasksGroupByProjectSections } from '../../store/selectors';
 import { InboxComponent } from './inbox.component';
-import { MemoizedSelector } from '@ngrx/store';
-import { TasksState } from '../../store/reducers/tasks.reducer';
-import { ActivatedRoute } from '@angular/router';
 
-// const projects: Project[] = [{ id: 1, name: 'Project' }];
 const sections: Section[] = [
   { id: 1, name: 'Section 1', projectId: 1 },
   { id: 2, name: 'Section 2', projectId: 1 },
@@ -36,9 +34,8 @@ describe('InboxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InboxComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [NoopAnimationsModule, SharedModule, MatExpansionModule],
+      imports: [NoopAnimationsModule, MatExpansionModule, InboxComponent],
       providers: [
         provideMockStore({
           initialState: {
@@ -65,7 +62,7 @@ describe('InboxComponent', () => {
     component = fixture.componentInstance;
     mockSelectTasksGroupByProjectSections = store.overrideSelector(
       selectTasksGroupByProjectSections,
-      new Map<Section, Task[]> 
+      new Map<Section, Task[]>()
     );
     fixture.detectChanges();
   });

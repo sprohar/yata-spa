@@ -1,3 +1,12 @@
+import { TextFieldModule } from '@angular/cdk/text-field';
+import {
+  AsyncPipe,
+  DatePipe,
+  KeyValuePipe,
+  NgClass,
+  NgFor,
+  NgIf,
+} from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -15,11 +24,21 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, debounceTime, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../auth/models/user.model';
 import { Priority, Project, Section, Tag, Task } from '../../../models';
 import { CreateTaskComponentActions } from '../../../store/actions';
@@ -29,6 +48,7 @@ import {
   selectTags,
   selectUserPreferences,
 } from '../../../store/selectors';
+import { TaskPriorityPipe } from '../../pipes/task-priority.pipe';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
 @Component({
@@ -36,6 +56,27 @@ import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-t
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatChipsModule,
+    NgFor,
+    MatIconModule,
+    TextFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatButtonModule,
+    MatMenuModule,
+    NgClass,
+    MatDividerModule,
+    AsyncPipe,
+    DatePipe,
+    KeyValuePipe,
+    TaskPriorityPipe,
+  ],
 })
 export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
@@ -47,19 +88,17 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   @Output() canceled = new EventEmitter<void>();
   @Output() created = new EventEmitter<Task>();
-  @Input() parent?: Task;
-  @Input() project?: Project;
-  @Input() section?: Section | null;
-  @Input() priority? = Priority.NONE;
+  @Input() parent: Task | null = null;
+  @Input() project: Project | null = null;
+  @Input() section: Section | null = null;
+  @Input() priority: Priority | null = Priority.NONE;
   @ViewChild('taskInput') taskInput!: ElementRef;
 
   readonly HIGH_PRIORITY = Priority.HIGH;
   readonly MEDIUM_PRIORITY = Priority.MEDIUM;
   readonly LOW_PRIORITY = Priority.LOW;
   readonly NO_PRIORITY = Priority.NONE;
-  readonly group$: Observable<Map<Project, Section[]>> = this.store.select(
-    selectSectionsGroupedByProject
-  );
+  readonly group$ = this.store.select(selectSectionsGroupedByProject);
 
   constructor(
     private readonly store: Store,
@@ -69,7 +108,9 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.taskInput.nativeElement.focus();
+    if (this.taskInput) {
+      this.taskInput.nativeElement.focus();
+    }
     this.changeDetector.detectChanges();
   }
 
@@ -78,8 +119,6 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm();
-
     this.store
       .select(selectUserPreferences)
       .pipe(takeUntil(this.destroy$))
@@ -89,6 +128,8 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
       .select(selectTags)
       .pipe(takeUntil(this.destroy$))
       .subscribe((tags) => (this.existingTags = new Set<Tag>(tags)));
+
+    this.initForm();
 
     this.store
       .select(selectCurrentProjectId)
@@ -104,29 +145,32 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   initForm() {
     this.form = this.fb.group({
-      title: this.fb.control('', {
+      title: this.fb.control<string>('', {
         nonNullable: true,
         validators: [
           Validators.required,
           Validators.maxLength(Task.Title.MaxLength),
         ],
       }),
-      priority: this.fb.control(this.priority, {
+      priority: this.fb.control<Priority>(this.priority ?? Priority.NONE, {
         nonNullable: true,
       }),
       description: [null, [Validators.maxLength(Task.Description.MaxLength)]],
       projectId: [null, [Validators.required]],
       sectionId: [null],
       parentId: [null],
-      dueDate: this.fb.control(
-        this.preferences && this.preferences.defaultDueDateToday !== undefined
-          ? this.preferences.defaultDueDateToday
-          : new Date(new Date().setHours(0, 0, 0, 0))
-      ),
+      dueDate: this.fb.control<Date | null>(null),
     });
 
+    if (this.preferences?.defaultDueDateToday) {
+      const today = new Date(new Date().setHours(0, 0, 0, 0));
+      this.dueDateControl.patchValue(
+        this.preferences.defaultDueDateToday ? today : null
+      );
+    }
+
     this.titleControl.valueChanges
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$), debounceTime(200))
       .subscribe(this.handleParseInputForTags.bind(this));
   }
 
@@ -139,11 +183,11 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   get titleControl() {
-    return this.form.get('title') as FormControl;
+    return this.form.get('title') as FormControl<string>;
   }
 
   get priorityControl() {
-    return this.form.get('priority') as FormControl;
+    return this.form.get('priority') as FormControl<Priority>;
   }
 
   get dueDateControl() {
@@ -152,6 +196,10 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   get parentIdControl() {
     return this.form.get('parentId') as FormControl;
+  }
+
+  trackBySectionId(_index: number, section: Section) {
+    return section.id;
   }
 
   getProjectSections(projectId: number, group: Map<Project, Section[]>) {
@@ -200,11 +248,11 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
    */
   intersectOnTagName(selectedTags: Set<Tag>, existingTags: Set<Tag>) {
     const map = new Map<string, Tag>();
-    for (let tag of selectedTags) {
+    for (const tag of selectedTags) {
       map.set(tag.name, tag);
     }
 
-    for (let tag of existingTags) {
+    for (const tag of existingTags) {
       const entry = map.get(tag.name);
       if (entry) {
         map.set(tag.name, tag);
@@ -216,10 +264,6 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   handleCancel() {
     this.canceled.emit();
-  }
-
-  removeDueDate() {
-    this.dueDateControl.setValue(null);
   }
 
   removeTag(tag: Tag) {
@@ -243,11 +287,14 @@ export class CreateTaskComponent implements AfterViewInit, OnDestroy, OnInit {
 
   handleSubmit() {
     if (this.form.invalid) return;
-    if ((this.titleControl.value as string).trim() === '') return;
+    if (this.titleControl.value.trim() === '') return;
 
     const task: Task = this.form.value;
-    const dueDate = this.dueDateControl.value as Date;
-    task.dueDate = dueDate.toISOString();
+    const dueDate = this.dueDateControl.value;
+
+    if (dueDate === null) delete task.dueDate;
+    else task.dueDate = dueDate.toISOString();
+
     task.tags = this.intersectOnTagName(this.selectedTags, this.existingTags);
 
     Object.keys(task).forEach((key) => {

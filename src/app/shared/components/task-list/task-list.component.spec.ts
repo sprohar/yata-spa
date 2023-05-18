@@ -1,11 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  DragDropModule,
-} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Priority, Section, Task } from '../../../models';
 import { TaskListActions } from '../../../store/actions/task-list.actions';
@@ -18,8 +13,7 @@ describe('TaskListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TaskListComponent],
-      imports: [DragDropModule],
+      imports: [TaskListComponent],
       providers: [provideMockStore()],
     }).compileComponents();
 

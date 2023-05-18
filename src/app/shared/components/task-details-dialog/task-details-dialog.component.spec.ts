@@ -1,18 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -21,9 +14,9 @@ import { AppState } from '../../../store/app.state';
 import { initialAuthState } from '../../../store/reducers/auth.reducer';
 import { DateTimePickerDialogComponent } from '../date-time-picker-dialog/date-time-picker-dialog.component';
 
+import { MatNativeDateModule } from '@angular/material/core';
 import { Priority, Tag, Task } from '../../../models';
 import { TaskDetailsActions } from '../../../store/actions';
-import { SharedModule } from '../../shared.module';
 import { TaskDetailsDialogComponent } from './task-details-dialog.component';
 
 const task: Task = {
@@ -64,28 +57,28 @@ describe('TaskDetailsDialogComponent', () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      declarations: [TaskDetailsDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
-        ReactiveFormsModule,
         NoopAnimationsModule,
-        MatButtonModule,
+        TaskDetailsDialogComponent,
+        MatNativeDateModule,
         MatDialogModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDividerModule,
-        MatCheckboxModule,
-        SharedModule,
       ],
       providers: [
         provideMockStore({ initialState }),
-        { provide: MatDialog, useValue: matDialog },
         { provide: ActivatedRoute, useValue: route },
         { provide: Router, useValue: router },
       ],
     }).compileComponents();
+
+    TestBed.overrideComponent(TaskDetailsDialogComponent, {
+      add: {
+        providers: [
+          { provide: MAT_DIALOG_DATA, useValue: {} },
+          { provide: MatDialog, useValue: matDialog },
+        ],
+      },
+    });
 
     fixture = TestBed.createComponent(TaskDetailsDialogComponent);
     store = TestBed.inject(MockStore);
@@ -156,21 +149,6 @@ describe('TaskDetailsDialogComponent', () => {
 
       expect(matDialog.open).toHaveBeenCalled();
       expect(store.dispatch).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('#handleRemoveDueDate', () => {
-    it('should set the dueDate field to null & dispatch updateTask action', () => {
-      spyOn(store, 'dispatch');
-
-      component.handleRemoveDueDate();
-
-      expect(component.form.value.dueDate).toBeNull();
-      expect(store.dispatch).toHaveBeenCalledWith(
-        TaskDetailsActions.updateTask({
-          task: { id: task.id, dueDate: null },
-        })
-      );
     });
   });
 

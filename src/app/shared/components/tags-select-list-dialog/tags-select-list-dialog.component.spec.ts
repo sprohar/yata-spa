@@ -1,16 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Tag, Task } from '../../../models';
@@ -32,17 +23,8 @@ describe('TagsSelectListDialogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [TagsSelectListDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatListModule,
-        NoopAnimationsModule,
-        ReactiveFormsModule,
-      ],
+      imports: [NoopAnimationsModule, TagsSelectListDialogComponent],
       providers: [
         provideMockStore(),
         {

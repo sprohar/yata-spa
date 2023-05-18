@@ -2,11 +2,11 @@ import { PaginatedList } from '../interfaces';
 import { Tag } from '../models';
 
 export const mockTags: Tag[] = [
-  { id: 1, name: 'C++', colorHexCode: '#c8d533', userId: '1' },
-  { id: 2, name: 'Python', colorHexCode: '#d6babd', userId: '1' },
-  { id: 3, name: 'Java', colorHexCode: '#cd1b0b', userId: '1' },
-  { id: 4, name: 'Python', colorHexCode: '#c7eecc', userId: '1' },
-  { id: 5, name: 'C', colorHexCode: '#fa6495', userId: '1' },
+  { id: 1, name: 'C++', colorHexCode: '#2259e3', userId: '1' },
+  { id: 2, name: 'Python', colorHexCode: '#ffff00', userId: '1' },
+  { id: 3, name: 'Java', colorHexCode: '#ff0000', userId: '1' },
+  { id: 4, name: 'PHP', colorHexCode: '#b0b3d6', userId: '1' },
+  { id: 5, name: 'C', colorHexCode: '#2259e3', userId: '1' },
 ];
 
 export const mockPaginatedTagsList: PaginatedList<Tag> = {

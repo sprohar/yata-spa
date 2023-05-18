@@ -1,8 +1,13 @@
-import { ChangeDetectionStrategy } from '@angular/core';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../../auth/models/user.model';
 import { PreferencesActions } from '../../../../store/actions';
 import { selectUserPreferences } from '../../../../store/selectors';
@@ -21,6 +26,8 @@ import { selectUserPreferences } from '../../../../store/selectors';
       ></mat-slide-toggle>
     </div>
   `,
+  standalone: true,
+  imports: [MatSlideToggleModule, ReactiveFormsModule],
 })
 export class DefaultDueDateSettingComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();

@@ -7,35 +7,19 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <yata-sidenav></yata-sidenav>
+    <yata-sidenav (closeSidenav)="drawer.close()"></yata-sidenav>
   </mat-sidenav>
   <mat-sidenav-content class="relative">
-    <mat-toolbar [class.hide]="(isHandset$ | async) === false">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
-      >
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <ng-container *ngIf="isHandset$ | async">
-        <yata-task-search class="full-width search-bar"></yata-task-search>
-      </ng-container>
-    </mat-toolbar>
-    <div class="relative p-1">
+    <yata-navbar
+      *ngIf="isHandset$ | async"
+      (toggleSidenav)="drawer.toggle()"
+    ></yata-navbar>
+    <div class="relative p-1 full-height">
       <router-outlet></router-outlet>
     </div>
 
-    <button
+    <yata-create-task-fab-button
       *ngIf="isHandset$ | async"
-      mat-mini-fab
-      color="primary"
-      aria-label="Create task"
-      style="position: fixed; right: 16px; bottom: 16px"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
+    ></yata-create-task-fab-button>
   </mat-sidenav-content>
 </mat-sidenav-container>

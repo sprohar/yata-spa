@@ -1,11 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import {
-  MatDialog,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { User } from '../../auth/models/user.model';
@@ -31,8 +25,7 @@ describe('ProfileComponent', () => {
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [ProfileComponent],
-      imports: [MatButtonModule, MatDialogModule, MatIconModule],
+      imports: [ProfileComponent],
       providers: [
         {
           provide: MatDialog,
@@ -57,16 +50,6 @@ describe('ProfileComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should render the user profile', () => {
-    const email: Element = host.querySelector('#email')!;
-    const username: Element = host.querySelector('#username')!;
-
-    expect(email).toBeDefined();
-    expect(email.textContent).toMatch(user.email!);
-    expect(username).toBeDefined();
-    expect(username.textContent).toMatch(user.username!);
   });
 
   it('should render the avatar when the user does not have a profile picture', () => {

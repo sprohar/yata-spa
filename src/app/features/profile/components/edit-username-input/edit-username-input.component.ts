@@ -10,7 +10,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { UserActions } from '../../../../store/actions';
@@ -21,16 +23,19 @@ import { selectUser } from '../../../../store/reducers/auth.reducer';
   templateUrl: './edit-username-input.component.html',
   styleUrls: ['./edit-username-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [ReactiveFormsModule, MatButtonModule, MatIconModule],
 })
 export class EditUsernameInputComponent
   implements OnDestroy, OnInit, AfterViewInit
 {
   private readonly destroy$ = new Subject<void>();
-  @ViewChild('input') inputElement?: ElementRef;
-  @Output() readonly close = new EventEmitter<void>();
   readonly control = new FormControl<string>('', {
     validators: [Validators.required, Validators.maxLength(255)],
   });
+
+  @ViewChild('input') inputElement?: ElementRef;
+  @Output() readonly close = new EventEmitter<void>();
 
   constructor(
     private readonly store: Store,

@@ -7,6 +7,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideMockStore } from '@ngrx/store/testing';
 import { Priority } from '../../../models';
 import {
   CreateTaskDialogComponent,
@@ -18,6 +19,7 @@ describe('CreateTaskDialogComponent', () => {
   let fixture: ComponentFixture<CreateTaskDialogComponent>;
   let dialogRef: MatDialogRef<CreateTaskDialogComponent>;
   let data: CreateTaskDialogData = {
+    parent: null,
     section: {
       id: 1,
       name: 'Section 1',
@@ -34,10 +36,14 @@ describe('CreateTaskDialogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [CreateTaskDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatDialogModule, NoopAnimationsModule],
+      imports: [
+        MatDialogModule,
+        NoopAnimationsModule,
+        CreateTaskDialogComponent,
+      ],
       providers: [
+        provideMockStore(),
         {
           provide: MatDialogRef,
           useValue: dialogRef,

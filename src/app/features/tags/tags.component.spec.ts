@@ -25,9 +25,8 @@ describe('TagsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TagsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatExpansionModule],
+      imports: [MatExpansionModule, TagsComponent],
       providers: [
         provideMockStore({
           initialState: {

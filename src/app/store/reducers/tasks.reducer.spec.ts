@@ -271,7 +271,10 @@ describe('Tasks Reducer', () => {
       const action = YataApiActions.createTaskSuccess({ task });
       const state = fromTasks.reducer(initialState, action);
 
-      expect(state.tasks.length).toBe(1);
+      expect(state).toEqual({
+        ...initialState,
+        tasks: [task],
+      });
     });
   });
 
@@ -462,7 +465,9 @@ describe('Tasks Reducer', () => {
         title: 'Updated',
       };
 
-      const action = YataApiActions.updateSubtaskSuccess({ subtask: updatedSubtask });
+      const action = YataApiActions.updateSubtaskSuccess({
+        subtask: updatedSubtask,
+      });
       const state = fromTasks.reducer(initialState, action);
 
       expect(state).toEqual({

@@ -1,15 +1,18 @@
 <ng-container *ngIf="currentProject$ | async as project; else noProject">
-  <header class="view-header">
-    <div class="pb-1">
-      <h1 class="truncate">
-        {{ project.name }}
-      </h1>
-    </div>
+  <header class="flex align-items-center space-between mb-1">
+    <h1 class="m-0 p-0 truncate">
+      {{ project.name }}
+    </h1>
 
-    <yata-task-search class="is-not-handset spacer"></yata-task-search>
-    <span class="is-handset spacer"></span>
-
-    <div class="flex pb-1">
+    <div class="flex">
+      <button
+        mat-icon-button
+        aria-label="Filter tasks"
+        title="Search"
+        (click)="openSearchDialog()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
       <!-- Create task -->
       <button
         data-test="viewHeaderCreateTaskButton"
@@ -52,9 +55,9 @@
           <mat-icon>add</mat-icon>
           <span>Add Section</span>
         </button>
-        
+
         <mat-divider></mat-divider>
-        
+
         <button
           mat-menu-item
           (click)="openDeleteProjectConfirmationDialog(project)"
@@ -68,14 +71,13 @@
 </ng-container>
 
 <ng-template #noProject>
-  <header class="view-header">
+  <header class="flex align-items-center space-between mb-1">
     <div class="pb-1">
       <h1 class="truncate">
         {{ title }}
       </h1>
     </div>
 
-    <yata-task-search class="spacer"></yata-task-search>
     <yata-tasks-order-by-options class="pb-1"></yata-tasks-order-by-options>
   </header>
 </ng-template>

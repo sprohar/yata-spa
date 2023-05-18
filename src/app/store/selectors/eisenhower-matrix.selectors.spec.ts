@@ -83,30 +83,37 @@ const state: AppState = {
 };
 
 describe('EisenhowerMatrixSelectors', () => {
-  it('should select completed high priority tasks', () => {
-    const completedHighPriorityTasks = selectCompletedHighPriorityTasks(state);
+  const projects = state.projects.projects;
+  const tasks = state.tasks.tasks;
 
-    expect(completedHighPriorityTasks.length).toEqual(1);
-    expect(completedHighPriorityTasks[0].id).toEqual(2);
+  it('should select completed high priority tasks', () => {
+    const actual = selectCompletedHighPriorityTasks.projector(tasks);
+    const expected = state.tasks.tasks.filter(
+      (task) => task.isCompleted && task.priority === Priority.HIGH
+    );
+
+    expect(actual.length).toEqual(expected.length);
   });
 
   it('should select completed medium priority tasks', () => {
     const completedMediumPriorityTasks =
-      selectCompletedMediumPriorityTasks(state);
+      selectCompletedMediumPriorityTasks.projector(tasks);
 
     expect(completedMediumPriorityTasks.length).toEqual(1);
     expect(completedMediumPriorityTasks[0].id).toEqual(4);
   });
 
   it('should select completed low priority tasks', () => {
-    const completedLowPriorityTasks = selectCompletedLowPriorityTasks(state);
+    const completedLowPriorityTasks =
+      selectCompletedLowPriorityTasks.projector(tasks);
 
     expect(completedLowPriorityTasks.length).toEqual(1);
     expect(completedLowPriorityTasks[0].id).toEqual(6);
   });
 
   it('should select completed no priority tasks', () => {
-    const completedNoPriorityTasks = selectCompletedNoPriorityTasks(state);
+    const completedNoPriorityTasks =
+      selectCompletedNoPriorityTasks.projector(tasks);
 
     expect(completedNoPriorityTasks.length).toEqual(1);
     expect(completedNoPriorityTasks[0].id).toEqual(8);
@@ -114,7 +121,7 @@ describe('EisenhowerMatrixSelectors', () => {
 
   it('should select high priority tasks group by project', () => {
     const highPriorityTasksGroupByProject =
-      selectHighPriorityTasksGroupByProject(state);
+      selectHighPriorityTasksGroupByProject.projector(projects, tasks);
 
     expect(highPriorityTasksGroupByProject.size).toEqual(1);
     expect(
@@ -127,7 +134,7 @@ describe('EisenhowerMatrixSelectors', () => {
 
   it('should select medium priority tasks group by project', () => {
     const mediumPriorityTasksGroupByProject =
-      selectMediumPriorityTasksGroupByProject(state);
+      selectMediumPriorityTasksGroupByProject.projector(projects, tasks);
 
     expect(mediumPriorityTasksGroupByProject.size).toEqual(1);
     expect(
@@ -140,7 +147,7 @@ describe('EisenhowerMatrixSelectors', () => {
 
   it('should select low priority tasks group by project', () => {
     const lowPriorityTasksGroupByProject =
-      selectMediumPriorityTasksGroupByProject(state);
+      selectMediumPriorityTasksGroupByProject.projector(projects, tasks);
 
     expect(lowPriorityTasksGroupByProject.size).toEqual(1);
     expect(
@@ -153,7 +160,7 @@ describe('EisenhowerMatrixSelectors', () => {
 
   it('should select no priority tasks group by project', () => {
     const noPriorityTasksGroupByProject =
-      selectMediumPriorityTasksGroupByProject(state);
+      selectMediumPriorityTasksGroupByProject.projector(projects, tasks);
 
     expect(noPriorityTasksGroupByProject.size).toEqual(1);
     expect(

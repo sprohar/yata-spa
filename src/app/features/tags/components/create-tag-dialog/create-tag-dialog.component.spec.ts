@@ -25,7 +25,6 @@ describe('CreateTagDialogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [CreateTagDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         NoopAnimationsModule,
@@ -34,6 +33,7 @@ describe('CreateTagDialogComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
+        CreateTagDialogComponent,
       ],
       providers: [
         provideMockStore(),

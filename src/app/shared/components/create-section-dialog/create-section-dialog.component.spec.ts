@@ -2,15 +2,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
+  MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Project, Section } from '../../../models';
+import { Project } from '../../../models';
 import { ViewHeaderActions } from '../../../store/actions';
 
 import { CreateSectionDialogComponent } from './create-section-dialog.component';
@@ -23,7 +23,6 @@ describe('CreateSectionDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateSectionDialogComponent],
       imports: [
         MatDialogModule,
         MatFormFieldModule,
@@ -31,6 +30,7 @@ describe('CreateSectionDialogComponent', () => {
         MatButtonModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
+        CreateSectionDialogComponent,
       ],
       providers: [
         provideMockStore(),

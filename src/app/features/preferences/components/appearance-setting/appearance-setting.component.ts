@@ -4,9 +4,11 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 import { UserPreference } from '../../../../auth/models/user.model';
 import { PreferencesActions } from '../../../../store/actions';
 import { selectUserPreferences } from '../../../../store/selectors';
@@ -16,6 +18,8 @@ import { selectUserPreferences } from '../../../../store/selectors';
   templateUrl: './appearance-setting.component.html',
   styleUrls: ['./appearance-setting.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatCardModule, MatSlideToggleModule, ReactiveFormsModule],
 })
 export class AppearanceSettingComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();

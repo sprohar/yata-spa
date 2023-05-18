@@ -12,10 +12,16 @@ import { Tag } from '../models';
 import { TagsService } from '../services/http';
 import { tagsResolver } from './tags.resolver';
 
-@Component({ selector: 'home' })
+@Component({
+  selector: 'home',
+  standalone: true,
+})
 class HomeStubComponent {}
 
-@Component({ selector: 'inbox' })
+@Component({
+  selector: 'inbox',
+  standalone: true,
+})
 class InboxStubComponent {}
 
 const routes: Route[] = [
@@ -40,8 +46,11 @@ describe('TagsResolver', () => {
     tagsServiceSpy = jasmine.createSpyObj('TagsService', ['getAll']);
 
     await TestBed.configureTestingModule({
-      declarations: [HomeStubComponent, InboxStubComponent],
-      imports: [RouterTestingModule.withRoutes(routes)],
+      imports: [
+        RouterTestingModule.withRoutes(routes),
+        HomeStubComponent,
+        InboxStubComponent,
+      ],
       providers: [
         provideMockStore({}),
         {

@@ -42,14 +42,13 @@ describe('AppearanceSettingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppearanceSettingComponent],
-      imports: [MatCardModule, MatSlideToggleModule, ReactiveFormsModule],
-      providers: [
+    imports: [MatCardModule, MatSlideToggleModule, ReactiveFormsModule, AppearanceSettingComponent],
+    providers: [
         provideMockStore({
-          initialState,
+            initialState,
         }),
-      ],
-    }).compileComponents();
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AppearanceSettingComponent);
     store = TestBed.inject(MockStore);

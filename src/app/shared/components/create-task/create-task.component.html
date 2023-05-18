@@ -1,14 +1,10 @@
 <form
-  class="flex flex-column row-gap-1"
+  class="flex-column row-gap-1 p-1"
   [formGroup]="form"
   *ngIf="group$ | async as group"
 >
-  <div class="flex flex-column">
-    <mat-form-field
-      class="form-field"
-      appearance="outline"
-      [hideRequiredMarker]="true"
-    >
+  <div class="flex-column">
+    <mat-form-field appearance="outline" [hideRequiredMarker]="true">
       <mat-label>Task</mat-label>
       <input
         #taskInput
@@ -23,7 +19,7 @@
     </mat-form-field>
 
     <!-- Tags -->
-    <mat-chip-listbox aria-label="Tags" class="tags">
+    <mat-chip-listbox aria-label="Tags" class="chips-list mb-1">
       <mat-chip *ngFor="let tag of selectedTags" [attr.data-test]="tag.name">
         {{ tag.name }}
         <button matChipRemove (click)="removeTag(tag)">
@@ -66,7 +62,8 @@
         <mat-select formControlName="sectionId">
           <mat-option
             *ngFor="
-              let section of getProjectSections(projectIdControl.value, group)
+              let section of getProjectSections(projectIdControl.value, group);
+              trackBy: trackBySectionId
             "
             [value]="section.id"
           >
@@ -135,26 +132,18 @@
             >
               {{ dueDateControl.value | date : "mediumDate" }}
             </button>
-            <button
-              mat-icon-button
-              title="Remove due date"
-              class="scale-90"
-              (click)="removeDueDate()"
-            >
-              <mat-icon>close</mat-icon>
-            </button>
           </div>
         </ng-container>
         <ng-template #datePicker>
           <button
             data-test="dueDatePickerButton"
             mat-stroked-button
-            aria-label="Due date picker"
+            aria-label="Open due date picker"
             title="Due date"
             (click)="openDateTimePicker()"
           >
             <mat-icon>event</mat-icon>
-            Due date
+            Set date
           </button>
         </ng-template>
       </div>

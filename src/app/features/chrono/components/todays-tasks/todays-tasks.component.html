@@ -14,17 +14,14 @@
     </mat-expansion-panel-header>
 
     <yata-task-list>
-      <ng-container
+      <yata-task
         *ngFor="let task of tasks; index as i; trackBy: trackByTaskId"
+        [attr.data-test-task]="i"
+        [task]="task"
+        [isDraggable]="false"
       >
-        <yata-task
-          [attr.data-test-task]="i"
-          [task]="task"
-          [isDraggable]="false"
-        >
-          <yata-task-options [task]="task"></yata-task-options>
-        </yata-task>
-      </ng-container>
+        <yata-task-options [task]="task"></yata-task-options>
+      </yata-task>
     </yata-task-list>
   </mat-expansion-panel>
 
@@ -41,17 +38,14 @@
     </mat-expansion-panel-header>
 
     <yata-task-list>
-      <ng-container
+      <yata-task
         *ngFor="let task of tasks; index as i; trackBy: trackByTaskId"
+        [attr.data-test-task]="i"
+        [task]="task"
+        [isDraggable]="false"
       >
-        <yata-task
-          [attr.data-test-task]="i"
-          [task]="task"
-          [isDraggable]="false"
-        >
-          <yata-task-options [task]="task"></yata-task-options>
-        </yata-task>
-      </ng-container>
+        <yata-task-options [task]="task"></yata-task-options>
+      </yata-task>
     </yata-task-list>
   </mat-expansion-panel>
 </main>

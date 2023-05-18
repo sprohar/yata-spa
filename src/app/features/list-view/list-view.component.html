@@ -38,7 +38,7 @@
           </mat-expansion-panel-header>
 
           <yata-task-list
-            [attr.data-test-task-list]="map.key.id"
+            [attr.data-task-list]="map.key.id"
             #taskList
             cdkDropList
             cdkDropListSortingDisabled
@@ -72,7 +72,7 @@
           </mat-expansion-panel-header>
 
           <!-- Completed task list -->
-          <yata-task-list data-test="completedTasks">
+          <yata-task-list data-completed-task-list="completedTasks">
             <ng-container *ngFor="let task of completedTasks">
               <yata-task [task]="task">
                 <yata-task-options [task]="task"></yata-task-options>

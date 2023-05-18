@@ -27,7 +27,6 @@ describe('CreateCustomRecurrenceDialogComponent', () => {
     dialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      declarations: [CreateCustomRecurrenceDialogComponent],
       imports: [
         MatFormFieldModule,
         MatInputModule,
@@ -39,6 +38,7 @@ describe('CreateCustomRecurrenceDialogComponent', () => {
         MatSelectModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
+        CreateCustomRecurrenceDialogComponent,
       ],
       providers: [
         { provide: MatDialogRef, useValue: dialogRef },

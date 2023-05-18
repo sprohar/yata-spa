@@ -4,8 +4,6 @@
   [formGroup]="form"
   *ngIf="prefs$ | async as prefs"
 >
-  <!-- Make three columns  -->
-
   <!-- Checkbox -->
   <div class="flex-column">
     <div class="flex align-items-center">
@@ -59,7 +57,7 @@
           *ngIf="task.dueDate"
           [attr.data-test]="'task-' + task.id + 'dueDate'"
           mat-stroked-button
-          class="task-due-date"
+          class="task-due-date scale-90"
         >
           {{ task.dueDate | date : "shortDate" }}
         </button>

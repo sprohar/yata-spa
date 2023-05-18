@@ -1,12 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import {
-  MatDialogModule,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TimeStringParser } from '../../util/time-string-parser';
 
@@ -23,13 +18,11 @@ describe('DateTimePickerDialogComponent', () => {
     });
 
     await TestBed.configureTestingModule({
-      declarations: [DateTimePickerDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         NoopAnimationsModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatIconModule,
+        DateTimePickerDialogComponent,
+        MatNativeDateModule,
       ],
       providers: [
         {

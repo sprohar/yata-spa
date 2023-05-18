@@ -1,11 +1,17 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Priority, Project, Section } from '../../../models';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { Priority, Project, Section, Task } from '../../../models';
+import { CreateTaskComponent } from '../create-task/create-task.component';
 
 export interface CreateTaskDialogData {
-  section?: Section;
-  project?: Project;
-  priority?: Priority;
+  section: Section | null;
+  project: Project | null;
+  priority: Priority | null;
+  parent: Task | null;
 }
 
 @Component({
@@ -13,12 +19,14 @@ export interface CreateTaskDialogData {
   templateUrl: './create-task-dialog.component.html',
   styleUrls: ['./create-task-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatDialogModule, CreateTaskComponent],
 })
 export class CreateTaskDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: CreateTaskDialogData,
-    private dialogRef: MatDialogRef<CreateTaskDialogComponent>
+    private readonly dialogRef: MatDialogRef<CreateTaskDialogComponent>
   ) {}
 
   close() {

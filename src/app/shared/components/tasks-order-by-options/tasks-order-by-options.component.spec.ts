@@ -1,7 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { TasksOrderByOptionsComponent } from './tasks-order-by-options.component';
@@ -13,13 +10,7 @@ describe('TasksOrderByOptionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TasksOrderByOptionsComponent],
-      imports: [
-        MatButtonModule,
-        MatIconModule,
-        MatMenuModule,
-        NoopAnimationsModule,
-      ],
+      imports: [NoopAnimationsModule, TasksOrderByOptionsComponent],
       providers: [provideMockStore()],
     }).compileComponents();
 

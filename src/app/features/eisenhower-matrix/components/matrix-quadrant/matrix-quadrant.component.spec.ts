@@ -8,6 +8,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Priority, Project, Task } from '../../../../models';
 import { MatrixListData } from '../../interfaces/matrix-list-data';
@@ -34,7 +35,6 @@ describe('MatrixQuadrantComponent', () => {
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [MatrixQuadrantComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         MatDialogModule,
@@ -43,12 +43,17 @@ describe('MatrixQuadrantComponent', () => {
         MatButtonModule,
         MatIconModule,
         MatMenuModule,
+        MatrixQuadrantComponent,
       ],
       providers: [
         provideMockStore(),
         {
           provide: MatDialog,
           useValue: dialog,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {},
         },
       ],
     }).compileComponents();

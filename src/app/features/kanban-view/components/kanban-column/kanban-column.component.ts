@@ -1,4 +1,4 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,12 +12,20 @@ import { Section, Task } from '../../../../models';
 import { CreateTaskDialogComponent } from '../../../../shared/components/create-task-dialog/create-task-dialog.component';
 import { KanbanViewActions } from '../../../../store/actions';
 import { selectCompletedTasks } from '../../../../store/selectors';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { TaskCardComponent } from '../task-card/task-card.component';
+import { SectionOptionsComponent } from '../../../../shared/components/section-options/section-options.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'yata-kanban-column',
-  templateUrl: './kanban-column.component.html',
-  styleUrls: ['./kanban-column.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'yata-kanban-column',
+    templateUrl: './kanban-column.component.html',
+    styleUrls: ['./kanban-column.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgIf, MatButtonModule, MatIconModule, SectionOptionsComponent, CdkDropList, NgFor, TaskCardComponent, CdkDrag, MatExpansionModule, AsyncPipe]
 })
 export class KanbanColumnComponent implements OnInit {
   @Input() section!: Section;

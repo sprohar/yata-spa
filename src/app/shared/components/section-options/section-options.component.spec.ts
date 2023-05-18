@@ -61,9 +61,8 @@ describe('SectionOptionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SectionOptionsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [MatMenuModule, MatButtonModule],
+      imports: [MatMenuModule, MatButtonModule, SectionOptionsComponent],
       providers: [
         provideMockStore({ initialState }),
         {

@@ -1,6 +1,13 @@
 <header class="flex space-between align-items-center">
   <h1>Eisenhower Matrix</h1>
-  <yata-task-search class="is-not-handset"></yata-task-search>
+  <button
+    mat-icon-button
+    aria-label="Filter tasks"
+    title="Search"
+    (click)="openSearchDialog()"
+  >
+    <mat-icon>search</mat-icon>
+  </button>
 </header>
 <main
   class="matrix-container row-gap-1 full-height"
